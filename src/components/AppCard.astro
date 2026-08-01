@@ -1,0 +1,46 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  app: CollectionEntry<'apps'>;
+}
+
+const { app } = Astro.props;
+const statusLabels = {
+  development: 'در حال توسعه',
+  beta: 'نسخه آزمایشی',
+  available: 'منتشر شده',
+  archived: 'بایگانی شده',
+} as const;
+---
+
+<article class="app-card">
+  <div class="app-card-top">
+    {
+      app.data.icon ? (
+        <img
+          src={app.data.icon}
+          alt={`آیکون ${app.data.name}`}
+          width="64"
+          height="64"
+        />
+      ) : (
+        <span class="app-icon-placeholder" aria-hidden="true">
+          ا
+        </span>
+      )
+    }
+    <span class="status-badge">{statusLabels[app.data.status]}</span>
+  </div>
+  <div>
+    <p class="app-platforms">{app.data.platforms.join('، ')}</p>
+    <h3>{app.data.name}</h3>
+    <p class="app-tagline">{app.data.tagline}</p>
+    <p>{app.data.shortDescription}</p>
+  </div>
+  <div class="app-links">
+    <a href={`/apps/${app.id}/`}>معرفی کامل</a>
+    <a href={app.data.supportUrl}>پشتیبانی</a>
+    <a href={app.data.privacyUrl}>حریم خصوصی</a>
+  </div>
+</article>

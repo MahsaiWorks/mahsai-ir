@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import AppCard from '../components/AppCard.astro';
+import { siteConfig } from '../config/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const apps = (await getCollection('apps')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayout
+  title={`اپلیکیشن‌ها | ${siteConfig.brandName}`}
+  description="فهرست اپلیکیشن‌ها، وضعیت انتشار، پلتفرم‌ها و مسیرهای رسمی پشتیبانی."
+>
+  <header class="page-hero">
+    <div class="shell">
+      <p class="eyebrow">محصولات</p>
+      <h1>اپلیکیشن‌ها</h1>
+      <p class="page-lead">
+        محصولات MAHSAI، وضعیت انتشار و مسیرهای رسمی معرفی و پشتیبانی آن‌ها.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="shell">
+      <div class="apps-grid">
+        {apps.map((app) => <AppCard app={app} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

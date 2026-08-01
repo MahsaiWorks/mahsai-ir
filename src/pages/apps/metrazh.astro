@@ -1,0 +1,168 @@
+---
+import { getCollection } from 'astro:content';
+import { siteConfig } from '../../config/site';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const app = (await getCollection('apps')).find(
+  (entry) => entry.id === 'metrazh',
+);
+
+if (!app) {
+  throw new Error('Metrazh content entry is missing.');
+}
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: app.data.name,
+  alternateName: 'Metrazh',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: app.data.minOs,
+  softwareVersion: app.data.version,
+  description: app.data.shortDescription,
+  url: new URL(Astro.url.pathname, Astro.site).toString(),
+  author: {
+    '@type': 'Organization',
+    name: siteConfig.brandName,
+  },
+  inLanguage: 'fa-IR',
+};
+---
+
+<BaseLayout
+  title={`متراژ؛ دستیار مشاوران املاک | ${siteConfig.brandName}`}
+  description={app.data.shortDescription}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(structuredData)}
+  />
+
+  <section class="product-hero">
+    <div class="shell product-hero-grid">
+      <div class="product-copy">
+        <div class="product-identity">
+          <img src={app.data.icon} alt="آیکون متراژ" width="88" height="88" />
+          <div>
+            <p class="eyebrow">اپلیکیشن اندروید</p>
+            <p class="status-badge">در حال توسعه و پیش‌انتشار</p>
+          </div>
+        </div>
+        <h1>متراژ؛ دستیار روزانه مشاوران املاک</h1>
+        <p class="product-tagline">{app.data.tagline}</p>
+        <p class="page-lead">{app.data.fullDescription}</p>
+        <div class="hero-actions">
+          <a class="button" href="/support/">پشتیبانی متراژ</a>
+          <a class="button button-secondary" href="/articles/">مقالات آموزشی</a>
+        </div>
+        <p class="release-note">{app.data.releaseNote}</p>
+      </div>
+      <div class="product-device" aria-label="پیش‌نمایش میز کار متراژ">
+        <img
+          src="/images/apps/metrazh/dashboard.png"
+          alt="میز کار متراژ با برنامه‌های روزانه و دسترسی‌های سریع"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="product-facts" aria-label="مشخصات فنی متراژ">
+    <div class="shell facts-grid">
+      <div><span>پلتفرم</span><strong>Android</strong></div>
+      <div><span>حداقل نسخه</span><strong>Android 7.0</strong></div>
+      <div><span>نسخه فعلی</span><strong>{app.data.version}</strong></div>
+      <div><span>وضعیت</span><strong>پیش‌انتشار</strong></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="features-title">
+    <div class="shell">
+      <header class="section-heading">
+        <p class="eyebrow">قابلیت‌های فعلی</p>
+        <h2 id="features-title">از ثبت فایل تا پیگیری معامله</h2>
+        <p class="section-description">
+          امکاناتی که در نسخه فعلی پروژه پیاده‌سازی شده‌اند و برای کار روزانه
+          مشاوران املاک طراحی شده‌اند.
+        </p>
+      </header>
+      <ol class="feature-list">
+        {
+          app.data.features.map((feature, index) => (
+            <li>
+              <span>
+                {new Intl.NumberFormat('fa-IR', {
+                  minimumIntegerDigits: 2,
+                }).format(index + 1)}
+              </span>
+              <p>{feature}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section-alt" aria-labelledby="screenshots-title">
+    <div class="shell">
+      <header class="section-heading">
+        <p class="eyebrow">نمای برنامه</p>
+        <h2 id="screenshots-title">متراژ در عمل</h2>
+        <p class="section-description">
+          این تصاویر از نسخه پیش‌انتشار و محیط آزمون تهیه شده‌اند و ممکن است تا
+          انتشار نهایی تغییر کنند.
+        </p>
+      </header>
+      <div class="screenshot-track">
+        {
+          app.data.screenshots.map((screenshot) => (
+            <figure>
+              <img src={screenshot.src} alt={screenshot.alt} loading="lazy" />
+              <figcaption>{screenshot.alt}</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="audience-title">
+    <div class="shell audience-layout">
+      <div>
+        <p class="eyebrow">برای چه کسانی؟</p>
+        <h2 id="audience-title">ابزاری برای جریان واقعی کار املاک</h2>
+      </div>
+      <ul class="audience-list">
+        {app.data.audience.map((audience) => <li>{audience}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="shell cta-panel">
+      <p class="eyebrow">پشتیبانی رسمی</p>
+      <h2>پرسشی درباره متراژ دارید؟</h2>
+      <p>
+        برای پرسش‌های فنی و پیگیری اخبار نسخه پیش‌انتشار از مسیرهای رسمی MAHSAI
+        استفاده کنید.
+      </p>
+      <div class="cta-actions">
+        <a class="button" href={`mailto:${siteConfig.supportEmail}`} dir="ltr">
+          {siteConfig.supportEmail}
+        </a>
+        {
+          app.data.supportLinks.map((link) => (
+            <a
+              class="button button-secondary"
+              href={link.url}
+              target="_blank"
+              rel="noopener"
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

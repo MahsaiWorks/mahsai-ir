@@ -1,0 +1,68 @@
+---
+import { siteConfig } from '../config/site';
+
+const path = Astro.url.pathname;
+const links = [
+  { href: '/', label: 'خانه' },
+  { href: '/about/', label: 'درباره' },
+  { href: '/apps/', label: 'اپلیکیشن‌ها' },
+  { href: '/articles/', label: 'مقالات' },
+  { href: '/support/', label: 'پشتیبانی' },
+];
+
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a
+      class="brand"
+      href="/"
+      aria-label={`${siteConfig.brandName} — صفحه اصلی`}
+    >
+      <span class="brand-mark" aria-hidden="true">م</span>
+      <span>{siteConfig.brandName}</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="پیمایش اصلی">
+      <ul>
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                aria-current={isActive(link.href) ? 'page' : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <details class="mobile-nav">
+      <summary aria-label="باز کردن فهرست پیمایش">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </summary>
+      <nav aria-label="پیمایش موبایل">
+        <ul>
+          {
+            links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  aria-current={isActive(link.href) ? 'page' : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>

@@ -1,0 +1,57 @@
+---
+import { siteConfig } from '../config/site';
+
+const year = new Intl.DateTimeFormat('fa-IR', { year: 'numeric' }).format(
+  new Date(),
+);
+---
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div>
+      <a class="brand footer-brand" href="/">
+        <span class="brand-mark" aria-hidden="true">م</span>
+        <span>{siteConfig.brandName}</span>
+      </a>
+      <p>{siteConfig.title}؛ با تمرکز بر تجربه‌های ساده، دقیق و ماندگار.</p>
+    </div>
+
+    <nav aria-label="پیوندهای پشتیبانی و حقوقی">
+      <h2>دسترسی سریع</h2>
+      <ul>
+        <li><a href="/support/">پشتیبانی</a></li>
+        <li><a href="/articles/">مقالات آموزشی</a></li>
+        <li><a href="/privacy/">حریم خصوصی</a></li>
+        <li><a href="/terms/">شرایط استفاده</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <h2>ارتباط</h2>
+      <a
+        class="footer-email"
+        href={`mailto:${siteConfig.supportEmail}`}
+        dir="ltr"
+      >
+        {siteConfig.supportEmail}
+      </a>
+      {
+        siteConfig.socialLinks.length > 0 && (
+          <ul class="social-list">
+            {siteConfig.socialLinks.map((link) => (
+              <li>
+                <a href={link.url} rel="me noopener" target="_blank">
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </div>
+  <div class="shell footer-bottom">
+    <span>© {year} {siteConfig.brandName}</span>
+    <span lang="en" dir="ltr">mahsai.ir</span>
+  </div>
+</footer>

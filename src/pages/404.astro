@@ -1,0 +1,22 @@
+---
+import { siteConfig } from '../config/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title={`صفحه پیدا نشد | ${siteConfig.brandName}`}
+  description="صفحه درخواستی پیدا نشد."
+  noindex
+>
+  <section class="not-found">
+    <div class="shell">
+      <p class="not-found-code" aria-hidden="true">۴۰۴</p>
+      <h1>این صفحه پیدا نشد.</h1>
+      <p>
+        ممکن است نشانی تغییر کرده باشد یا صفحه‌ای که می‌خواهید دیگر وجود نداشته
+        باشد.
+      </p>
+      <a class="button" href="/">بازگشت به صفحه اصلی</a>
+    </div>
+  </section>
+</BaseLayout>

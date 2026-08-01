@@ -1,0 +1,73 @@
+---
+import { getCollection, render } from 'astro:content';
+import { siteConfig } from '../../config/site';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const articles = (await getCollection('articles')).filter(
+    (article) => !article.data.draft,
+  );
+
+  return articles.map((article) => ({
+    params: { id: article.id },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('fa-IR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+const articleStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.data.title,
+  description: article.data.description,
+  datePublished: article.data.publishedAt.toISOString(),
+  dateModified: (
+    article.data.updatedAt ?? article.data.publishedAt
+  ).toISOString(),
+  mainEntityOfPage: canonical.toString(),
+  publisher: {
+    '@type': 'Organization',
+    name: siteConfig.brandName,
+  },
+  inLanguage: 'fa-IR',
+};
+---
+
+<BaseLayout
+  title={`${article.data.title} | ${siteConfig.brandName}`}
+  description={article.data.description}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(articleStructuredData)}
+  />
+  <article>
+    <header class="article-hero">
+      <div class="shell article-shell">
+        <a class="back-link" href="/articles/">همه مقالات</a>
+        <p class="eyebrow">{article.data.category}</p>
+        <h1>{article.data.title}</h1>
+        <p class="page-lead">{article.data.description}</p>
+        <div class="article-meta article-byline">
+          <time datetime={article.data.publishedAt.toISOString()}>
+            {formatDate(article.data.publishedAt)}
+          </time>
+          <span>{article.data.readingTime} مطالعه</span>
+          <span>{siteConfig.brandName}</span>
+        </div>
+      </div>
+    </header>
+    <div class="shell article-shell article-body prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

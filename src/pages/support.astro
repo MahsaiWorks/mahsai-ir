@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import { siteConfig } from '../config/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const apps = (await getCollection('apps')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayout
+  title={`پشتیبانی | ${siteConfig.brandName}`}
+  description="راهنمای دریافت پشتیبانی، گزارش مشکل و پیگیری پرسش‌های مربوط به اپلیکیشن‌ها."
+>
+  <header class="page-hero">
+    <div class="shell">
+      <p class="eyebrow">مرکز راهنما</p>
+      <h1>پشتیبانی</h1>
+      <p class="page-lead">
+        برای پیگیری سریع‌تر، نام اپلیکیشن، نسخه برنامه، نوع دستگاه و شرح دقیق
+        مشکل را در پیام خود بنویسید.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="shell support-grid">
+      <article class="support-card">
+        <h2>ارتباط ایمیلی</h2>
+        <p>برای پرسش عمومی یا گزارش مشکل از ایمیل پشتیبانی استفاده کنید.</p>
+        <a
+          class="text-link"
+          href={`mailto:${siteConfig.supportEmail}`}
+          dir="ltr"
+        >
+          {siteConfig.supportEmail}
+        </a>
+      </article>
+      <article class="support-card">
+        <h2>هنگام گزارش مشکل</h2>
+        <p>
+          نسخه متراژ، مدل دستگاه، نسخه اندروید، مراحل تکرار مشکل و در صورت امکان
+          تصویر خطا را ارسال کنید. اطلاعات محرمانه مشتریان را از تصاویر حذف
+          کنید.
+        </p>
+      </article>
+      {
+        apps.flatMap((app) =>
+          app.data.supportLinks.map((link) => (
+            <article class="support-card">
+              <h2>{link.label}</h2>
+              <p>مسیر رسمی {app.data.name} برای پشتیبانی و اطلاع‌رسانی.</p>
+              <a
+                class="text-link"
+                href={link.url}
+                target="_blank"
+                rel="noopener"
+              >
+                باز کردن در تلگرام
+              </a>
+            </article>
+          )),
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

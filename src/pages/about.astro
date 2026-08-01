@@ -1,0 +1,58 @@
+---
+import { siteConfig } from '../config/site';
+import { specialties } from '../data/specialties';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title={`درباره ${siteConfig.brandName}`}
+  description="معرفی MAHSAI، توسعه‌دهنده اپلیکیشن اندروید و سازنده متراژ."
+>
+  <header class="page-hero">
+    <div class="shell">
+      <p class="eyebrow">درباره MAHSAI</p>
+      <h1>توسعه اپلیکیشن برای نیازهای واقعی.</h1>
+      <p class="page-lead">{siteConfig.biography}</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="shell content-layout">
+      <article class="prose">
+        <h2>معرفی</h2>
+        <p>
+          {siteConfig.developerName} یک برند توسعه اپلیکیشن است. محصول فعلی این برند
+          «متراژ» است؛ اپلیکیشن فارسی اندروید برای مدیریت فعالیت‌های روزانه مشاوران
+          و دفاتر املاک.
+        </p>
+
+        <h2>محصول فعلی</h2>
+        <p>
+          متراژ برای ثبت فایل‌های ملکی، متقاضیان، بازدیدها، یادآوری‌ها،
+          پیگیری‌ها و معاملات طراحی شده است. نسخه فعلی در مرحله توسعه و
+          پیش‌انتشار قرار دارد.
+        </p>
+
+        <h2>حوزه‌های تمرکز</h2>
+        <ul>
+          {
+            specialties.map((specialty) => (
+              <li>
+                {specialty.title}: {specialty.description}
+              </li>
+            ))
+          }
+        </ul>
+      </article>
+      <aside class="content-aside">
+        <p>
+          برای پرسش درباره MAHSAI یا متراژ با
+          <a href={`mailto:${siteConfig.supportEmail}`} dir="ltr"
+            >{siteConfig.supportEmail}</a
+          >
+          تماس بگیرید.
+        </p>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
