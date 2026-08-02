@@ -45,12 +45,13 @@ const articles = (await getCollection('articles'))
       <div class="hero-product-visual" aria-label="پیش‌نمایش اپلیکیشن متراژ">
         <div class="hero-visual-copy">
           <img
-            src="/images/apps/metrazh/icon.png"
-            alt=""
-            width="56"
-            height="56"
+            class="metrazh-wordmark"
+            src="/images/apps/metrazh/wordmark-light.png"
+            alt="لوگوی متراژ"
+            width="170"
+            height="103"
           />
-          <div><strong>متراژ</strong><span>دستیار مشاوران املاک</span></div>
+          <span>دستیار مشاوران املاک</span>
         </div>
         <div class="hero-phone hero-phone-secondary" aria-hidden="true">
           <img src="/images/apps/metrazh/files.png" alt="" />
@@ -121,7 +122,18 @@ const articles = (await getCollection('articles'))
       <div class="articles-grid">
         {
           articles.map((article) => (
-            <article class="article-card">
+            <article class="article-card" data-accent={article.data.accent}>
+              <a
+                class="article-card-image"
+                href={`/articles/${article.id}/`}
+                aria-label={`مطالعه ${article.data.title}`}
+              >
+                <img
+                  src={article.data.cover}
+                  alt={article.data.coverAlt}
+                  loading="lazy"
+                />
+              </a>
               <div class="article-meta">
                 <span>{article.data.category}</span>
                 <span>{article.data.readingTime}</span>

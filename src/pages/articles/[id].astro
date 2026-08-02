@@ -10,24 +10,39 @@ export async function getStaticPaths() {
 
   return articles.map((article) => ({
     params: { id: article.id },
-    props: { article },
+    props: { article, allArticles: articles },
   }));
 }
 
-const { article } = Astro.props;
-const { Content } = await render(article);
+const { article, allArticles } = Astro.props;
+const { Content, headings } = await render(article);
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const relatedArticles = allArticles
+  .filter((entry) => entry.id !== article.id)
+  .sort((a, b) => {
+    const aMatch = a.data.category === article.data.category ? 1 : 0;
+    const bMatch = b.data.category === article.data.category ? 1 : 0;
+    return (
+      bMatch - aMatch ||
+      b.data.publishedAt.getTime() - a.data.publishedAt.getTime()
+    );
+  })
+  .slice(0, 3);
+
 const formatDate = (date: Date) =>
   new Intl.DateTimeFormat('fa-IR', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   }).format(date);
+
 const articleStructuredData = {
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: article.data.title,
   description: article.data.description,
+  image: new URL(article.data.cover, Astro.site).toString(),
+  keywords: article.data.keywords.join(', '),
   datePublished: article.data.publishedAt.toISOString(),
   dateModified: (
     article.data.updatedAt ?? article.data.publishedAt
@@ -44,30 +59,104 @@ const articleStructuredData = {
 <BaseLayout
   title={`${article.data.title} | ${siteConfig.brandName}`}
   description={article.data.description}
+  image={article.data.cover}
+  type="article"
+  keywords={article.data.keywords}
 >
   <script
     type="application/ld+json"
     is:inline
     set:html={JSON.stringify(articleStructuredData)}
   />
-  <article>
-    <header class="article-hero">
-      <div class="shell article-shell">
-        <a class="back-link" href="/articles/">همه مقالات</a>
-        <p class="eyebrow">{article.data.category}</p>
-        <h1>{article.data.title}</h1>
-        <p class="page-lead">{article.data.description}</p>
-        <div class="article-meta article-byline">
-          <time datetime={article.data.publishedAt.toISOString()}>
-            {formatDate(article.data.publishedAt)}
-          </time>
-          <span>{article.data.readingTime} مطالعه</span>
-          <span>{siteConfig.brandName}</span>
+
+  <article class="article-page" data-accent={article.data.accent}>
+    <header class="article-feature">
+      <div class="shell article-feature-grid">
+        <div class="article-feature-copy">
+          <a class="back-link" href="/articles/">مجله MAHSAI</a>
+          <p class="eyebrow">{article.data.category}</p>
+          <h1>{article.data.title}</h1>
+          <p class="article-deck">{article.data.description}</p>
+          <div class="article-byline">
+            <span>{siteConfig.brandName}</span>
+            <time datetime={article.data.publishedAt.toISOString()}>
+              {formatDate(article.data.publishedAt)}
+            </time>
+            <span>{article.data.readingTime} مطالعه</span>
+          </div>
         </div>
+        <figure class="article-cover">
+          <img src={article.data.cover} alt={article.data.coverAlt} />
+          <figcaption>{article.data.coverAlt}</figcaption>
+        </figure>
       </div>
     </header>
-    <div class="shell article-shell article-body prose">
-      <Content />
+
+    <div class="shell article-reading-layout">
+      <aside class="article-toc" aria-label="فهرست مقاله">
+        <p>در این راهنما</p>
+        <ol>
+          {
+            headings
+              .filter((heading) => heading.depth === 2)
+              .map((heading) => (
+                <li>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </li>
+              ))
+          }
+        </ol>
+        <a class="toc-product-link" href="/apps/metrazh/">
+          متراژ در یک نگاه <span aria-hidden="true">←</span>
+        </a>
+      </aside>
+      <div class="article-body prose">
+        <Content />
+        <div class="article-inline-cta">
+          <span>MAHSAI / METRAZH</span>
+          <h2>فایل‌ها و پیگیری‌ها را منظم‌تر مدیریت کنید.</h2>
+          <p>
+            متراژ، دستیار فارسی مشاوران املاک، برای نظم دادن به اطلاعات روزانه و
+            کاهش فراموشی در پیگیری‌ها طراحی شده است.
+          </p>
+          <a class="button" href="/apps/metrazh/">آشنایی با متراژ</a>
+        </div>
+      </div>
     </div>
   </article>
+
+  {
+    relatedArticles.length > 0 && (
+      <section class="related-stories" aria-labelledby="related-title">
+        <div class="shell">
+          <div class="journal-section-head">
+            <div>
+              <p class="eyebrow">ادامه مسیر</p>
+              <h2 id="related-title">راهنماهای مرتبط</h2>
+            </div>
+            <a class="story-link" href="/articles/">
+              همه مقالات
+            </a>
+          </div>
+          <div class="related-grid">
+            {relatedArticles.map((related) => (
+              <article class="related-card">
+                <a href={`/articles/${related.id}/`}>
+                  <img
+                    src={related.data.cover}
+                    alt={related.data.coverAlt}
+                    loading="lazy"
+                  />
+                </a>
+                <p>{related.data.category}</p>
+                <h3>
+                  <a href={`/articles/${related.id}/`}>{related.data.title}</a>
+                </h3>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 </BaseLayout>

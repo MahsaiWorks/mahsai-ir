@@ -7,6 +7,13 @@ const articles = (await getCollection('articles'))
   .filter((article) => !article.data.draft)
   .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
 
+const featured =
+  articles.find((article) => article.data.featured) ?? articles[0];
+const remaining = articles.filter((article) => article.id !== featured?.id);
+const categories = [
+  ...new Set(articles.map((article) => article.data.category)),
+];
+
 const formatDate = (date: Date) =>
   new Intl.DateTimeFormat('fa-IR', {
     year: 'numeric',
@@ -16,46 +23,115 @@ const formatDate = (date: Date) =>
 ---
 
 <BaseLayout
-  title={`مقالات آموزشی املاک | ${siteConfig.brandName}`}
-  description="راهنماهای کاربردی MAHSAI برای مدیریت فایل ملکی، متقاضیان و فعالیت‌های روزانه مشاوران املاک."
+  title={`مجله تخصصی مشاوران املاک | ${siteConfig.brandName}`}
+  description="راهنماهای عمیق و کاربردی MAHSAI برای فایل‌گیری، پیگیری مشتری، آگهی‌نویسی و مدیریت حرفه‌ای فعالیت‌های روزانه مشاوران املاک."
 >
-  <header class="page-hero">
-    <div class="shell">
-      <p class="eyebrow">دانش کاربردی</p>
-      <h1>مقالات آموزشی املاک</h1>
-      <p class="page-lead">
-        راهنماهای کوتاه و کاربردی برای ثبت بهتر اطلاعات، پیگیری منظم و استفاده
-        دقیق‌تر از ابزارهای متراژ.
-      </p>
-    </div>
-  </header>
+  <header class="editorial-hero">
+    <div class="shell editorial-hero-grid">
+      <div class="editorial-intro">
+        <p class="journal-label"><span>مجله MAHSAI</span><i>۰۱</i></p>
+        <h1>دانش کاربردی برای <em>مشاوران حرفه‌ای.</em></h1>
+        <p>
+          از فایل‌گیری و شناخت متقاضی تا پیگیری، بازدید و ثبت دقیق اطلاعات؛
+          مطالبی برای بهتر شدن جریان واقعی کار در املاک.
+        </p>
+        <div class="topic-list" aria-label="موضوعات مجله">
+          {categories.map((category) => <span>{category}</span>)}
+        </div>
+      </div>
 
-  <section class="section">
-    <div class="shell articles-grid">
       {
-        articles.map((article) => (
-          <article class="article-card">
-            <div class="article-meta">
-              <span>{article.data.category}</span>
-              <span>{article.data.readingTime}</span>
-            </div>
-            <div>
+        featured && (
+          <article class="featured-story" data-accent={featured.data.accent}>
+            <a href={`/articles/${featured.id}/`} class="featured-story-media">
+              <img src={featured.data.cover} alt={featured.data.coverAlt} />
+            </a>
+            <div class="featured-story-copy">
+              <div class="article-meta">
+                <span>انتخاب سردبیر</span>
+                <span>{featured.data.readingTime} مطالعه</span>
+              </div>
               <h2>
-                <a href={`/articles/${article.id}/`}>{article.data.title}</a>
+                <a href={`/articles/${featured.id}/`}>{featured.data.title}</a>
               </h2>
-              <p>{article.data.description}</p>
-            </div>
-            <div class="article-footer">
-              <time datetime={article.data.publishedAt.toISOString()}>
-                {formatDate(article.data.publishedAt)}
-              </time>
-              <a class="text-link" href={`/articles/${article.id}/`}>
-                مطالعه مقاله <span aria-hidden="true">←</span>
+              <p>{featured.data.description}</p>
+              <a class="story-link" href={`/articles/${featured.id}/`}>
+                شروع مطالعه <span aria-hidden="true">←</span>
               </a>
             </div>
           </article>
-        ))
+        )
       }
+    </div>
+  </header>
+
+  <section class="journal-section" aria-labelledby="latest-articles">
+    <div class="shell">
+      <div class="journal-section-head">
+        <div>
+          <p class="eyebrow">تازه‌ترین راهنماها</p>
+          <h2 id="latest-articles">برای تصمیم‌های دقیق‌تر، هر روز.</h2>
+        </div>
+        <span
+          >{new Intl.NumberFormat('fa-IR').format(articles.length)} مقاله</span
+        >
+      </div>
+
+      <div class="article-magazine-grid">
+        {
+          remaining.map((article, index) => (
+            <article
+              class:list={[
+                'magazine-card',
+                { 'magazine-card-wide': index === 0 },
+              ]}
+              data-accent={article.data.accent}
+            >
+              <a
+                class="magazine-card-media"
+                href={`/articles/${article.id}/`}
+                aria-label={`مطالعه ${article.data.title}`}
+              >
+                <img
+                  src={article.data.cover}
+                  alt={article.data.coverAlt}
+                  loading="lazy"
+                />
+                <span>{article.data.category}</span>
+              </a>
+              <div class="magazine-card-copy">
+                <div class="article-meta">
+                  <time datetime={article.data.publishedAt.toISOString()}>
+                    {formatDate(article.data.publishedAt)}
+                  </time>
+                  <span>{article.data.readingTime}</span>
+                </div>
+                <h2>
+                  <a href={`/articles/${article.id}/`}>{article.data.title}</a>
+                </h2>
+                <p>{article.data.description}</p>
+                <a class="story-link" href={`/articles/${article.id}/`}>
+                  مطالعه کامل <span aria-hidden="true">←</span>
+                </a>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="journal-cta">
+    <div class="shell journal-cta-inner">
+      <div>
+        <p class="eyebrow">ابزار کنار دانش</p>
+        <h2>آموخته‌ها را در جریان کار واقعی اجرا کنید.</h2>
+      </div>
+      <p>
+        متراژ برای ثبت فایل، مدیریت متقاضی، برنامه‌ریزی پیگیری و نگهداری منظم
+        اطلاعات مشاوران املاک طراحی شده است.
+      </p>
+      <a class="button" href="/apps/metrazh/">معرفی متراژ</a>
     </div>
   </section>
 </BaseLayout>

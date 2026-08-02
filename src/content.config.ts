@@ -9,6 +9,10 @@ const apps = defineCollection({
     shortDescription: z.string(),
     fullDescription: z.string(),
     icon: z.string(),
+    logo: z.object({
+      dark: z.string(),
+      light: z.string(),
+    }),
     screenshots: z.array(
       z.object({
         src: z.string(),
@@ -51,6 +55,10 @@ const articles = defineCollection({
     publishedAt: z.coerce.date(),
     updatedAt: z.coerce.date().optional(),
     readingTime: z.string(),
+    cover: z.string(),
+    coverAlt: z.string(),
+    accent: z.enum(['navy', 'teal', 'sand']),
+    keywords: z.array(z.string()),
     draft: z.boolean().default(false),
     featured: z.boolean().default(false),
   }),

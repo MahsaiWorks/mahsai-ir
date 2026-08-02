@@ -35,7 +35,12 @@ const statusLabels = {
     </div>
     <div class="app-card-copy">
       <p class="app-platforms">{app.data.platforms.join('، ')}</p>
-      <h3>{app.data.name}</h3>
+      <img
+        class="app-wordmark"
+        src={app.data.logo.light}
+        alt={`لوگوی ${app.data.name}`}
+      />
+      <h3 class="visually-hidden">{app.data.name}</h3>
       <p class="app-tagline">{app.data.tagline}</p>
       <p>{app.data.shortDescription}</p>
     </div>
