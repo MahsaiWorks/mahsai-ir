@@ -1373,8 +1373,8 @@ summary {
   width: 2.45rem;
   overflow: hidden;
   border-radius: 0.8rem;
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: #071426;
+  color: #fff;
 }
 
 .brand-mark img {
