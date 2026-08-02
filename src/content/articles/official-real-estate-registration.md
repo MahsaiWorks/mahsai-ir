@@ -5,7 +5,7 @@ category: 'دانش حقوقی عمومی'
 publishedAt: '2026-08-02'
 updatedAt: '2026-08-02'
 readingTime: '۹ دقیقه'
-cover: '/images/editorial/property-workflow.webp'
+cover: '/images/editorial/property-workflow-light.webp'
 coverAlt: 'اسناد و پوشه‌های منظم یک پرونده ملکی کنار ماکت ساختمان و کلید'
 accent: 'sand'
 keywords:

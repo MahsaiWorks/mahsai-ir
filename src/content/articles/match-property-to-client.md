@@ -4,7 +4,7 @@ description: 'روش مرحله‌به‌مرحله تطبیق فایل ملکی
 category: 'مدیریت متقاضی'
 publishedAt: '2026-08-02'
 readingTime: '۸ دقیقه'
-cover: '/images/editorial/client-matching.webp'
+cover: '/images/editorial/client-matching-light.webp'
 coverAlt: 'ماکت‌های ساختمان و کارت‌های مشتری که با یک مسیر مشخص به هم متصل شده‌اند'
 accent: 'navy'
 keywords:

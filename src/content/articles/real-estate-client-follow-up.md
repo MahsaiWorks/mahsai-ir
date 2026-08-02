@@ -4,7 +4,7 @@ description: 'یک سیستم عملی برای پیگیری مشتری املا
 category: 'ارتباط با مشتری'
 publishedAt: '2026-08-02'
 readingTime: '۸ دقیقه'
-cover: '/images/editorial/client-matching.webp'
+cover: '/images/editorial/client-matching-light.webp'
 coverAlt: 'نمای مفهومی تطبیق مشتری با ملک و برنامه‌ریزی پیگیری روی میز کار املاک'
 accent: 'teal'
 keywords:

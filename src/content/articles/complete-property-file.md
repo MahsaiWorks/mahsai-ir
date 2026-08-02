@@ -5,7 +5,7 @@ category: 'مدیریت فایل'
 publishedAt: '2026-08-01'
 updatedAt: '2026-08-02'
 readingTime: '۹ دقیقه'
-cover: '/images/editorial/property-workflow.webp'
+cover: '/images/editorial/property-workflow-light.webp'
 coverAlt: 'میز کار حرفه‌ای املاک با ماکت ساختمان، پوشه‌های فایل، نقشه و تلفن همراه'
 accent: 'navy'
 keywords:
