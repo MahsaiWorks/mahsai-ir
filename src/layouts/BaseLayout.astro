@@ -12,6 +12,7 @@ interface Props {
   image?: string;
   type?: 'website' | 'article';
   keywords?: string[];
+  imageAlt?: string;
 }
 
 const {
@@ -21,6 +22,7 @@ const {
   image = siteConfig.seoDefaults.image,
   type = 'website',
   keywords = [],
+  imageAlt = `کارت معرفی ${siteConfig.brandName}`,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL(image, Astro.site);
@@ -66,10 +68,7 @@ const structuredData = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={socialImage} />
-    <meta
-      property="og:image:alt"
-      content={`کارت معرفی ${siteConfig.brandName}`}
-    />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />

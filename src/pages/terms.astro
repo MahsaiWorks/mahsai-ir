@@ -1,26 +1,35 @@
 ---
 import { siteConfig } from '../config/site';
+import PageStage from '../components/PageStage.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
   title={`شرایط استفاده | ${siteConfig.brandName}`}
-  description="شرایط استفاده از وب‌سایت MAHSAI و نسخه پیش‌انتشار اپلیکیشن متراژ."
+  description="شرایط استفاده از وب‌سایت مهسای و نسخه پیش‌انتشار اپلیکیشن متراژ."
 >
-  <header class="page-hero">
-    <div class="shell">
-      <p class="eyebrow">شرایط استفاده</p>
-      <h1>استفاده از MAHSAI و متراژ</h1>
-      <p class="page-lead">
-        با استفاده از این وب‌سایت یا اپلیکیشن متراژ، مسئولیت استفاده آگاهانه از
-        اطلاعات، ابزارها و خروجی‌های برنامه را می‌پذیرید.
-      </p>
-    </div>
-  </header>
+  <PageStage
+    eyebrow="شرایط استفاده"
+    title="چارچوب روشن برای استفاده"
+    highlight="آگاهانه."
+    lead="با استفاده از این وب‌سایت یا اپلیکیشن متراژ، مسئولیت بررسی اطلاعات، حفاظت از داده‌ها و ارزیابی خروجی‌های کمکی برنامه را می‌پذیرید."
+    index="صفحه ۰۵"
+    note="محاسبات، گزارش‌ها و خروجی‌های برنامه ابزار کمکی‌اند و جای بررسی حقوقی، مالی یا کارشناسی را نمی‌گیرند."
+    signals={['محصول پیش‌انتشار', 'مسئولیت صحت داده‌ها', 'استفاده مسئولانه']}
+    tone="apricot"
+  />
 
-  <section class="section">
-    <div class="shell content-layout">
-      <article class="prose">
+  <section class="page-section legal-section">
+    <div class="shell legal-layout">
+      <aside class="legal-aside">
+        <span>آخرین به‌روزرسانی</span>
+        <strong>۱۴۰۵/۰۵/۱۰</strong>
+        <p>پرسش درباره این شرایط را از مسیر رسمی پشتیبانی بفرستید.</p>
+        <a href={`mailto:${siteConfig.supportEmail}`} dir="ltr"
+          >{siteConfig.supportEmail}</a
+        >
+      </aside>
+      <article class="prose legal-prose">
         <h2>وضعیت محصول</h2>
         <p>
           متراژ در حال توسعه و پیش‌انتشار است. قابلیت‌ها، ظاهر برنامه، شیوه
@@ -58,9 +67,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <h2>مالکیت محتوا</h2>
         <p>
-          نام MAHSAI، نام و نشان متراژ، طراحی‌ها و محتوای اختصاصی این وب‌سایت
-          متعلق به مالک مربوط هستند. استفاده مجدد تجاری یا انتساب نادرست آن‌ها
-          بدون اجازه مجاز نیست.
+          نام مهسای (MAHSAI)، نام و نشان متراژ، طراحی‌ها و محتوای اختصاصی این
+          وب‌سایت متعلق به مالک مربوط هستند. استفاده مجدد تجاری یا انتساب نادرست
+          آن‌ها بدون اجازه مجاز نیست.
         </p>
 
         <h2>تماس</h2>
@@ -72,9 +81,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           تماس بگیرید.
         </p>
       </article>
-      <aside class="content-aside">
-        <p>آخرین به‌روزرسانی: ۱۴۰۵/۰۵/۱۰</p>
-      </aside>
     </div>
   </section>
 </BaseLayout>

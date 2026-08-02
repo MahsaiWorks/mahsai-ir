@@ -1,22 +1,47 @@
 ---
+import PageStage from '../components/PageStage.astro';
 import { siteConfig } from '../config/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
   title={`صفحه پیدا نشد | ${siteConfig.brandName}`}
-  description="صفحه درخواستی پیدا نشد."
+  description="صفحه درخواستی در وب‌سایت مهسای پیدا نشد."
   noindex
 >
-  <section class="not-found">
-    <div class="shell">
-      <p class="not-found-code" aria-hidden="true">۴۰۴</p>
-      <h1>این صفحه پیدا نشد.</h1>
-      <p>
-        ممکن است نشانی تغییر کرده باشد یا صفحه‌ای که می‌خواهید دیگر وجود نداشته
-        باشد.
-      </p>
-      <a class="button" href="/">بازگشت به صفحه اصلی</a>
+  <PageStage
+    eyebrow="صفحه پیدا نشد"
+    title="مسیر را دوباره"
+    highlight="پیدا کنیم."
+    lead="ممکن است نشانی تغییر کرده باشد یا صفحه‌ای که می‌خواهید دیگر در این مسیر وجود نداشته باشد."
+    index="خطای ۴۰۴"
+    note="از صفحه خانه، معرفی متراژ یا مجله تخصصی می‌توانید مسیر درست را ادامه دهید."
+    signals={['خانه', 'معرفی متراژ', 'مقالات آموزشی']}
+    tone="apricot"
+  >
+    <div slot="actions" class="page-stage-actions">
+      <a class="button" href="/">بازگشت به خانه</a>
+      <a class="page-stage-link" href="/articles/">رفتن به مجله</a>
+    </div>
+  </PageStage>
+
+  <section class="page-section compact-page-section">
+    <div class="shell route-grid">
+      <a href="/apps/metrazh/"
+        ><span>01</span><strong>معرفی متراژ</strong><p>
+          قابلیت‌ها و تصاویر واقعی محصول
+        </p></a
+      >
+      <a href="/articles/"
+        ><span>02</span><strong>مجله املاک</strong><p>
+          راهنماهای ساختاریافته و کاربردی
+        </p></a
+      >
+      <a href="/support/"
+        ><span>03</span><strong>پشتیبانی</strong><p>
+          راه ارتباط رسمی با مهسای
+        </p></a
+      >
     </div>
   </section>
 </BaseLayout>

@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import AppCard from '../components/AppCard.astro';
+import PageStage from '../components/PageStage.astro';
 import { siteConfig } from '../config/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
@@ -11,23 +11,68 @@ const apps = (await getCollection('apps')).sort(
 
 <BaseLayout
   title={`اپلیکیشن‌ها | ${siteConfig.brandName}`}
-  description="فهرست اپلیکیشن‌ها، وضعیت انتشار، پلتفرم‌ها و مسیرهای رسمی پشتیبانی."
+  description="محصولات رسمی مهسای، قابلیت‌ها، وضعیت انتشار و مسیرهای پشتیبانی؛ شامل اپلیکیشن متراژ برای مشاوران املاک."
 >
-  <header class="page-hero">
-    <div class="shell">
-      <p class="eyebrow">محصولات</p>
-      <h1>اپلیکیشن‌ها</h1>
-      <p class="page-lead">
-        محصولات MAHSAI، وضعیت انتشار و مسیرهای رسمی معرفی و پشتیبانی آن‌ها.
-      </p>
-    </div>
-  </header>
+  <PageStage
+    eyebrow="محصولات"
+    title="ابزارهایی برای جریان واقعی"
+    highlight="کار."
+    lead="هر محصول این صفحه از یک مسئله مشخص شروع می‌شود و مسیر معرفی، وضعیت انتشار و پشتیبانی رسمی خودش را دارد."
+    index="صفحه ۰۲"
+    note="متراژ نخستین محصول معرفی‌شده مهسای و یک اپلیکیشن فارسی اندروید برای مشاوران املاک است."
+    signals={['معرفی شفاف قابلیت‌ها', 'تصاویر واقعی محصول', 'پشتیبانی رسمی']}
+    tone="apricot"
+  />
 
-  <section class="section">
-    <div class="shell">
-      <div class="apps-grid">
-        {apps.map((app) => <AppCard app={app} />)}
-      </div>
+  <section class="page-section" aria-labelledby="apps-title">
+    <div class="shell product-catalog">
+      <header class="split-intro">
+        <div class="split-intro-heading">
+          <p class="eyebrow">کاتالوگ محصول</p>
+          <h2 id="apps-title">محصول فعلی مهسای</h2>
+        </div>
+        <p>
+          جزئیات این صفحه مستقیماً از داده ساختاریافته هر اپلیکیشن خوانده
+          می‌شود؛ بنابراین وضعیت، نسخه و مسیرهای رسمی همیشه از یک منبع واحد
+          نمایش داده می‌شوند.
+        </p>
+      </header>
+
+      {
+        apps.map((app) => (
+          <article class="catalog-app">
+            <div class="catalog-app-visual">
+              <span>نمای واقعی اپلیکیشن</span>
+              <img
+                src={app.data.screenshots[0]?.src}
+                alt={app.data.screenshots[0]?.alt}
+                loading="lazy"
+              />
+            </div>
+            <div class="catalog-app-copy">
+              <div class="catalog-app-id">
+                <img src={app.data.logo.dark} alt={app.data.name} />
+                <span>در حال توسعه و پیش‌انتشار</span>
+              </div>
+              <h3>{app.data.tagline}</h3>
+              <p>{app.data.fullDescription}</p>
+              <ul>
+                {app.data.features.slice(0, 4).map((feature) => (
+                  <li>{feature}</li>
+                ))}
+              </ul>
+              <div class="catalog-app-actions">
+                <a class="button" href={`/apps/${app.id}/`}>
+                  معرفی کامل و تصاویر
+                </a>
+                <a class="page-stage-link" href={app.data.supportUrl}>
+                  پشتیبانی
+                </a>
+              </div>
+            </div>
+          </article>
+        ))
+      }
     </div>
   </section>
 </BaseLayout>

@@ -1,0 +1,42 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+  featured?: boolean;
+}
+
+const { article, featured = false } = Astro.props;
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('fa-IR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+---
+
+<article
+  class:list={['editorial-card', { 'editorial-card-featured': featured }]}
+>
+  <a
+    class="editorial-card-media"
+    href={`/articles/${article.id}/`}
+    aria-label={`مطالعه ${article.data.title}`}
+  >
+    <img src={article.data.cover} alt={article.data.coverAlt} loading="lazy" />
+    <span>{article.data.category}</span>
+  </a>
+  <div class="editorial-card-copy">
+    <div class="article-meta">
+      <time datetime={article.data.publishedAt.toISOString()}>
+        {formatDate(article.data.publishedAt)}
+      </time>
+      <span>{article.data.readingTime}</span>
+    </div>
+    <h3><a href={`/articles/${article.id}/`}>{article.data.title}</a></h3>
+    <p>{article.data.description}</p>
+    <a class="story-link" href={`/articles/${article.id}/`}>
+      مطالعه راهنمای کامل <span aria-hidden="true">←</span>
+    </a>
+  </div>
+</article>

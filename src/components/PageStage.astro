@@ -1,0 +1,57 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  highlight?: string;
+  lead: string;
+  index?: string;
+  note?: string;
+  signals?: string[];
+  tone?: 'paper' | 'mint' | 'apricot';
+}
+
+const {
+  eyebrow,
+  title,
+  highlight,
+  lead,
+  index = 'معرفی صفحه',
+  note,
+  signals = [],
+  tone = 'paper',
+} = Astro.props;
+---
+
+<header class="page-stage" data-tone={tone}>
+  <div class="shell">
+    <div class="page-stage-frame">
+      <div class="page-stage-copy">
+        <p class="page-stage-brand">
+          <span lang="en" dir="ltr">MAHSAI</span>
+          <i aria-hidden="true"></i>
+          {eyebrow}
+        </p>
+        <h1>
+          {title}
+          {highlight && <span>{highlight}</span>}
+        </h1>
+        <p class="page-stage-lead">{lead}</p>
+        <slot name="actions" />
+      </div>
+
+      <aside class="page-stage-note" aria-label="خلاصه صفحه">
+        <span class="page-stage-index">{index}</span>
+        {note && <p>{note}</p>}
+        {
+          signals.length > 0 && (
+            <ul>
+              {signals.map((signal) => (
+                <li>{signal}</li>
+              ))}
+            </ul>
+          )
+        }
+      </aside>
+    </div>
+  </div>
+</header>

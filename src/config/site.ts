@@ -5,6 +5,7 @@ export interface ExternalLink {
 
 export interface SiteConfig {
   brandName: string;
+  brandNameFa: string;
   developerName: string;
   title: string;
   biography: string;
@@ -24,17 +25,18 @@ export interface SiteConfig {
  */
 export const siteConfig: SiteConfig = {
   brandName: 'MAHSAI',
+  brandNameFa: 'مهسای',
   developerName: 'MAHSAI',
   title: 'توسعه‌دهنده اپلیکیشن',
   biography:
-    'MAHSAI توسعه‌دهنده اپلیکیشن و سازنده متراژ، دستیار مشاوران املاک است.',
+    'مهسای توسعه‌دهنده اپلیکیشن و سازنده متراژ، دستیار مشاوران املاک است.',
   supportEmail: 'support@mahsai.ir',
   socialLinks: [], // REPLACE: e.g. { label: 'GitHub', url: 'https://...' }
   appStoreLinks: [], // REPLACE: real developer/store profile links only
   seoDefaults: {
     title: 'MAHSAI | توسعه‌دهنده اپلیکیشن',
     description:
-      'وب‌سایت رسمی MAHSAI؛ معرفی و پشتیبانی اپلیکیشن متراژ و مقالات آموزشی مشاوران املاک.',
+      'وب‌سایت رسمی مهسای؛ معرفی و پشتیبانی اپلیکیشن متراژ و مقالات آموزشی مشاوران املاک.',
     image: '/og.png',
   },
 };

@@ -1,27 +1,38 @@
 ---
 import { siteConfig } from '../config/site';
+import PageStage from '../components/PageStage.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
   title={`حریم خصوصی متراژ | ${siteConfig.brandName}`}
-  description="سیاست حریم خصوصی اپلیکیشن متراژ و وب‌سایت MAHSAI؛ نحوه نگهداری محلی داده‌ها، دسترسی‌های دستگاه و سرویس‌های ثالث."
+  description="سیاست حریم خصوصی اپلیکیشن متراژ و وب‌سایت مهسای؛ نحوه نگهداری محلی داده‌ها، دسترسی‌های دستگاه و سرویس‌های ثالث."
 >
-  <header class="page-hero">
-    <div class="shell">
-      <p class="eyebrow">سیاست حریم خصوصی</p>
-      <h1>حریم خصوصی متراژ</h1>
-      <p class="page-lead">
-        متراژ برای مدیریت فایل‌های ملکی، مشتریان و فعالیت‌های روزانه مشاوران
-        املاک طراحی شده است. این صفحه توضیح می‌دهد برنامه چه اطلاعاتی را استفاده
-        می‌کند و کنترل آن‌ها چگونه در اختیار کاربر باقی می‌ماند.
-      </p>
-    </div>
-  </header>
+  <PageStage
+    eyebrow="سیاست حریم خصوصی"
+    title="داده‌های کاری شما، زیر"
+    highlight="کنترل شما."
+    lead="این صفحه توضیح می‌دهد متراژ چه اطلاعاتی را روی دستگاه نگهداری می‌کند، دسترسی‌ها چه زمانی استفاده می‌شوند و مسئولیت فایل پشتیبان چگونه است."
+    index="صفحه ۰۴"
+    note="متراژ در نسخه فعلی سرویس همگام‌سازی ابری اختصاصی برای داده‌های اصلی کاربر ندارد."
+    signals={[
+      'ذخیره اصلی روی دستگاه',
+      'پشتیبان رمزگذاری‌شده',
+      'بدون ردیاب تحلیلی فعلی',
+    ]}
+  />
 
-  <section class="section">
-    <div class="shell content-layout">
-      <article class="prose">
+  <section class="page-section legal-section">
+    <div class="shell legal-layout">
+      <aside class="legal-aside">
+        <span>آخرین به‌روزرسانی</span>
+        <strong>۱۴۰۵/۰۵/۱۰</strong>
+        <p>برای پرسش حریم خصوصی از ایمیل رسمی پشتیبانی استفاده کنید.</p>
+        <a href={`mailto:${siteConfig.supportEmail}`} dir="ltr"
+          >{siteConfig.supportEmail}</a
+        >
+      </aside>
+      <article class="prose legal-prose">
         <h2>اطلاعات ذخیره‌شده روی دستگاه</h2>
         <p>
           اطلاعات فایل‌های ملکی، مالکان، مشتریان، متقاضیان، بازدیدها،
@@ -97,7 +108,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <h2>حریم خصوصی وب‌سایت</h2>
         <p>
-          وب‌سایت MAHSAI به‌صورت ایستا ارائه می‌شود و در نسخه فعلی حساب کاربری،
+          وب‌سایت مهسای به‌صورت ایستا ارائه می‌شود و در نسخه فعلی حساب کاربری،
           فرم جمع‌آوری اطلاعات، کوکی تحلیلی یا ابزار ردیابی ندارد. کلیک روی
           ایمیل یا پیوند تلگرام، کاربر را به برنامه یا سرویس مربوط منتقل می‌کند
           و سیاست همان سرویس بر ادامه تعامل حاکم است.
@@ -118,9 +129,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           تماس بگیرید.
         </p>
       </article>
-      <aside class="content-aside">
-        <p>آخرین به‌روزرسانی: ۱۴۰۵/۰۵/۱۰</p>
-      </aside>
     </div>
   </section>
 </BaseLayout>

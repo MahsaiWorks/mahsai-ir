@@ -1,58 +1,112 @@
 ---
+import PageStage from '../components/PageStage.astro';
 import { siteConfig } from '../config/site';
 import { specialties } from '../data/specialties';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title={`درباره ${siteConfig.brandName}`}
-  description="معرفی MAHSAI، توسعه‌دهنده اپلیکیشن اندروید و سازنده متراژ."
+  title={`درباره ${siteConfig.brandName} | توسعه اپلیکیشن فارسی`}
+  description="مهسای برند توسعه اپلیکیشن و سازنده متراژ، دستیار فارسی مشاوران املاک است."
 >
-  <header class="page-hero">
-    <div class="shell">
-      <p class="eyebrow">درباره MAHSAI</p>
-      <h1>توسعه اپلیکیشن برای نیازهای واقعی.</h1>
-      <p class="page-lead">{siteConfig.biography}</p>
+  <PageStage
+    eyebrow="درباره برند"
+    title="محصول را از دل مسئله واقعی"
+    highlight="می‌سازیم."
+    lead={siteConfig.biography}
+    index="صفحه ۰۱"
+    note="مهسای محل معرفی محصولات، مستندات رسمی و محتوای آموزشی مرتبط با آن‌هاست."
+    signals={['توسعه اپلیکیشن', 'تجربه فارسی و RTL', 'پشتیبانی رسمی محصول']}
+    tone="mint"
+  >
+    <div slot="actions" class="page-stage-actions">
+      <a class="button" href="/apps/metrazh/">مشاهده متراژ</a>
+      <a class="page-stage-link" href="/support/">ارتباط با پشتیبانی</a>
     </div>
-  </header>
+  </PageStage>
 
-  <section class="section">
-    <div class="shell content-layout">
-      <article class="prose">
-        <h2>معرفی</h2>
-        <p>
-          {siteConfig.developerName} یک برند توسعه اپلیکیشن است. محصول فعلی این برند
-          «متراژ» است؛ اپلیکیشن فارسی اندروید برای مدیریت فعالیت‌های روزانه مشاوران
-          و دفاتر املاک.
-        </p>
+  <section class="page-section" aria-labelledby="approach-title">
+    <div class="shell split-intro">
+      <div class="split-intro-heading">
+        <p class="eyebrow">روش ساخت</p>
+        <h2 id="approach-title">کمتر حواس‌پرتی؛ بیشتر وضوح در کار روزانه.</h2>
+      </div>
+      <p>
+        نقطه شروع هر محصول در مهسای یک جریان کاری واقعی است. در متراژ، این جریان
+        از ثبت فایل و متقاضی آغاز می‌شود و تا بازدید، پیگیری، معامله و نگهداری
+        امن اطلاعات ادامه پیدا می‌کند.
+      </p>
+    </div>
 
-        <h2>محصول فعلی</h2>
-        <p>
-          متراژ برای ثبت فایل‌های ملکی، متقاضیان، بازدیدها، یادآوری‌ها،
-          پیگیری‌ها و معاملات طراحی شده است. نسخه فعلی در مرحله توسعه و
-          پیش‌انتشار قرار دارد.
-        </p>
-
-        <h2>حوزه‌های تمرکز</h2>
-        <ul>
-          {
-            specialties.map((specialty) => (
-              <li>
-                {specialty.title}: {specialty.description}
-              </li>
-            ))
-          }
-        </ul>
+    <div class="shell principle-grid">
+      <article>
+        <span>01</span>
+        <h3>مسئله قبل از قابلیت</h3>
+        <p>هر ابزار باید یک کار مشخص را کوتاه‌تر، منظم‌تر یا کم‌خطاتر کند.</p>
       </article>
-      <aside class="content-aside">
+      <article>
+        <span>02</span>
+        <h3>فارسی از ابتدا</h3>
+        <p>راست‌به‌چپ، واژه‌ها و ترتیب اطلاعات بخشی از طراحی محصول‌اند.</p>
+      </article>
+      <article>
+        <span>03</span>
+        <h3>اطلاعات قابل کنترل</h3>
         <p>
-          برای پرسش درباره MAHSAI یا متراژ با
-          <a href={`mailto:${siteConfig.supportEmail}`} dir="ltr"
-            >{siteConfig.supportEmail}</a
-          >
-          تماس بگیرید.
+          کاربر باید بداند داده‌هایش کجا هستند و چگونه از آن‌ها پشتیبان می‌گیرد.
         </p>
-      </aside>
+      </article>
+    </div>
+  </section>
+
+  <section class="page-section page-section-ink" aria-labelledby="focus-title">
+    <div class="shell focus-ledger">
+      <header>
+        <p class="eyebrow">حوزه‌های تمرکز</p>
+        <h2 id="focus-title">سه لایه از یک تجربه محصول.</h2>
+      </header>
+      <div>
+        {
+          specialties.map((specialty) => (
+            <article>
+              <span>{specialty.number}</span>
+              <div>
+                <h3>{specialty.title}</h3>
+                <p>{specialty.description}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="shell product-callout">
+      <div class="product-callout-art">
+        <img
+          src="/images/editorial/female-consultant-matching.webp"
+          alt="تصویر سه‌بعدی مشاور خانم در حال بررسی نیاز مشتری و فایل‌های ملک"
+          loading="lazy"
+        />
+      </div>
+      <div>
+        <p class="eyebrow">محصول فعلی</p>
+        <img
+          class="product-callout-logo"
+          src="/images/apps/metrazh/wordmark-dark.png"
+          alt="متراژ"
+          width="170"
+          height="103"
+        />
+        <h2>دستیار فارسی برای نظم دادن به جریان کار املاک.</h2>
+        <p>
+          متراژ برای ثبت فایل‌های ملکی، مدیریت متقاضی، برنامه‌ریزی بازدید،
+          یادآوری پیگیری و آماده‌سازی خروجی‌های کاری طراحی شده و در مرحله توسعه
+          و پیش‌انتشار قرار دارد.
+        </p>
+        <a class="text-link" href="/apps/metrazh/">معرفی کامل محصول ←</a>
+      </div>
     </div>
   </section>
 </BaseLayout>
