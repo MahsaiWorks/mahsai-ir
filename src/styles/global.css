@@ -1373,18 +1373,14 @@ summary {
   width: 2.45rem;
   overflow: hidden;
   border-radius: 0.8rem;
-  background: var(--text);
-  color: var(--bg);
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
-.brand-mark::after {
-  position: absolute;
-  inset-inline: 0.45rem;
-  inset-block-end: 0.34rem;
-  height: 0.18rem;
-  border-block: 1px solid currentColor;
-  content: '';
-  opacity: 0.55;
+.brand-mark img {
+  display: block;
+  width: 72%;
+  height: 72%;
 }
 
 .desktop-nav a {
