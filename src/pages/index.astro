@@ -19,26 +19,61 @@ const articles = (await getCollection('articles'))
   title={siteConfig.seoDefaults.title}
   description={siteConfig.seoDefaults.description}
 >
-  <section class="hero">
+  <section class="hero hero-home">
     <div class="shell hero-grid">
-      <div>
-        <p class="eyebrow">MAHSAI · توسعه اپلیکیشن</p>
-        <h1>ابزارهایی برای <span>کارهای واقعی</span>.</h1>
+      <div class="hero-content">
+        <p class="hero-badge">
+          <span aria-hidden="true"></span> محصولی از MAHSAI
+        </p>
+        <h1>ابزار حرفه‌ای برای <span>کارهای واقعی.</span></h1>
         <p class="hero-copy">
-          MAHSAI توسعه‌دهنده متراژ است؛ اپلیکیشن اندروید برای مدیریت فایل‌های
-          ملکی، متقاضیان و پیگیری‌های روزانه مشاوران املاک.
+          متراژ، دستیار فارسی مشاوران املاک برای مدیریت فایل‌ها، متقاضیان،
+          بازدیدها و پیگیری‌های روزانه؛ طراحی‌شده برای یک جریان کاری منظم‌تر.
         </p>
         <div class="hero-actions">
           <a class="button" href="/apps/metrazh/">
-            معرفی متراژ <span aria-hidden="true">←</span>
+            آشنایی با متراژ <span aria-hidden="true">←</span>
           </a>
           <a class="button button-secondary" href="/articles/">مقالات آموزشی</a>
         </div>
+        <ul class="hero-signals" aria-label="ویژگی‌های اصلی">
+          <li><span aria-hidden="true">✓</span> ویژه اندروید</li>
+          <li><span aria-hidden="true">✓</span> فارسی و راست‌به‌چپ</li>
+          <li><span aria-hidden="true">✓</span> پشتیبانی رسمی</li>
+        </ul>
       </div>
-      <p class="hero-note">
-        <strong>متراژ ۱.۰.۳</strong>
-        <span>نسخه اندروید در حال توسعه و پیش‌انتشار است.</span>
+      <div class="hero-product-visual" aria-label="پیش‌نمایش اپلیکیشن متراژ">
+        <div class="hero-visual-copy">
+          <img
+            src="/images/apps/metrazh/icon.png"
+            alt=""
+            width="56"
+            height="56"
+          />
+          <div><strong>متراژ</strong><span>دستیار مشاوران املاک</span></div>
+        </div>
+        <div class="hero-phone hero-phone-secondary" aria-hidden="true">
+          <img src="/images/apps/metrazh/files.png" alt="" />
+        </div>
+        <div class="hero-phone hero-phone-primary">
+          <img
+            src="/images/apps/metrazh/dashboard.png"
+            alt="نمای میز کار اپلیکیشن متراژ"
+          />
+        </div>
+        <span class="hero-version">نسخه ۱.۰.۳ · پیش‌انتشار</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-facts" aria-label="مشخصات متراژ">
+    <div class="shell home-facts-grid">
+      <p><span>محصول</span><strong>متراژ</strong></p>
+      <p><span>پلتفرم</span><strong lang="en" dir="ltr">Android</strong></p>
+      <p>
+        <span>حداقل نسخه</span><strong lang="en" dir="ltr">Android 7.0</strong>
       </p>
+      <p><span>وضعیت</span><strong>در حال توسعه</strong></p>
     </div>
   </section>
 
@@ -70,7 +105,7 @@ const articles = (await getCollection('articles'))
         title="متراژ؛ دستیار مشاوران املاک"
         description="مدیریت هوشمند فایل‌ها — آفلاین و امن. داده‌های اصلی روی دستگاه نگهداری می‌شوند و برخی قابلیت‌ها برای کارکرد به اینترنت نیاز دارند."
       />
-      <div class="apps-grid">
+      <div class="apps-grid apps-grid-featured">
         {apps.map((app) => <AppCard app={app} />)}
       </div>
     </div>
@@ -113,7 +148,9 @@ const articles = (await getCollection('articles'))
   <section class="section">
     <div class="shell about-preview">
       <div class="about-visual" aria-hidden="true">
-        <span>ساخت برای استفاده واقعی.</span>
+        <small>MAHSAI / PRODUCT DEVELOPMENT</small>
+        <span>ساختن، برای استفاده واقعی.</span>
+        <i></i>
       </div>
       <div class="about-copy">
         <p class="eyebrow">درباره MAHSAI</p>

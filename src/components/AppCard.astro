@@ -15,32 +15,51 @@ const statusLabels = {
 ---
 
 <article class="app-card">
-  <div class="app-card-top">
-    {
-      app.data.icon ? (
+  <div class="app-card-content">
+    <div class="app-card-top">
+      {
+        app.data.icon ? (
+          <img
+            src={app.data.icon}
+            alt={`آیکون ${app.data.name}`}
+            width="72"
+            height="72"
+          />
+        ) : (
+          <span class="app-icon-placeholder" aria-hidden="true">
+            ا
+          </span>
+        )
+      }
+      <span class="status-badge">{statusLabels[app.data.status]}</span>
+    </div>
+    <div class="app-card-copy">
+      <p class="app-platforms">{app.data.platforms.join('، ')}</p>
+      <h3>{app.data.name}</h3>
+      <p class="app-tagline">{app.data.tagline}</p>
+      <p>{app.data.shortDescription}</p>
+    </div>
+    <div class="app-links">
+      <a class="button" href={`/apps/${app.id}/`}>
+        معرفی کامل <span aria-hidden="true">←</span>
+      </a>
+      <a href={app.data.supportUrl}>پشتیبانی</a>
+      <a href={app.data.privacyUrl}>حریم خصوصی</a>
+    </div>
+  </div>
+  {
+    app.data.screenshots[0] && (
+      <a
+        class="app-card-preview"
+        href={`/apps/${app.id}/`}
+        aria-label={`مشاهده معرفی کامل ${app.data.name}`}
+      >
         <img
-          src={app.data.icon}
-          alt={`آیکون ${app.data.name}`}
-          width="64"
-          height="64"
+          src={app.data.screenshots[0].src}
+          alt={app.data.screenshots[0].alt}
+          loading="lazy"
         />
-      ) : (
-        <span class="app-icon-placeholder" aria-hidden="true">
-          ا
-        </span>
-      )
-    }
-    <span class="status-badge">{statusLabels[app.data.status]}</span>
-  </div>
-  <div>
-    <p class="app-platforms">{app.data.platforms.join('، ')}</p>
-    <h3>{app.data.name}</h3>
-    <p class="app-tagline">{app.data.tagline}</p>
-    <p>{app.data.shortDescription}</p>
-  </div>
-  <div class="app-links">
-    <a href={`/apps/${app.id}/`}>معرفی کامل</a>
-    <a href={app.data.supportUrl}>پشتیبانی</a>
-    <a href={app.data.privacyUrl}>حریم خصوصی</a>
-  </div>
+      </a>
+    )
+  }
 </article>
