@@ -3093,6 +3093,21 @@ summary {
   line-height: 1.9;
 }
 
+.home-origin-link {
+  display: block;
+  width: fit-content;
+  margin-block-start: 0.75rem;
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-variation-settings: 'wght' 720;
+  text-decoration: none;
+}
+
+.home-origin-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
 .home-trust-section {
   padding-block: 0 var(--section-space);
 }
@@ -4249,6 +4264,130 @@ summary {
   opacity: 0.8;
 }
 
+.product-origin-section {
+  padding: clamp(4.5rem, 9vw, 8rem) 0;
+  color: #f8f5ee;
+  background: #0b1f33;
+}
+
+.product-origin-intro {
+  display: grid;
+  gap: 1.5rem;
+  align-items: end;
+}
+
+.product-origin-intro .eyebrow,
+.product-origin-turning-point .eyebrow {
+  color: #71d2c5;
+}
+
+.product-origin-intro h2 {
+  max-width: 17ch;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(2rem, 4.2vw, 3.6rem);
+  font-variation-settings: 'wght' 760;
+  letter-spacing: -0.045em;
+  line-height: 1.28;
+}
+
+.product-origin-intro > p {
+  max-width: 42rem;
+  margin: 0;
+  color: rgba(248, 245, 238, 0.72);
+  font-size: clamp(1rem, 1.45vw, 1.12rem);
+  line-height: 2.1;
+}
+
+.product-origin-markers {
+  display: grid;
+  margin-block: clamp(2.5rem, 6vw, 5rem);
+  overflow: hidden;
+  border: 1px solid rgba(248, 245, 238, 0.14);
+  border-radius: 1.5rem;
+}
+
+.product-origin-markers article {
+  padding: clamp(1.4rem, 3vw, 2rem);
+  border-bottom: 1px solid rgba(248, 245, 238, 0.14);
+}
+
+.product-origin-markers article:last-child {
+  border-bottom: 0;
+}
+
+.product-origin-markers strong {
+  display: block;
+  margin-block-end: 0.55rem;
+  color: #71d2c5;
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
+  font-variation-settings: 'wght' 760;
+}
+
+.product-origin-markers p {
+  margin: 0;
+  color: rgba(248, 245, 238, 0.66);
+  font-size: 0.86rem;
+  line-height: 1.85;
+}
+
+.product-origin-chapters {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid rgba(248, 245, 238, 0.14);
+}
+
+.product-origin-chapters article {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: clamp(1.5rem, 3vw, 2.2rem) 0;
+  border-bottom: 1px solid rgba(248, 245, 238, 0.14);
+}
+
+.product-origin-chapters article > span {
+  color: #f6a47a;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.76rem;
+}
+
+.product-origin-chapters h3 {
+  margin: 0 0 0.6rem;
+  color: #fff;
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+}
+
+.product-origin-chapters p {
+  max-width: 50rem;
+  margin: 0;
+  color: rgba(248, 245, 238, 0.68);
+  line-height: 2;
+}
+
+.product-origin-turning-point {
+  margin-block-start: clamp(3rem, 7vw, 6rem);
+  padding: clamp(1.75rem, 5vw, 4rem);
+  color: #0b1f33;
+  background: #dff3ef;
+  border-radius: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.product-origin-turning-point > p:not(.eyebrow) {
+  max-width: 48rem;
+  margin: 0;
+  font-size: clamp(1.3rem, 2.8vw, 2.15rem);
+  font-variation-settings: 'wght' 690;
+  letter-spacing: -0.03em;
+  line-height: 1.65;
+}
+
+.product-origin-turning-point strong {
+  display: block;
+  margin-block-start: 1.5rem;
+  color: #087f72;
+  font-size: 0.78rem;
+}
+
 .product-flow-section {
   padding: clamp(4.5rem, 9vw, 8rem) 0;
 }
@@ -4873,6 +5012,19 @@ summary {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .product-origin-markers {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .product-origin-markers article {
+    border-inline-end: 1px solid rgba(248, 245, 238, 0.14);
+    border-bottom: 0;
+  }
+
+  .product-origin-markers article:last-child {
+    border-inline-end: 0;
+  }
+
   .article-stage-cover {
     min-height: 31rem;
   }
@@ -4891,8 +5043,22 @@ summary {
   .split-intro,
   .focus-ledger,
   .faq-layout,
-  .product-flow-grid {
+  .product-flow-grid,
+  .product-origin-intro {
     grid-template-columns: minmax(0, 0.82fr) minmax(27rem, 1.18fr);
+  }
+
+  .product-origin-chapters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .product-origin-chapters article:nth-child(odd) {
+    padding-inline-end: 2rem;
+    border-inline-end: 1px solid rgba(248, 245, 238, 0.14);
+  }
+
+  .product-origin-chapters article:nth-child(even) {
+    padding-inline-start: 2rem;
   }
 
   .principle-grid {

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../../config/site';
+import { metrazhStory } from '../../data/metrazhStory';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const app = (await getCollection('apps')).find(
@@ -89,6 +90,54 @@ const structuredData = {
           >
         </p>
       </div>
+    </div>
+  </section>
+
+  <section
+    class="product-origin-section"
+    id="origin-story"
+    aria-labelledby="origin-title"
+  >
+    <div class="shell product-origin-intro">
+      <div>
+        <p class="eyebrow">داستان شکل‌گیری</p>
+        <h2 id="origin-title">{metrazhStory.title}</h2>
+      </div>
+      <p>{metrazhStory.lead}</p>
+    </div>
+
+    <div
+      class="shell product-origin-markers"
+      aria-label="چند نشانه از تجربه اولیه"
+    >
+      {
+        metrazhStory.markers.map((marker) => (
+          <article>
+            <strong>{marker.value}</strong>
+            <p>{marker.label}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="shell product-origin-chapters">
+      {
+        metrazhStory.chapters.map((chapter) => (
+          <article>
+            <span>{chapter.number}</span>
+            <div>
+              <h3>{chapter.title}</h3>
+              <p>{chapter.description}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="shell product-origin-turning-point">
+      <p class="eyebrow">نقطه تغییر</p>
+      <p>{metrazhStory.turningPoint}</p>
+      <strong>روایت سازنده متراژ</strong>
     </div>
   </section>
 

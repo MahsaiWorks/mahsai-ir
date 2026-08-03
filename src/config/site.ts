@@ -29,7 +29,7 @@ export const siteConfig: SiteConfig = {
   developerName: 'MAHSAI',
   title: 'توسعه‌دهنده اپلیکیشن',
   biography:
-    'مهسای توسعه‌دهنده اپلیکیشن و سازنده متراژ، دستیار مشاوران املاک است.',
+    'مهسای از تجربه واقعی کار در املاک شکل گرفته و سازنده متراژ، دستیار فارسی مشاوران املاک است.',
   supportEmail: 'support@mahsai.ir',
   socialLinks: [], // REPLACE: e.g. { label: 'GitHub', url: 'https://...' }
   appStoreLinks: [], // REPLACE: real developer/store profile links only

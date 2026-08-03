@@ -1,26 +1,29 @@
 ---
 import PageStage from '../components/PageStage.astro';
 import { siteConfig } from '../config/site';
+import { metrazhStory } from '../data/metrazhStory';
 import { specialties } from '../data/specialties';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
   title={`درباره ${siteConfig.brandName} | توسعه اپلیکیشن فارسی`}
-  description="مهسای برند توسعه اپلیکیشن و سازنده متراژ، دستیار فارسی مشاوران املاک است."
+  description="داستان شکل‌گیری مهسای و متراژ؛ محصولی که از تجربه واقعی کار در املاک و مسئله پراکندگی اطلاعات ساخته شد."
 >
   <PageStage
     eyebrow="درباره برند"
-    title="محصول را از دل مسئله واقعی"
-    highlight="می‌سازیم."
-    lead={siteConfig.biography}
+    title="متراژ از دل یک تجربه واقعی"
+    highlight="ساخته شد."
+    lead={metrazhStory.summary}
     index="صفحه ۰۱"
     note="مهسای محل معرفی محصولات، مستندات رسمی و محتوای آموزشی مرتبط با آن‌هاست."
     signals={['توسعه اپلیکیشن', 'تجربه فارسی و RTL', 'پشتیبانی رسمی محصول']}
     tone="mint"
   >
     <div slot="actions" class="page-stage-actions">
-      <a class="button" href="/apps/metrazh/">مشاهده متراژ</a>
+      <a class="button" href="/apps/metrazh/#origin-story"
+        >خواندن داستان متراژ</a
+      >
       <a class="page-stage-link" href="/support/">ارتباط با پشتیبانی</a>
     </div>
   </PageStage>
@@ -32,9 +35,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <h2 id="approach-title">کمتر حواس‌پرتی؛ بیشتر وضوح در کار روزانه.</h2>
       </div>
       <p>
-        نقطه شروع هر محصول در مهسای یک جریان کاری واقعی است. در متراژ، این جریان
-        از ثبت فایل و متقاضی آغاز می‌شود و تا بازدید، پیگیری، معامله و نگهداری
-        امن اطلاعات ادامه پیدا می‌کند.
+        نقطه شروع متراژ فهرستی از قابلیت‌ها نبود؛ تجربه‌ای بود که در آن اطلاعات
+        ارزشمند میان پنج دفتر، برگه‌های پراکنده و حافظه تقسیم شده بودند. طراحی
+        محصول از همان جریان واقعی شروع شد: ثبت فایل و متقاضی، بازدید، پیگیری،
+        معامله و حفظ اختیار اطلاعات.
       </p>
     </div>
 
