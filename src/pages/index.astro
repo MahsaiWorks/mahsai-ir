@@ -10,6 +10,9 @@ const apps = (await getCollection('apps'))
   .filter((app) => app.data.featured)
   .sort((a, b) => a.data.order - b.data.order);
 const featuredApp = apps[0];
+const releaseChannel = featuredApp?.data.supportLinks.find((link) =>
+  link.url.includes('t.me/metrazhapp'),
+);
 const allArticles = (await getCollection('articles')).filter(
   (article) => !article.data.draft,
 );
@@ -194,6 +197,21 @@ const bazaarShowcaseSlides = [
               داستان واقعی شکل‌گیری متراژ
               <span aria-hidden="true">←</span>
             </a>
+            <div class="home-release-actions">
+              {releaseChannel && (
+                <a
+                  class="button"
+                  href={releaseChannel.url}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  خبرم کن وقتی منتشر شد
+                </a>
+              )}
+              <a class="page-stage-link" href="/apps/metrazh/status/">
+                وضعیت انتشار
+              </a>
+            </div>
             <p class="home-release-note">
               نسخه فعلی در حال آماده‌سازی برای انتشار عمومی است؛ جزئیات رسمی
               دانلود پس از تأیید نهایی در همین سایت قرار می‌گیرد.

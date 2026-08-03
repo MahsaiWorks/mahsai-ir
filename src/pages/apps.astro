@@ -65,6 +65,9 @@ const apps = (await getCollection('apps')).sort(
                 <a class="button" href={`/apps/${app.id}/`}>
                   معرفی کامل و تصاویر
                 </a>
+                <a class="page-stage-link" href={`/apps/${app.id}/status/`}>
+                  وضعیت انتشار
+                </a>
                 <a class="page-stage-link" href={app.data.supportUrl}>
                   پشتیبانی
                 </a>

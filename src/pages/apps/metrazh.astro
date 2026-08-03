@@ -1,7 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../../config/site';
-import { metrazhStory } from '../../data/metrazhStory';
+import {
+  metrazhStory,
+  metrazhWorkflowComparison,
+} from '../../data/metrazhStory';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const app = (await getCollection('apps')).find(
@@ -16,6 +19,10 @@ const productGuides = (await getCollection('articles'))
 if (!app) {
   throw new Error('Metrazh content entry is missing.');
 }
+
+const releaseChannel = app.data.supportLinks.find((link) =>
+  link.url.includes('t.me/metrazhapp'),
+);
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -70,8 +77,21 @@ const structuredData = {
         <p class="product-tagline">{app.data.tagline}</p>
         <p class="page-lead">{app.data.fullDescription}</p>
         <div class="hero-actions">
-          <a class="button" href="/support/">پشتیبانی متراژ</a>
-          <a class="button button-secondary" href="/articles/">مقالات آموزشی</a>
+          {
+            releaseChannel && (
+              <a
+                class="button"
+                href={releaseChannel.url}
+                target="_blank"
+                rel="noopener"
+              >
+                خبرم کن وقتی منتشر شد
+              </a>
+            )
+          }
+          <a class="button button-secondary" href="/apps/metrazh/status/">
+            وضعیت انتشار
+          </a>
         </div>
         <p class="release-note">{app.data.releaseNote}</p>
       </div>
@@ -138,6 +158,36 @@ const structuredData = {
       <p class="eyebrow">نقطه تغییر</p>
       <p>{metrazhStory.turningPoint}</p>
       <strong>روایت سازنده متراژ</strong>
+    </div>
+  </section>
+
+  <section class="product-compare-section" aria-labelledby="comparison-title">
+    <div class="shell product-compare-header">
+      <div>
+        <p class="eyebrow">قبل و بعد</p>
+        <h2 id="comparison-title">
+          از دفترهای پراکنده به یک جریان قابل پیگیری.
+        </h2>
+      </div>
+      <p>
+        متراژ قرار نیست تجربه و مهارت مشاور را جایگزین کند؛ کارهای تکراری و
+        اطلاعات پراکنده را منظم می‌کند تا تصمیم و ارتباط انسانی جای بیشتری داشته
+        باشند.
+      </p>
+    </div>
+    <div class="shell product-compare-table" role="list">
+      <div class="product-compare-labels" aria-hidden="true">
+        <span>روش پراکنده</span><span>در متراژ</span>
+      </div>
+      {
+        metrazhWorkflowComparison.map((item) => (
+          <article role="listitem">
+            <span>{item.number}</span>
+            <p>{item.before}</p>
+            <p>{item.after}</p>
+          </article>
+        ))
+      }
     </div>
   </section>
 
@@ -308,28 +358,29 @@ const structuredData = {
 
   <section class="cta-section">
     <div class="shell cta-panel">
-      <p class="eyebrow">پشتیبانی رسمی</p>
-      <h2>پرسشی درباره متراژ دارید؟</h2>
+      <p class="eyebrow">قدم بعدی</p>
+      <h2>خبر انتشار متراژ را از مسیر رسمی بگیرید.</h2>
       <p>
-        برای پرسش‌های فنی و پیگیری اخبار نسخه پیش‌انتشار از مسیرهای رسمی مهسای
-        استفاده کنید.
+        وضعیت نسخه و لینک دانلود عمومی فقط پس از تأیید در سایت مهسای و کانال
+        رسمی متراژ اعلام می‌شوند.
       </p>
       <div class="cta-actions">
-        <a class="button" href={`mailto:${siteConfig.supportEmail}`} dir="ltr">
-          {siteConfig.supportEmail}
-        </a>
         {
-          app.data.supportLinks.map((link) => (
+          releaseChannel && (
             <a
-              class="button button-secondary"
-              href={link.url}
+              class="button"
+              href={releaseChannel.url}
               target="_blank"
               rel="noopener"
             >
-              {link.label}
+              عضویت در کانال رسمی متراژ
             </a>
-          ))
+          )
         }
+        <a class="button button-secondary" href="/apps/metrazh/status/">
+          مشاهده وضعیت انتشار
+        </a>
+        <a class="button button-secondary" href="/support/">پشتیبانی</a>
       </div>
     </div>
   </section>

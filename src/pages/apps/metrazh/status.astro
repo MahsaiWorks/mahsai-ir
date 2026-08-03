@@ -1,0 +1,134 @@
+---
+import { getCollection } from 'astro:content';
+import PageStage from '../../../components/PageStage.astro';
+import { siteConfig } from '../../../config/site';
+import {
+  releaseCheckpoints,
+  releasePrinciples,
+} from '../../../data/metrazhRelease';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const app = (await getCollection('apps')).find(
+  (entry) => entry.id === 'metrazh',
+);
+
+if (!app) {
+  throw new Error('Metrazh content entry is missing.');
+}
+
+const releaseChannel = app.data.supportLinks.find((link) =>
+  link.url.includes('t.me/metrazhapp'),
+);
+---
+
+<BaseLayout
+  title={`وضعیت انتشار متراژ | ${siteConfig.brandName}`}
+  description={`وضعیت رسمی انتشار متراژ، نسخه ${app.data.version}، مرحله فعلی و مسیر دریافت لینک دانلود تأییدشده.`}
+>
+  <PageStage
+    eyebrow="وضعیت رسمی محصول"
+    title={`نسخه ${app.data.version} در مرحله`}
+    highlight="پیش‌انتشار است."
+    lead="این صفحه منبع رسمی وضعیت متراژ است. تا پیش از تأیید انتشار عمومی، هیچ لینک دانلودی در سایت نمایش داده نمی‌شود."
+    index="متراژ / وضعیت"
+    note={app.data.releaseNote}
+    signals={[
+      app.data.minOs,
+      `نسخه ${app.data.version}`,
+      'دانلود عمومی: هنوز تأیید نشده',
+    ]}
+    tone="apricot"
+  >
+    <div slot="actions" class="page-stage-actions">
+      {
+        releaseChannel && (
+          <a
+            class="button"
+            href={releaseChannel.url}
+            target="_blank"
+            rel="noopener"
+          >
+            دریافت خبر انتشار
+          </a>
+        )
+      }
+      <a class="page-stage-link" href="/apps/metrazh/">بازگشت به معرفی متراژ</a>
+    </div>
+  </PageStage>
+
+  <section class="page-section" aria-labelledby="release-path-title">
+    <div class="shell release-status-header">
+      <div>
+        <p class="eyebrow">مسیر انتشار</p>
+        <h2 id="release-path-title">
+          هر مرحله فقط پس از تأیید واقعی جلو می‌رود.
+        </h2>
+      </div>
+      <p>
+        این وضعیت برای جلوگیری از انتشار لینک‌های نامعتبر یا وعده‌های مبهم ثبت
+        می‌شود. آخرین اطلاعات تأییدشده همیشه در همین صفحه قرار می‌گیرد.
+      </p>
+    </div>
+
+    <div class="shell release-status-grid">
+      {
+        releaseCheckpoints.map((checkpoint) => (
+          <article data-status={checkpoint.status}>
+            <div>
+              <span>{checkpoint.number}</span>
+              <p>{checkpoint.eyebrow}</p>
+            </div>
+            <h3>{checkpoint.title}</h3>
+            <p>{checkpoint.description}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section
+    class="page-section page-section-ink"
+    aria-labelledby="version-title"
+  >
+    <div class="shell release-version-layout">
+      <div>
+        <p class="eyebrow">یادداشت نسخه فعلی</p>
+        <h2 id="version-title">متراژ {app.data.version}</h2>
+        <p>
+          این شماره، نسخه فعلی ثبت‌شده برای محصول است و در وضعیت پیش‌انتشار قرار
+          دارد. تاریخ یا لینک دانلود عمومی فقط پس از نهایی‌شدن به این صفحه اضافه
+          می‌شود.
+        </p>
+      </div>
+      <ul>
+        {releasePrinciples.map((principle) => <li>{principle}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="shell cta-panel">
+      <p class="eyebrow">اطلاع‌رسانی رسمی</p>
+      <h2>برای دریافت نسخه، فقط مسیرهای رسمی را دنبال کنید.</h2>
+      <p>
+        خبر انتشار در کانال متراژ قرار می‌گیرد و لینک نهایی هم‌زمان در همین سایت
+        اضافه می‌شود.
+      </p>
+      <div class="cta-actions">
+        {
+          releaseChannel && (
+            <a
+              class="button"
+              href={releaseChannel.url}
+              target="_blank"
+              rel="noopener"
+            >
+              کانال رسمی متراژ
+            </a>
+          )
+        }
+        <a class="button button-secondary" href="/support/">پشتیبانی رسمی</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
