@@ -21,6 +21,36 @@ const articles = homeArticleIds
   .map((id) => allArticles.find((article) => article.id === id))
   .filter((article) => article !== undefined);
 const featuredProjects = projects.filter((project) => project.featured);
+const bazaarShowcaseSlides = [
+  {
+    src: '/images/apps/metrazh/bazaar/slide-01.jpg',
+    alt: 'میز کار و برنامه روزانه در متراژ',
+  },
+  {
+    src: '/images/apps/metrazh/bazaar/slide-02.jpg',
+    alt: 'جست‌وجو و مدیریت فایل‌های ملکی در متراژ',
+  },
+  {
+    src: '/images/apps/metrazh/bazaar/slide-03.jpg',
+    alt: 'مدیریت مشتریان و متقاضیان در متراژ',
+  },
+  {
+    src: '/images/apps/metrazh/bazaar/slide-04.jpg',
+    alt: 'تطبیق هوشمند فایل و مشتری در متراژ',
+  },
+  {
+    src: '/images/apps/metrazh/bazaar/slide-05.jpg',
+    alt: 'دستیار تولید آگهی هوشمند متراژ',
+  },
+  {
+    src: '/images/apps/metrazh/bazaar/slide-06.jpg',
+    alt: 'ساخت کاتالوگ حرفه‌ای ملک در متراژ',
+  },
+  {
+    src: '/images/apps/metrazh/bazaar/slide-07.jpg',
+    alt: 'نمایش فایل‌ها و مسیر بازدید روی نقشه در متراژ',
+  },
+];
 ---
 
 <BaseLayout
@@ -103,12 +133,29 @@ const featuredProjects = projects.filter((project) => project.featured);
         <div class="shell home-product-grid">
           <div class="home-product-visual">
             <span class="home-visual-label">نمای واقعی اپلیکیشن</span>
-            <div class="home-device" aria-hidden="true">
-              <img src="/images/apps/metrazh/files.png" alt="" loading="lazy" />
+            <div
+              class="home-market-gallery"
+              role="region"
+              aria-label="تصاویر معرفی متراژ برای کافه‌بازار"
+              tabindex="0"
+            >
+              {bazaarShowcaseSlides.map((slide, index) => (
+                <figure class="home-market-card">
+                  <img
+                    src={slide.src}
+                    alt={slide.alt}
+                    width="1080"
+                    height="1920"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <figcaption>{String(index + 1).padStart(2, '0')}</figcaption>
+                </figure>
+              ))}
             </div>
             <p class="home-visual-callout">
-              <span aria-hidden="true">⌕</span>
-              جست‌وجو، فیلتر و دسترسی سریع
+              <span aria-hidden="true">↔</span>
+              برای دیدن همه تصاویر ورق بزنید
             </p>
           </div>
 

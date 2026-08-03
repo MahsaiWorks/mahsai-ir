@@ -2943,6 +2943,65 @@ summary {
   border-radius: 1.75rem 1.75rem 0 0;
 }
 
+.home-market-gallery {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  padding: 1rem 0.2rem 4.8rem;
+  align-self: stretch;
+  align-items: end;
+  gap: 1rem;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-padding-inline: 0.2rem;
+  scroll-snap-type: inline mandatory;
+  scrollbar-color: #10243f rgba(255, 255, 255, 0.6);
+  scrollbar-width: thin;
+}
+
+.home-market-gallery:focus-visible {
+  outline: 0.18rem solid #087f72;
+  outline-offset: 0.35rem;
+}
+
+.home-market-card {
+  position: relative;
+  flex: 0 0 min(13.75rem, 72vw);
+  margin: 0;
+  padding: 0.32rem;
+  overflow: hidden;
+  border: 0.1rem solid rgba(16, 36, 63, 0.2);
+  border-radius: 1.7rem;
+  background: #10243f;
+  box-shadow: 0 1.3rem 2.8rem rgba(16, 36, 63, 0.2);
+  scroll-snap-align: start;
+}
+
+.home-market-card img {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: 1.35rem;
+  object-fit: cover;
+}
+
+.home-market-card figcaption {
+  position: absolute;
+  inset-block-start: 0.9rem;
+  inset-inline-end: 0.9rem;
+  display: grid;
+  width: 2rem;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 50%;
+  background: rgba(7, 20, 38, 0.78);
+  color: #ffffff;
+  font-size: 0.64rem;
+  font-variation-settings: 'wght' 760;
+  backdrop-filter: blur(0.45rem);
+}
+
 .home-visual-callout {
   position: absolute;
   inset-block-end: 1.25rem;
@@ -3292,8 +3351,8 @@ summary {
     min-height: 39rem;
   }
 
-  .home-device {
-    width: 20rem;
+  .home-market-card {
+    flex-basis: 15.25rem;
   }
 
   .home-focus-panel {
