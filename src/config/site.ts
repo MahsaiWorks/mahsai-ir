@@ -27,16 +27,16 @@ export const siteConfig: SiteConfig = {
   brandName: 'MAHSAI',
   brandNameFa: 'مهسای',
   developerName: 'MAHSAI',
-  title: 'توسعه‌دهنده اپلیکیشن',
+  title: 'مرجع عملی هوش مصنوعی و سازندهٔ محصولات دیجیتال',
   biography:
-    'مهسای از تجربه واقعی کار در املاک شکل گرفته و سازنده متراژ، دستیار فارسی مشاوران املاک است.',
+    'مهسای یک مرجع عملی و به‌روز هوش مصنوعی برای فارسی‌زبانان و سازندهٔ متراژ، دستیار فارسی مشاوران املاک است.',
   supportEmail: 'support@mahsai.ir',
   socialLinks: [], // REPLACE: e.g. { label: 'GitHub', url: 'https://...' }
   appStoreLinks: [], // REPLACE: real developer/store profile links only
   seoDefaults: {
-    title: 'MAHSAI | توسعه‌دهنده اپلیکیشن',
+    title: 'MAHSAI | هوش مصنوعی به زبان روشن',
     description:
-      'وب‌سایت رسمی مهسای؛ معرفی و پشتیبانی اپلیکیشن متراژ و مقالات آموزشی مشاوران املاک.',
+      'رادار هوش مصنوعی، راهنمای ابزارها، آموزش رایگان و آزمایش فارسی با منبع رسمی؛ همراه معرفی و پشتیبانی اپلیکیشن متراژ.',
     image: '/og.png',
   },
 };

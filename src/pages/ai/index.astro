@@ -1,0 +1,197 @@
+---
+import { getCollection } from 'astro:content';
+import AIGuideCard from '../../components/AIGuideCard.astro';
+import { aiNavigation } from '../../data/aiNavigation';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const guides = (await getCollection('aiGuides'))
+  .filter((guide) => !guide.data.draft)
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+const updates = (await getCollection('aiUpdates'))
+  .filter((update) => !update.data.draft)
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+const tools = (await getCollection('aiTools')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const latestUpdate = updates[0];
+
+const itemListStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'راهنماهای هوش مصنوعی MAHSAI',
+  itemListElement: guides.slice(0, 6).map((guide, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: guide.data.title,
+    url: new URL(`/ai/learn/${guide.id}/`, Astro.site).toString(),
+  })),
+};
+---
+
+<BaseLayout
+  title="هوش مصنوعی به زبان روشن | MAHSAI AI"
+  description="رادار به‌روز هوش مصنوعی، راهنمای ابزارها، آموزش رایگان، آزمایش فارسی و مسیر امن اجرای مدل‌های آفلاین؛ با منبع رسمی و تاریخ بررسی."
+  keywords={[
+    'هوش مصنوعی فارسی',
+    'اخبار هوش مصنوعی',
+    'آموزش هوش مصنوعی',
+    'ابزارهای هوش مصنوعی',
+  ]}
+  imageAlt="کارت معرفی مرکز هوش مصنوعی MAHSAI"
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(itemListStructuredData)}
+  />
+
+  <section class="ai-hero" aria-labelledby="ai-title">
+    <div class="shell ai-hero-grid">
+      <div class="ai-hero-copy">
+        <p class="ai-kicker"><span>MAHSAI AI</span> · مرجع عملی فارسی</p>
+        <h1 id="ai-title">
+          هوش مصنوعی،
+          <span>بدون هیاهو.</span>
+        </h1>
+        <p>
+          هر روز بفهمید چه چیزی تغییر کرده، چرا مهم است، کدام ابزار برای کار شما
+          مناسب‌تر است و دقیقاً چگونه از آن استفاده کنید.
+        </p>
+        <div class="ai-hero-actions">
+          <a class="button" href="/ai/today/">رادار امروز</a>
+          <a class="button button-secondary" href="/ai/learn/">شروع یادگیری</a>
+        </div>
+        <ul class="ai-trust-line" aria-label="اصول تحریریه MAHSAI AI">
+          <li><span aria-hidden="true">✓</span> منبع رسمی</li>
+          <li><span aria-hidden="true">✓</span> تاریخ بررسی</li>
+          <li><span aria-hidden="true">✓</span> مرز روشنِ ادعا و آزمایش</li>
+        </ul>
+      </div>
+
+      <aside class="ai-hero-radar" aria-label="وضعیت امروز مرکز هوش مصنوعی">
+        <div class="ai-radar-orbit" aria-hidden="true">
+          <span></span><i></i><b></b>
+        </div>
+        <p><span aria-hidden="true"></span> رادار فعال</p>
+        <strong>{updates.length} گزارش تأییدشده</strong>
+        <dl>
+          <div><dt>راهنمای عملی</dt><dd>{guides.length}</dd></div>
+          <div><dt>ابزار بررسی‌شده</dt><dd>{tools.length}</dd></div>
+          <div><dt>آخرین بررسی</dt><dd>۲۲ مرداد ۱۴۰۵</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  {
+    latestUpdate && (
+      <section class="ai-latest" aria-labelledby="ai-latest-title">
+        <div class="shell ai-latest-grid">
+          <div>
+            <p class="eyebrow">تازه‌ترین گزارش تأییدشده</p>
+            <h2 id="ai-latest-title">{latestUpdate.data.title}</h2>
+            <p>{latestUpdate.data.description}</p>
+            <a class="button" href={`/ai/today/${latestUpdate.id}/`}>
+              خواندن گزارش امروز
+            </a>
+          </div>
+          <ol>
+            {latestUpdate.data.takeaways.map((takeaway, index) => (
+              <li>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                {takeaway}
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="ai-routes section" aria-labelledby="ai-routes-title">
+    <div class="shell">
+      <div class="ai-section-head">
+        <div>
+          <p class="eyebrow">از کجا شروع کنم؟</p>
+          <h2 id="ai-routes-title">مسیر درست را با نیازتان انتخاب کنید.</h2>
+        </div>
+        <p>
+          هر مسیر یک سؤال مشخص را جواب می‌دهد؛ از خبر امروز تا اجرای مدل روی
+          لپ‌تاپ.
+        </p>
+      </div>
+      <div class="ai-route-grid">
+        {
+          aiNavigation.map((item, index) => (
+            <a href={item.href}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <strong>{item.label}</strong>
+              <p>{item.description}</p>
+              <i aria-hidden="true">←</i>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="ai-guide-showcase section" aria-labelledby="ai-guides-title">
+    <div class="shell">
+      <div class="ai-section-head">
+        <div>
+          <p class="eyebrow">راهنماهای پایه</p>
+          <h2 id="ai-guides-title">از انتخاب ابزار تا یک جریان کاری مطمئن.</h2>
+        </div>
+        <a class="story-link" href="/ai/learn/">همه آموزش‌ها</a>
+      </div>
+      <div class="ai-guide-grid">
+        {
+          guides
+            .slice(0, 3)
+            .map((guide, index) => (
+              <AIGuideCard guide={guide} featured={index === 0} />
+            ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="ai-method section" aria-labelledby="ai-method-title">
+    <div class="shell ai-method-grid">
+      <div>
+        <p class="eyebrow">روش انتشار</p>
+        <h2 id="ai-method-title">اعتماد باید داخل خود صفحه دیده شود.</h2>
+        <p>
+          هر مطلب MAHSAI AI باید نویسنده، زمان انتشار، آخرین بررسی و لینک منابع
+          اصلی داشته باشد. رتبه‌بندی یا نتیجهٔ تست فقط وقتی منتشر می‌شود که روش
+          آزمون و دادهٔ قابل تکرار داشته باشیم.
+        </p>
+        <a class="button button-secondary" href="/ai/sources/"
+          >سیاست منابع و اصلاحات</a
+        >
+      </div>
+      <ol>
+        <li>
+          <span>01</span><strong>منبع اصلی</strong><p>
+            مستندات سازنده، مقالهٔ پژوهشی یا مرجع رسمی.
+          </p>
+        </li>
+        <li>
+          <span>02</span><strong>بازبینی انسانی</strong><p>
+            تطبیق ادعا با منبع و حذف نتیجه‌گیری اغراق‌آمیز.
+          </p>
+        </li>
+        <li>
+          <span>03</span><strong>تاریخ بررسی</strong><p>
+            سیگنال روشن برای اینکه بدانید اطلاعات چه زمانی تازه بوده است.
+          </p>
+        </li>
+        <li>
+          <span>04</span><strong>اصلاح شفاف</strong><p>
+            تغییر مهم پنهان نمی‌شود و صفحه دوباره تاریخ می‌خورد.
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+</BaseLayout>

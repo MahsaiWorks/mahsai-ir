@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import AIToolCard from '../../../components/AIToolCard.astro';
+import PageStage from '../../../components/PageStage.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const tools = (await getCollection('aiTools')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayout
+  title="راهنمای ابزارهای هوش مصنوعی | MAHSAI AI"
+  description="فهرست ابزارهای هوش مصنوعی با کاربرد، محدودیت، پلتفرم، لینک رسمی و تاریخ آخرین بررسی؛ برای انتخاب آگاهانه، نه انبار هزاران لینک."
+>
+  <PageStage
+    eyebrow="راهنمای ابزار"
+    title="ابزار کمتر،"
+    highlight="انتخاب دقیق‌تر."
+    lead="این فهرست فقط ابزارهایی را نگه می‌دارد که صفحهٔ رسمی، کاربرد روشن و تاریخ بررسی دارند. قیمت یا قابلیت متغیر را بدون منبع روز منتشر نمی‌کنیم."
+    index={`${tools.length} ابزار بررسی‌شده`}
+    note="هدف ساخت بزرگ‌ترین فهرست نیست؛ هدف این است که برای یک کار مشخص سریع‌تر به گزینهٔ مناسب برسید."
+    signals={['لینک رسمی', 'مناسب برای', 'محدودیت‌ها', 'تاریخ بررسی']}
+    tone="paper"
+  />
+  <section class="section">
+    <div class="shell ai-tool-grid">
+      {tools.map((tool) => <AIToolCard tool={tool} />)}
+    </div>
+  </section>
+</BaseLayout>

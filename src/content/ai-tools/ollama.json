@@ -1,0 +1,37 @@
+{
+  "name": "Ollama",
+  "shortName": "Ollama",
+  "description": "ابزار اجرای مدل‌های زبانی روی رایانه، با خط فرمان و API محلی؛ برای توسعه و جریان‌های کاری قابل اسکریپت مناسب است.",
+  "officialUrl": "https://ollama.com/download",
+  "category": "local",
+  "access": "hybrid",
+  "platforms": ["ویندوز", "macOS", "Linux"],
+  "bestFor": [
+    "اجرای مدل از ترمینال",
+    "API محلی",
+    "آزمایش مدل روی سخت‌افزار شخصی"
+  ],
+  "features": [
+    "خط فرمان",
+    "API روی localhost",
+    "پشتیبانی از چند سیستم‌عامل",
+    "محل ذخیرهٔ مدل قابل تنظیم"
+  ],
+  "limitations": [
+    "مدل‌ها می‌توانند فضای بسیار زیادی مصرف کنند",
+    "سرعت و امکان اجرا به سخت‌افزار و مدل وابسته است"
+  ],
+  "verifiedAt": "2026-08-13",
+  "sources": [
+    {
+      "label": "Ollama Quickstart",
+      "url": "https://docs.ollama.com/quickstart"
+    },
+    {
+      "label": "Ollama for Windows",
+      "url": "https://docs.ollama.com/windows"
+    }
+  ],
+  "featured": true,
+  "order": 4
+}

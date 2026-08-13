@@ -28,13 +28,29 @@ const downloadLink = featuredApp
         </span>
         <span>{siteConfig.brandName}</span>
       </a>
-      <p>{siteConfig.title}؛ با تمرکز بر تجربه‌های ساده، دقیق و ماندگار.</p>
+      <p>هوش مصنوعی به زبان روشن؛ با منبع، تاریخ بررسی و راهکار قابل اجرا.</p>
     </div>
 
-    <nav aria-label="پیوندهای پشتیبانی و حقوقی">
+    <nav aria-label="پیوندهای اصلی سایت">
       <h2>دسترسی سریع</h2>
       <ul>
+        <li><a href="/ai/">مرکز هوش مصنوعی</a></li>
+        <li><a href="/ai/today/">رادار امروز</a></li>
+        <li><a href="/ai/tools/">راهنمای ابزارها</a></li>
+        <li><a href="/ai/learn/">آموزش رایگان</a></li>
+        <li><a href="/ai/offline/">هوش مصنوعی آفلاین</a></li>
         <li><a href="/apps/metrazh/">معرفی متراژ</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <h2>ارتباط</h2>
+      <ul class="footer-site-links">
+        <li><a href="/about/">درباره MAHSAI</a></li>
+        <li><a href="/support/">پشتیبانی</a></li>
+        <li><a href="/ai/sources/">سیاست منابع و اصلاحات</a></li>
+        <li><a href="/privacy/">حریم خصوصی</a></li>
+        <li><a href="/terms/">شرایط استفاده</a></li>
         {
           downloadLink && featuredApp && (
             <li>
@@ -44,15 +60,7 @@ const downloadLink = featuredApp
             </li>
           )
         }
-        <li><a href="/support/">پشتیبانی</a></li>
-        <li><a href="/articles/">مقالات آموزشی</a></li>
-        <li><a href="/privacy/">حریم خصوصی</a></li>
-        <li><a href="/terms/">شرایط استفاده</a></li>
       </ul>
-    </nav>
-
-    <div>
-      <h2>ارتباط</h2>
       <a
         class="footer-email"
         href={`mailto:${siteConfig.supportEmail}`}

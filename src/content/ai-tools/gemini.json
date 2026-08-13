@@ -1,0 +1,37 @@
+{
+  "name": "Google Gemini",
+  "shortName": "Gemini",
+  "description": "دستیار گوگل برای ایده‌پردازی، تحلیل فایل و پژوهش؛ در Deep Research می‌تواند از Google Search و منابع متصل استفاده کند.",
+  "officialUrl": "https://gemini.google.com/",
+  "category": "assistant",
+  "access": "cloud",
+  "platforms": ["وب", "اندروید", "iOS"],
+  "bestFor": [
+    "پژوهش با Google Search",
+    "کار با سرویس‌های متصل گوگل",
+    "ایده‌پردازی و پیش‌نویس"
+  ],
+  "features": [
+    "Deep Research",
+    "انتخاب منابع پژوهش",
+    "بارگذاری فایل",
+    "اتصال اختیاری به سرویس‌های Google"
+  ],
+  "limitations": [
+    "دسترسی قابلیت‌ها به سن، کشور، حساب و سقف مصرف وابسته است",
+    "خروجی می‌تواند خطا داشته باشد و باید بررسی شود"
+  ],
+  "verifiedAt": "2026-08-13",
+  "sources": [
+    {
+      "label": "Use Gemini Apps — Google",
+      "url": "https://support.google.com/gemini/answer/13275745?hl=en"
+    },
+    {
+      "label": "Deep Research in Gemini Apps — Google",
+      "url": "https://support.google.com/gemini/answer/15719111?hl=en"
+    }
+  ],
+  "featured": true,
+  "order": 2
+}

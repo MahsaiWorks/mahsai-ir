@@ -1,0 +1,37 @@
+{
+  "name": "Claude",
+  "shortName": "Claude",
+  "description": "دستیار Anthropic برای گفت‌وگو، کار با پروژه‌ها، جست‌وجوی وب و پژوهش چندمرحله‌ای با ارجاع.",
+  "officialUrl": "https://claude.ai/",
+  "category": "assistant",
+  "access": "cloud",
+  "platforms": ["وب", "ویندوز", "macOS", "اندروید", "iOS"],
+  "bestFor": [
+    "پروژه‌های دارای فایل و دستور ثابت",
+    "پژوهش چندمرحله‌ای",
+    "نوشتن و تحلیل متن"
+  ],
+  "features": [
+    "Web Search با ارجاع",
+    "Research",
+    "Projects",
+    "دانش و دستور اختصاصی پروژه"
+  ],
+  "limitations": [
+    "Research به Web Search و نوع حساب مناسب نیاز دارد",
+    "سقف مصرف و دسترسی ممکن است تغییر کند"
+  ],
+  "verifiedAt": "2026-08-13",
+  "sources": [
+    {
+      "label": "Research on Claude — Anthropic",
+      "url": "https://support.anthropic.com/en/articles/11088861-using-research-on-claude-ai"
+    },
+    {
+      "label": "Projects in Claude — Anthropic",
+      "url": "https://support.anthropic.com/en/articles/9517075-what-are-projects"
+    }
+  ],
+  "featured": true,
+  "order": 3
+}

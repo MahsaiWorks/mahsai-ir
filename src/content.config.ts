@@ -2,6 +2,11 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
+const sourceLink = z.object({
+  label: z.string(),
+  url: z.url(),
+});
+
 const apps = defineCollection({
   loader: glob({ base: './src/content/apps', pattern: '**/*.{json,yaml,yml}' }),
   schema: z.object({
@@ -69,4 +74,77 @@ const articles = defineCollection({
   }),
 });
 
-export const collections = { apps, articles };
+const aiGuides = defineCollection({
+  loader: glob({ base: './src/content/ai-guides', pattern: '**/*.{md,mdx}' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    kind: z.enum(['guide', 'comparison', 'workflow']),
+    topic: z.enum([
+      'starting',
+      'offline',
+      'productivity',
+      'research',
+      'persian',
+    ]),
+    publishedAt: z.coerce.date(),
+    updatedAt: z.coerce.date().optional(),
+    verifiedAt: z.coerce.date(),
+    readingTime: z.string(),
+    level: z.enum(['beginner', 'intermediate', 'advanced']),
+    takeaways: z.array(z.string()).min(2).max(4),
+    sources: z.array(sourceLink).min(1),
+    keywords: z.array(z.string()).min(2),
+    draft: z.boolean().default(false),
+    featured: z.boolean().default(false),
+  }),
+});
+
+const aiUpdates = defineCollection({
+  loader: glob({ base: './src/content/ai-updates', pattern: '**/*.{md,mdx}' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    category: z.enum(['tools', 'models', 'policy', 'research']),
+    publishedAt: z.coerce.date(),
+    updatedAt: z.coerce.date().optional(),
+    verifiedAt: z.coerce.date(),
+    readingTime: z.string(),
+    takeaways: z.array(z.string()).min(2).max(4),
+    sources: z.array(sourceLink).min(1),
+    keywords: z.array(z.string()).min(2),
+    draft: z.boolean().default(false),
+    featured: z.boolean().default(false),
+  }),
+});
+
+const aiTools = defineCollection({
+  loader: glob({
+    base: './src/content/ai-tools',
+    pattern: '**/*.{json,yaml,yml}',
+  }),
+  schema: z.object({
+    name: z.string(),
+    shortName: z.string(),
+    description: z.string(),
+    officialUrl: z.url(),
+    category: z.enum(['assistant', 'research', 'local']),
+    access: z.enum(['cloud', 'local', 'hybrid']),
+    platforms: z.array(z.string()).min(1),
+    bestFor: z.array(z.string()).min(2).max(4),
+    features: z.array(z.string()).min(2).max(5),
+    limitations: z.array(z.string()).min(1).max(4),
+    verifiedAt: z.coerce.date(),
+    sources: z.array(sourceLink).min(1),
+    featured: z.boolean().default(false),
+    order: z.number().int().positive(),
+  }),
+});
+
+export const collections = {
+  apps,
+  articles,
+  aiGuides,
+  aiUpdates,
+  aiTools,
+};

@@ -6,9 +6,11 @@ import { getCafeBazaarLink } from '../data/appPresentation';
 const path = Astro.url.pathname;
 const links = [
   { href: '/', label: 'خانه' },
-  { href: '/about/', label: 'درباره' },
-  { href: '/apps/', label: 'اپلیکیشن‌ها' },
-  { href: '/articles/', label: 'مقالات' },
+  { href: '/ai/', label: 'هوش مصنوعی' },
+  { href: '/ai/today/', label: 'رادار امروز' },
+  { href: '/ai/tools/', label: 'ابزارها' },
+  { href: '/ai/learn/', label: 'آموزش' },
+  { href: '/apps/', label: 'محصولات' },
   { href: '/support/', label: 'پشتیبانی' },
 ];
 
@@ -59,20 +61,9 @@ const downloadLink = featuredApp
     </nav>
 
     {
-      downloadLink && featuredApp ? (
-        <a
-          class="header-cta"
-          href={downloadLink.url}
-          target="_blank"
-          rel="noopener"
-          aria-label={`دانلود ${featuredApp.data.name} از کافه‌بازار`}
-        >
-          دانلود متراژ
-          <span aria-hidden="true">←</span>
-        </a>
-      ) : (
-        <a class="header-cta" href="/support/">
-          پشتیبانی
+      (
+        <a class="header-cta" href="/ai/today/">
+          امروز چه خبر؟
           <span aria-hidden="true">←</span>
         </a>
       )

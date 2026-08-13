@@ -1,0 +1,43 @@
+---
+interface Source {
+  label: string;
+  url: string;
+}
+
+interface Props {
+  sources: Source[];
+  verifiedAt: Date;
+}
+
+const { sources, verifiedAt } = Astro.props;
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('fa-IR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+---
+
+<aside class="ai-sources" aria-labelledby="ai-sources-title">
+  <div>
+    <p class="eyebrow">شفافیت محتوا</p>
+    <h2 id="ai-sources-title">منابع اصلی و تاریخ بررسی</h2>
+    <p>
+      آخرین بررسی: <time datetime={verifiedAt.toISOString()}
+        >{formatDate(verifiedAt)}</time
+      >. اگر منبع رسمی تغییر کند، این صفحه باید دوباره بررسی شود.
+    </p>
+  </div>
+  <ol>
+    {
+      sources.map((source) => (
+        <li>
+          <a href={source.url} target="_blank" rel="noopener noreferrer">
+            {source.label}
+            <span aria-hidden="true">↗</span>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</aside>

@@ -22,7 +22,7 @@ const {
   image = siteConfig.seoDefaults.image,
   type = 'website',
   keywords = [],
-  imageAlt = `کارت معرفی ${siteConfig.brandName} و اپلیکیشن متراژ`,
+  imageAlt = `کارت معرفی ${siteConfig.brandName} AI`,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL(image, Astro.site);
@@ -60,7 +60,18 @@ const structuredData = {
         <meta name="keywords" content={keywords.join('، ')} />
       )
     }
-    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta
+      name="robots"
+      content={noindex
+        ? 'noindex, follow'
+        : 'index, follow, max-image-preview:large'}
+    />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="رادار هوش مصنوعی MAHSAI"
+      href="/ai/rss.xml"
+    />
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content={type} />
     <meta property="og:locale" content="fa_IR" />
@@ -72,6 +83,7 @@ const structuredData = {
     <meta property="og:image:alt" content={imageAlt} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />

@@ -15,17 +15,17 @@ const bazaarLink = metrazhApp
 ---
 
 <BaseLayout
-  title={`پشتیبانی رسمی متراژ | ${siteConfig.brandName}`}
-  description="مسیر رسمی پشتیبانی متراژ؛ راهنمای گزارش مشکل، اطلاعات لازم برای بررسی و راه‌های ارتباط با مهسای."
+  title={`پشتیبانی سایت و متراژ | ${siteConfig.brandName}`}
+  description="مسیر رسمی پشتیبانی MAHSAI؛ گزارش خطای محتوایی مرکز هوش مصنوعی، مشکل سایت یا مسئلهٔ فنی اپلیکیشن متراژ."
 >
   <PageStage
     eyebrow="مرکز راهنما"
-    title="پاسخ روشن، از مسیر"
+    title="گزارش دقیق، از مسیر"
     highlight="رسمی."
-    lead="برای اینکه مشکل سریع‌تر بررسی شود، اطلاعات درست را یک‌جا بفرستید و داده‌های محرمانه مالک یا مشتری را از پیام و تصویر حذف کنید."
+    lead="برای خطای محتوایی مرکز AI، مشکل سایت یا مسئلهٔ فنی متراژ ایمیل بفرستید. لینک صفحه و توضیح دقیق را اضافه کنید و اطلاعات محرمانه را از پیام و تصویر حذف کنید."
     index="صفحه ۰۳"
-    note="پشتیبانی سایت مهسای و اپلیکیشن متراژ فقط از کانال‌های درج‌شده در همین صفحه انجام می‌شود."
-    signals={['ایمیل رسمی', 'راهنمای گزارش خطا', 'پیوندهای تأییدشده']}
+    note="پشتیبانی سایت MAHSAI و اپلیکیشن متراژ فقط از کانال‌های درج‌شده در همین صفحه انجام می‌شود."
+    signals={['گزارش خطای محتوا', 'مشکل سایت', 'پشتیبانی متراژ', 'ایمیل رسمی']}
     tone="mint"
   >
     <div slot="actions" class="page-stage-actions">
@@ -100,6 +100,16 @@ const bazaarLink = metrazhApp
         <h2 id="channels-title">کانال مناسب را انتخاب کنید.</h2>
       </header>
       <div class="support-channel-grid">
+        <article class="support-channel">
+          <span>MAHSAI AI</span>
+          <h3>گزارش خطای محتوایی</h3>
+          <p>لینک صفحه، جملهٔ موردنظر و منبع اصلاحی پیشنهادی را بفرستید.</p>
+          <a
+            href={`mailto:${siteConfig.supportEmail}?subject=${encodeURIComponent('گزارش خطای محتوایی MAHSAI AI')}`}
+          >
+            ارسال گزارش محتوا ←
+          </a>
+        </article>
         <article class="support-channel support-channel-primary">
           <span>پشتیبانی مستقیم</span>
           <h3>ایمیل رسمی مهسای</h3>

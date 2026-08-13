@@ -1,0 +1,43 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { toolAccessLabels } from '../data/aiNavigation';
+
+interface Props {
+  tool: CollectionEntry<'aiTools'>;
+}
+
+const { tool } = Astro.props;
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('fa-IR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+---
+
+<article class="ai-tool-card">
+  <div class="ai-tool-card-head">
+    <span class="ai-tool-monogram" aria-hidden="true">
+      {tool.data.shortName.slice(0, 1)}
+    </span>
+    <div>
+      <p>{toolAccessLabels[tool.data.access]}</p>
+      <h2>{tool.data.name}</h2>
+    </div>
+  </div>
+  <p>{tool.data.description}</p>
+  <div class="ai-tool-detail">
+    <h3>مناسب برای</h3>
+    <ul>{tool.data.bestFor.map((item) => <li>{item}</li>)}</ul>
+  </div>
+  <div class="ai-tool-detail ai-tool-warning">
+    <h3>قبل از استفاده</h3>
+    <ul>{tool.data.limitations.map((item) => <li>{item}</li>)}</ul>
+  </div>
+  <footer>
+    <span>بررسی {formatDate(tool.data.verifiedAt)}</span>
+    <a href={`/ai/tools/${tool.id}/`}>
+      جزئیات و منابع <span aria-hidden="true">←</span>
+    </a>
+  </footer>
+</article>

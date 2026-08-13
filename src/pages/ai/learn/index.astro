@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import AIGuideCard from '../../../components/AIGuideCard.astro';
+import PageStage from '../../../components/PageStage.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const guides = (await getCollection('aiGuides'))
+  .filter((guide) => !guide.data.draft)
+  .sort(
+    (a, b) =>
+      Number(b.data.featured) - Number(a.data.featured) ||
+      b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+  );
+---
+
+<BaseLayout
+  title="آموزش رایگان هوش مصنوعی | MAHSAI AI"
+  description="راهنماهای عملی و رایگان هوش مصنوعی برای فارسی‌زبانان؛ از انتخاب ابزار و پرامپت‌نویسی تا مدل‌های آفلاین و جریان‌های کاری واقعی."
+>
+  <PageStage
+    eyebrow="آموزش رایگان هوش مصنوعی"
+    title="یاد بگیرید، اجرا کنید،"
+    highlight="نتیجه را بسنجید."
+    lead="آموزش‌ها از مسئلهٔ واقعی شروع می‌شوند، با منبع رسمی جلو می‌روند و با چک‌لیست قابل اجرا تمام می‌شوند."
+    index={`${guides.length} راهنمای پایه`}
+    note="دوره‌های پولی زمانی ساخته می‌شوند که محتوای رایگان ارزش خود را ثابت کرده و نیاز واقعی مخاطب روشن شده باشد."
+    signals={[
+      'رایگان و بدون ثبت‌نام',
+      'تاریخ آخرین بررسی',
+      'سطح و زمان مطالعه',
+      'منابع مستقیم',
+    ]}
+    tone="mint"
+  />
+  <section class="section">
+    <div class="shell ai-guide-grid">
+      {
+        guides.map((guide, index) => (
+          <AIGuideCard guide={guide} featured={index === 0} />
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

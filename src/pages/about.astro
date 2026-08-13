@@ -3,96 +3,120 @@ import { getCollection } from 'astro:content';
 import PageStage from '../components/PageStage.astro';
 import { siteConfig } from '../config/site';
 import { getCafeBazaarLink } from '../data/appPresentation';
-import { metrazhStory } from '../data/metrazhStory';
-import { specialties } from '../data/specialties';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const metrazhApp = (await getCollection('apps')).find(
   (app) => app.id === 'metrazh',
 );
-
-if (!metrazhApp) {
-  throw new Error('Metrazh content entry is missing.');
-}
-
+if (!metrazhApp) throw new Error('Metrazh content entry is missing.');
 const bazaarLink = getCafeBazaarLink(metrazhApp.data.storeLinks);
 ---
 
 <BaseLayout
-  title={`درباره ${siteConfig.brandName} | توسعه اپلیکیشن فارسی`}
-  description="داستان شکل‌گیری مهسای و متراژ؛ محصولی که از تجربه واقعی کار در املاک و مسئله پراکندگی اطلاعات ساخته شد."
+  title={`درباره ${siteConfig.brandName} | هوش مصنوعی و محصولات فارسی`}
+  description="MAHSAI یک مرجع عملی هوش مصنوعی برای فارسی‌زبانان و سازندهٔ متراژ است؛ با تمرکز بر اطلاعات قابل بررسی و محصولی که از مسئلهٔ واقعی شروع می‌شود."
 >
   <PageStage
-    eyebrow="درباره برند"
-    title="متراژ از دل یک تجربه واقعی"
-    highlight="ساخته شد."
-    lead={metrazhStory.summary}
-    index="صفحه ۰۱"
-    note="مهسای محل معرفی محصولات، مستندات رسمی و محتوای آموزشی مرتبط با آن‌هاست."
-    signals={['توسعه اپلیکیشن', 'تجربه فارسی و RTL', 'پشتیبانی رسمی محصول']}
+    eyebrow="درباره MAHSAI"
+    title="اطلاعات قابل بررسی؛"
+    highlight="محصول قابل استفاده."
+    lead="MAHSAI دو مسیر روشن دارد: تبدیل تغییرات سریع هوش مصنوعی به راهنمای فارسی قابل اجرا، و ساخت محصولاتی که از یک مسئلهٔ واقعی شروع می‌شوند."
+    index="دو مسیر · یک استاندارد"
+    note="مرکز AI و اپلیکیشن متراژ هویت و مسیر محتوایی مستقل دارند، اما هر دو باید دقیق، روشن و پاسخ‌گو باشند."
+    signals={[
+      'منبع و تاریخ بررسی',
+      'فارسی و راست‌به‌چپ',
+      'پشتیبانی رسمی',
+      'اصلاح شفاف',
+    ]}
     tone="mint"
   >
     <div slot="actions" class="page-stage-actions">
-      <a class="button" href="/apps/metrazh/#origin-story"
-        >خواندن داستان متراژ</a
-      >
-      <a class="page-stage-link" href="/support/">ارتباط با پشتیبانی</a>
+      <a class="button" href="/ai/">مرکز هوش مصنوعی</a>
+      <a class="page-stage-link" href="/apps/metrazh/">معرفی متراژ</a>
     </div>
   </PageStage>
 
-  <section class="page-section" aria-labelledby="approach-title">
+  <section class="page-section" aria-labelledby="about-paths-title">
     <div class="shell split-intro">
       <div class="split-intro-heading">
-        <p class="eyebrow">روش ساخت</p>
-        <h2 id="approach-title">کمتر حواس‌پرتی؛ بیشتر وضوح در کار روزانه.</h2>
+        <p class="eyebrow">MAHSAI چه می‌سازد؟</p>
+        <h2 id="about-paths-title">دو نوع ارزش برای دو نیاز متفاوت.</h2>
       </div>
       <p>
-        نقطه شروع متراژ فهرستی از قابلیت‌ها نبود؛ تجربه‌ای بود که در آن اطلاعات
-        ارزشمند میان پنج دفتر، برگه‌های پراکنده و حافظه تقسیم شده بودند. طراحی
-        محصول از همان جریان واقعی شروع شد: ثبت فایل و متقاضی، بازدید، پیگیری،
-        معامله و حفظ اختیار اطلاعات.
+        مرکز هوش مصنوعی برای تصمیم و یادگیری روزانه ساخته می‌شود. متراژ یک محصول
+        مستقل برای نظم‌دادن به جریان کار مشاوران املاک است. هیچ‌کدام قرار نیست
+        جای دیگری را بگیرد.
       </p>
     </div>
-
-    <div class="shell principle-grid">
+    <div class="shell about-ai-paths">
       <article>
-        <span>01</span>
-        <h3>مسئله قبل از قابلیت</h3>
-        <p>هر ابزار باید یک کار مشخص را کوتاه‌تر، منظم‌تر یا کم‌خطاتر کند.</p>
+        <span>01</span><p class="eyebrow">MAHSAI AI</p><h3>
+          از تغییر سریع، اطلاعات قابل استفاده.
+        </h3><p>
+          رادار خبر، راهنمای ابزار، آموزش رایگان، آزمایش فارسی و هوش مصنوعی
+          آفلاین؛ با لینک منبع و زمان آخرین بررسی.
+        </p><a class="story-link" href="/ai/"
+          >ورود به مرکز AI <span aria-hidden="true">←</span></a
+        >
       </article>
       <article>
-        <span>02</span>
-        <h3>فارسی از ابتدا</h3>
-        <p>راست‌به‌چپ، واژه‌ها و ترتیب اطلاعات بخشی از طراحی محصول‌اند.</p>
-      </article>
-      <article>
-        <span>03</span>
-        <h3>اطلاعات قابل کنترل</h3>
-        <p>
-          کاربر باید بداند داده‌هایش کجا هستند و چگونه از آن‌ها پشتیبان می‌گیرد.
-        </p>
+        <span>02</span><p class="eyebrow">محصول مستقل</p><img
+          src={metrazhApp.data.logo.dark}
+          alt="متراژ"
+          width="170"
+          height="103"
+        /><h3>از تجربهٔ پراکنده، جریان کاری منظم.</h3><p>
+          {metrazhApp.data.shortDescription}
+        </p><a class="story-link" href="/apps/metrazh/"
+          >معرفی کامل متراژ <span aria-hidden="true">←</span></a
+        >
       </article>
     </div>
   </section>
 
-  <section class="page-section page-section-ink" aria-labelledby="focus-title">
+  <section
+    class="page-section page-section-ink"
+    aria-labelledby="about-standard-title"
+  >
     <div class="shell focus-ledger">
       <header>
-        <p class="eyebrow">حوزه‌های تمرکز</p>
-        <h2 id="focus-title">سه لایه از یک تجربه محصول.</h2>
+        <p class="eyebrow">استاندارد مشترک</p><h2 id="about-standard-title">
+          وضوح قبل از حجم.
+        </h2>
       </header>
       <div>
-        {
-          specialties.map((specialty) => (
-            <article>
-              <span>{specialty.number}</span>
-              <div>
-                <h3>{specialty.title}</h3>
-                <p>{specialty.description}</p>
-              </div>
-            </article>
-          ))
-        }
+        <article>
+          <span>01</span><div>
+            <h3>مسئله قبل از قابلیت</h3><p>
+              محتوا و محصول باید یک نیاز مشخص را کوتاه‌تر، روشن‌تر یا کم‌خطاتر
+              کنند.
+            </p>
+          </div>
+        </article>
+        <article>
+          <span>02</span><div>
+            <h3>شاهد قبل از ادعا</h3><p>
+              خبر به منبع اصلی و نتیجهٔ آزمایش به روش قابل تکرار نیاز دارد.
+            </p>
+          </div>
+        </article>
+        <article>
+          <span>03</span><div>
+            <h3>فارسی از ابتدا</h3><p>
+              زبان، راست‌به‌چپ و مثال‌های قابل لمس بخشی از طراحی‌اند، نه ترجمهٔ
+              آخر کار.
+            </p>
+          </div>
+        </article>
+        <article>
+          <span>04</span><div>
+            <h3>مسئولیت بعد از انتشار</h3><p>
+              تاریخ بررسی، مسیر پشتیبانی و سیاست اصلاح باید همیشه قابل مشاهده
+              باشند.
+            </p>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -102,26 +126,23 @@ const bazaarLink = getCafeBazaarLink(metrazhApp.data.storeLinks);
       <div class="product-callout-art">
         <img
           src="/images/editorial/female-consultant-matching.webp"
-          alt="تصویر سه‌بعدی مشاور خانم در حال بررسی نیاز مشتری و فایل‌های ملک"
+          alt="تصویر سه‌بعدی مشاور املاک در حال بررسی نیاز مشتری"
           loading="lazy"
         />
       </div>
       <div>
-        <p class="eyebrow">محصول فعلی</p>
-        <img
+        <p class="eyebrow">محصول منتشرشده</p><img
           class="product-callout-logo"
           src="/images/apps/metrazh/wordmark-dark.png"
           alt="متراژ"
           width="170"
           height="103"
-        />
-        <h2>دستیار فارسی برای نظم دادن به جریان کار املاک.</h2>
-        <p>
-          متراژ برای ثبت فایل‌های ملکی، مدیریت متقاضی، برنامه‌ریزی بازدید،
-          یادآوری پیگیری و آماده‌سازی خروجی‌های کاری طراحی شده است. نسخه عمومی
-          {metrazhApp.data.version} از صفحه رسمی کافه‌بازار قابل دریافت است.
-        </p>
-        <div class="catalog-app-actions">
+        /><h2>دستیار فارسی جریان کار املاک.</h2><p>
+          متراژ برای ثبت فایل، مدیریت متقاضی، برنامه‌ریزی بازدید، پیگیری و
+          آماده‌سازی خروجی‌های کاری طراحی شده است. نسخهٔ عمومی {
+            metrazhApp.data.version
+          } از مسیر رسمی کافه‌بازار در دسترس است.
+        </p><div class="catalog-app-actions">
           {
             bazaarLink && (
               <a
@@ -133,8 +154,7 @@ const bazaarLink = getCafeBazaarLink(metrazhApp.data.storeLinks);
                 دانلود از کافه‌بازار
               </a>
             )
-          }
-          <a class="text-link" href="/apps/metrazh/">معرفی کامل محصول ←</a>
+          }<a class="text-link" href="/apps/metrazh/">معرفی کامل محصول ←</a>
         </div>
       </div>
     </div>

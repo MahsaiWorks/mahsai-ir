@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import AIUpdateCard from '../../../components/AIUpdateCard.astro';
+import PageStage from '../../../components/PageStage.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const updates = (await getCollection('aiUpdates'))
+  .filter((update) => !update.data.draft)
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+---
+
+<BaseLayout
+  title="رادار امروز هوش مصنوعی | MAHSAI AI"
+  description="گزارش تغییرات مهم هوش مصنوعی با منبع رسمی، توضیح اثر واقعی و تاریخ آخرین بررسی؛ بدون شایعه و تیتر اغراق‌آمیز."
+>
+  <PageStage
+    eyebrow="رادار روزانه MAHSAI"
+    title="فقط تغییراتی که"
+    highlight="ارزش دانستن دارند."
+    lead="هر گزارش باید به منبع اصلی وصل باشد، اثر عملی تغییر را توضیح دهد و مرز خبر با نظر یا آزمون را روشن نگه دارد."
+    index={`${updates.length} گزارش منتشرشده`}
+    note="در شروع، کیفیت و راستی‌آزمایی بر تعداد خبر اولویت دارد. با شکل‌گیری فرایند روزانه، پوشش گسترده‌تر می‌شود."
+    signals={['منبع رسمی', 'تاریخ بررسی', 'اثر عملی', 'امکان اصلاح']}
+    tone="apricot"
+  >
+    <div slot="actions" class="page-stage-actions">
+      <a class="button" href="/ai/rss.xml">RSS رادار</a>
+      <a class="page-stage-link" href="/ai/sources/">روش انتخاب منابع</a>
+    </div>
+  </PageStage>
+  <section class="section">
+    <div class="shell ai-update-grid">
+      {
+        updates.map((update, index) => (
+          <AIUpdateCard update={update} featured={index === 0} />
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

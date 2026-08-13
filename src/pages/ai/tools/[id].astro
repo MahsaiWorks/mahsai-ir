@@ -1,0 +1,110 @@
+---
+import { getCollection } from 'astro:content';
+import AISources from '../../../components/AISources.astro';
+import { toolAccessLabels } from '../../../data/aiNavigation';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const tools = await getCollection('aiTools');
+  return tools.map((tool) => ({ params: { id: tool.id }, props: { tool } }));
+}
+const { tool } = Astro.props;
+const categoryLabels = {
+  assistant: 'دستیار عمومی',
+  research: 'پژوهش',
+  local: 'اجرای محلی',
+} as const;
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('fa-IR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: tool.data.name,
+  description: tool.data.description,
+  applicationCategory: categoryLabels[tool.data.category],
+  operatingSystem: tool.data.platforms.join(', '),
+  url: tool.data.officialUrl,
+};
+---
+
+<BaseLayout
+  title={`${tool.data.name}؛ کاربرد، محدودیت و لینک رسمی | MAHSAI AI`}
+  description={tool.data.description}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(structuredData)}
+  />
+  <article class="ai-tool-page">
+    <header class="ai-tool-stage">
+      <div class="shell">
+        <nav class="breadcrumbs" aria-label="مسیر صفحه">
+          <a href="/">خانه</a><span>/</span><a href="/ai/">هوش مصنوعی</a><span
+            >/</span
+          ><a href="/ai/tools/">ابزارها</a>
+        </nav>
+        <div class="ai-tool-stage-grid">
+          <div>
+            <p class="ai-kicker">
+              {categoryLabels[tool.data.category]} · {
+                toolAccessLabels[tool.data.access]
+              }
+            </p>
+            <h1>{tool.data.name}</h1>
+            <p>{tool.data.description}</p>
+            <div class="ai-tool-stage-actions">
+              <a
+                class="button"
+                href={tool.data.officialUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                >رفتن به وب‌سایت رسمی <span aria-hidden="true">↗</span></a
+              ><span>بررسی {formatDate(tool.data.verifiedAt)}</span>
+            </div>
+          </div>
+          <aside>
+            <span class="ai-tool-big-monogram" aria-hidden="true"
+              >{tool.data.shortName.slice(0, 1)}</span
+            ><p>پلتفرم‌ها</p><ul>
+              {tool.data.platforms.map((platform) => <li>{platform}</li>)}
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </header>
+    <div class="shell ai-tool-page-grid">
+      <section>
+        <p class="eyebrow">چه کاری انجام می‌دهد؟</p><h2>
+          قابلیت‌های ثبت‌شده
+        </h2><ul class="ai-detail-list">
+          {tool.data.features.map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+      <section>
+        <p class="eyebrow">برای چه کسی؟</p><h2>مناسب برای</h2><ul
+          class="ai-detail-list"
+        >
+          {tool.data.bestFor.map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+      <section class="ai-tool-caution">
+        <p class="eyebrow">مرز استفاده</p><h2>محدودیت‌ها</h2><ul
+          class="ai-detail-list"
+        >
+          {tool.data.limitations.map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+    </div>
+    <div class="shell">
+      <AISources
+        sources={tool.data.sources}
+        verifiedAt={tool.data.verifiedAt}
+      />
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,118 @@
+---
+import { getCollection, render } from 'astro:content';
+import AISources from '../../../components/AISources.astro';
+import { updateCategoryLabels } from '../../../data/aiNavigation';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const updates = (await getCollection('aiUpdates')).filter(
+    (item) => !item.data.draft,
+  );
+  return updates.map((update) => ({
+    params: { id: update.id },
+    props: { update },
+  }));
+}
+const { update } = Astro.props;
+const { Content, headings } = await render(update);
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const modified = update.data.updatedAt ?? update.data.publishedAt;
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('fa-IR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'NewsArticle',
+  headline: update.data.title,
+  description: update.data.description,
+  image: new URL('/og.png', Astro.site).toString(),
+  datePublished: update.data.publishedAt.toISOString(),
+  dateModified: modified.toISOString(),
+  mainEntityOfPage: canonical.toString(),
+  inLanguage: 'fa-IR',
+  author: {
+    '@type': 'Organization',
+    name: 'MAHSAI',
+    url: new URL('/about/', Astro.site).toString(),
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'MAHSAI',
+    logo: {
+      '@type': 'ImageObject',
+      url: new URL('/brand/mahsai-symbol.png', Astro.site).toString(),
+    },
+  },
+  keywords: update.data.keywords.join(', '),
+};
+---
+
+<BaseLayout
+  title={`${update.data.title} | MAHSAI AI`}
+  description={update.data.description}
+  type="article"
+  keywords={update.data.keywords}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(structuredData)}
+  />
+  <article class="ai-reading-page">
+    <header class="ai-reading-stage ai-update-reading-stage">
+      <div class="shell">
+        <nav class="breadcrumbs" aria-label="مسیر صفحه">
+          <a href="/">خانه</a><span aria-hidden="true">/</span><a href="/ai/"
+            >هوش مصنوعی</a
+          ><span aria-hidden="true">/</span><a href="/ai/today/">رادار امروز</a>
+        </nav>
+        <div class="ai-reading-stage-grid">
+          <div>
+            <p class="ai-kicker">
+              <span aria-hidden="true">●</span>
+              {updateCategoryLabels[update.data.category]}
+            </p>
+            <h1>{update.data.title}</h1>
+            <p class="ai-reading-deck">{update.data.description}</p>
+            <div class="ai-reading-byline">
+              <span>تحریریه MAHSAI AI</span><time
+                datetime={update.data.publishedAt.toISOString()}
+                >{formatDate(update.data.publishedAt)}</time
+              ><span>{update.data.readingTime} مطالعه</span>
+            </div>
+          </div>
+          <aside class="ai-reading-summary">
+            <span>خلاصهٔ گزارش</span><ul>
+              {update.data.takeaways.map((item) => <li>{item}</li>)}
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </header>
+    <div class="shell ai-reading-layout">
+      <aside class="ai-reading-toc">
+        <p>در این گزارش</p><ol>
+          {
+            headings
+              .filter((h) => h.depth === 2)
+              .map((h) => (
+                <li>
+                  <a href={`#${h.slug}`}>{h.text}</a>
+                </li>
+              ))
+          }
+        </ol>
+      </aside>
+      <div class="ai-reading-content prose"><Content /></div>
+    </div>
+    <div class="shell">
+      <AISources
+        sources={update.data.sources}
+        verifiedAt={update.data.verifiedAt}
+      />
+    </div>
+  </article>
+</BaseLayout>
