@@ -2,6 +2,7 @@
   "name": "LM Studio",
   "shortName": "LM Studio",
   "description": "برنامهٔ دسکتاپ برای جست‌وجو، دانلود، مدیریت و اجرای مدل‌های محلی با رابط گرافیکی و API محلی.",
+  "plainSummary": "برای شروع تصویری و ساده با مدل‌های محلی، بدون اینکه از همان اول سراغ خط فرمان بروید.",
   "officialUrl": "https://lmstudio.ai/download",
   "category": "local",
   "access": "hybrid",
@@ -21,6 +22,7 @@
     "برای ویندوز x64 پردازندهٔ دارای AVX2 لازم است",
     "۱۶ گیگابایت RAM و ۴ گیگابایت VRAM توصیه شده است"
   ],
+  "verification": "source-checked",
   "verifiedAt": "2026-08-13",
   "sources": [
     {
@@ -33,5 +35,5 @@
     }
   ],
   "featured": true,
-  "order": 5
+  "order": 8
 }

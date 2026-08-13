@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { toolAccessLabels } from '../data/aiNavigation';
+import { toolAccessLabels, toolVerificationLabels } from '../data/aiNavigation';
 
 interface Props {
   tool: CollectionEntry<'aiTools'>;
@@ -26,6 +26,10 @@ const formatDate = (date: Date) =>
     </div>
   </div>
   <p>{tool.data.description}</p>
+  <p class="ai-tool-plain">
+    <strong>به زبان ساده:</strong>
+    {tool.data.plainSummary}
+  </p>
   <div class="ai-tool-detail">
     <h3>مناسب برای</h3>
     <ul>{tool.data.bestFor.map((item) => <li>{item}</li>)}</ul>
@@ -35,7 +39,11 @@ const formatDate = (date: Date) =>
     <ul>{tool.data.limitations.map((item) => <li>{item}</li>)}</ul>
   </div>
   <footer>
-    <span>بررسی {formatDate(tool.data.verifiedAt)}</span>
+    <span
+      >{toolVerificationLabels[tool.data.verification]} · {
+        formatDate(tool.data.verifiedAt)
+      }</span
+    >
     <a href={`/ai/tools/${tool.id}/`}>
       جزئیات و منابع <span aria-hidden="true">←</span>
     </a>

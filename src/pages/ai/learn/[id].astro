@@ -1,6 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content';
 import AISources from '../../../components/AISources.astro';
+import AnswerFirst from '../../../components/AnswerFirst.astro';
+import RelatedReads from '../../../components/RelatedReads.astro';
 import { guideKindLabels, guideLevelLabels } from '../../../data/aiNavigation';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
@@ -16,6 +18,25 @@ export async function getStaticPaths() {
 
 const { guide } = Astro.props;
 const { Content, headings } = await render(guide);
+const allGuides = (await getCollection('aiGuides'))
+  .filter((item) => !item.data.draft && item.id !== guide.id)
+  .sort((a, b) => {
+    const topicMatchA = a.data.topic === guide.data.topic ? 1 : 0;
+    const topicMatchB = b.data.topic === guide.data.topic ? 1 : 0;
+    return (
+      topicMatchB - topicMatchA ||
+      b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()
+    );
+  });
+const relatedItems = allGuides.slice(0, 3).map((item) => ({
+  href: `/ai/learn/${item.id}/`,
+  label: guideKindLabels[item.data.kind],
+  title: item.data.title,
+  description: item.data.description,
+}));
+const socialImage = guide.data.cover ?? '/og.png';
+const socialImageAlt =
+  guide.data.coverAlt ?? `کارت معرفی راهنمای ${guide.data.title}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const published = guide.data.publishedAt;
 const modified = guide.data.updatedAt ?? guide.data.publishedAt;
@@ -88,6 +109,8 @@ const breadcrumbs = {
   description={guide.data.description}
   type="article"
   keywords={guide.data.keywords}
+  image={socialImage}
+  imageAlt={socialImageAlt}
 >
   <script
     type="application/ld+json"
@@ -146,8 +169,29 @@ const breadcrumbs = {
           }
         </ol>
       </aside>
-      <div class="ai-reading-content prose"><Content /></div>
+      <div class="ai-reading-content prose">
+        <AnswerFirst answer={guide.data.answerFirst} />
+        {
+          guide.data.cover && guide.data.coverAlt && (
+            <figure class="ai-reading-cover">
+              <img
+                src={guide.data.cover}
+                alt={guide.data.coverAlt}
+                width="1664"
+                height="945"
+                loading="eager"
+              />
+            </figure>
+          )
+        }
+        <Content />
+        <aside class="article-next-step">
+          <span>همین حالا انجام دهید</span>
+          <p>{guide.data.nextStep}</p>
+        </aside>
+      </div>
     </div>
+    <div class="shell"><RelatedReads items={relatedItems} /></div>
     <div class="shell">
       <AISources
         sources={guide.data.sources}

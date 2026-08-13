@@ -1,0 +1,39 @@
+{
+  "name": "Open WebUI",
+  "shortName": "Open WebUI",
+  "description": "رابط خودمیزبان برای گفت‌وگو با مدل‌های محلی یا سرویس‌های سازگار؛ معمولاً با Docker یا Python راه‌اندازی می‌شود.",
+  "plainSummary": "یک صفحهٔ گفت‌وگوی قابل‌گسترش برای وصل‌کردن Ollama و مدل‌های دیگر روی سیستم یا سرور خودتان.",
+  "officialUrl": "https://openwebui.com/",
+  "category": "local",
+  "access": "hybrid",
+  "platforms": ["ویندوز", "macOS", "Linux", "مرورگر"],
+  "bestFor": [
+    "رابط گرافیکی برای Ollama",
+    "استفاده از چند ارائه‌دهنده",
+    "راه‌اندازی شخصی یا تیمی"
+  ],
+  "features": [
+    "اتصال به Ollama",
+    "پشتیبانی از APIهای سازگار",
+    "دانش و جست‌وجوی سند",
+    "نصب Docker یا Python"
+  ],
+  "limitations": [
+    "نصب و نگه‌داری امن به دانش فنی بیشتری از یک برنامهٔ دسکتاپ نیاز دارد",
+    "اتصال به سرویس ابری می‌تواند تجربه را از حالت کاملاً محلی خارج کند"
+  ],
+  "verification": "source-checked",
+  "verifiedAt": "2026-08-13",
+  "sources": [
+    {
+      "label": "Open WebUI Quick Start",
+      "url": "https://docs.openwebui.com/getting-started/quick-start/"
+    },
+    {
+      "label": "Open WebUI Features",
+      "url": "https://docs.openwebui.com/features/"
+    }
+  ],
+  "featured": true,
+  "order": 9
+}

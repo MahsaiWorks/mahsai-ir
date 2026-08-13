@@ -2,6 +2,7 @@
   "name": "Ollama",
   "shortName": "Ollama",
   "description": "ابزار اجرای مدل‌های زبانی روی رایانه، با خط فرمان و API محلی؛ برای توسعه و جریان‌های کاری قابل اسکریپت مناسب است.",
+  "plainSummary": "برای اجرای مدل روی کامپیوتر با دستورهای کوتاه و اتصال آن به برنامه‌ها از راه API محلی.",
   "officialUrl": "https://ollama.com/download",
   "category": "local",
   "access": "hybrid",
@@ -21,6 +22,7 @@
     "مدل‌ها می‌توانند فضای بسیار زیادی مصرف کنند",
     "سرعت و امکان اجرا به سخت‌افزار و مدل وابسته است"
   ],
+  "verification": "source-checked",
   "verifiedAt": "2026-08-13",
   "sources": [
     {
@@ -33,5 +35,5 @@
     }
   ],
   "featured": true,
-  "order": 4
+  "order": 7
 }

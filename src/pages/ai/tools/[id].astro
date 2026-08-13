@@ -1,7 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
 import AISources from '../../../components/AISources.astro';
-import { toolAccessLabels } from '../../../data/aiNavigation';
+import {
+  toolAccessLabels,
+  toolVerificationLabels,
+} from '../../../data/aiNavigation';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
@@ -29,6 +32,37 @@ const structuredData = {
   operatingSystem: tool.data.platforms.join(', '),
   url: tool.data.officialUrl,
 };
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const breadcrumbs = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'خانه',
+      item: new URL('/', Astro.site).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'هوش مصنوعی',
+      item: new URL('/ai/', Astro.site).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: 'ابزارها',
+      item: new URL('/ai/tools/', Astro.site).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 4,
+      name: tool.data.name,
+      item: canonical.toString(),
+    },
+  ],
+};
 ---
 
 <BaseLayout
@@ -39,6 +73,11 @@ const structuredData = {
     type="application/ld+json"
     is:inline
     set:html={JSON.stringify(structuredData)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbs)}
   />
   <article class="ai-tool-page">
     <header class="ai-tool-stage">
@@ -56,7 +95,7 @@ const structuredData = {
               }
             </p>
             <h1>{tool.data.name}</h1>
-            <p>{tool.data.description}</p>
+            <p>{tool.data.plainSummary}</p>
             <div class="ai-tool-stage-actions">
               <a
                 class="button"
@@ -64,7 +103,11 @@ const structuredData = {
                 target="_blank"
                 rel="noopener noreferrer"
                 >رفتن به وب‌سایت رسمی <span aria-hidden="true">↗</span></a
-              ><span>بررسی {formatDate(tool.data.verifiedAt)}</span>
+              ><span
+                >{toolVerificationLabels[tool.data.verification]} · {
+                  formatDate(tool.data.verifiedAt)
+                }</span
+              >
             </div>
           </div>
           <aside>
@@ -78,6 +121,10 @@ const structuredData = {
       </div>
     </header>
     <div class="shell ai-tool-page-grid">
+      <section class="ai-tool-quick-answer">
+        <p class="eyebrow">در یک نگاه</p><h2>به زبان ساده</h2>
+        <p>{tool.data.description}</p>
+      </section>
       <section>
         <p class="eyebrow">چه کاری انجام می‌دهد؟</p><h2>
           قابلیت‌های ثبت‌شده

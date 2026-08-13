@@ -14,14 +14,32 @@ export async function GET() {
     .sort(
       (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
     );
+  const guides = (await getCollection('aiGuides'))
+    .filter((guide) => !guide.data.draft)
+    .sort(
+      (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+    );
   const base = 'https://mahsai.ir';
-  const items = updates
-    .map((update) => {
-      const url = `${base}/ai/today/${update.id}/`;
-      return `<item><title>${escapeXml(update.data.title)}</title><link>${url}</link><guid>${url}</guid><description>${escapeXml(update.data.description)}</description><pubDate>${update.data.publishedAt.toUTCString()}</pubDate></item>`;
+  const items = [
+    ...updates.map((update) => ({
+      title: update.data.title,
+      description: update.data.description,
+      publishedAt: update.data.publishedAt,
+      url: `${base}/ai/today/${update.id}/`,
+    })),
+    ...guides.map((guide) => ({
+      title: guide.data.title,
+      description: guide.data.description,
+      publishedAt: guide.data.publishedAt,
+      url: `${base}/ai/learn/${guide.id}/`,
+    })),
+  ]
+    .sort((a, b) => b.publishedAt.valueOf() - a.publishedAt.valueOf())
+    .map((item) => {
+      return `<item><title>${escapeXml(item.title)}</title><link>${item.url}</link><guid>${item.url}</guid><description>${escapeXml(item.description)}</description><pubDate>${item.publishedAt.toUTCString()}</pubDate></item>`;
     })
     .join('');
-  const body = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>رادار هوش مصنوعی MAHSAI</title><link>${base}/ai/today/</link><description>گزارش‌های تأییدشدهٔ هوش مصنوعی با منبع رسمی</description><language>fa-IR</language>${items}</channel></rss>`;
+  const body = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>هوش مصنوعی MAHSAI</title><link>${base}/ai/</link><description>رادار، راهنما و آموزش هوش مصنوعی به زبان ساده با منبع رسمی</description><language>fa-IR</language>${items}</channel></rss>`;
   return new Response(body, {
     headers: { 'Content-Type': 'application/rss+xml; charset=utf-8' },
   });

@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import { siteConfig } from '../../config/site';
 import { articleClusters } from '../../data/articleClusters';
+import AnswerFirst from '../../components/AnswerFirst.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
@@ -183,6 +184,7 @@ const breadcrumbStructuredData = {
       </aside>
 
       <div class="article-body prose">
+        <AnswerFirst answer={article.data.description} />
         <Content />
         <aside class="article-inline-cta">
           <span>متراژ، محصول مهسای</span>

@@ -7,6 +7,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 const tools = (await getCollection('aiTools')).sort(
   (a, b) => a.data.order - b.data.order,
 );
+const sourceChecked = tools.filter(
+  (tool) => tool.data.verification === 'source-checked',
+).length;
 ---
 
 <BaseLayout
@@ -17,12 +20,24 @@ const tools = (await getCollection('aiTools')).sort(
     eyebrow="راهنمای ابزار"
     title="ابزار کمتر،"
     highlight="انتخاب دقیق‌تر."
-    lead="این فهرست فقط ابزارهایی را نگه می‌دارد که صفحهٔ رسمی، کاربرد روشن و تاریخ بررسی دارند. قیمت یا قابلیت متغیر را بدون منبع روز منتشر نمی‌کنیم."
+    lead="هر کارت در چند ثانیه می‌گوید ابزار چه کاری می‌کند، برای چه کسی مناسب است و قبل از استفاده چه محدودیتی دارد. قیمت یا قابلیت متغیر را بدون منبع روز منتشر نمی‌کنیم."
     index={`${tools.length} ابزار بررسی‌شده`}
     note="هدف ساخت بزرگ‌ترین فهرست نیست؛ هدف این است که برای یک کار مشخص سریع‌تر به گزینهٔ مناسب برسید."
     signals={['لینک رسمی', 'مناسب برای', 'محدودیت‌ها', 'تاریخ بررسی']}
     tone="paper"
   />
+  <section class="tool-legend">
+    <div class="shell tool-legend-grid">
+      <div>
+        <strong>{sourceChecked}</strong><span>ابزار بررسی‌شده از منبع رسمی</span
+        >
+      </div>
+      <p>
+        <strong>نکته:</strong> «بررسی منبع» با «تست دست‌اول» فرق دارد. تا وقتی MAHSAI
+        یک سناریوی ثابت را اجرا نکرده باشد، امتیاز یا برنده اعلام نمی‌کنیم.
+      </p>
+    </div>
+  </section>
   <section class="section">
     <div class="shell ai-tool-grid">
       {tools.map((tool) => <AIToolCard tool={tool} />)}

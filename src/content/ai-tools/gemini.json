@@ -2,6 +2,7 @@
   "name": "Google Gemini",
   "shortName": "Gemini",
   "description": "دستیار گوگل برای ایده‌پردازی، تحلیل فایل و پژوهش؛ در Deep Research می‌تواند از Google Search و منابع متصل استفاده کند.",
+  "plainSummary": "برای کسی که با جست‌وجوی گوگل و سرویس‌های Google کار می‌کند، یک دستیار عمومی و پژوهشی است.",
   "officialUrl": "https://gemini.google.com/",
   "category": "assistant",
   "access": "cloud",
@@ -21,6 +22,7 @@
     "دسترسی قابلیت‌ها به سن، کشور، حساب و سقف مصرف وابسته است",
     "خروجی می‌تواند خطا داشته باشد و باید بررسی شود"
   ],
+  "verification": "source-checked",
   "verifiedAt": "2026-08-13",
   "sources": [
     {

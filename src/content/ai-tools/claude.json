@@ -2,6 +2,7 @@
   "name": "Claude",
   "shortName": "Claude",
   "description": "دستیار Anthropic برای گفت‌وگو، کار با پروژه‌ها، جست‌وجوی وب و پژوهش چندمرحله‌ای با ارجاع.",
+  "plainSummary": "برای نوشتن، تحلیل متن، نگه‌داری پروژه و پژوهش منبع‌دار؛ دسترسی قابلیت‌ها به حساب وابسته است.",
   "officialUrl": "https://claude.ai/",
   "category": "assistant",
   "access": "cloud",
@@ -21,6 +22,7 @@
     "Research به Web Search و نوع حساب مناسب نیاز دارد",
     "سقف مصرف و دسترسی ممکن است تغییر کند"
   ],
+  "verification": "source-checked",
   "verifiedAt": "2026-08-13",
   "sources": [
     {

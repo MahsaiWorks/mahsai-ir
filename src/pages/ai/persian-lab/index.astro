@@ -1,6 +1,12 @@
 ---
 import PageStage from '../../../components/PageStage.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import {
+  benchmarkCases,
+  benchmarkDimensions,
+  benchmarkFiles,
+  benchmarkVersion,
+} from '../../../data/persianBenchmark';
 
 const protocol = [
   {
@@ -31,8 +37,8 @@ const protocol = [
     title="فارسی را با حس کلی"
     highlight="امتیاز نمی‌دهیم."
     lead="کیفیت را به معیارهای قابل مشاهده تقسیم می‌کنیم، نسخه و پرامپت را ثبت می‌کنیم و فقط نتیجه‌ای را منتشر می‌کنیم که امکان تکرار داشته باشد."
-    index="نسخه ۰٫۱ پروتکل"
-    note="آزمایش هنوز اجرا نشده است؛ بنابراین در این صفحه رتبه‌بندی یا ادعای برتری وجود ندارد."
+    index={`مجموعهٔ آزمون ${benchmarkVersion} · ${benchmarkCases.length} سناریو`}
+    note="مجموعهٔ آزمون منتشر شده، اما اجرای چندابزاری هنوز انجام نشده است؛ بنابراین رتبه‌بندی یا ادعای برتری نداریم."
     signals={[
       'پرامپت یکسان',
       'متن واقعی غیرمحرمانه',
@@ -41,6 +47,24 @@ const protocol = [
     ]}
     tone="mint"
   />
+  <section class="section lab-download-section">
+    <div class="shell lab-download-card">
+      <div>
+        <p class="eyebrow">دادهٔ باز و قابل تکرار</p>
+        <h2>خودتان همان آزمون را اجرا کنید.</h2>
+        <p>
+          ورودی، دستور و معیار قبولی هر سناریو منتشر شده است. JSON برای
+          برنامه‌نویسی و CSV برای بررسی جدولی آماده است.
+        </p>
+      </div>
+      <div class="lab-download-actions">
+        <a class="button" href={benchmarkFiles.json} download>دانلود JSON</a>
+        <a class="button button-secondary" href={benchmarkFiles.csv} download
+          >دانلود CSV</a
+        >
+      </div>
+    </div>
+  </section>
   <section class="section">
     <div class="shell ai-lab-grid">
       <div>
@@ -77,10 +101,76 @@ const protocol = [
         </h2>
       </div><dl>
         <div><dt>تعریف معیارها</dt><dd>انجام شده</dd></div><div>
-          <dt>ساخت مجموعهٔ آزمون</dt><dd>در حال آماده‌سازی</dd>
+          <dt>ساخت مجموعهٔ آزمون</dt><dd>نسخهٔ ۰٫۱ منتشر شد</dd>
         </div><div><dt>اجرای چندابزاری</dt><dd>هنوز انجام نشده</dd></div><div>
-          <dt>انتشار دادهٔ خام</dt><dd>پس از آزمون</dd>
+          <dt>انتشار ورودی و معیار</dt><dd>JSON و CSV منتشر شد</dd>
         </div>
+      </dl>
+    </div>
+  </section>
+  <section class="section">
+    <div class="shell benchmark-cases">
+      <div class="ai-section-head">
+        <div>
+          <p class="eyebrow">سناریوهای نسخهٔ ۰٫۱</p><h2>
+            کوچک، واقعی و قابل بررسی.
+          </h2>
+        </div>
+        <p>
+          این نسخه برای تثبیت روش است، نه اعلام برنده. دادهٔ حساس یا محرمانه
+          داخل مجموعه وجود ندارد.
+        </p>
+      </div>
+      <div class="benchmark-case-grid">
+        {
+          benchmarkCases.map((item) => (
+            <article>
+              <span>
+                {item.id} · {item.category}
+              </span>
+              <h3>{item.title}</h3>
+              <p>{item.goal}</p>
+              <details>
+                <summary>دیدن ورودی و معیارها</summary>
+                <>
+                  <h4>ورودی</h4>
+                  <p>{item.input}</p>
+                </>
+                <>
+                  <h4>دستور</h4>
+                  <p>{item.prompt}</p>
+                </>
+                <>
+                  <h4>معیار قبولی</h4>
+                  <ul>
+                    {item.checks.map((check) => (
+                      <li>{check}</li>
+                    ))}
+                  </ul>
+                </>
+              </details>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+  <section class="section benchmark-score-section">
+    <div class="shell benchmark-score-card">
+      <div>
+        <p class="eyebrow">وزن امتیازها</p><h2>امتیاز از کجا می‌آید؟</h2>
+      </div>
+      <dl>
+        {
+          benchmarkDimensions.map((item) => (
+            <div>
+              <>
+                <dt>{item.label}</dt>
+                <dd>{item.weight}٪</dd>
+              </>
+            </div>
+          ))
+        }
       </dl>
     </div>
   </section>

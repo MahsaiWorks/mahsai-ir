@@ -2,6 +2,7 @@
   "name": "ChatGPT",
   "shortName": "ChatGPT",
   "description": "دستیار عمومی OpenAI برای گفت‌وگو، کار با فایل، جست‌وجوی وب و پژوهش چندمرحله‌ای؛ دسترسی هر قابلیت به حساب وابسته است.",
+  "plainSummary": "برای نوشتن، پرسش‌های روزمره، کار با فایل و تحقیق؛ ولی جواب مهم را باید با منبع بررسی کنید.",
   "officialUrl": "https://chatgpt.com/",
   "category": "assistant",
   "access": "cloud",
@@ -21,6 +22,7 @@
     "قابلیت‌ها و سقف استفاده با نوع حساب و منطقه تغییر می‌کند",
     "پاسخ‌های مهم نیاز به بررسی منبع دارند"
   ],
+  "verification": "source-checked",
   "verifiedAt": "2026-08-13",
   "sources": [
     {

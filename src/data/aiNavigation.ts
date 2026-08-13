@@ -30,6 +30,11 @@ export const aiNavigation = [
     description: 'از شروع تا جریان کار واقعی',
   },
   {
+    href: '/ai/course/',
+    label: 'دوره رایگان',
+    description: 'یک مسیر کوتاه با تمرین واقعی',
+  },
+  {
     href: '/ai/workflows/',
     label: 'جریان‌های کاری',
     description: 'هوش مصنوعی در کار روزانه',
@@ -64,4 +69,9 @@ export const toolAccessLabels = {
   cloud: 'ابری',
   local: 'محلی',
   hybrid: 'ترکیبی',
+} as const;
+
+export const toolVerificationLabels = {
+  'source-checked': 'بررسی‌شده از منبع رسمی',
+  'hands-on': 'آزمون دست‌اول MAHSAI',
 } as const;

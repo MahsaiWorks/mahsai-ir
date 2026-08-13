@@ -1,0 +1,39 @@
+{
+  "name": "Perplexity",
+  "shortName": "Perplexity",
+  "description": "ابزار جست‌وجو و پژوهش مبتنی بر هوش مصنوعی با پاسخ‌های دارای ارجاع، فایل و فضای Project برای کارهای ادامه‌دار.",
+  "plainSummary": "برای جست‌وجوی منبع‌دار و جمع‌کردن تحقیق‌های ادامه‌دار در یک Project کاربرد دارد.",
+  "officialUrl": "https://www.perplexity.ai/",
+  "category": "research",
+  "access": "cloud",
+  "platforms": ["وب", "ویندوز", "macOS", "اندروید", "iOS"],
+  "bestFor": [
+    "جست‌وجوی سریع با لینک",
+    "تحقیق چندمرحله‌ای",
+    "پروژه‌های منبع‌محور"
+  ],
+  "features": [
+    "پاسخ همراه با ارجاع",
+    "Projects برای کار ادامه‌دار",
+    "فایل و دستور ثابت پروژه",
+    "جست‌وجوی وب"
+  ],
+  "limitations": [
+    "وجود لینک به‌معنای پشتیبانی کامل منبع از ادعا نیست",
+    "قابلیت، سقف فایل و دسترسی با نوع حساب تغییر می‌کند"
+  ],
+  "verification": "source-checked",
+  "verifiedAt": "2026-08-13",
+  "sources": [
+    {
+      "label": "What are Projects? — Perplexity Help Center",
+      "url": "https://www.perplexity.ai/help-center/en/articles/10352961-what-are-spaces"
+    },
+    {
+      "label": "Internal Knowledge Search — Perplexity Help Center",
+      "url": "https://www.perplexity.ai/help-center/en/articles/10352914-what-is-internal-knowledge-search"
+    }
+  ],
+  "featured": true,
+  "order": 5
+}

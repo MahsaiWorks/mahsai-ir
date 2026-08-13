@@ -15,30 +15,35 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     highlight="پیدا کنیم."
     lead="ممکن است نشانی تغییر کرده باشد یا صفحه‌ای که می‌خواهید دیگر در این مسیر وجود نداشته باشد."
     index="خطای ۴۰۴"
-    note="از صفحه خانه، معرفی متراژ یا مجله تخصصی می‌توانید مسیر درست را ادامه دهید."
-    signals={['خانه', 'معرفی متراژ', 'مقالات آموزشی']}
+    note="از مرکز هوش مصنوعی، آموزش‌های رایگان یا معرفی متراژ می‌توانید مسیر درست را ادامه دهید."
+    signals={['مرکز هوش مصنوعی', 'آموزش رایگان', 'معرفی متراژ']}
     tone="apricot"
   >
     <div slot="actions" class="page-stage-actions">
       <a class="button" href="/">بازگشت به خانه</a>
-      <a class="page-stage-link" href="/articles/">رفتن به مجله</a>
+      <a class="page-stage-link" href="/ai/">مرکز هوش مصنوعی</a>
     </div>
   </PageStage>
 
   <section class="page-section compact-page-section">
     <div class="shell route-grid">
+      <a href="/ai/today/"
+        ><span>01</span><strong>رادار امروز</strong><p>
+          تغییرات مهم با منبع رسمی
+        </p></a
+      >
+      <a href="/ai/learn/"
+        ><span>02</span><strong>آموزش رایگان</strong><p>
+          راهنماهای ساده و قدم‌به‌قدم
+        </p></a
+      >
       <a href="/apps/metrazh/"
-        ><span>01</span><strong>معرفی متراژ</strong><p>
+        ><span>03</span><strong>معرفی متراژ</strong><p>
           قابلیت‌ها و تصاویر واقعی محصول
         </p></a
       >
-      <a href="/articles/"
-        ><span>02</span><strong>مجله املاک</strong><p>
-          راهنماهای ساختاریافته و کاربردی
-        </p></a
-      >
       <a href="/support/"
-        ><span>03</span><strong>پشتیبانی</strong><p>
+        ><span>04</span><strong>پشتیبانی</strong><p>
           راه ارتباط رسمی با مهسای
         </p></a
       >
