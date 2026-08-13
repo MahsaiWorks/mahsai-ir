@@ -1,9 +1,21 @@
 ---
+import { getCollection } from 'astro:content';
 import PageStage from '../components/PageStage.astro';
 import { siteConfig } from '../config/site';
+import { getCafeBazaarLink } from '../data/appPresentation';
 import { metrazhStory } from '../data/metrazhStory';
 import { specialties } from '../data/specialties';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const metrazhApp = (await getCollection('apps')).find(
+  (app) => app.id === 'metrazh',
+);
+
+if (!metrazhApp) {
+  throw new Error('Metrazh content entry is missing.');
+}
+
+const bazaarLink = getCafeBazaarLink(metrazhApp.data.storeLinks);
 ---
 
 <BaseLayout
@@ -106,10 +118,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <h2>دستیار فارسی برای نظم دادن به جریان کار املاک.</h2>
         <p>
           متراژ برای ثبت فایل‌های ملکی، مدیریت متقاضی، برنامه‌ریزی بازدید،
-          یادآوری پیگیری و آماده‌سازی خروجی‌های کاری طراحی شده و در مرحله توسعه
-          و پیش‌انتشار قرار دارد.
+          یادآوری پیگیری و آماده‌سازی خروجی‌های کاری طراحی شده است. نسخه عمومی
+          {metrazhApp.data.version} از صفحه رسمی کافه‌بازار قابل دریافت است.
         </p>
-        <a class="text-link" href="/apps/metrazh/">معرفی کامل محصول ←</a>
+        <div class="catalog-app-actions">
+          {
+            bazaarLink && (
+              <a
+                class="button"
+                href={bazaarLink.url}
+                target="_blank"
+                rel="noopener"
+              >
+                دانلود از کافه‌بازار
+              </a>
+            )
+          }
+          <a class="text-link" href="/apps/metrazh/">معرفی کامل محصول ←</a>
+        </div>
       </div>
     </div>
   </section>

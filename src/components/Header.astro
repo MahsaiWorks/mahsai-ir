@@ -1,5 +1,7 @@
 ---
+import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
+import { getCafeBazaarLink } from '../data/appPresentation';
 
 const path = Astro.url.pathname;
 const links = [
@@ -12,6 +14,13 @@ const links = [
 
 const isActive = (href: string) =>
   href === '/' ? path === '/' : path.startsWith(href);
+
+const featuredApp = (await getCollection('apps'))
+  .filter((app) => app.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)[0];
+const downloadLink = featuredApp
+  ? getCafeBazaarLink(featuredApp.data.storeLinks)
+  : undefined;
 ---
 
 <header class="site-header">
@@ -49,10 +58,25 @@ const isActive = (href: string) =>
       </ul>
     </nav>
 
-    <a class="header-cta" href="/support/">
-      پشتیبانی
-      <span aria-hidden="true">←</span>
-    </a>
+    {
+      downloadLink && featuredApp ? (
+        <a
+          class="header-cta"
+          href={downloadLink.url}
+          target="_blank"
+          rel="noopener"
+          aria-label={`دانلود ${featuredApp.data.name} از کافه‌بازار`}
+        >
+          دانلود متراژ
+          <span aria-hidden="true">←</span>
+        </a>
+      ) : (
+        <a class="header-cta" href="/support/">
+          پشتیبانی
+          <span aria-hidden="true">←</span>
+        </a>
+      )
+    }
 
     <details class="mobile-nav">
       <summary aria-label="باز کردن فهرست پیمایش">
@@ -72,6 +96,20 @@ const isActive = (href: string) =>
                 </a>
               </li>
             ))
+          }
+          {
+            downloadLink && featuredApp && (
+              <li>
+                <a
+                  class="mobile-download-link"
+                  href={downloadLink.url}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  دانلود {featuredApp.data.name} از کافه‌بازار
+                </a>
+              </li>
+            )
           }
         </ul>
       </nav>

@@ -1,9 +1,17 @@
 ---
+import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
+import { getCafeBazaarLink } from '../data/appPresentation';
 
 const year = new Intl.DateTimeFormat('fa-IR', { year: 'numeric' }).format(
   new Date(),
 );
+const featuredApp = (await getCollection('apps'))
+  .filter((app) => app.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)[0];
+const downloadLink = featuredApp
+  ? getCafeBazaarLink(featuredApp.data.storeLinks)
+  : undefined;
 ---
 
 <footer class="site-footer">
@@ -26,6 +34,16 @@ const year = new Intl.DateTimeFormat('fa-IR', { year: 'numeric' }).format(
     <nav aria-label="پیوندهای پشتیبانی و حقوقی">
       <h2>دسترسی سریع</h2>
       <ul>
+        <li><a href="/apps/metrazh/">معرفی متراژ</a></li>
+        {
+          downloadLink && featuredApp && (
+            <li>
+              <a href={downloadLink.url} target="_blank" rel="noopener">
+                دانلود {featuredApp.data.name} از کافه‌بازار
+              </a>
+            </li>
+          )
+        }
         <li><a href="/support/">پشتیبانی</a></li>
         <li><a href="/articles/">مقالات آموزشی</a></li>
         <li><a href="/privacy/">حریم خصوصی</a></li>

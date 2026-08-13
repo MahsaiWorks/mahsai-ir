@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import PageStage from '../components/PageStage.astro';
 import { siteConfig } from '../config/site';
+import { getAppStatusLabel, getCafeBazaarLink } from '../data/appPresentation';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const apps = (await getCollection('apps')).sort(
@@ -39,42 +40,58 @@ const apps = (await getCollection('apps')).sort(
       </header>
 
       {
-        apps.map((app) => (
-          <article class="catalog-app">
-            <div class="catalog-app-visual">
-              <span>نمای واقعی اپلیکیشن</span>
-              <img
-                src={app.data.screenshots[0]?.src}
-                alt={app.data.screenshots[0]?.alt}
-                loading="lazy"
-              />
-            </div>
-            <div class="catalog-app-copy">
-              <div class="catalog-app-id">
-                <img src={app.data.logo.dark} alt={app.data.name} />
-                <span>در حال توسعه و پیش‌انتشار</span>
+        apps.map((app) => {
+          const downloadLink = getCafeBazaarLink(app.data.storeLinks);
+
+          return (
+            <article class="catalog-app">
+              <div class="catalog-app-visual">
+                <span>نمای واقعی اپلیکیشن</span>
+                <img
+                  src={app.data.screenshots[0]?.src}
+                  alt={app.data.screenshots[0]?.alt}
+                  loading="lazy"
+                />
               </div>
-              <h3>{app.data.tagline}</h3>
-              <p>{app.data.fullDescription}</p>
-              <ul>
-                {app.data.features.slice(0, 4).map((feature) => (
-                  <li>{feature}</li>
-                ))}
-              </ul>
-              <div class="catalog-app-actions">
-                <a class="button" href={`/apps/${app.id}/`}>
-                  معرفی کامل و تصاویر
-                </a>
-                <a class="page-stage-link" href={`/apps/${app.id}/status/`}>
-                  وضعیت انتشار
-                </a>
-                <a class="page-stage-link" href={app.data.supportUrl}>
-                  پشتیبانی
-                </a>
+              <div class="catalog-app-copy">
+                <div class="catalog-app-id">
+                  <img src={app.data.logo.dark} alt={app.data.name} />
+                  <span>
+                    {getAppStatusLabel(app.data.status, app.data.storeLinks)}
+                  </span>
+                </div>
+                <h3>{app.data.tagline}</h3>
+                <p>{app.data.fullDescription}</p>
+                <ul>
+                  {app.data.features.slice(0, 4).map((feature) => (
+                    <li>{feature}</li>
+                  ))}
+                </ul>
+                <div class="catalog-app-actions">
+                  {downloadLink && (
+                    <a
+                      class="button"
+                      href={downloadLink.url}
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      دانلود از کافه‌بازار
+                    </a>
+                  )}
+                  <a class="page-stage-link" href={`/apps/${app.id}/`}>
+                    معرفی کامل و تصاویر
+                  </a>
+                  <a class="page-stage-link" href={`/apps/${app.id}/status/`}>
+                    وضعیت انتشار
+                  </a>
+                  <a class="page-stage-link" href={app.data.supportUrl}>
+                    پشتیبانی
+                  </a>
+                </div>
               </div>
-            </div>
-          </article>
-        ))
+            </article>
+          );
+        })
       }
     </div>
   </section>

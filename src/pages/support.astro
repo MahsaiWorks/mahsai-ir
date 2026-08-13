@@ -2,11 +2,16 @@
 import { getCollection } from 'astro:content';
 import PageStage from '../components/PageStage.astro';
 import { siteConfig } from '../config/site';
+import { getCafeBazaarLink } from '../data/appPresentation';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const apps = (await getCollection('apps')).sort(
   (a, b) => a.data.order - b.data.order,
 );
+const metrazhApp = apps.find((app) => app.id === 'metrazh');
+const bazaarLink = metrazhApp
+  ? getCafeBazaarLink(metrazhApp.data.storeLinks)
+  : undefined;
 ---
 
 <BaseLayout
@@ -27,6 +32,18 @@ const apps = (await getCollection('apps')).sort(
       <a class="button" href={`mailto:${siteConfig.supportEmail}`}>
         ارسال ایمیل پشتیبانی
       </a>
+      {
+        bazaarLink && metrazhApp && (
+          <a
+            class="page-stage-link"
+            href={bazaarLink.url}
+            target="_blank"
+            rel="noopener"
+          >
+            دانلود {metrazhApp.data.name} از کافه‌بازار
+          </a>
+        )
+      }
     </div>
   </PageStage>
 
@@ -119,10 +136,19 @@ const apps = (await getCollection('apps')).sort(
       </header>
       <div class="faq-list">
         <details>
-          <summary>آیا متراژ لینک دانلود عمومی دارد؟</summary>
+          <summary>نسخه رسمی متراژ را از کجا دانلود کنم؟</summary>
           <p>
-            نسخه فعلی در مرحله توسعه و پیش‌انتشار است و هنوز لینک عمومی
-            تأییدشده‌ای اعلام نشده است.
+            نسخه {metrazhApp?.data.version} از
+            {
+              bazaarLink ? (
+                <a href={bazaarLink.url} target="_blank" rel="noopener">
+                  صفحه رسمی متراژ در کافه‌بازار
+                </a>
+              ) : (
+                'صفحه رسمی محصول'
+              )
+            }
+            قابل دریافت است. برای نصب و بروزرسانی فقط از همین مسیر استفاده کنید.
           </p>
         </details>
         <details>

@@ -10,8 +10,8 @@ const apps = (await getCollection('apps'))
   .filter((app) => app.data.featured)
   .sort((a, b) => a.data.order - b.data.order);
 const featuredApp = apps[0];
-const releaseChannel = featuredApp?.data.supportLinks.find((link) =>
-  link.url.includes('t.me/metrazhapp'),
+const bazaarLink = featuredApp?.data.storeLinks.find((link) =>
+  link.url.includes('cafebazaar.ir'),
 );
 const allArticles = (await getCollection('articles')).filter(
   (article) => !article.data.draft,
@@ -27,31 +27,28 @@ const articles = homeArticleIds
 const featuredProjects = projects.filter((project) => project.featured);
 const bazaarShowcaseSlides = [
   {
-    src: '/images/apps/metrazh/bazaar/slide-01.jpg',
-    alt: 'میز کار و برنامه روزانه در متراژ',
-  },
-  {
-    src: '/images/apps/metrazh/bazaar/slide-02.jpg',
-    alt: 'جست‌وجو و مدیریت فایل‌های ملکی در متراژ',
-  },
-  {
     src: '/images/apps/metrazh/bazaar/slide-03.jpg',
+    number: '03',
     alt: 'مدیریت مشتریان و متقاضیان در متراژ',
   },
   {
     src: '/images/apps/metrazh/bazaar/slide-04.jpg',
+    number: '04',
     alt: 'تطبیق هوشمند فایل و مشتری در متراژ',
   },
   {
     src: '/images/apps/metrazh/bazaar/slide-05.jpg',
+    number: '05',
     alt: 'دستیار تولید آگهی هوشمند متراژ',
   },
   {
     src: '/images/apps/metrazh/bazaar/slide-06.jpg',
+    number: '06',
     alt: 'ساخت کاتالوگ حرفه‌ای ملک در متراژ',
   },
   {
     src: '/images/apps/metrazh/bazaar/slide-07.jpg',
+    number: '07',
     alt: 'نمایش فایل‌ها و مسیر بازدید روی نقشه در متراژ',
   },
 ];
@@ -79,12 +76,19 @@ const bazaarShowcaseSlides = [
             متقاضیان، بازدیدها و کارهای روزانه است.
           </p>
           <div class="home-stage-actions">
-            <a class="button home-primary-action" href="/apps/metrazh/">
-              آشنایی با متراژ <span aria-hidden="true">←</span>
-            </a>
-            <a class="home-quiet-link" href="/articles/">
-              راهنماهای کاربردی املاک
-            </a>
+            {
+              bazaarLink && (
+                <a
+                  class="button home-primary-action"
+                  href={bazaarLink.url}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  دانلود از کافه‌بازار <span aria-hidden="true">←</span>
+                </a>
+              )
+            }
+            <a class="home-quiet-link" href="/apps/metrazh/">آشنایی با متراژ</a>
           </div>
           {
             featuredApp && (
@@ -140,10 +144,11 @@ const bazaarShowcaseSlides = [
             <div
               class="home-market-gallery"
               role="region"
-              aria-label="تصاویر معرفی متراژ برای کافه‌بازار"
+              aria-label="تصاویر نسخه عمومی متراژ در کافه‌بازار"
+              aria-describedby="market-gallery-help"
               tabindex="0"
             >
-              {bazaarShowcaseSlides.map((slide, index) => (
+              {bazaarShowcaseSlides.map((slide) => (
                 <figure class="home-market-card">
                   <img
                     src={slide.src}
@@ -153,13 +158,13 @@ const bazaarShowcaseSlides = [
                     loading="lazy"
                     decoding="async"
                   />
-                  <figcaption>{String(index + 1).padStart(2, '0')}</figcaption>
+                  <figcaption>{slide.number}</figcaption>
                 </figure>
               ))}
             </div>
-            <p class="home-visual-callout">
+            <p class="home-visual-callout" id="market-gallery-help">
               <span aria-hidden="true">↔</span>
-              برای دیدن همه تصاویر ورق بزنید
+              پنج تصویر عمومی بازار را ورق بزنید
             </p>
           </div>
 
@@ -179,7 +184,7 @@ const bazaarShowcaseSlides = [
             <div class="home-product-meta" aria-label="اطلاعات نسخه متراژ">
               <span>نسخه {featuredApp.data.version}</span>
               <span>{featuredApp.data.minOs}</span>
-              <span>پیش‌انتشار</span>
+              <span>منتشرشده در بازار</span>
             </div>
             <ol class="home-feature-list">
               {featuredApp.data.features.slice(0, 3).map((feature, index) => (
@@ -198,14 +203,14 @@ const bazaarShowcaseSlides = [
               <span aria-hidden="true">←</span>
             </a>
             <div class="home-release-actions">
-              {releaseChannel && (
+              {bazaarLink && (
                 <a
                   class="button"
-                  href={releaseChannel.url}
+                  href={bazaarLink.url}
                   target="_blank"
                   rel="noopener"
                 >
-                  خبرم کن وقتی منتشر شد
+                  دانلود از کافه‌بازار
                 </a>
               )}
               <a class="page-stage-link" href="/apps/metrazh/status/">
@@ -213,8 +218,9 @@ const bazaarShowcaseSlides = [
               </a>
             </div>
             <p class="home-release-note">
-              نسخه فعلی در حال آماده‌سازی برای انتشار عمومی است؛ جزئیات رسمی
-              دانلود پس از تأیید نهایی در همین سایت قرار می‌گیرد.
+              نسخه عمومی {featuredApp.data.version} متراژ هم‌اکنون از صفحه رسمی
+              کافه‌بازار قابل دریافت است؛ بروزرسانی بعدی پس از تأیید بازار منتشر
+              می‌شود.
             </p>
           </div>
         </div>

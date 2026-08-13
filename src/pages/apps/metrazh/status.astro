@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import PageStage from '../../../components/PageStage.astro';
 import { siteConfig } from '../../../config/site';
 import {
-  releaseCheckpoints,
+  getReleaseCheckpoints,
   releasePrinciples,
 } from '../../../data/metrazhRelease';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
@@ -16,39 +16,36 @@ if (!app) {
   throw new Error('Metrazh content entry is missing.');
 }
 
-const releaseChannel = app.data.supportLinks.find((link) =>
-  link.url.includes('t.me/metrazhapp'),
+const bazaarLink = app.data.storeLinks.find((link) =>
+  link.url.includes('cafebazaar.ir'),
 );
+const releaseCheckpoints = getReleaseCheckpoints(app.data.version);
 ---
 
 <BaseLayout
   title={`وضعیت انتشار متراژ | ${siteConfig.brandName}`}
-  description={`وضعیت رسمی انتشار متراژ، نسخه ${app.data.version}، مرحله فعلی و مسیر دریافت لینک دانلود تأییدشده.`}
+  description={`وضعیت رسمی انتشار متراژ، نسخه عمومی ${app.data.version} و مسیر دانلود تأییدشده از کافه‌بازار.`}
 >
   <PageStage
     eyebrow="وضعیت رسمی محصول"
-    title={`نسخه ${app.data.version} در مرحله`}
-    highlight="پیش‌انتشار است."
-    lead="این صفحه منبع رسمی وضعیت متراژ است. تا پیش از تأیید انتشار عمومی، هیچ لینک دانلودی در سایت نمایش داده نمی‌شود."
+    title={`نسخه ${app.data.version}`}
+    highlight="در کافه‌بازار منتشر شده است."
+    lead="نسخه عمومی متراژ از صفحه رسمی کافه‌بازار قابل دریافت است. وضعیت بروزرسانی‌های بعدی پس از تأیید بازار در همین صفحه اعلام می‌شود."
     index="متراژ / وضعیت"
     note={app.data.releaseNote}
-    signals={[
-      app.data.minOs,
-      `نسخه ${app.data.version}`,
-      'دانلود عمومی: هنوز تأیید نشده',
-    ]}
+    signals={[app.data.minOs, `نسخه ${app.data.version}`, 'دانلود عمومی: فعال']}
     tone="apricot"
   >
     <div slot="actions" class="page-stage-actions">
       {
-        releaseChannel && (
+        bazaarLink && (
           <a
             class="button"
-            href={releaseChannel.url}
+            href={bazaarLink.url}
             target="_blank"
             rel="noopener"
           >
-            دریافت خبر انتشار
+            دانلود از کافه‌بازار
           </a>
         )
       }
@@ -95,8 +92,8 @@ const releaseChannel = app.data.supportLinks.find((link) =>
         <p class="eyebrow">یادداشت نسخه فعلی</p>
         <h2 id="version-title">متراژ {app.data.version}</h2>
         <p>
-          این شماره، نسخه فعلی ثبت‌شده برای محصول است و در وضعیت پیش‌انتشار قرار
-          دارد. تاریخ یا لینک دانلود عمومی فقط پس از نهایی‌شدن به این صفحه اضافه
+          این شماره، نسخه عمومی فعلی متراژ در کافه‌بازار است. بروزرسانی بعدی پس
+          از پایان بررسی بازار و قابل‌دریافت‌شدن برای کاربران در این صفحه ثبت
           می‌شود.
         </p>
       </div>
@@ -108,22 +105,19 @@ const releaseChannel = app.data.supportLinks.find((link) =>
 
   <section class="cta-section">
     <div class="shell cta-panel">
-      <p class="eyebrow">اطلاع‌رسانی رسمی</p>
-      <h2>برای دریافت نسخه، فقط مسیرهای رسمی را دنبال کنید.</h2>
-      <p>
-        خبر انتشار در کانال متراژ قرار می‌گیرد و لینک نهایی هم‌زمان در همین سایت
-        اضافه می‌شود.
-      </p>
+      <p class="eyebrow">دانلود رسمی</p>
+      <h2>متراژ را از کافه‌بازار دریافت کنید.</h2>
+      <p>این لینک به صفحه عمومی و تأییدشده متراژ در کافه‌بازار متصل است.</p>
       <div class="cta-actions">
         {
-          releaseChannel && (
+          bazaarLink && (
             <a
               class="button"
-              href={releaseChannel.url}
+              href={bazaarLink.url}
               target="_blank"
               rel="noopener"
             >
-              کانال رسمی متراژ
+              دانلود از کافه‌بازار
             </a>
           )
         }

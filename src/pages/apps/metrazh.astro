@@ -20,8 +20,8 @@ if (!app) {
   throw new Error('Metrazh content entry is missing.');
 }
 
-const releaseChannel = app.data.supportLinks.find((link) =>
-  link.url.includes('t.me/metrazhapp'),
+const bazaarLink = app.data.storeLinks.find((link) =>
+  link.url.includes('cafebazaar.ir'),
 );
 
 const structuredData = {
@@ -34,6 +34,8 @@ const structuredData = {
   softwareVersion: app.data.version,
   description: app.data.shortDescription,
   url: new URL(Astro.url.pathname, Astro.site).toString(),
+  downloadUrl: bazaarLink?.url,
+  sameAs: bazaarLink ? [bazaarLink.url] : undefined,
   author: {
     '@type': 'Organization',
     name: siteConfig.brandName,
@@ -45,6 +47,7 @@ const structuredData = {
 <BaseLayout
   title={`متراژ؛ دستیار مشاوران املاک | ${siteConfig.brandName}`}
   description={app.data.shortDescription}
+  imageAlt="معرفی اپلیکیشن متراژ؛ دستیار فارسی مشاوران املاک"
 >
   <script
     type="application/ld+json"
@@ -69,7 +72,7 @@ const structuredData = {
           />
           <div>
             <p class="eyebrow">اپلیکیشن اندروید</p>
-            <p class="status-badge">در حال توسعه و پیش‌انتشار</p>
+            <p class="status-badge">منتشرشده در کافه‌بازار</p>
           </div>
         </div>
         <p class="product-kicker">مدیریت املاک، یکپارچه و در دسترس</p>
@@ -78,14 +81,14 @@ const structuredData = {
         <p class="page-lead">{app.data.fullDescription}</p>
         <div class="hero-actions">
           {
-            releaseChannel && (
+            bazaarLink && (
               <a
                 class="button"
-                href={releaseChannel.url}
+                href={bazaarLink.url}
                 target="_blank"
                 rel="noopener"
               >
-                خبرم کن وقتی منتشر شد
+                دانلود از کافه‌بازار
               </a>
             )
           }
@@ -246,7 +249,7 @@ const structuredData = {
       <div><span>پلتفرم</span><strong>Android</strong></div>
       <div><span>حداقل نسخه</span><strong>Android 7.0</strong></div>
       <div><span>نسخه فعلی</span><strong>{app.data.version}</strong></div>
-      <div><span>وضعیت</span><strong>پیش‌انتشار</strong></div>
+      <div><span>وضعیت</span><strong>قابل دانلود</strong></div>
     </div>
   </section>
 
@@ -283,8 +286,8 @@ const structuredData = {
         <p class="eyebrow">نمای برنامه</p>
         <h2 id="screenshots-title">متراژ در عمل</h2>
         <p class="section-description">
-          این تصاویر از نسخه پیش‌انتشار و محیط آزمون تهیه شده‌اند و ممکن است تا
-          انتشار نهایی تغییر کنند.
+          نمونه‌هایی از جریان واقعی کار در متراژ؛ جزئیات رابط ممکن است در
+          بروزرسانی‌های بعدی تغییر کند.
         </p>
       </header>
       <div class="screenshot-track">
@@ -356,24 +359,74 @@ const structuredData = {
     )
   }
 
+  <section
+    class="page-section page-section-soft"
+    aria-labelledby="install-faq-title"
+  >
+    <div class="shell faq-layout">
+      <header>
+        <p class="eyebrow">پیش از نصب</p>
+        <h2 id="install-faq-title">پاسخ کوتاه به پرسش‌های مهم</h2>
+      </header>
+      <div class="faq-list">
+        <details>
+          <summary>متراژ روی چه دستگاه‌هایی نصب می‌شود؟</summary>
+          <p>
+            نسخه فعلی برای {app.data.minOs} و نسخه‌های جدیدتر Android ارائه شده است.
+          </p>
+        </details>
+        <details>
+          <summary>اطلاعات فایل‌ها و مشتری‌ها کجا نگهداری می‌شوند؟</summary>
+          <p>
+            داده‌های اصلی روی دستگاه نگهداری می‌شوند و نسخه فعلی برای آن‌ها
+            همگام‌سازی ابری اختصاصی ندارد. جزئیات دسترسی‌ها و پشتیبان در صفحه
+            <a href="/privacy/">حریم خصوصی</a> آمده است.
+          </p>
+        </details>
+        <details>
+          <summary>آیا همه بخش‌های برنامه به اینترنت نیاز دارند؟</summary>
+          <p>
+            بخش اصلی مدیریت اطلاعات محلی است؛ نقشه، خرید، تشخیص گفتار و بعضی
+            مسیرهای اشتراک‌گذاری ممکن است به اینترنت یا برنامه‌های دیگر نیاز
+            داشته باشند.
+          </p>
+        </details>
+        {
+          bazaarLink && (
+            <details>
+              <summary>نسخه رسمی را از کجا دریافت کنم؟</summary>
+              <p>
+                نسخه {app.data.version} فقط از
+                <a href={bazaarLink.url} target="_blank" rel="noopener">
+                  صفحه رسمی متراژ در کافه‌بازار
+                </a>
+                دریافت و بروزرسانی می‌شود.
+              </p>
+            </details>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
   <section class="cta-section">
     <div class="shell cta-panel">
-      <p class="eyebrow">قدم بعدی</p>
-      <h2>خبر انتشار متراژ را از مسیر رسمی بگیرید.</h2>
+      <p class="eyebrow">شروع کار</p>
+      <h2>متراژ را از صفحه رسمی کافه‌بازار دریافت کنید.</h2>
       <p>
-        وضعیت نسخه و لینک دانلود عمومی فقط پس از تأیید در سایت مهسای و کانال
-        رسمی متراژ اعلام می‌شوند.
+        لینک زیر مستقیماً به صفحه رسمی متراژ در کافه‌بازار می‌رود. برای نصب و
+        بروزرسانی فقط از همین مسیر استفاده کنید.
       </p>
       <div class="cta-actions">
         {
-          releaseChannel && (
+          bazaarLink && (
             <a
               class="button"
-              href={releaseChannel.url}
+              href={bazaarLink.url}
               target="_blank"
               rel="noopener"
             >
-              عضویت در کانال رسمی متراژ
+              دانلود از کافه‌بازار
             </a>
           )
         }

@@ -1,12 +1,24 @@
 ---
+import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
 import PageStage from '../components/PageStage.astro';
+import { getCafeBazaarLink } from '../data/appPresentation';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const metrazhApp = (await getCollection('apps')).find(
+  (app) => app.id === 'metrazh',
+);
+
+if (!metrazhApp) {
+  throw new Error('Metrazh content entry is missing.');
+}
+
+const bazaarLink = getCafeBazaarLink(metrazhApp.data.storeLinks);
 ---
 
 <BaseLayout
   title={`شرایط استفاده | ${siteConfig.brandName}`}
-  description="شرایط استفاده از وب‌سایت مهسای و نسخه پیش‌انتشار اپلیکیشن متراژ."
+  description={`شرایط استفاده از وب‌سایت مهسای و نسخه عمومی ${metrazhApp.data.version} اپلیکیشن متراژ.`}
 >
   <PageStage
     eyebrow="شرایط استفاده"
@@ -15,7 +27,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     lead="با استفاده از این وب‌سایت یا اپلیکیشن متراژ، مسئولیت بررسی اطلاعات، حفاظت از داده‌ها و ارزیابی خروجی‌های کمکی برنامه را می‌پذیرید."
     index="صفحه ۰۵"
     note="محاسبات، گزارش‌ها و خروجی‌های برنامه ابزار کمکی‌اند و جای بررسی حقوقی، مالی یا کارشناسی را نمی‌گیرند."
-    signals={['محصول پیش‌انتشار', 'مسئولیت صحت داده‌ها', 'استفاده مسئولانه']}
+    signals={['نسخه عمومی رسمی', 'مسئولیت صحت داده‌ها', 'استفاده مسئولانه']}
     tone="apricot"
   />
 
@@ -23,7 +35,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="shell legal-layout">
       <aside class="legal-aside">
         <span>آخرین به‌روزرسانی</span>
-        <strong>۱۴۰۵/۰۵/۱۰</strong>
+        <strong>۱۴۰۵/۰۵/۲۲</strong>
         <p>پرسش درباره این شرایط را از مسیر رسمی پشتیبانی بفرستید.</p>
         <a href={`mailto:${siteConfig.supportEmail}`} dir="ltr"
           >{siteConfig.supportEmail}</a
@@ -32,9 +44,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <article class="prose legal-prose">
         <h2>وضعیت محصول</h2>
         <p>
-          متراژ در حال توسعه و پیش‌انتشار است. قابلیت‌ها، ظاهر برنامه، شیوه
-          ارائه و شرایط اشتراک ممکن است پیش از انتشار عمومی تغییر کنند. در حال
-          حاضر هیچ لینک عمومی تأییدشده‌ای برای دانلود اعلام نشده است.
+          نسخه عمومی {metrazhApp.data.version} متراژ منتشر شده است. قابلیت‌ها، ظاهر
+          برنامه، شیوه ارائه و شرایط اشتراک ممکن است در بروزرسانی‌های بعدی تغییر کنند.
+          دریافت نسخه رسمی فقط از
+          {
+            bazaarLink ? (
+              <a href={bazaarLink.url} target="_blank" rel="noopener">
+                صفحه متراژ در کافه‌بازار
+              </a>
+            ) : (
+              'مسیر رسمی اعلام‌شده در سایت'
+            )
+          }
+          انجام می‌شود.
         </p>
 
         <h2>استفاده مسئولانه</h2>

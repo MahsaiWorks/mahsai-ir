@@ -34,9 +34,9 @@
     }
   ],
   "platforms": ["Android"],
-  "status": "development",
-  "tagline": "مدیریت هوشمند فایل‌ها — آفلاین و امن",
-  "version": "1.0.3",
+  "status": "available",
+  "tagline": "مدیریت فایل و پیگیری مشاور املاک، با نگهداری محلی داده‌ها",
+  "version": "1.0.4",
   "minOs": "Android 7.0 (API 24)",
   "audience": [
     "مشاوران مستقل املاک",
@@ -56,8 +56,13 @@
     "پشتیبان رمزگذاری‌شده، بازیابی و خروجی CSV",
     "قفل PIN و ورود زیست‌سنجی از طریق اندروید"
   ],
-  "releaseNote": "متراژ در حال توسعه و پیش‌انتشار است و هنوز لینک عمومی تأییدشده‌ای برای دانلود ندارد.",
-  "storeLinks": [],
+  "releaseNote": "نسخه عمومی ۱.۰.۴ متراژ از کافه‌بازار قابل دریافت است. بروزرسانی بعدی پس از تأیید بازار منتشر می‌شود.",
+  "storeLinks": [
+    {
+      "label": "دانلود متراژ از کافه‌بازار",
+      "url": "https://cafebazaar.ir/app/ir.fileryar.amlakyar"
+    }
+  ],
   "supportUrl": "/support/",
   "privacyUrl": "/privacy/",
   "supportLinks": [

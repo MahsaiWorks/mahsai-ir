@@ -22,7 +22,7 @@ const {
   image = siteConfig.seoDefaults.image,
   type = 'website',
   keywords = [],
-  imageAlt = `کارت معرفی ${siteConfig.brandName}`,
+  imageAlt = `کارت معرفی ${siteConfig.brandName} و اپلیکیشن متراژ`,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL(image, Astro.site);
@@ -70,10 +70,13 @@ const structuredData = {
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={socialImage} />
     <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
 
     <script
       type="application/ld+json"

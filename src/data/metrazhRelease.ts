@@ -6,7 +6,7 @@ export interface ReleaseCheckpoint {
   description: string;
 }
 
-export const releaseCheckpoints: ReleaseCheckpoint[] = [
+export const getReleaseCheckpoints = (version: string): ReleaseCheckpoint[] => [
   {
     number: '۰۱',
     status: 'ready',
@@ -17,24 +17,24 @@ export const releaseCheckpoints: ReleaseCheckpoint[] = [
   },
   {
     number: '۰۲',
-    status: 'review',
-    eyebrow: 'در حال کنترل نهایی',
-    title: 'آماده‌سازی انتشار عمومی',
+    status: 'ready',
+    eyebrow: 'منتشرشده',
+    title: `نسخه عمومی ${version}`,
     description:
-      'نسخه پیش‌انتشار در مرحله بررسی‌های نهایی انتشار قرار دارد. وضعیت این مرحله فقط پس از تأیید واقعی در همین صفحه تغییر می‌کند.',
+      'نسخه عمومی متراژ از صفحه رسمی کافه‌بازار قابل دریافت است و لینک مستقیم آن در سایت قرار دارد.',
   },
   {
     number: '۰۳',
-    status: 'pending',
-    eyebrow: 'پس از تأیید انتشار',
-    title: 'لینک دانلود رسمی',
+    status: 'review',
+    eyebrow: 'در انتظار تأیید بازار',
+    title: 'بروزرسانی بعدی',
     description:
-      'تا زمانی که لینک عمومی تأیید نشده باشد، هیچ دکمه دانلودی نمایش داده نمی‌شود. لینک معتبر فقط از همین سایت و کانال رسمی اعلام خواهد شد.',
+      'نسخه بعدی پس از پایان بررسی کافه‌بازار و قابل‌دریافت‌شدن برای کاربران به‌عنوان نسخه عمومی جدید معرفی می‌شود.',
   },
 ];
 
 export const releasePrinciples = [
   'شماره نسخه و وضعیت انتشار از داده رسمی محصول خوانده می‌شوند.',
-  'لینک دانلود تأییدنشده یا فایل غیررسمی در سایت قرار نمی‌گیرد.',
+  'دانلود فقط به صفحه رسمی متراژ در کافه‌بازار هدایت می‌شود.',
   'تغییرات مهم نسخه‌ها پس از نهایی‌شدن در همین صفحه ثبت می‌شوند.',
 ];

@@ -253,6 +253,14 @@ summary {
   font-weight: 700;
 }
 
+.mobile-nav .mobile-download-link {
+  margin-block-start: 0.35rem;
+  background: var(--text);
+  color: var(--bg);
+  font-weight: 780;
+  text-align: center;
+}
+
 .hero {
   position: relative;
   padding-block: clamp(4.5rem, 12vw, 9rem) var(--section-space);
