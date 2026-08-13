@@ -7,6 +7,10 @@ import {
   benchmarkFiles,
   benchmarkVersion,
 } from '../../../data/persianBenchmark';
+import {
+  benchmarkRanking,
+  benchmarkResultFiles,
+} from '../../../data/persianBenchmarkResults';
 
 const protocol = [
   {
@@ -22,10 +26,15 @@ const protocol = [
     description: 'تبدیل متن فارسی به جدول یا JSON بدون ساختن دادهٔ تازه.',
   },
   {
-    title: 'پژوهش دارای منبع',
-    description: 'درستی ادعا، ارتباط ارجاع و اعلام صریح کمبود اطلاعات.',
+    title: 'ابهام و صداقت',
+    description: 'خودداری از حدس و اعلام صریح وقتی متن اطلاعات کافی ندارد.',
   },
 ];
+
+const leader = benchmarkRanking[0] ?? {
+  product: 'نتیجهٔ ثبت‌شده',
+  average: 0,
+};
 ---
 
 <BaseLayout
@@ -38,7 +47,7 @@ const protocol = [
     highlight="امتیاز نمی‌دهیم."
     lead="کیفیت را به معیارهای قابل مشاهده تقسیم می‌کنیم، نسخه و پرامپت را ثبت می‌کنیم و فقط نتیجه‌ای را منتشر می‌کنیم که امکان تکرار داشته باشد."
     index={`مجموعهٔ آزمون ${benchmarkVersion} · ${benchmarkCases.length} سناریو`}
-    note="مجموعهٔ آزمون منتشر شده، اما اجرای چندابزاری هنوز انجام نشده است؛ بنابراین رتبه‌بندی یا ادعای برتری نداریم."
+    note={`۲۴ اجرای کامل منتشر شد. بالاترین میانگین این نسخه: ${leader.product} با ${leader.average} از ۱۰۰.`}
     signals={[
       'پرامپت یکسان',
       'متن واقعی غیرمحرمانه',
@@ -47,6 +56,21 @@ const protocol = [
     ]}
     tone="mint"
   />
+  <section class="ai-course-banner" aria-labelledby="lab-results-title">
+    <div class="shell ai-course-banner-grid">
+      <div>
+        <p class="eyebrow">نتیجهٔ دست‌اول منتشر شد</p>
+        <h2 id="lab-results-title">
+          ChatGPT، دو حالت Gemini و Qwen در ۲۴ اجرای واقعی.
+        </h2>
+        <p>
+          پاسخ خام، برندهٔ هر کار، روش امتیازدهی و حتی اجراهای حذف‌شده را یکجا
+          ببینید.
+        </p>
+      </div>
+      <a class="button" href="/ai/persian-lab/results/">دیدن نتیجهٔ کامل</a>
+    </div>
+  </section>
   <section class="section lab-download-section">
     <div class="shell lab-download-card">
       <div>
@@ -61,6 +85,9 @@ const protocol = [
         <a class="button" href={benchmarkFiles.json} download>دانلود JSON</a>
         <a class="button button-secondary" href={benchmarkFiles.csv} download
           >دانلود CSV</a
+        >
+        <a class="story-link" href={benchmarkResultFiles.json} download
+          >دانلود نتایج</a
         >
       </div>
     </div>
@@ -97,13 +124,13 @@ const protocol = [
     <div class="shell ai-lab-status-grid">
       <div>
         <p class="eyebrow">وضعیت انتشار</p><h2>
-          نتیجه‌ای که هنوز نداریم، نمی‌سازیم.
+          حالا روش و نتیجه هر دو قابل بررسی‌اند.
         </h2>
       </div><dl>
         <div><dt>تعریف معیارها</dt><dd>انجام شده</dd></div><div>
           <dt>ساخت مجموعهٔ آزمون</dt><dd>نسخهٔ ۰٫۱ منتشر شد</dd>
-        </div><div><dt>اجرای چندابزاری</dt><dd>هنوز انجام نشده</dd></div><div>
-          <dt>انتشار ورودی و معیار</dt><dd>JSON و CSV منتشر شد</dd>
+        </div><div><dt>اجرای چندمدلی</dt><dd>۲۴ پاسخ کامل</dd></div><div>
+          <dt>انتشار داده</dt><dd>پرامپت، پاسخ و امتیاز</dd>
         </div>
       </dl>
     </div>
@@ -117,8 +144,8 @@ const protocol = [
           </h2>
         </div>
         <p>
-          این نسخه برای تثبیت روش است، نه اعلام برنده. دادهٔ حساس یا محرمانه
-          داخل مجموعه وجود ندارد.
+          این نسخه کوچک است و نتیجه فقط در محدودهٔ همین سناریوها معتبر می‌ماند.
+          دادهٔ حساس یا محرمانه داخل مجموعه وجود ندارد.
         </p>
       </div>
       <div class="benchmark-case-grid">
@@ -180,7 +207,7 @@ const protocol = [
         <li>نام دقیق ابزار یا مدل و تاریخ اجرا ثبت می‌شود.</li><li>
           پرامپت و ورودی آزمون برای همه یکسان می‌ماند.
         </li><li>خطاهای واقعیت، زبان و قالب جداگانه گزارش می‌شوند.</li><li>
-          امتیاز نهایی بدون نمونهٔ پاسخ و توضیح داور منتشر نمی‌شود.
+          امتیاز نهایی همراه پاسخ خام و توضیح داور منتشر می‌شود.
         </li><li>تغییر نسخه به‌معنای لزوم آزمون دوباره است.</li>
       </ul>
     </div>

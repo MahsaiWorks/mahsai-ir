@@ -15,9 +15,14 @@ export const aiNavigation = [
     description: 'تصمیم‌گیری بدون طرفداری',
   },
   {
+    href: '/ai/persian-lab/results/',
+    label: 'نتیجه تست فارسی',
+    description: '۲۴ پاسخ واقعی و قابل دانلود',
+  },
+  {
     href: '/ai/persian-lab/',
     label: 'آزمایشگاه فارسی',
-    description: 'روش آزمون شفاف و تکرارپذیر',
+    description: 'روش شفاف و تکرارپذیر آزمون',
   },
   {
     href: '/ai/offline/',

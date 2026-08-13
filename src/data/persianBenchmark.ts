@@ -2,12 +2,9 @@ export const benchmarkVersion = '0.1';
 export const benchmarkUpdatedAt = '2026-08-13';
 
 export const benchmarkDimensions = [
-  { key: 'facts', label: 'حفظ واقعیت', weight: 25 },
-  { key: 'instruction', label: 'رعایت دستور', weight: 20 },
-  { key: 'language', label: 'فارسی طبیعی', weight: 20 },
-  { key: 'structure', label: 'قالب و ساختار', weight: 15 },
-  { key: 'uncertainty', label: 'اعلام ابهام', weight: 10 },
-  { key: 'citations', label: 'منبع و قابلیت بررسی', weight: 10 },
+  { key: 'criteria', label: 'معیارهای عینی هر آزمون', weight: 60 },
+  { key: 'format', label: 'رعایت دقیق دستور و قالب', weight: 25 },
+  { key: 'usability', label: 'روانی و قابل‌استفاده‌بودن', weight: 15 },
 ] as const;
 
 export const benchmarkCases = [

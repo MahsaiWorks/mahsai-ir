@@ -1,0 +1,500 @@
+---
+import PageStage from '../../../../components/PageStage.astro';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import {
+  benchmarkCases,
+  benchmarkFiles,
+} from '../../../../data/persianBenchmark';
+import {
+  benchmarkCaseWinners,
+  benchmarkExcludedRuns,
+  benchmarkRanking,
+  benchmarkResultFiles,
+  benchmarkRunDate,
+  benchmarkRunVersion,
+  benchmarkScoring,
+  benchmarkSystems,
+} from '../../../../data/persianBenchmarkResults';
+
+const scoreFormat = new Intl.NumberFormat('fa-IR', {
+  maximumFractionDigits: 1,
+});
+
+const verdicts: Record<string, { label: string; text: string }> = {
+  'chatgpt-gpt-5-6-sol': {
+    label: 'متعادل‌ترین نتیجه',
+    text: 'در پنج آزمون تقریباً بی‌نقص بود و JSON خام را هم درست تحویل داد.',
+  },
+  'gemini-3-6-flash': {
+    label: 'بهترین لحن روزمره',
+    text: 'در پیام صمیمی و خلاصه‌سازی عالی بود و فقط جدول ابهام را کوتاه‌تر از انتظار ساخت.',
+  },
+  'gemini-3-1-pro': {
+    label: 'قوی، اما نه همیشه دقیق‌تر',
+    text: 'پنج پاسخ خوب داد؛ حصار Markdown دور JSON امتیاز خروجی ماشین‌خوان را کم کرد.',
+  },
+  'qwen-3-7-plus-arena': {
+    label: 'بهترین بازنویسی دوستانه',
+    text: 'بازنویسی طبیعی و JSON دقیق داشت؛ در جدول ابهام و یک جملهٔ خلاصه از قالب فاصله گرفت.',
+  },
+};
+
+const faq = [
+  {
+    question: 'بهترین هوش مصنوعی برای فارسی کدام بود؟',
+    answer:
+      'در همین شش آزمون و در تاریخ ۲۲ مرداد ۱۴۰۵، ChatGPT با مدل GPT-5.6 Sol بالاترین میانگین را گرفت. اما برای لحن روزمره Gemini Flash و برای بازنویسی دوستانه Qwen بهترین پاسخ این اجرا را دادند.',
+  },
+  {
+    question: 'آیا Gemini Pro از Flash بهتر بود؟',
+    answer:
+      'نه در همهٔ کارها. هر دو در چند آزمون عالی بودند، اما Pro در آزمون JSON دور پاسخ حصار Markdown گذاشت و متن خام دیگر مستقیماً قابل پردازش نبود.',
+  },
+  {
+    question: 'آیا این رتبه‌بندی قطعی و همیشگی است؟',
+    answer:
+      'خیر. نتیجه فقط برای همین پرامپت‌ها، مدل‌ها، حالت‌ها و تاریخ اجرا معتبر است. نسخهٔ مدل یا حتی مسیر پاسخ‌دهی سرویس‌ها می‌تواند عوض شود.',
+  },
+];
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'بهترین هوش مصنوعی برای فارسی؛ نتیجه ۲۴ آزمون واقعی MAHSAI',
+    description:
+      'مقایسه ChatGPT، دو حالت Gemini و Qwen با شش آزمون ثابت فارسی، پاسخ خام، روش امتیازدهی و داده قابل دانلود.',
+    datePublished: benchmarkRunDate,
+    dateModified: benchmarkRunDate,
+    inLanguage: 'fa-IR',
+    author: { '@type': 'Organization', name: 'MAHSAI' },
+    publisher: { '@type': 'Organization', name: 'MAHSAI' },
+    mainEntityOfPage: new URL(
+      '/ai/persian-lab/results/',
+      Astro.site,
+    ).toString(),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    name: 'نتایج نسخه ۰.۱ بنچمارک فارسی MAHSAI',
+    description:
+      '۲۴ پاسخ از چهار مدل یا حالت هوش مصنوعی روی شش آزمون ثابت فارسی، همراه با امتیاز و یادداشت داوری.',
+    creator: { '@type': 'Organization', name: 'MAHSAI' },
+    datePublished: benchmarkRunDate,
+    inLanguage: 'fa-IR',
+    measurementTechnique:
+      'پرامپت یکسان در گفت‌وگوی جدا، ثبت پاسخ نهایی و بازبینی انسانی بر اساس معیار منتشرشده',
+    variableMeasured: benchmarkScoring.map((item) => item.label),
+    distribution: [
+      {
+        '@type': 'DataDownload',
+        encodingFormat: 'application/json',
+        contentUrl: new URL(benchmarkResultFiles.json, Astro.site).toString(),
+      },
+      {
+        '@type': 'DataDownload',
+        encodingFormat: 'text/csv',
+        contentUrl: new URL(benchmarkResultFiles.csv, Astro.site).toString(),
+      },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'رتبه‌بندی نسخه ۰.۱ آزمون فارسی MAHSAI',
+    itemListElement: benchmarkRanking.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: `${item.product} — ${item.model}`,
+      description: `میانگین ${item.average} از ۱۰۰ در شش آزمون`,
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title="بهترین هوش مصنوعی برای فارسی؛ ۲۴ آزمون واقعی | MAHSAI AI"
+  description="نتیجه شش آزمون ثابت فارسی روی ChatGPT، Gemini Flash، Gemini Pro و Qwen؛ با پاسخ خام، امتیاز شفاف و فایل JSON و CSV."
+  keywords={[
+    'بهترین هوش مصنوعی برای فارسی',
+    'مقایسه ChatGPT و Gemini',
+    'تست فارسی هوش مصنوعی',
+    'بهترین هوش مصنوعی فارسی',
+    'بنچمارک فارسی هوش مصنوعی',
+  ]}
+  type="article"
+>
+  {
+    structuredData.map((item) => (
+      <script
+        type="application/ld+json"
+        is:inline
+        set:html={JSON.stringify(item)}
+      />
+    ))
+  }
+
+  <PageStage
+    eyebrow="نتیجهٔ دست‌اول آزمایشگاه فارسی"
+    title="۲۴ آزمون واقعی؛"
+    highlight="یک برنده برای همهٔ کارها نداریم."
+    lead="چهار مدل یا حالت را با شش ورودی یکسان سنجیدیم. پاسخ نهایی، روش امتیازدهی و حتی اجراهای حذف‌شده را منتشر کرده‌ایم تا نتیجه فقط یک ادعا نباشد."
+    index={`نسخهٔ ${benchmarkRunVersion} · اجرا در ۲۲ مرداد ۱۴۰۵`}
+    note="پاسخ کوتاه: ChatGPT بالاترین میانگین را گرفت؛ Gemini Flash در لحن روزمره و Qwen در بازنویسی دوستانه بهتر بودند."
+    signals={[
+      '۲۴ پاسخ کامل',
+      'گفت‌وگوی جدا برای هر آزمون',
+      'پاسخ خام قابل مشاهده',
+      'دادهٔ JSON و CSV',
+    ]}
+    tone="mint"
+  />
+
+  <section
+    class="section benchmark-answer"
+    aria-labelledby="quick-answer-title"
+  >
+    <div class="shell benchmark-answer-grid">
+      <div class="benchmark-answer-lead">
+        <p class="eyebrow">جواب ساده</p>
+        <h2 id="quick-answer-title">کدام را انتخاب کنیم؟</h2>
+        <p>
+          اگر فقط یک انتخاب می‌خواهید، <strong>ChatGPT GPT-5.6 Sol</strong> در این
+          مجموعه متعادل‌ترین نتیجه را داد. برای پیام فارسی خودمانی،
+          <strong>Gemini 3.6 Flash</strong> طبیعی‌تر بود. برای بازنویسی با حفظ عدد
+          و تاریخ، <strong>Qwen 3.7 Plus</strong> بهترین پاسخ را نوشت.
+        </p>
+        <p class="benchmark-answer-limit">
+          این نتیجه حکم همیشگی نیست؛ فقط دربارهٔ همین شش کار و نسخه‌های ثبت‌شده
+          در روز آزمون است.
+        </p>
+      </div>
+      <ol class="benchmark-ranking" aria-label="رتبه‌بندی میانگین امتیاز">
+        {
+          benchmarkRanking.map((item, index) => {
+            const verdict = verdicts[item.id] ?? {
+              label: 'نتیجهٔ ثبت‌شده',
+              text: 'جزئیات این اجرا در دادهٔ خام منتشر شده است.',
+            };
+            return (
+              <li>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <div>
+                  <small>{verdict.label}</small>
+                  <strong>{item.product}</strong>
+                  <p>{item.model}</p>
+                </div>
+                <b>{scoreFormat.format(item.average)}</b>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section
+    class="section benchmark-system-section"
+    aria-labelledby="systems-title"
+  >
+    <div class="shell">
+      <div class="ai-section-head">
+        <div>
+          <p class="eyebrow">چهار مدل و حالت کامل</p>
+          <h2 id="systems-title">امتیاز بالا، اما با تفاوت‌های مهم.</h2>
+        </div>
+        <p>
+          امتیاز میانگین به‌تنهایی کافی نیست. متن زیر هر کارت می‌گوید هر گزینه
+          دقیقاً کجا خوب بود و کجا لغزید.
+        </p>
+      </div>
+      <div class="benchmark-system-grid">
+        {
+          benchmarkRanking.map((ranked) => {
+            const system = benchmarkSystems.find(
+              (item) => item.id === ranked.id,
+            );
+            const verdict = verdicts[ranked.id] ?? {
+              label: 'نتیجهٔ ثبت‌شده',
+              text: 'جزئیات این اجرا در دادهٔ خام منتشر شده است.',
+            };
+            if (!system) return null;
+            return (
+              <article>
+                <div>
+                  <span>{verdict.label}</span>
+                  <b>{scoreFormat.format(ranked.average)} / ۱۰۰</b>
+                </div>
+                <h3>{system.product}</h3>
+                <p class="benchmark-system-model">
+                  {system.model} · {system.mode}
+                </p>
+                <p>{verdict.text}</p>
+                <small>{system.captureNote}</small>
+              </article>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="section benchmark-choice-section"
+    aria-labelledby="choice-title"
+  >
+    <div class="shell">
+      <div class="ai-section-head">
+        <div>
+          <p class="eyebrow">بهترین برای هر کار</p>
+          <h2 id="choice-title">به‌جای طرفداری، بر اساس نیاز انتخاب کنید.</h2>
+        </div>
+        <p>
+          مساوی یعنی دو یا چند پاسخ تمام شرط‌های همان آزمون را بدون تفاوت قابل
+          دفاع پاس کرده‌اند.
+        </p>
+      </div>
+      <div class="benchmark-table-wrap">
+        <table class="benchmark-result-table">
+          <thead>
+            <tr>
+              <th>کار فارسی</th>
+              <th>بهترین این اجرا</th>
+              <th>امتیاز</th>
+              <th>چرا؟</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              benchmarkCaseWinners.map((item) => (
+                <tr>
+                  <td>{item.useCase}</td>
+                  <td>
+                    <strong>{item.winner}</strong>
+                  </td>
+                  <td>{scoreFormat.format(item.score)}</td>
+                  <td>{item.reason}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="section benchmark-method-section"
+    aria-labelledby="method-title"
+  >
+    <div class="shell benchmark-method-grid">
+      <div>
+        <p class="eyebrow">روش آزمون</p>
+        <h2 id="method-title">نتیجه چگونه ساخته شد؟</h2>
+        <ol>
+          <li><span>۱</span>شش ورودی غیرمحرمانه و یکسان برای همه.</li>
+          <li><span>۲</span>هر آزمون در گفت‌وگوی تازه یا موقت.</li>
+          <li><span>۳</span>ثبت نام مدل و حالت دقیقاً از رابط قابل مشاهده.</li>
+          <li><span>۴</span>داوری پاسخ نهایی بر اساس معیار از پیش منتشرشده.</li>
+        </ol>
+        <p class="benchmark-method-note">
+          جست‌وجوی وب، فایل، حافظهٔ گفتگو و ابزار جانبی فعال نشد. سرعت و قیمت هم
+          در امتیاز نهایی دخالت ندارند.
+        </p>
+      </div>
+      <dl class="benchmark-rubric">
+        {
+          benchmarkScoring.map((item) => (
+            <div>
+              <dt>
+                <span>{item.weight}٪</span>
+                {item.label}
+              </dt>
+              <dd>{item.description}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <section class="section benchmark-raw-section" aria-labelledby="raw-title">
+    <div class="shell">
+      <div class="ai-section-head">
+        <div>
+          <p class="eyebrow">پاسخ خام و داوری</p>
+          <h2 id="raw-title">چیزی را پشت عدد پنهان نکرده‌ایم.</h2>
+        </div>
+        <p>
+          هر سناریو را باز کنید؛ ورودی، دستور، پاسخ نهایی چهار مدل و دلیل امتیاز
+          همان‌جا دیده می‌شود.
+        </p>
+      </div>
+      <div class="benchmark-raw-list">
+        {
+          benchmarkCases.map((benchmarkCase, caseIndex) => (
+            <details open={caseIndex === 0}>
+              <summary>
+                <span>{benchmarkCase.id}</span>
+                <strong>{benchmarkCase.title}</strong>
+                <i>دیدن ۴ پاسخ</i>
+              </summary>
+              <div class="benchmark-prompt-box">
+                <div>
+                  <h3>ورودی</h3>
+                  <p>{benchmarkCase.input}</p>
+                </div>
+                <div>
+                  <h3>دستور</h3>
+                  <p>{benchmarkCase.prompt}</p>
+                </div>
+              </div>
+              <div class="benchmark-response-grid">
+                {benchmarkSystems.map((system) => {
+                  const result = system.results.find(
+                    (item) => item.caseId === benchmarkCase.id,
+                  );
+                  if (!result) return null;
+                  return (
+                    <article>
+                      <header>
+                        <div>
+                          <strong>{system.product}</strong>
+                          <span>{system.model}</span>
+                        </div>
+                        <b>{result.score.total}</b>
+                      </header>
+                      <pre dir="auto">{result.response}</pre>
+                      <dl>
+                        <div>
+                          <dt>معیار</dt>
+                          <dd>{result.score.criteria}/۶۰</dd>
+                        </div>
+                        <div>
+                          <dt>قالب</dt>
+                          <dd>{result.score.format}/۲۵</dd>
+                        </div>
+                        <div>
+                          <dt>کاربرد</dt>
+                          <dd>{result.score.usability}/۱۵</dd>
+                        </div>
+                      </dl>
+                      <p>{result.note}</p>
+                    </article>
+                  );
+                })}
+              </div>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="section lab-download-section"
+    aria-labelledby="download-title"
+  >
+    <div class="shell lab-download-card benchmark-download-card">
+      <div>
+        <p class="eyebrow">دادهٔ قابل دانلود</p>
+        <h2 id="download-title">خودتان نتیجه را بررسی کنید.</h2>
+        <p>
+          فایل نتیجه شامل ۲۴ پاسخ، امتیاز جزءبه‌جزء، یادداشت داوری، پرامپت‌ها و
+          اجراهای حذف‌شده است. مجموعهٔ آزمون خالی هم جداگانه باقی مانده است.
+        </p>
+      </div>
+      <div class="lab-download-actions">
+        <a class="button" href={benchmarkResultFiles.json} download
+          >نتایج JSON</a
+        >
+        <a
+          class="button button-secondary"
+          href={benchmarkResultFiles.csv}
+          download>نتایج CSV</a
+        >
+        <a class="story-link" href={benchmarkFiles.json} download
+          >فقط مجموعهٔ آزمون</a
+        >
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="section benchmark-transparency"
+    aria-labelledby="limits-title"
+  >
+    <div class="shell benchmark-transparency-grid">
+      <div>
+        <p class="eyebrow">محدودیت‌ها</p>
+        <h2 id="limits-title">این صفحه چه چیزی را ثابت نمی‌کند؟</h2>
+        <ul>
+          <li>شش آزمون برای شناخت همهٔ توانایی‌های یک مدل کافی نیست.</li>
+          <li>
+            سرعت، قیمت، جست‌وجوی وب، تصویر و کدنویسی در این نسخه سنجیده نشد.
+          </li>
+          <li>۱۵ درصد امتیاز شامل داوری انسانیِ روانی و کاربردپذیری است.</li>
+          <li>Qwen از مسیر Direct در Arena اجرا شد، نه از سایت رسمی Qwen.</li>
+          <li>با تغییر نسخه یا حالت، نتیجه باید دوباره اجرا شود.</li>
+        </ul>
+      </div>
+      <details>
+        <summary>کدام اجراها حذف شدند و چرا؟</summary>
+        <ul>
+          {
+            benchmarkExcludedRuns.map((item) => (
+              <li>
+                <strong>{item.tool}</strong>
+                <span>{item.reason}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <section class="section benchmark-faq" aria-labelledby="faq-title">
+    <div class="shell">
+      <p class="eyebrow">پرسش‌های رایج</p>
+      <h2 id="faq-title">سه پاسخ کوتاه پیش از انتخاب.</h2>
+      <div>
+        {
+          faq.map((item) => (
+            <details>
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="course-finish benchmark-next">
+    <div class="shell course-finish-card">
+      <p class="eyebrow">قدم بعدی</p>
+      <h2>اول ابزار را انتخاب کنید؛ بعد روش درست کار را یاد بگیرید.</h2>
+      <p>
+        دورهٔ رایگان MAHSAI کمک می‌کند یک کار واقعی را با ورودی روشن، کنترل
+        خروجی و حفظ حریم خصوصی انجام دهید.
+      </p>
+      <div>
+        <a class="button" href="/ai/course/">شروع دورهٔ رایگان</a>
+        <a class="button button-secondary" href="/ai/persian-lab/"
+          >روش کامل آزمایشگاه</a
+        >
+      </div>
+    </div>
+  </section>
+</BaseLayout>
