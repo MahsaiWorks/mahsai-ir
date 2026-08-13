@@ -16,7 +16,13 @@ const formatDate = (date: Date) =>
   }).format(date);
 ---
 
-<article class:list={['ai-guide-card', { 'ai-guide-card-featured': featured }]}>
+<article
+  class:list={[
+    'ai-guide-card',
+    'spatial-card',
+    { 'ai-guide-card-featured': featured },
+  ]}
+>
   <div class="ai-guide-card-top">
     <span>{guideKindLabels[guide.data.kind]}</span>
     <span>{guideLevelLabels[guide.data.level]}</span>
