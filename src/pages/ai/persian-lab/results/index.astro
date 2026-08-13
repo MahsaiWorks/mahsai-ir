@@ -188,7 +188,7 @@ const structuredData = [
             };
             return (
               <li>
-                <span>{String(index + 1).padStart(2, '0')}</span>
+                <span>{new Intl.NumberFormat('fa-IR').format(index + 1)}</span>
                 <div>
                   <small>{verdict.label}</small>
                   <strong>{item.product}</strong>
@@ -486,11 +486,11 @@ const structuredData = [
       <p class="eyebrow">قدم بعدی</p>
       <h2>اول ابزار را انتخاب کنید؛ بعد روش درست کار را یاد بگیرید.</h2>
       <p>
-        دورهٔ رایگان MAHSAI کمک می‌کند یک کار واقعی را با ورودی روشن، کنترل
+        تمرین عملی رایگان MAHSAI کمک می‌کند یک کار واقعی را با ورودی روشن، کنترل
         خروجی و حفظ حریم خصوصی انجام دهید.
       </p>
       <div>
-        <a class="button" href="/ai/course/">شروع دورهٔ رایگان</a>
+        <a class="button" href="/ai/course/">شروع تمرین رایگان</a>
         <a class="button button-secondary" href="/ai/persian-lab/"
           >روش کامل آزمایشگاه</a
         >

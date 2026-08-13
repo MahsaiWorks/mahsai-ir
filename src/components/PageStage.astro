@@ -15,7 +15,6 @@ const {
   title,
   highlight,
   lead,
-  index = 'معرفی صفحه',
   note,
   signals = [],
   tone = 'paper',
@@ -40,7 +39,6 @@ const {
       </div>
 
       <aside class="page-stage-note" aria-label="خلاصه صفحه">
-        <span class="page-stage-index">{index}</span>
         {note && <p>{note}</p>}
         {
           signals.length > 0 && (

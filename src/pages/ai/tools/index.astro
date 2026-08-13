@@ -7,40 +7,99 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 const tools = (await getCollection('aiTools')).sort(
   (a, b) => a.data.order - b.data.order,
 );
-const sourceChecked = tools.filter(
-  (tool) => tool.data.verification === 'source-checked',
-).length;
+const choices = [
+  {
+    title: 'برای نوشتن و کارهای روزمره',
+    description:
+      'از دستیارهای عمومی شروع کنید؛ بعد بر اساس نوع فایل، دسترسی و محدودیت حساب انتخاب کنید.',
+  },
+  {
+    title: 'برای تحقیق و پیدا کردن منبع',
+    description:
+      'ابزاری را ترجیح دهید که لینک منبع را نشان دهد؛ اما خود منبع را هم باز کنید و بخوانید.',
+  },
+  {
+    title: 'برای حریم خصوصی و کار بدون اینترنت',
+    description:
+      'اول توان رایانه و اندازهٔ مدل را بسنجید؛ محلی بودن برنامه همیشه به معنی ساده یا کاملاً امن بودن نیست.',
+  },
+] as const;
 ---
 
 <BaseLayout
-  title="راهنمای ابزارهای هوش مصنوعی | MAHSAI"
-  description="فهرست ابزارهای هوش مصنوعی با کاربرد، محدودیت، پلتفرم، لینک رسمی و تاریخ آخرین بررسی؛ برای انتخاب آگاهانه، نه انبار هزاران لینک."
+  title="کدام ابزار هوش مصنوعی برای کار شما مناسب‌تر است؟ | MAHSAI"
+  description="راهنمای فارسی انتخاب ابزار هوش مصنوعی بر اساس نوع کار، دسترسی، محدودیت و حریم خصوصی؛ بدون رتبه‌بندی تبلیغاتی و فهرست‌های شلوغ."
 >
   <PageStage
-    eyebrow="راهنمای ابزار"
-    title="ابزار کمتر،"
-    highlight="انتخاب دقیق‌تر."
-    lead="هر کارت در چند ثانیه می‌گوید ابزار چه کاری می‌کند، برای چه کسی مناسب است و قبل از استفاده چه محدودیتی دارد. قیمت یا قابلیت متغیر را بدون منبع روز منتشر نمی‌کنیم."
-    index={`${tools.length} ابزار بررسی‌شده`}
-    note="هدف ساخت بزرگ‌ترین فهرست نیست؛ هدف این است که برای یک کار مشخص سریع‌تر به گزینهٔ مناسب برسید."
-    signals={['لینک رسمی', 'مناسب برای', 'محدودیت‌ها', 'تاریخ بررسی']}
+    eyebrow="انتخاب ابزار با سؤال درست"
+    title="کدام ابزار برای کار شما"
+    highlight="مناسب‌تر است؟"
+    lead="اسم معروف‌تر همیشه انتخاب بهتر نیست. بگویید چه کاری دارید، چه اطلاعاتی وارد می‌کنید و چه محدودیتی برای دسترسی یا هزینه دارید؛ بعد گزینه‌ها را کنار هم ببینید."
+    note="این صفحه فهرست تبلیغاتی نیست. تا وقتی یک سناریوی ثابت را خودمان اجرا نکرده باشیم، برنده یا امتیاز ساختگی اعلام نمی‌کنیم."
+    signals={['کاربرد واقعی', 'دسترسی', 'حریم خصوصی', 'تاریخ بررسی']}
     tone="paper"
   />
-  <section class="tool-legend">
-    <div class="shell tool-legend-grid">
-      <div>
-        <strong>{sourceChecked}</strong><span>ابزار بررسی‌شده از منبع رسمی</span
-        >
+
+  <section
+    class="section mahsa-tool-decisions"
+    aria-labelledby="tool-decision-title"
+  >
+    <div class="shell">
+      <header class="mahsa-section-heading">
+        <div>
+          <p class="eyebrow">قبل از دیدن نام ابزارها</p>
+          <h2 id="tool-decision-title">نوع کارتان را مشخص کنید.</h2>
+        </div>
+        <p>با این سه مسیر، فهرست پایین سریع‌تر معنی پیدا می‌کند.</p>
+      </header>
+      <div class="mahsa-tool-decision-grid">
+        {
+          choices.map((choice) => (
+            <article>
+              <span aria-hidden="true">
+                <>
+                  <i />
+                  <b />
+                </>
+              </span>
+              <h3>{choice.title}</h3>
+              <p>{choice.description}</p>
+            </article>
+          ))
+        }
       </div>
-      <p>
-        <strong>نکته:</strong> «بررسی منبع» با «تست دست‌اول» فرق دارد. تا وقتی MAHSAI
-        یک سناریوی ثابت را اجرا نکرده باشد، امتیاز یا برنده اعلام نمی‌کنیم.
-      </p>
     </div>
   </section>
-  <section class="section">
-    <div class="shell ai-tool-grid">
-      {tools.map((tool) => <AIToolCard tool={tool} />)}
+
+  <aside class="mahsa-tool-note">
+    <div class="shell">
+      <strong>یک مرز مهم</strong>
+      <p>
+        «بررسی منبع رسمی» با «آزمون دست‌اول» فرق دارد. نوع بررسی و تاریخ آن روی
+        هر کارت نوشته شده است.
+      </p>
+      <a href="/ai/persian-lab/">آزمون‌های فارسی و روش اجرا ←</a>
+    </div>
+  </aside>
+
+  <section
+    class="section mahsa-tool-library"
+    aria-labelledby="tool-library-title"
+  >
+    <div class="shell">
+      <header class="mahsa-section-heading">
+        <div>
+          <p class="eyebrow">راهنمای انتخاب‌ها</p>
+          <h2 id="tool-library-title">کاربرد و محدودیت را کنار هم ببینید.</h2>
+        </div>
+        <p>
+          نام رسمی هر ابزار در صفحهٔ جزئیات و لینک منبع آمده است؛ اینجا نام‌ها
+          را برای خواندن روان‌تر فارسی نوشته‌ایم.
+        </p>
+      </header>
+      <div class="ai-tool-grid">
+        {tools.map((tool) => <AIToolCard tool={tool} />)}
+      </div>
     </div>
   </section>
 </BaseLayout>

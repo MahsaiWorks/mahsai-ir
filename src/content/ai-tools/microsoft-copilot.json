@@ -1,12 +1,12 @@
 {
   "name": "Microsoft Copilot",
   "shortName": "Copilot",
-  "description": "دستیار عمومی مایکروسافت برای گفت‌وگو، کار با فایل و کمک به کارهای روزمره؛ با Copilot سازمانی یک محصول یکسان نیست.",
-  "plainSummary": "برای پرسش عمومی و تحلیل فایل در محیط Copilot؛ نسخهٔ شخصی را با Microsoft 365 Copilot اشتباه نگیرید.",
+  "description": "دستیار عمومی مایکروسافت برای گفت‌وگو، کار با فایل و کمک به کارهای روزمره؛ نسخهٔ شخصی و سازمانی آن یک محصول یکسان نیستند.",
+  "plainSummary": "برای پرسش عمومی و تحلیل فایل مناسب است؛ نسخهٔ شخصی را با نسخهٔ سازمانی اشتباه نگیرید.",
   "officialUrl": "https://copilot.microsoft.com/",
   "category": "assistant",
   "access": "cloud",
-  "platforms": ["وب", "ویندوز", "اندروید", "iOS"],
+  "platforms": ["وب", "ویندوز", "اندروید", "آیفون و آیپد"],
   "bestFor": [
     "پرسش‌های عمومی",
     "بررسی فایل‌های رایج",
@@ -15,18 +15,18 @@
   "features": [
     "گفت‌وگوی عمومی",
     "بارگذاری فایل و تصویر",
-    "پشتیبانی از PDF و فایل‌های Office",
+    "پشتیبانی از فایل پی‌دی‌اف و پرونده‌های اداری رایج",
     "پرسش‌های ادامه‌دار دربارهٔ فایل"
   ],
   "limitations": [
-    "Copilot شخصی و Microsoft 365 Copilot شرایط و قابلیت‌های جدا دارند",
+    "نسخهٔ شخصی و نسخهٔ سازمانی شرایط و قابلیت‌های جدا دارند",
     "فایل‌ها، سقف و نگه‌داری داده را باید از راهنمای رسمی حساب بررسی کرد"
   ],
   "verification": "source-checked",
   "verifiedAt": "2026-08-13",
   "sources": [
     {
-      "label": "File upload in Microsoft Copilot — Microsoft Support",
+      "label": "راهنمای رسمی بارگذاری فایل در کوپایلت مایکروسافت",
       "url": "https://support.microsoft.com/en-us/Microsoft-Copilot/file-upload-in-microsoft-copilot"
     }
   ],

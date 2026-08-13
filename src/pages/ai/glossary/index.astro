@@ -37,10 +37,9 @@ const structuredData = {
   <section class="section">
     <div class="shell ai-glossary-grid">
       {
-        aiGlossary.map((item, index) => (
+        aiGlossary.map((item) => (
           <article id={item.english.toLowerCase().replaceAll(' ', '-')}>
             <>
-              <span>{String(index + 1).padStart(2, '0')}</span>
               <p lang="en" dir="ltr">
                 {item.english}
               </p>

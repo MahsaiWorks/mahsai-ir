@@ -17,6 +17,19 @@ const categoryLabels = {
   research: 'پژوهش',
   local: 'اجرای محلی',
 } as const;
+const toolNameLabels: Record<string, string> = {
+  chatgpt: 'چت‌جی‌پی‌تی',
+  gemini: 'جمینای گوگل',
+  claude: 'کلود',
+  'gemini-notebook': 'دفتر پژوهش جمینای',
+  perplexity: 'پرپلکسیتی',
+  'microsoft-copilot': 'کوپایلت مایکروسافت',
+  ollama: 'اولاما',
+  'lm-studio': 'ال‌ام استودیو',
+  'open-webui': 'اوپن وب‌یوآی',
+  anythingllm: 'انی‌تینگ‌ال‌ال‌ام',
+};
+const displayName = toolNameLabels[tool.id] ?? tool.data.name;
 const formatDate = (date: Date) =>
   new Intl.DateTimeFormat('fa-IR', {
     year: 'numeric',
@@ -58,7 +71,7 @@ const breadcrumbs = {
     {
       '@type': 'ListItem',
       position: 4,
-      name: tool.data.name,
+      name: displayName,
       item: canonical.toString(),
     },
   ],
@@ -66,7 +79,7 @@ const breadcrumbs = {
 ---
 
 <BaseLayout
-  title={`${tool.data.name}؛ کاربرد، محدودیت و لینک رسمی | MAHSAI`}
+  title={`${displayName}؛ کاربرد، محدودیت و لینک رسمی | MAHSAI`}
   description={tool.data.description}
 >
   <script
@@ -94,7 +107,7 @@ const breadcrumbs = {
                 toolAccessLabels[tool.data.access]
               }
             </p>
-            <h1>{tool.data.name}</h1>
+            <h1>{displayName}</h1>
             <p>{tool.data.plainSummary}</p>
             <div class="ai-tool-stage-actions">
               <a
@@ -112,7 +125,7 @@ const breadcrumbs = {
           </div>
           <aside>
             <span class="ai-tool-big-monogram" aria-hidden="true"
-              >{tool.data.shortName.slice(0, 1)}</span
+              >{categoryLabels[tool.data.category]}</span
             ><p>پلتفرم‌ها</p><ul>
               {tool.data.platforms.map((platform) => <li>{platform}</li>)}
             </ul>

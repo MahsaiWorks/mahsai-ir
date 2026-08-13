@@ -1,32 +1,36 @@
 {
   "name": "AnythingLLM",
   "shortName": "AnythingLLM",
-  "description": "برنامهٔ دسکتاپ یا سرویس خودمیزبان برای گفت‌وگو با سند، RAG، مدل محلی و عامل‌ها؛ نسخهٔ Desktop برای استفادهٔ تک‌نفره ساده‌تر است.",
+  "description": "برنامهٔ رومیزی یا سرویس خودمیزبان برای گفت‌وگو با سند، بازیابی اطلاعات از فایل، مدل محلی و عامل‌ها؛ نسخهٔ رومیزی برای استفادهٔ تک‌نفره ساده‌تر است.",
   "plainSummary": "اگر می‌خواهید روی فایل‌های خودتان با مدل محلی یا ابری سؤال بپرسید، نسخهٔ دسکتاپ شروع ساده‌تری دارد.",
   "officialUrl": "https://anythingllm.com/",
   "category": "local",
   "access": "hybrid",
-  "platforms": ["ویندوز", "macOS", "Linux", "Docker"],
-  "bestFor": ["پرسش از سندهای شخصی", "RAG محلی", "اتصال مدل‌های محلی و ابری"],
+  "platforms": ["ویندوز", "مک", "لینوکس", "داکر"],
+  "bestFor": [
+    "پرسش از سندهای شخصی",
+    "بازیابی محلی از سند",
+    "اتصال مدل‌های محلی و ابری"
+  ],
   "features": [
     "نسخهٔ دسکتاپ تک‌نفره",
-    "نسخهٔ Docker چندکاربره",
-    "اتصال به Ollama و LM Studio",
+    "نسخهٔ چندکاربره برای سرور",
+    "اتصال به اولاما و ال‌ام استودیو",
     "فضای کاری سندمحور"
   ],
   "limitations": [
     "مصرف سخت‌افزار بیشتر به مدل انتخابی وابسته است تا خود برنامه",
-    "نسخهٔ دسکتاپ و Docker امکانات و مسئولیت امنیتی متفاوت دارند"
+    "نسخهٔ رومیزی و نسخهٔ سرور امکانات و مسئولیت امنیتی متفاوت دارند"
   ],
   "verification": "source-checked",
   "verifiedAt": "2026-08-13",
   "sources": [
     {
-      "label": "AnythingLLM Desktop overview",
+      "label": "معرفی رسمی نسخهٔ رومیزی انی‌تینگ‌ال‌ال‌ام",
       "url": "https://docs.anythingllm.com/installation-desktop/overview"
     },
     {
-      "label": "AnythingLLM system requirements",
+      "label": "نیازمندی‌های رسمی اجرای انی‌تینگ‌ال‌ال‌ام",
       "url": "https://docs.anythingllm.com/installation-desktop/system-requirements"
     }
   ],

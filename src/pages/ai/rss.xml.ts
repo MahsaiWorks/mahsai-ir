@@ -41,7 +41,7 @@ export async function GET() {
       return `<item><title>${escapeXml(item.title)}</title><link>${item.url}</link><guid>${item.url}</guid><description>${escapeXml(item.description)}</description><pubDate>${item.publishedAt.toUTCString()}</pubDate></item>`;
     })
     .join('');
-  const body = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>هوش مصنوعی MAHSAI</title><link>${base}/ai/</link><description>رادار، راهنما و آموزش هوش مصنوعی به زبان ساده با منبع رسمی</description><language>fa-IR</language>${items}</channel></rss>`;
+  const body = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>هوش مصنوعی MAHSAI</title><link>${base}/ai/</link><description>تازه‌های مهم و راهنماهای هوش مصنوعی به زبان ساده با منبع اصلی</description><language>fa-IR</language>${items}</channel></rss>`;
   return new Response(body, {
     headers: { 'Content-Type': 'application/rss+xml; charset=utf-8' },
   });

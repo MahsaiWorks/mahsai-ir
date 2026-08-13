@@ -103,10 +103,9 @@ const leader = benchmarkRanking[0] ?? {
         </p>
       </div><ol>
         {
-          protocol.map((item, index) => (
+          protocol.map((item) => (
             <li>
               <>
-                <span>{String(index + 1).padStart(2, '0')}</span>
                 <div>
                   <>
                     <h3>{item.title}</h3>

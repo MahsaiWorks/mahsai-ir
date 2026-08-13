@@ -1,22 +1,22 @@
 {
   "name": "Google Gemini",
   "shortName": "Gemini",
-  "description": "دستیار گوگل برای ایده‌پردازی، تحلیل فایل و پژوهش؛ در Deep Research می‌تواند از Google Search و منابع متصل استفاده کند.",
-  "plainSummary": "برای کسی که با جست‌وجوی گوگل و سرویس‌های Google کار می‌کند، یک دستیار عمومی و پژوهشی است.",
+  "description": "دستیار گوگل برای ایده‌پردازی، تحلیل فایل و پژوهش؛ در حالت پژوهش چندمرحله‌ای می‌تواند از جست‌وجوی گوگل و منابع متصل استفاده کند.",
+  "plainSummary": "برای کسی که با جست‌وجو و سرویس‌های گوگل کار می‌کند، یک دستیار عمومی و پژوهشی است.",
   "officialUrl": "https://gemini.google.com/",
   "category": "assistant",
   "access": "cloud",
-  "platforms": ["وب", "اندروید", "iOS"],
+  "platforms": ["وب", "اندروید", "آیفون و آیپد"],
   "bestFor": [
-    "پژوهش با Google Search",
+    "پژوهش با جست‌وجوی گوگل",
     "کار با سرویس‌های متصل گوگل",
     "ایده‌پردازی و پیش‌نویس"
   ],
   "features": [
-    "Deep Research",
+    "پژوهش چندمرحله‌ای",
     "انتخاب منابع پژوهش",
     "بارگذاری فایل",
-    "اتصال اختیاری به سرویس‌های Google"
+    "اتصال اختیاری به سرویس‌های گوگل"
   ],
   "limitations": [
     "دسترسی قابلیت‌ها به سن، کشور، حساب و سقف مصرف وابسته است",
@@ -26,11 +26,11 @@
   "verifiedAt": "2026-08-13",
   "sources": [
     {
-      "label": "Use Gemini Apps — Google",
+      "label": "راهنمای رسمی استفاده از جمینای گوگل",
       "url": "https://support.google.com/gemini/answer/13275745?hl=en"
     },
     {
-      "label": "Deep Research in Gemini Apps — Google",
+      "label": "راهنمای رسمی پژوهش چندمرحله‌ای در جمینای",
       "url": "https://support.google.com/gemini/answer/15719111?hl=en"
     }
   ],

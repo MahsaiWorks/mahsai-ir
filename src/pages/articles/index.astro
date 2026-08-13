@@ -26,11 +26,11 @@ const clusterArticles = (cluster: (typeof articleClusters)[number]['id']) =>
   description="راهنماهای کاربردی و به‌هم‌پیوسته برای مشاوران املاک؛ از فایل‌گیری و نیازسنجی مشتری تا بازدید، پیگیری، آگهی‌نویسی و امنیت اطلاعات."
 >
   <PageStage
-    eyebrow="مجله کاربردی املاک"
-    title="چیزهایی که فردا در دفتر"
-    highlight="به کارتان می‌آید."
-    lead="اینجا قرار نیست با متن‌های سنگین و تکراری وقتتان را بگیریم. هر راهنما یک مسئله واقعی دفتر املاک را باز می‌کند و آخرش یک قدم عملی جلوی پایتان می‌گذارد."
-    index={`${new Intl.NumberFormat('fa-IR').format(articles.length)} راهنما`}
+    eyebrow="مجلهٔ کاربردی متراژ"
+    title="راهنماهایی که فردا در دفتر"
+    highlight="به کارتان می‌آیند."
+    lead="هر مقاله یک مسئلهٔ واقعی دفتر املاک را با زبان ساده باز می‌کند، نمونه و تصویر دارد و با یک قدم قابل اجرا تمام می‌شود؛ از ثبت فایل تا پیگیری مشتری و نوشتن آگهی."
+    note="این مطالب کنار اپلیکیشن متراژ ساخته شده‌اند: راهنما کمک می‌کند روش درست را بفهمید و متراژ کمک می‌کند همان روش را در کار روزانه منظم نگه دارید."
     signals={[
       'فایل و داده',
       'مشتری و بازدید',
@@ -45,7 +45,6 @@ const clusterArticles = (cluster: (typeof articleClusters)[number]['id']) =>
       {
         articleClusters.map((cluster) => (
           <a href={`#cluster-${cluster.id}`}>
-            <span>{cluster.number}</span>
             <strong>{cluster.title}</strong>
             <p>{cluster.description}</p>
           </a>
@@ -101,7 +100,6 @@ const clusterArticles = (cluster: (typeof articleClusters)[number]['id']) =>
           >
             <div class="shell">
               <header class="cluster-heading">
-                <span>{cluster.number}</span>
                 <div>
                   <p class="eyebrow">مسیر مطالعه</p>
                   <h2 id={`cluster-title-${cluster.id}`}>{cluster.title}</h2>

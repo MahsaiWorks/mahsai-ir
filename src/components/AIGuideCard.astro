@@ -8,6 +8,13 @@ interface Props {
 }
 
 const { guide, featured = false } = Astro.props;
+const topicLabels = {
+  starting: 'شروع ساده',
+  offline: 'بدون اینترنت',
+  productivity: 'کار روزانه',
+  research: 'تحقیق و منبع',
+  persian: 'زبان فارسی',
+} as const;
 const formatDate = (date: Date) =>
   new Intl.DateTimeFormat('fa-IR', {
     year: 'numeric',
@@ -23,6 +30,31 @@ const formatDate = (date: Date) =>
     { 'ai-guide-card-featured': featured },
   ]}
 >
+  <a
+    class="ai-guide-card-visual"
+    href={`/ai/learn/${guide.id}/`}
+    aria-label={`مطالعهٔ ${guide.data.title}`}
+    data-topic={guide.data.topic}
+  >
+    {
+      guide.data.cover ? (
+        <img
+          src={guide.data.cover}
+          alt={guide.data.coverAlt ?? ''}
+          loading="lazy"
+        />
+      ) : (
+        <span aria-hidden="true">
+          <>
+            <i />
+            <b />
+            <em />
+          </>
+        </span>
+      )
+    }
+    <strong>{topicLabels[guide.data.topic]}</strong>
+  </a>
   <div class="ai-guide-card-top">
     <span>{guideKindLabels[guide.data.kind]}</span>
     <span>{guideLevelLabels[guide.data.level]}</span>
@@ -36,6 +68,6 @@ const formatDate = (date: Date) =>
     <span>{guide.data.readingTime}</span>
   </div>
   <a class="story-link" href={`/ai/learn/${guide.id}/`}>
-    مطالعه راهنما <span aria-hidden="true">←</span>
+    این راهنما را بخوانید <span aria-hidden="true">←</span>
   </a>
 </article>

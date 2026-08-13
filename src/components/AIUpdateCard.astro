@@ -26,6 +26,31 @@ const formatDate = (date: Date) =>
     { 'ai-update-card-featured': featured },
   ]}
 >
+  <a
+    class="ai-update-card-visual"
+    href={`/ai/today/${update.id}/`}
+    aria-label={`مطالعهٔ ${update.data.title}`}
+    data-category={update.data.category}
+  >
+    {
+      update.data.cover ? (
+        <img
+          src={update.data.cover}
+          alt={update.data.coverAlt ?? ''}
+          loading="lazy"
+        />
+      ) : (
+        <span aria-hidden="true">
+          <>
+            <i />
+            <b />
+            <em />
+          </>
+        </span>
+      )
+    }
+    <strong>{updateCategoryLabels[update.data.category]}</strong>
+  </a>
   <div class="ai-update-card-top">
     <div class="ai-update-card-signal">
       <span aria-hidden="true"></span>
@@ -51,6 +76,6 @@ const formatDate = (date: Date) =>
     <span>{update.data.readingTime}</span>
   </div>
   <a class="story-link" href={`/ai/today/${update.id}/`}>
-    گزارش کامل <span aria-hidden="true">←</span>
+    توضیح ساده و منبع را ببینید <span aria-hidden="true">←</span>
   </a>
 </article>

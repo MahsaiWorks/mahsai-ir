@@ -1,36 +1,36 @@
 {
   "name": "Claude",
   "shortName": "Claude",
-  "description": "دستیار Anthropic برای گفت‌وگو، کار با پروژه‌ها، جست‌وجوی وب و پژوهش چندمرحله‌ای با ارجاع.",
+  "description": "دستیار شرکت آنتروپیک برای گفت‌وگو، کار با پروژه‌ها، جست‌وجوی وب و پژوهش چندمرحله‌ای با ارجاع.",
   "plainSummary": "برای نوشتن، تحلیل متن، نگه‌داری پروژه و پژوهش منبع‌دار؛ دسترسی قابلیت‌ها به حساب وابسته است.",
   "officialUrl": "https://claude.ai/",
   "category": "assistant",
   "access": "cloud",
-  "platforms": ["وب", "ویندوز", "macOS", "اندروید", "iOS"],
+  "platforms": ["وب", "ویندوز", "مک", "اندروید", "آیفون و آیپد"],
   "bestFor": [
     "پروژه‌های دارای فایل و دستور ثابت",
     "پژوهش چندمرحله‌ای",
     "نوشتن و تحلیل متن"
   ],
   "features": [
-    "Web Search با ارجاع",
-    "Research",
-    "Projects",
+    "جست‌وجوی وب همراه با ارجاع",
+    "پژوهش چندمرحله‌ای",
+    "فضای پروژه برای کارهای ادامه‌دار",
     "دانش و دستور اختصاصی پروژه"
   ],
   "limitations": [
-    "Research به Web Search و نوع حساب مناسب نیاز دارد",
+    "پژوهش چندمرحله‌ای به جست‌وجوی وب و نوع حساب مناسب نیاز دارد",
     "سقف مصرف و دسترسی ممکن است تغییر کند"
   ],
   "verification": "source-checked",
   "verifiedAt": "2026-08-13",
   "sources": [
     {
-      "label": "Research on Claude — Anthropic",
+      "label": "راهنمای رسمی پژوهش در کلود",
       "url": "https://support.anthropic.com/en/articles/11088861-using-research-on-claude-ai"
     },
     {
-      "label": "Projects in Claude — Anthropic",
+      "label": "راهنمای رسمی فضای پروژه در کلود",
       "url": "https://support.anthropic.com/en/articles/9517075-what-are-projects"
     }
   ],

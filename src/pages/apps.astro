@@ -1,98 +1,152 @@
 ---
 import { getCollection } from 'astro:content';
-import PageStage from '../components/PageStage.astro';
 import { siteConfig } from '../config/site';
 import { getAppStatusLabel, getCafeBazaarLink } from '../data/appPresentation';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const apps = (await getCollection('apps')).sort(
+const app = (await getCollection('apps')).sort(
   (a, b) => a.data.order - b.data.order,
-);
+)[0];
+
+if (!app) {
+  throw new Error('No application content is available.');
+}
+
+const downloadLink = getCafeBazaarLink(app.data.storeLinks);
+const productGuides = (await getCollection('articles'))
+  .filter((article) => !article.data.draft && article.data.featured)
+  .sort((a, b) => a.data.seriesOrder - b.data.seriesOrder)
+  .slice(0, 3);
 ---
 
 <BaseLayout
-  title={`اپلیکیشن‌ها | ${siteConfig.brandName}`}
-  description="محصولات رسمی مهسای، قابلیت‌ها، وضعیت انتشار و مسیرهای پشتیبانی؛ شامل اپلیکیشن متراژ برای مشاوران املاک."
+  title={`اپلیکیشن متراژ؛ محصول کاربردی ${siteConfig.brandName}`}
+  description="آشنایی با متراژ؛ اپلیکیشن فارسی مدیریت فایل، مشتری، بازدید و پیگیری برای مشاوران املاک، همراه با تصاویر واقعی و لینک رسمی نصب."
 >
-  <PageStage
-    eyebrow="محصولات"
-    title="ابزارهایی برای جریان واقعی"
-    highlight="کار."
-    lead="هر محصول این صفحه از یک مسئله مشخص شروع می‌شود و مسیر معرفی، وضعیت انتشار و پشتیبانی رسمی خودش را دارد."
-    index="صفحه ۰۲"
-    note="متراژ نخستین محصول معرفی‌شده مهسای و یک اپلیکیشن فارسی اندروید برای مشاوران املاک است."
-    signals={['معرفی شفاف قابلیت‌ها', 'تصاویر واقعی محصول', 'پشتیبانی رسمی']}
-    tone="apricot"
-  />
-
-  <section class="page-section" aria-labelledby="apps-title">
-    <div class="shell product-catalog">
-      <header class="split-intro">
-        <div class="split-intro-heading">
-          <p class="eyebrow">کاتالوگ محصول</p>
-          <h2 id="apps-title">محصول فعلی مهسای</h2>
-        </div>
+  <section class="mahsa-apps-hero" aria-labelledby="apps-title">
+    <div class="shell mahsa-apps-hero-grid">
+      <div class="mahsa-apps-copy">
+        <p class="mahsa-home-kicker">محصولی برای یک مسئلهٔ واقعی در ایران</p>
+        <img
+          class="mahsa-apps-wordmark"
+          src={app.data.logo.dark}
+          alt="متراژ"
+          width="190"
+          height="115"
+        />
+        <h1 id="apps-title">
+          کار املاک شلوغ است؛ <span>اطلاعاتتان نباید باشد.</span>
+        </h1>
         <p>
-          جزئیات این صفحه مستقیماً از داده ساختاریافته هر اپلیکیشن خوانده
-          می‌شود؛ بنابراین وضعیت، نسخه و مسیرهای رسمی همیشه از یک منبع واحد
-          نمایش داده می‌شوند.
+          متراژ فایل ملک، نیاز مشتری، بازدید و پیگیری بعدی را در یک برنامهٔ
+          فارسی کنار هم نگه می‌دارد؛ برای مشاوری که می‌خواهد کمتر میان دفتر،
+          گالری و یادداشت‌ها جابه‌جا شود.
         </p>
-      </header>
+        <div class="mahsa-home-actions">
+          <a class="button" href={`/apps/${app.id}/`}>متراژ را کامل ببینید</a>
+          {
+            downloadLink && (
+              <a
+                class="mahsa-text-link"
+                href={downloadLink.url}
+                target="_blank"
+                rel="noopener"
+              >
+                نصب از صفحهٔ رسمی کافه‌بازار ↗
+              </a>
+            )
+          }
+        </div>
+        <p class="mahsa-app-status">
+          <span>{getAppStatusLabel(app.data.status, app.data.storeLinks)}</span>
+          <span>پشتیبانی فارسی</span>
+          <span>طراحی راست‌به‌چپ</span>
+        </p>
+      </div>
 
-      {
-        apps.map((app) => {
-          const downloadLink = getCafeBazaarLink(app.data.storeLinks);
-
-          return (
-            <article class="catalog-app">
-              <div class="catalog-app-visual">
-                <span>نمای واقعی اپلیکیشن</span>
-                <img
-                  src={app.data.screenshots[0]?.src}
-                  alt={app.data.screenshots[0]?.alt}
-                  loading="lazy"
-                />
-              </div>
-              <div class="catalog-app-copy">
-                <div class="catalog-app-id">
-                  <img src={app.data.logo.dark} alt={app.data.name} />
-                  <span>
-                    {getAppStatusLabel(app.data.status, app.data.storeLinks)}
-                  </span>
-                </div>
-                <h3>{app.data.tagline}</h3>
-                <p>{app.data.fullDescription}</p>
-                <ul>
-                  {app.data.features.slice(0, 4).map((feature) => (
-                    <li>{feature}</li>
-                  ))}
-                </ul>
-                <div class="catalog-app-actions">
-                  {downloadLink && (
-                    <a
-                      class="button"
-                      href={downloadLink.url}
-                      target="_blank"
-                      rel="noopener"
-                    >
-                      دانلود از کافه‌بازار
-                    </a>
-                  )}
-                  <a class="page-stage-link" href={`/apps/${app.id}/`}>
-                    معرفی کامل و تصاویر
-                  </a>
-                  <a class="page-stage-link" href={`/apps/${app.id}/status/`}>
-                    وضعیت انتشار
-                  </a>
-                  <a class="page-stage-link" href={app.data.supportUrl}>
-                    پشتیبانی
-                  </a>
-                </div>
-              </div>
-            </article>
-          );
-        })
-      }
+      <div class="mahsa-apps-visual" aria-label="نمای اپلیکیشن متراژ">
+        <img
+          class="mahsa-apps-character"
+          src="/images/home/metrazh-hero-character.webp"
+          alt="مشاور املاک ایرانی در حال استفاده از اپلیکیشن متراژ"
+          width="996"
+          height="1096"
+        />
+        <figure>
+          <img
+            src={app.data.screenshots[0]?.src}
+            alt={app.data.screenshots[0]?.alt}
+            loading="eager"
+          />
+          <figcaption>نمای واقعی میز کار متراژ</figcaption>
+        </figure>
+      </div>
     </div>
   </section>
+
+  <section class="section mahsa-app-fit" aria-labelledby="app-fit-title">
+    <div class="shell mahsa-app-fit-grid">
+      <div>
+        <p class="eyebrow">آیا متراژ برای شماست؟</p>
+        <h2 id="app-fit-title">
+          اگر این مسئله‌ها آشناست، از معرفی کامل شروع کنید.
+        </h2>
+      </div>
+      <ul>
+        {app.data.features.slice(0, 4).map((feature) => <li>{feature}</li>)}
+      </ul>
+      <aside>
+        <strong>شفاف پیش از نصب</strong>
+        <p>
+          تصاویر واقعی، قابلیت‌های فعلی، روش نگهداری داده و وضعیت انتشار را در
+          صفحهٔ اختصاصی متراژ یک‌جا می‌بینید.
+        </p>
+        <a class="button" href={`/apps/${app.id}/`}>معرفی کامل و تصاویر متراژ</a
+        >
+      </aside>
+    </div>
+  </section>
+
+  {
+    productGuides.length > 0 && (
+      <section
+        class="section mahsa-property-reads"
+        aria-labelledby="apps-guides-title"
+      >
+        <div class="shell">
+          <header class="mahsa-section-heading">
+            <div>
+              <p class="eyebrow">قبل و بعد از نصب</p>
+              <h2 id="apps-guides-title">
+                راهنماهایی برای کار منظم‌تر در املاک.
+              </h2>
+            </div>
+            <a class="story-link" href="/articles/">
+              همهٔ مقاله‌های املاک
+            </a>
+          </header>
+          <div class="mahsa-property-grid">
+            {productGuides.map((guide) => (
+              <article>
+                <a href={`/articles/${guide.id}/`}>
+                  <img
+                    src={guide.data.cover}
+                    alt={guide.data.coverAlt}
+                    loading="lazy"
+                  />
+                </a>
+                <p>{guide.data.category}</p>
+                <h3>
+                  <a href={`/articles/${guide.id}/`}>{guide.data.title}</a>
+                </h3>
+                <a class="story-link" href={`/articles/${guide.id}/`}>
+                  مطالعهٔ راهنما
+                </a>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 </BaseLayout>

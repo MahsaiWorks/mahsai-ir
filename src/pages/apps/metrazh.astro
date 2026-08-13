@@ -58,10 +58,7 @@ const structuredData = {
   <section class="product-hero product-page-stage">
     <div class="shell product-hero-grid product-hero-frame">
       <div class="product-copy">
-        <p class="product-brand-line">
-          <span lang="en" dir="ltr">MAHSAI</span><i aria-hidden="true"></i> محصول
-          اول
-        </p>
+        <p class="product-brand-line">ساخته‌شده برای مشاوران املاک ایران</p>
         <div class="product-identity">
           <img
             class="product-wordmark"
@@ -71,12 +68,12 @@ const structuredData = {
             height="115"
           />
           <div>
-            <p class="eyebrow">اپلیکیشن اندروید</p>
+            <p class="eyebrow">اپلیکیشن فارسی اندروید</p>
             <p class="status-badge">منتشرشده در کافه‌بازار</p>
           </div>
         </div>
-        <p class="product-kicker">مدیریت املاک، یکپارچه و در دسترس</p>
-        <h1>فایل، مشتری و پیگیری؛ <span>بدون پراکندگی.</span></h1>
+        <p class="product-kicker">مدیریت فایل و مشتری، در یک جای مشخص</p>
+        <h1>چیزی میان دفترها گم نشود؛ <span>پیگیری‌ها جا نماند.</span></h1>
         <p class="product-tagline">{app.data.tagline}</p>
         <p class="page-lead">{app.data.fullDescription}</p>
         <div class="hero-actions">
@@ -88,7 +85,7 @@ const structuredData = {
                 target="_blank"
                 rel="noopener"
               >
-                دانلود از کافه‌بازار
+                نصب از کافه‌بازار
               </a>
             )
           }
@@ -147,7 +144,6 @@ const structuredData = {
       {
         metrazhStory.chapters.map((chapter) => (
           <article>
-            <span>{chapter.number}</span>
             <div>
               <h3>{chapter.title}</h3>
               <p>{chapter.description}</p>
@@ -185,7 +181,6 @@ const structuredData = {
       {
         metrazhWorkflowComparison.map((item) => (
           <article role="listitem">
-            <span>{item.number}</span>
             <p>{item.before}</p>
             <p>{item.after}</p>
           </article>
@@ -209,7 +204,7 @@ const structuredData = {
       </header>
       <ol>
         <li>
-          <span>01</span><div>
+          <div>
             <h3>ثبت ساختاریافته</h3><p>
               جزئیات ملک، مالک، تصاویر و موقعیت در یک پرونده قابل جست‌وجو قرار
               می‌گیرند.
@@ -217,7 +212,7 @@ const structuredData = {
           </div>
         </li>
         <li>
-          <span>02</span><div>
+          <div>
             <h3>بازیابی هدفمند</h3><p>
               فیلتر پیشرفته و جست‌وجوی صوتیِ دارای مرحله تأیید، رسیدن به فایل
               مناسب را کوتاه‌تر می‌کنند.
@@ -225,7 +220,7 @@ const structuredData = {
           </div>
         </li>
         <li>
-          <span>03</span><div>
+          <div>
             <h3>اقدام بعدی</h3><p>
               بازدید، یادآوری، تعامل و معامله کنار همان جریان کاری ثبت و پیگیری
               می‌شوند.
@@ -233,9 +228,9 @@ const structuredData = {
           </div>
         </li>
         <li>
-          <span>04</span><div>
+          <div>
             <h3>خروجی آماده</h3><p>
-              متن آگهی قالب‌محور، PDF مشخصات و محاسبات کاربردی از داده‌های
+              متن آگهی قالب‌محور، فایل مشخصات و محاسبات کاربردی از داده‌های
               ثبت‌شده ساخته می‌شوند.
             </p>
           </div>
@@ -246,8 +241,8 @@ const structuredData = {
 
   <section class="product-facts" aria-label="مشخصات فنی متراژ">
     <div class="shell facts-grid">
-      <div><span>پلتفرم</span><strong>Android</strong></div>
-      <div><span>حداقل نسخه</span><strong>Android 7.0</strong></div>
+      <div><span>پلتفرم</span><strong>اندروید</strong></div>
+      <div><span>حداقل نسخه</span><strong>اندروید ۷</strong></div>
       <div><span>نسخه فعلی</span><strong>{app.data.version}</strong></div>
       <div><span>وضعیت</span><strong>قابل دانلود</strong></div>
     </div>
@@ -265,13 +260,8 @@ const structuredData = {
       </header>
       <ol class="feature-list">
         {
-          app.data.features.map((feature, index) => (
+          app.data.features.map((feature) => (
             <li>
-              <span>
-                {new Intl.NumberFormat('fa-IR', {
-                  minimumIntegerDigits: 2,
-                }).format(index + 1)}
-              </span>
               <p>{feature}</p>
             </li>
           ))
@@ -371,9 +361,7 @@ const structuredData = {
       <div class="faq-list">
         <details>
           <summary>متراژ روی چه دستگاه‌هایی نصب می‌شود؟</summary>
-          <p>
-            نسخه فعلی برای {app.data.minOs} و نسخه‌های جدیدتر Android ارائه شده است.
-          </p>
+          <p>نسخه فعلی برای اندروید ۷ و نسخه‌های جدیدتر ارائه شده است.</p>
         </details>
         <details>
           <summary>اطلاعات فایل‌ها و مشتری‌ها کجا نگهداری می‌شوند؟</summary>
@@ -426,7 +414,7 @@ const structuredData = {
               target="_blank"
               rel="noopener"
             >
-              دانلود از کافه‌بازار
+              نصب از کافه‌بازار
             </a>
           )
         }

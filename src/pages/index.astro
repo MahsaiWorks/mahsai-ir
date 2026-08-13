@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import AIGuideCard from '../components/AIGuideCard.astro';
 import { siteConfig } from '../config/site';
-import { aiNavigation } from '../data/aiNavigation';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const updates = (await getCollection('aiUpdates'))
@@ -15,9 +14,10 @@ const guides = (await getCollection('aiGuides'))
       Number(b.data.featured) - Number(a.data.featured) ||
       b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
   );
-const tools = (await getCollection('aiTools')).sort(
-  (a, b) => a.data.order - b.data.order,
-);
+const propertyGuides = (await getCollection('articles'))
+  .filter((article) => !article.data.draft && article.data.featured)
+  .sort((a, b) => a.data.seriesOrder - b.data.seriesOrder)
+  .slice(0, 3);
 const featuredApp = (await getCollection('apps'))
   .filter((app) => app.data.featured)
   .sort((a, b) => a.data.order - b.data.order)[0];
@@ -25,6 +25,36 @@ const bazaarLink = featuredApp?.data.storeLinks.find((link) =>
   link.url.includes('cafebazaar.ir'),
 );
 const latestUpdate = updates[0];
+const entryPaths = [
+  {
+    label: 'تازه چه شده؟',
+    description:
+      'تغییرهای مهم را کوتاه، روشن و همراه با کاری که باید انجام دهید بخوانید.',
+    href: '/ai/today/',
+    tone: 'coral',
+  },
+  {
+    label: 'از کجا شروع کنم؟',
+    description:
+      'با راهنماهای رایگان و قدم‌به‌قدم، اولین نتیجهٔ قابل استفاده را بگیرید.',
+    href: '/ai/learn/',
+    tone: 'mint',
+  },
+  {
+    label: 'کدام ابزار مناسب من است؟',
+    description:
+      'کاربرد، محدودیت و شرایط استفاده از ابزارها را پیش از انتخاب ببینید.',
+    href: '/ai/tools/',
+    tone: 'navy',
+  },
+  {
+    label: 'بدون اینترنت هم می‌شود؟',
+    description:
+      'راه‌های اجرای هوش مصنوعی روی رایانهٔ شخصی را ساده و امن یاد بگیرید.',
+    href: '/ai/offline/',
+    tone: 'sand',
+  },
+] as const;
 const formatDate = (date: Date) =>
   new Intl.DateTimeFormat('fa-IR', {
     year: 'numeric',
@@ -37,104 +67,99 @@ const formatDate = (date: Date) =>
   title={siteConfig.seoDefaults.title}
   description={siteConfig.seoDefaults.description}
 >
-  <section class="ai-hero home-ai-hero" aria-labelledby="home-title">
-    <div class="shell ai-hero-grid spatial-hero">
-      <div class="ai-hero-copy">
-        <p class="ai-kicker">
-          <span>MAHSAI</span> · هوش مصنوعی برای فارسی‌زبانان
-        </p>
-        <h1 id="home-title">هر روز بدانید <span>در AI چه مهم است.</span></h1>
+  <section class="mahsa-home-hero" aria-labelledby="home-title">
+    <div class="shell mahsa-home-hero-grid">
+      <div class="mahsa-home-copy">
+        <p class="mahsa-home-kicker">برای کاربران فارسی‌زبان</p>
+        <h1 id="home-title">
+          هوش مصنوعی را بفهمید؛ <span>به کار بگیرید.</span>
+        </h1>
         <p>
-          خبر تأییدشده، ابزار بررسی‌شده و راهنمایی که همان روز بتوانید در کار
-          واقعی استفاده کنید؛ بدون شایعه، فهرست‌های بی‌پایان و ادعای بی‌منبع.
+          راهنماهای ساده و تصویری، مقایسه‌های صادقانه و تازه‌هایی که واقعاً روی
+          انتخاب یا کار شما اثر می‌گذارند؛ با درنظرگرفتن نیاز و شرایط کاربر
+          ایرانی.
         </p>
-        <div class="ai-hero-actions">
-          <a class="button" href="/ai/today/"
-            >رادار امروز <span aria-hidden="true">←</span></a
-          ><a class="button button-secondary" href="/ai/learn/"
-            >از کجا شروع کنم؟</a
+        <div class="mahsa-home-actions">
+          <a class="button" href="/ai/learn/">از یک راهنمای ساده شروع کنید</a>
+          <a class="mahsa-text-link" href="/ai/today/">تازه‌های مهم را ببینید</a
           >
         </div>
-        <ul class="ai-trust-line" aria-label="تعهدهای محتوایی">
-          <li><span aria-hidden="true">✓</span> منبع رسمی</li><li>
-            <span aria-hidden="true">✓</span> تاریخ آخرین بررسی
-          </li><li><span aria-hidden="true">✓</span> آموزش رایگان و عملی</li>
+        <ul class="mahsa-home-promises" aria-label="ویژگی‌های مطالب مهسای">
+          <li>فارسی و روان</li>
+          <li>منبع و تاریخ بررسی</li>
+          <li>بدون ثبت‌نام اجباری</li>
         </ul>
       </div>
-      <aside
-        class="home-intel-board spatial-console"
-        aria-label="داشبورد محتوای هوش مصنوعی MAHSAI"
-      >
-        <header>
-          <p><span aria-hidden="true"></span> INTELLIGENCE DESK</p><strong
-            >به‌روز در ۲۲ مرداد ۱۴۰۵</strong
-          >
-        </header>
-        <div class="home-intel-score">
-          <span>امروز</span><b>{String(updates.length).padStart(2, '0')}</b><p>
-            گزارش دارای منبع
-          </p>
-        </div>
-        <dl>
-          <div><dt>راهنما</dt><dd>{guides.length}</dd></div><div>
-            <dt>ابزار</dt><dd>{tools.length}</dd>
-          </div><div><dt>جاوااسکریپت صفحه</dt><dd>صفر</dd></div>
-        </dl>
-        <footer><span aria-hidden="true">●</span> در حال توسعهٔ روزانه</footer>
-      </aside>
+      <figure class="mahsa-home-visual">
+        <img
+          src="/ai/gemini-notebook-editorial-cover-v1.png"
+          alt="مجموعه‌ای از برگه‌ها و منابع که به یک راهنمای منظم تبدیل شده‌اند"
+          width="1664"
+          height="945"
+        />
+        <figcaption>
+          <span>مسئلهٔ واقعی</span>
+          <span>توضیح ساده</span>
+          <span>قدم بعدی روشن</span>
+        </figcaption>
+      </figure>
     </div>
   </section>
 
   {
     latestUpdate && (
-      <section class="home-radar-strip" aria-labelledby="home-radar-title">
-        <div class="shell home-radar-grid">
-          <div>
-            <>
-              <p class="eyebrow">رادار امروز</p>
-              <h2 id="home-radar-title">{latestUpdate.data.title}</h2>
-              <p>{latestUpdate.data.description}</p>
-              <a class="story-link" href={`/ai/today/${latestUpdate.id}/`}>
-                گزارش کامل و منابع <span aria-hidden="true">←</span>
-              </a>
-            </>
+      <section class="mahsa-latest" aria-labelledby="home-latest-title">
+        <div class="shell mahsa-latest-card">
+          <div class="mahsa-latest-copy">
+            <p class="eyebrow">تازه و کاربردی</p>
+            <h2 id="home-latest-title">{latestUpdate.data.title}</h2>
+            <p>{latestUpdate.data.description}</p>
+            <div class="mahsa-latest-action">
+              <span>کاری که بهتر است انجام دهید</span>
+              <p>{latestUpdate.data.action}</p>
+            </div>
+            <a class="button" href={`/ai/today/${latestUpdate.id}/`}>
+              توضیح کامل و منبع
+            </a>
           </div>
-          <div class="home-radar-proof">
-            <>
-              <span>آخرین راستی‌آزمایی</span>
-              <strong>{formatDate(latestUpdate.data.verifiedAt)}</strong>
-              <p>{latestUpdate.data.sources.length} منبع رسمی در خود گزارش</p>
-              <a href="/ai/sources/">سیاست منابع و اصلاحات</a>
-            </>
-          </div>
+          <aside class="mahsa-latest-note">
+            <span>بررسی‌شده در</span>
+            <strong>{formatDate(latestUpdate.data.verifiedAt)}</strong>
+            <p>
+              این مطلب بر پایهٔ {latestUpdate.data.sources.length} منبع اصلی
+              نوشته شده و اگر اطلاعاتش تغییر کند، دوباره بررسی می‌شود.
+            </p>
+          </aside>
         </div>
       </section>
     )
   }
 
-  <section class="home-ai-map section" aria-labelledby="home-map-title">
+  <section class="mahsa-entry section" aria-labelledby="home-map-title">
     <div class="shell">
-      <div class="ai-section-head">
+      <div class="mahsa-section-heading">
         <div>
-          <p class="eyebrow">مرکز هوش مصنوعی</p><h2 id="home-map-title">
-            یک سؤال دارید؛ یک مسیر روشن بگیرید.
-          </h2>
-        </div><p>به‌جای گشتن میان صدها لینک، از نوع نیازتان شروع کنید.</p>
+          <p class="eyebrow">از نیاز خودتان شروع کنید</p>
+          <h2 id="home-map-title">دنبال چه جوابی هستید؟</h2>
+        </div>
+        <p>
+          لازم نیست ساختار سایت را بلد باشید؛ نزدیک‌ترین سؤال به نیازتان را
+          انتخاب کنید.
+        </p>
       </div>
-      <div class="home-ai-map-grid">
+      <div class="mahsa-entry-grid">
         {
-          aiNavigation.slice(0, 6).map((item, index) => (
-            <a href={item.href}>
-              <>
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <div>
-                  <>
-                    <strong>{item.label}</strong>
-                    <p>{item.description}</p>
-                  </>
-                </div>
-                <i aria-hidden="true">←</i>
-              </>
+          entryPaths.map((item) => (
+            <a href={item.href} data-tone={item.tone}>
+              <span aria-hidden="true">
+                <>
+                  <i />
+                  <b />
+                </>
+              </span>
+              <strong>{item.label}</strong>
+              <p>{item.description}</p>
+              <em>رفتن به این بخش ←</em>
             </a>
           ))
         }
@@ -142,14 +167,14 @@ const formatDate = (date: Date) =>
     </div>
   </section>
 
-  <section class="home-learning section" aria-labelledby="home-learning-title">
+  <section class="mahsa-learning section" aria-labelledby="home-learning-title">
     <div class="shell">
-      <div class="ai-section-head">
+      <div class="mahsa-section-heading">
         <div>
-          <p class="eyebrow">آموزش رایگان</p><h2 id="home-learning-title">
-            سه راهنما برای شروع درست.
-          </h2>
-        </div><a class="story-link" href="/ai/learn/">همه آموزش‌ها</a>
+          <p class="eyebrow">راهنماهای رایگان</p>
+          <h2 id="home-learning-title">بخوانید و همان روز امتحان کنید.</h2>
+        </div>
+        <a class="story-link" href="/ai/learn/">همهٔ راهنماها</a>
       </div>
       <div class="ai-guide-grid">
         {
@@ -163,37 +188,13 @@ const formatDate = (date: Date) =>
     </div>
   </section>
 
-  <section class="home-standard section" aria-labelledby="home-standard-title">
-    <div class="shell home-standard-grid">
-      <div>
-        <p class="eyebrow">استاندارد MAHSAI</p><h2 id="home-standard-title">
-          اطلاعاتی که بتوانید دوباره بررسی کنید.
-        </h2><p>
-          ما خبر را از نظر جدا می‌کنیم، قابلیت اعلام‌شده را به‌جای نتیجهٔ تست جا
-          نمی‌زنیم و تاریخ تازه‌بودن محتوا را پنهان نمی‌کنیم.
-        </p><a class="button button-secondary" href="/ai/sources/"
-          >روش کار تحریریه</a
-        >
-      </div>
-      <ol>
-        <li><span>منبع</span><strong>لینک مستقیم به مرجع اصلی</strong></li><li>
-          <span>زمان</span><strong>انتشار، بررسی و به‌روزرسانی جدا</strong>
-        </li><li>
-          <span>تجربه</span><strong>آزمون فقط با روش قابل تکرار</strong>
-        </li><li>
-          <span>اصلاح</span><strong>تغییر مهم، روشن و قابل پیگیری</strong>
-        </li>
-      </ol>
-    </div>
-  </section>
-
   {
     featuredApp && (
-      <section class="home-metrazh" aria-labelledby="home-metrazh-title">
-        <div class="shell home-metrazh-grid">
+      <section class="mahsa-product" aria-labelledby="home-metrazh-title">
+        <div class="shell mahsa-product-grid">
           <div class="home-metrazh-copy">
             <>
-              <p class="eyebrow">محصول مستقل MAHSAI</p>
+              <p class="eyebrow">ساخته‌شده برای بازار املاک ایران</p>
               <img
                 src={featuredApp.data.logo.light}
                 alt="متراژ"
@@ -201,9 +202,13 @@ const formatDate = (date: Date) =>
                 height="103"
               />
               <h2 id="home-metrazh-title">
-                دستیار فارسی کار روزانهٔ مشاوران املاک.
+                فایل، مشتری و پیگیری را از پراکندگی نجات دهید.
               </h2>
-              <p>{featuredApp.data.shortDescription}</p>
+              <p>
+                متراژ یک اپلیکیشن فارسی برای مشاوران املاک است؛ جایی برای
+                نگهداری فایل‌ها، نیاز مشتری، بازدیدها و اقدام بعدی، بدون وابستگی
+                به چند دفتر و یادداشت پراکنده.
+              </p>
               <ul>
                 {featuredApp.data.features.slice(0, 3).map((feature) => (
                   <li>{feature}</li>
@@ -211,7 +216,7 @@ const formatDate = (date: Date) =>
               </ul>
               <div>
                 <a class="button" href="/apps/metrazh/">
-                  معرفی کامل متراژ
+                  متراژ چطور کمک می‌کند؟
                 </a>
                 {bazaarLink && (
                   <a
@@ -220,13 +225,13 @@ const formatDate = (date: Date) =>
                     target="_blank"
                     rel="noopener"
                   >
-                    دانلود از کافه‌بازار <span aria-hidden="true">↗</span>
+                    نصب از کافه‌بازار <span aria-hidden="true">↗</span>
                   </a>
                 )}
               </div>
             </>
           </div>
-          <figure>
+          <figure class="mahsa-product-visual">
             <>
               <img
                 src="/images/apps/metrazh/bazaar/slide-04.jpg"
@@ -236,7 +241,7 @@ const formatDate = (date: Date) =>
                 loading="lazy"
               />
               <figcaption>
-                متراژ مسیر محصول و پشتیبانی مستقل خود را حفظ می‌کند.
+                نمای واقعی بخش تطبیق فایل و نیاز مشتری در متراژ
               </figcaption>
             </>
           </figure>
@@ -245,15 +250,46 @@ const formatDate = (date: Date) =>
     )
   }
 
-  <section class="home-close-ai" aria-labelledby="home-close-title">
-    <div class="shell">
-      <p class="ai-kicker">MAHSAI</p><h2 id="home-close-title">
-        هر روز یک تصمیم بهتر با اطلاعات کمتر، اما معتبرتر.
-      </h2><div>
-        <a class="button" href="/ai/">ورود به مرکز هوش مصنوعی</a><a
-          href="/ai/rss.xml">دنبال‌کردن RSS</a
-        >
-      </div>
-    </div>
-  </section>
+  {
+    propertyGuides.length > 0 && (
+      <section
+        class="mahsa-property-reads section"
+        aria-labelledby="home-property-title"
+      >
+        <div class="shell">
+          <div class="mahsa-section-heading">
+            <div>
+              <p class="eyebrow">کنار اپلیکیشن متراژ</p>
+              <h2 id="home-property-title">
+                راهنماهایی برای کار بهتر در املاک.
+              </h2>
+            </div>
+            <a class="story-link" href="/articles/">
+              همهٔ مقاله‌های املاک
+            </a>
+          </div>
+          <div class="mahsa-property-grid">
+            {propertyGuides.map((article) => (
+              <article>
+                <a href={`/articles/${article.id}/`}>
+                  <img
+                    src={article.data.cover}
+                    alt={article.data.coverAlt}
+                    loading="lazy"
+                  />
+                </a>
+                <p>{article.data.category}</p>
+                <h3>
+                  <a href={`/articles/${article.id}/`}>{article.data.title}</a>
+                </h3>
+                <a class="story-link" href={`/articles/${article.id}/`}>
+                  مطالعهٔ راهنما
+                </a>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 </BaseLayout>

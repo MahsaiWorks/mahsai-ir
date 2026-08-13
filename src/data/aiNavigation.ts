@@ -1,53 +1,53 @@
 export const aiNavigation = [
   {
     href: '/ai/today/',
-    label: 'رادار امروز',
-    description: 'تغییرات مهم با منبع رسمی',
+    label: 'تازه‌های مهم',
+    description: 'فقط تغییراتی که روی انتخاب یا کار شما اثر دارند',
   },
   {
     href: '/ai/tools/',
-    label: 'ابزارها',
-    description: 'انتخاب ابزار بر اساس نیاز',
+    label: 'انتخاب ابزار',
+    description: 'برای هر کار، گزینهٔ مناسب‌تر را پیدا کنید',
   },
   {
     href: '/ai/compare/',
-    label: 'مقایسه',
-    description: 'تصمیم‌گیری بدون طرفداری',
+    label: 'مقایسهٔ بی‌طرفانه',
+    description: 'مزیت‌ها و محدودیت‌ها را کنار هم ببینید',
   },
   {
     href: '/ai/persian-lab/results/',
-    label: 'نتیجه تست فارسی',
-    description: '۲۴ پاسخ واقعی و قابل دانلود',
+    label: 'نتیجهٔ آزمون فارسی',
+    description: 'ببینید ابزارها با متن فارسی چه کرده‌اند',
   },
   {
     href: '/ai/persian-lab/',
-    label: 'آزمایشگاه فارسی',
-    description: 'روش شفاف و تکرارپذیر آزمون',
+    label: 'روش آزمون فارسی',
+    description: 'معیارها و پاسخ‌های خام را بررسی کنید',
   },
   {
     href: '/ai/offline/',
-    label: 'هوش مصنوعی آفلاین',
-    description: 'اجرای محلی از لینک رسمی',
+    label: 'استفاده بدون اینترنت',
+    description: 'مدل را روی رایانهٔ خودتان اجرا کنید',
   },
   {
     href: '/ai/learn/',
-    label: 'آموزش رایگان',
-    description: 'از شروع تا جریان کار واقعی',
+    label: 'راهنماهای رایگان',
+    description: 'ساده شروع کنید و به یک نتیجهٔ واقعی برسید',
   },
   {
     href: '/ai/course/',
-    label: 'دوره رایگان',
-    description: 'یک مسیر کوتاه با تمرین واقعی',
+    label: 'تمرین قدم‌به‌قدم',
+    description: 'یک کار واقعی را با قالب آماده انجام دهید',
   },
   {
     href: '/ai/workflows/',
-    label: 'جریان‌های کاری',
-    description: 'هوش مصنوعی در کار روزانه',
+    label: 'کاربردهای روزمره',
+    description: 'برای نوشتن، تحقیق و کارهای تکراری',
   },
   {
     href: '/ai/glossary/',
-    label: 'واژه‌نامه',
-    description: 'اصطلاحات به زبان ساده',
+    label: 'معنی واژه‌ها',
+    description: 'اصطلاحات ناآشنا با توضیح سادهٔ فارسی',
   },
 ];
 

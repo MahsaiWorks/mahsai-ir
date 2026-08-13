@@ -1,12 +1,12 @@
 {
   "name": "ChatGPT",
   "shortName": "ChatGPT",
-  "description": "دستیار عمومی OpenAI برای گفت‌وگو، کار با فایل، جست‌وجوی وب و پژوهش چندمرحله‌ای؛ دسترسی هر قابلیت به حساب وابسته است.",
+  "description": "دستیار عمومی شرکت اوپن‌ای‌آی برای گفت‌وگو، کار با فایل، جست‌وجوی وب و پژوهش چندمرحله‌ای؛ دسترسی هر قابلیت به نوع حساب وابسته است.",
   "plainSummary": "برای نوشتن، پرسش‌های روزمره، کار با فایل و تحقیق؛ ولی جواب مهم را باید با منبع بررسی کنید.",
   "officialUrl": "https://chatgpt.com/",
   "category": "assistant",
   "access": "cloud",
-  "platforms": ["وب", "ویندوز", "macOS", "اندروید", "iOS"],
+  "platforms": ["وب", "ویندوز", "مک", "اندروید", "آیفون و آیپد"],
   "bestFor": [
     "کارهای عمومی و نوشتن",
     "جست‌وجوی سریع با منبع",
@@ -14,8 +14,8 @@
   ],
   "features": [
     "جست‌وجوی وب با ارجاع",
-    "Deep Research",
-    "Projects",
+    "پژوهش چندمرحله‌ای",
+    "فضای پروژه برای کارهای ادامه‌دار",
     "کار با فایل و تصویر"
   ],
   "limitations": [
@@ -26,11 +26,11 @@
   "verifiedAt": "2026-08-13",
   "sources": [
     {
-      "label": "What is ChatGPT — OpenAI",
+      "label": "راهنمای رسمی چت‌جی‌پی‌تی در اوپن‌ای‌آی",
       "url": "https://help.openai.com/en/articles/12677804-what-is-chatgpt-faq"
     },
     {
-      "label": "Deep research in ChatGPT — OpenAI",
+      "label": "راهنمای رسمی پژوهش چندمرحله‌ای در چت‌جی‌پی‌تی",
       "url": "https://help.openai.com/en/articles/10500283-deep-research-in-chatgpt"
     }
   ],

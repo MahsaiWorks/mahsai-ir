@@ -1,14 +1,14 @@
 {
   "name": "Gemini Notebook",
   "shortName": "Notebook",
-  "description": "نام تازهٔ NotebookLM؛ دستیار پژوهش گوگل برای پرسش از منابع شخصی با ارجاع و ساخت خروجی‌هایی مانند گزارش و مرور صوتی.",
+  "description": "نام تازهٔ دفتر پژوهش گوگل؛ ابزاری برای پرسش از منابع شخصی با ارجاع و ساخت خروجی‌هایی مانند گزارش و مرور صوتی.",
   "plainSummary": "چند فایل و لینک را در یک دفتر می‌گذارید و جواب‌ها را بر پایهٔ همان منابع با ارجاع می‌گیرید.",
   "officialUrl": "https://notebooklm.google.com/",
   "category": "research",
   "access": "cloud",
-  "platforms": ["وب", "اندروید", "iOS"],
+  "platforms": ["وب", "اندروید", "آیفون و آیپد"],
   "bestFor": [
-    "پرسش از PDF و منبع شخصی",
+    "پرسش از فایل پی‌دی‌اف و منبع شخصی",
     "ساخت راهنمای مطالعه",
     "مرور چند منبع مرتبط"
   ],
@@ -26,11 +26,11 @@
   "verifiedAt": "2026-08-13",
   "sources": [
     {
-      "label": "NotebookLM is now Gemini Notebook — Google",
+      "label": "اعلام رسمی نام تازهٔ دفتر پژوهش جمینای",
       "url": "https://blog.google/innovation-and-ai/products/gemini-notebook/notebooklm-gemini-notebook/"
     },
     {
-      "label": "Learn about Gemini Notebook — Google Help",
+      "label": "راهنمای رسمی دفتر پژوهش جمینای",
       "url": "https://support.google.com/gemininotebook/answer/16164461?hl=en"
     }
   ],

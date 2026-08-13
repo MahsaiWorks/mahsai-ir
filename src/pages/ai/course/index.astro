@@ -2,139 +2,164 @@
 import PageStage from '../../../components/PageStage.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
-const lessons = [
+const steps = [
   {
-    id: '01',
-    title: 'کار را روشن کنید',
-    time: '۸ دقیقه',
-    result: 'یک مسئلهٔ مبهم را به ورودی، خروجی و معیار قبولی تبدیل می‌کنید.',
+    id: 'choose-text',
+    label: 'ورودی را انتخاب کنید',
+    time: 'حدود ۵ دقیقه',
+    result:
+      'یک متن غیرمحرمانه و شلوغ، مثل یادداشت جلسه یا توضیح یک کار، انتخاب می‌کنید.',
   },
   {
-    id: '02',
-    title: 'پرامپت قابل بررسی بنویسید',
-    time: '۱۰ دقیقه',
-    result: 'یک دستور کوتاه می‌سازید که قالب، منبع و محدودیت دارد.',
+    id: 'give-instruction',
+    label: 'درخواست روشن بنویسید',
+    time: 'حدود ۱۰ دقیقه',
+    result:
+      'از قالب آماده استفاده می‌کنید تا شکل خروجی، محدودیت و معیار قبول از ابتدا معلوم باشد.',
   },
   {
-    id: '03',
-    title: 'جواب را راستی‌آزمایی کنید',
-    time: '۱۲ دقیقه',
-    result: 'ادعا، منبع و بخش نامطمئن را از هم جدا می‌کنید.',
+    id: 'check-answer',
+    label: 'جواب را بررسی کنید',
+    time: 'حدود ۱۵ دقیقه',
+    result:
+      'جمله‌های بدون پشتوانه، نکته‌های جاافتاده و بخش‌هایی را که نیاز به بازبینی دارند جدا می‌کنید.',
   },
   {
-    id: '04',
-    title: 'یک جریان کاری ذخیره کنید',
-    time: '۱۰ دقیقه',
-    result: 'نسخهٔ تکرارپذیر کار را برای استفادهٔ بعدی نگه می‌دارید.',
+    id: 'save-method',
+    label: 'روش خودتان را نگه دارید',
+    time: 'حدود ۱۰ دقیقه',
+    result:
+      'نسخهٔ اصلاح‌شدهٔ درخواست و یک فهرست کنترل کوتاه برای استفاده‌های بعدی دارید.',
   },
-];
-const promptTemplate = `نقش تو: کمک به آماده‌سازی یک پیش‌نویس
-ورودی: [متن یا منبع]
-خروجی: [قالب دقیق]
-محدودیت: چیزی خارج از منبع نساز
-معیار قبولی: [سه شرط روشن]
-اگر اطلاعات کافی نیست، واضح اعلام کن.`;
-const courseStructuredData = {
+] as const;
+
+const instructionTemplate = `این متن را فقط بر اساس اطلاعاتی که داخل آن است مرتب کن.
+
+خروجی موردنیاز:
+- خلاصهٔ کوتاه در سه جمله
+- کارهای قابل انجام به شکل فهرست
+- زمان یا مسئول هر کار، فقط اگر در متن آمده است
+- پرسش‌هایی که برای تکمیل اطلاعات باید جواب داده شوند
+
+محدودیت‌ها:
+- اطلاعات تازه نساز
+- اگر چیزی قطعی نیست، کنار آن بنویس «نیازمند بررسی»
+- جمله‌ها را کوتاه و فارسی روان بنویس`;
+
+const howToStructuredData = {
   '@context': 'https://schema.org',
-  '@type': 'Course',
-  name: 'اولین جریان کاری مطمئن با هوش مصنوعی',
+  '@type': 'HowTo',
+  name: 'تبدیل یک متن شلوغ به خروجی قابل استفاده با هوش مصنوعی',
   description:
-    'دورهٔ رایگان و کوتاه برای ساخت یک جریان کاری قابل بررسی با هوش مصنوعی.',
-  provider: {
-    '@type': 'Organization',
-    name: 'MAHSAI',
-    url: new URL('/', Astro.site).toString(),
-  },
+    'تمرین رایگان و کوتاه برای نوشتن درخواست روشن، بررسی پاسخ و ساخت یک روش قابل تکرار.',
   inLanguage: 'fa-IR',
-  isAccessibleForFree: true,
+  totalTime: 'PT40M',
+  step: steps.map((step) => ({
+    '@type': 'HowToStep',
+    name: step.label,
+    text: step.result,
+    url: new URL(`/ai/course/#${step.id}`, Astro.site).toString(),
+  })),
 };
 ---
 
 <BaseLayout
-  title="دوره رایگان هوش مصنوعی؛ اولین جریان کاری مطمئن | MAHSAI"
-  description="دوره رایگان ۴۰ دقیقه‌ای برای یادگیری پرامپت، بررسی منبع و ساخت اولین جریان کاری قابل اعتماد با هوش مصنوعی؛ ساده و تمرین‌محور."
+  title="تمرین عملی رایگان هوش مصنوعی؛ از متن شلوغ تا خروجی روشن | MAHSAI"
+  description="یک تمرین رایگان و حدود چهل‌دقیقه‌ای برای تبدیل متن شلوغ به خلاصه و فهرست کار؛ همراه با قالب آماده و روش بررسی جواب."
 >
   <script
     type="application/ld+json"
     is:inline
-    set:html={JSON.stringify(courseStructuredData)}
+    set:html={JSON.stringify(howToStructuredData)}
   />
+
   <PageStage
-    eyebrow="دورهٔ رایگان MAHSAI"
-    title="در ۴۰ دقیقه، اولین کار واقعی‌تان را"
-    highlight="مطمئن‌تر انجام دهید."
-    lead="چهار درس کوتاه، یک تمرین واقعی و یک خروجی قابل استفاده. لازم نیست برنامه‌نویس باشید یا اشتراک خاصی بخرید."
-    index="۴ درس · رایگان · مقدماتی"
-    note="این دوره دربارهٔ انتخاب یک برند خاص نیست؛ روشی یاد می‌گیرید که با ابزارهای مختلف قابل اجراست."
-    signals={['بدون پیش‌نیاز', 'تمرین واقعی', 'چک‌لیست آماده', 'بدون ثبت‌نام']}
+    eyebrow="تمرین عملی رایگان"
+    title="یک متن شلوغ را به"
+    highlight="خروجی قابل استفاده تبدیل کنید."
+    lead="در پایان این تمرین، یک خلاصهٔ روشن، فهرست کار و قالبی دارید که دفعهٔ بعد هم می‌توانید استفاده کنید. هیچ خرید یا ثبت‌نامی لازم نیست."
+    note="برای تمرین از متن غیرمحرمانه استفاده کنید. اطلاعات شخصی، مالی، پروندهٔ مشتری یا رمزها را داخل ابزارهای عمومی وارد نکنید."
+    signals={['حدود چهل دقیقه', 'قالب آماده', 'خروجی واقعی', 'بدون ثبت‌نام']}
     tone="mint"
   >
     <div slot="actions" class="page-stage-actions">
-      <a class="button" href="#lesson-01">شروع درس اول</a><a
-        class="page-stage-link"
-        href="/ai/learn/first-reliable-ai-workflow/">نسخهٔ کامل راهنما</a
-      >
+      <a class="button" href="#choose-text">شروع تمرین</a>
+      <a class="page-stage-link" href="/ai/learn/first-reliable-ai-workflow/">
+        راهنمای کامل‌تر همین روش
+      </a>
     </div>
   </PageStage>
+
   <section class="section course-outcome">
     <div class="shell course-outcome-grid">
       <div>
-        <p class="eyebrow">نتیجهٔ دوره</p><h2>آخر کار چه چیزی دارید؟</h2>
-      </div><p>
-        یک قالب شخصی برای تعریف کار، یک پرامپت قابل تکرار و یک چک‌لیست کنترل
-        کیفیت. یعنی دفعهٔ بعد از صفر شروع نمی‌کنید.
+        <p class="eyebrow">چیزی که تحویل می‌گیرید</p>
+        <h2>یک نتیجهٔ کوچک اما قابل استفاده.</h2>
+      </div>
+      <p>
+        هدف فقط گرفتن یک جواب زیبا نیست؛ در پایان، درخواست اصلاح‌شده، خروجی
+        بررسی‌شده و فهرست کنترلی دارید که برای کار بعدی هم قابل تکرار است.
       </p>
     </div>
   </section>
-  <section class="section course-lessons">
+
+  <section class="section course-lessons" aria-label="مراحل تمرین">
     <div class="shell course-lesson-list">
       {
-        lessons.map((lesson) => (
-          <article id={`lesson-${lesson.id}`}>
-            <>
-              <header>
-                <>
-                  <span>درس {lesson.id}</span>
-                  <time>{lesson.time}</time>
-                </>
-              </header>
-              <h2>{lesson.title}</h2>
-              <p>{lesson.result}</p>
-            </>
-            {lesson.id === '01' && (
+        steps.map((step) => (
+          <article id={step.id}>
+            <header>
+              <>
+                <span>{step.label}</span>
+                <time>{step.time}</time>
+              </>
+            </header>
+            <h2>{step.label}</h2>
+            <p>{step.result}</p>
+
+            {step.id === 'choose-text' && (
               <div class="course-exercise">
-                <h3>تمرین</h3>
+                <h3>متن مناسب برای تمرین</h3>
                 <p>
-                  این جمله را کامل کنید: «می‌خواهم با استفاده از [ورودی] به
-                  [خروجی] برسم و نتیجه وقتی قابل قبول است که [معیار]».
+                  یک یادداشت جلسه، توضیح پراکندهٔ یک کار یا متن شخصی خودتان را
+                  انتخاب کنید؛ به شرطی که نام، شماره تماس، اطلاعات مالی یا موضوع
+                  محرمانه نداشته باشد.
                 </p>
               </div>
             )}
-            {lesson.id === '02' && (
+
+            {step.id === 'give-instruction' && (
               <div class="course-exercise">
-                <h3>قالب آماده</h3>
+                <h3>قالب آماده برای کپی</h3>
                 <pre>
-                  <code>{promptTemplate}</code>
+                  <code>{instructionTemplate}</code>
                 </pre>
               </div>
             )}
-            {lesson.id === '03' && (
+
+            {step.id === 'check-answer' && (
               <div class="course-exercise">
                 <h3>سه سؤال کنترل</h3>
                 <ul>
-                  <li>کدام ادعا به منبع نیاز دارد؟</li>
-                  <li>کدام بخش حدس یا برداشت است؟</li>
-                  <li>اگر این جواب اشتباه باشد، چه آسیبی می‌زند؟</li>
+                  <li>
+                    آیا چیزی به متن اصلی اضافه شده که واقعاً آنجا نبوده است؟
+                  </li>
+                  <li>آیا نکتهٔ مهمی حذف یا بیش از حد ساده شده است؟</li>
+                  <li>
+                    آیا می‌توانم بر اساس این خروجی، کار بعدی را بدون حدس‌زدن
+                    انجام دهم؟
+                  </li>
                 </ul>
               </div>
             )}
-            {lesson.id === '04' && (
+
+            {step.id === 'save-method' && (
               <div class="course-exercise">
                 <h3>نسخهٔ قابل تکرار</h3>
                 <p>
-                  پرامپت نهایی، یک نمونهٔ ورودی خوب، چک‌لیست و تاریخ آخرین اصلاح
-                  را کنار هم نگه دارید. اطلاعات محرمانه را داخل قالب نمونه
-                  نگذارید.
+                  درخواست نهایی، یک نمونهٔ ورودی بی‌خطر، خروجی مطلوب و سه سؤال
+                  کنترل را کنار هم نگه دارید. تاریخ آخرین اصلاح را هم بنویسید تا
+                  بعداً بدانید کدام نسخه بهتر کار کرده است.
                 </p>
               </div>
             )}
@@ -143,18 +168,18 @@ const courseStructuredData = {
       }
     </div>
   </section>
+
   <section class="course-finish">
     <div class="shell course-finish-card">
-      <p class="eyebrow">تمام شد؛ حالا اجرا کنید</p><h2>
-        یک کار کوچک واقعی را همین امروز انجام دهید.
-      </h2><p>
-        برای شروع، یک متن غیرمحرمانه انتخاب کنید. قالب درس دوم را اجرا کنید و با
-        سه سؤال درس سوم جواب را بررسی کنید.
-      </p><div>
-        <a class="button" href="/ai/persian-lab/">گرفتن بستهٔ آزمون فارسی</a><a
-          class="button button-secondary"
-          href="/ai/learn/">دیدن همهٔ آموزش‌ها</a
-        >
+      <p class="eyebrow">حالا نوبت اجرای واقعی است</p>
+      <h2>با یک متن کم‌ریسک شروع کنید.</h2>
+      <p>
+        قالب را اجرا کنید، جواب را با سه سؤال کنترل بسنجید و فقط بخش‌هایی را نگه
+        دارید که دقیق، روشن و قابل استفاده‌اند.
+      </p>
+      <div>
+        <a class="button" href="/ai/persian-lab/">دیدن آزمون‌های فارسی</a>
+        <a class="button button-secondary" href="/ai/learn/">راهنماهای بیشتر</a>
       </div>
     </div>
   </section>
