@@ -12,7 +12,9 @@ export async function GET() {
   const updates = (await getCollection('aiUpdates'))
     .filter((update) => !update.data.draft)
     .sort(
-      (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+      (a, b) =>
+        b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf() ||
+        b.data.priority - a.data.priority,
     );
   const guides = (await getCollection('aiGuides'))
     .filter((guide) => !guide.data.draft)
@@ -23,7 +25,7 @@ export async function GET() {
   const items = [
     ...updates.map((update) => ({
       title: update.data.title,
-      description: update.data.description,
+      description: `${update.data.description} کار پیشنهادی: ${update.data.action}`,
       publishedAt: update.data.publishedAt,
       url: `${base}/ai/today/${update.id}/`,
     })),

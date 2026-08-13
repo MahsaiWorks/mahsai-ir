@@ -2,39 +2,261 @@
 import { getCollection } from 'astro:content';
 import AIUpdateCard from '../../../components/AIUpdateCard.astro';
 import PageStage from '../../../components/PageStage.astro';
+import {
+  updateCategoryLabels,
+  updateUrgencyLabels,
+} from '../../../data/aiNavigation';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 const updates = (await getCollection('aiUpdates'))
   .filter((update) => !update.data.draft)
-  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+  .sort(
+    (a, b) =>
+      b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf() ||
+      b.data.priority - a.data.priority,
+  );
+const briefUpdates = updates.slice(0, 4);
+const actionCount = updates.filter(
+  (update) => update.data.urgency === 'act',
+).length;
+const sourceCount = new Set(
+  updates.flatMap((update) => update.data.sources.map((source) => source.url)),
+).size;
+const latestVerifiedAt = updates.reduce(
+  (latest, update) =>
+    update.data.verifiedAt > latest ? update.data.verifiedAt : latest,
+  updates[0]?.data.verifiedAt ?? new Date(),
+);
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('fa-IR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+const formatNumber = (number: number) =>
+  new Intl.NumberFormat('fa-IR').format(number);
+const faqs = [
+  {
+    question: 'رادار MAHSAI چند بار به‌روز می‌شود؟',
+    answer:
+      'برنامهٔ رادار، بازبینی در روزهای کاری است؛ اما فقط وقتی تغییر مهمی روی تصمیم یا کار کاربر اثر بگذارد، گزارش تازه منتشر می‌شود.',
+  },
+  {
+    question: 'چرا تعداد خبرها کمتر از سایت‌های خبری است؟',
+    answer:
+      'هدف رادار پوشش همهٔ تیترها نیست. هر مورد باید منبع اصلی، تاریخ بررسی، اثر واقعی و یک کار پیشنهادی روشن داشته باشد.',
+  },
+  {
+    question: 'از کجا بفهمم یک ادعا آزمون شده است؟',
+    answer:
+      'گزارش‌ها میان ادعای سازنده، بررسی منبع و آزمون دست‌اول فرق می‌گذارند. نتیجهٔ آزمون فقط همراه با روش و خروجی قابل بررسی منتشر می‌شود.',
+  },
+];
+const itemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'رادار امروز هوش مصنوعی MAHSAI',
+  numberOfItems: updates.length,
+  itemListElement: updates.map((update, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: update.data.title,
+    url: new URL(`/ai/today/${update.id}/`, Astro.site).toString(),
+  })),
+};
+const collectionPage = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'اخبار امروز هوش مصنوعی با منبع رسمی',
+  description:
+    'خلاصهٔ تغییرات مهم هوش مصنوعی با منبع رسمی، اثر واقعی و کار پیشنهادی.',
+  url: new URL('/ai/today/', Astro.site).toString(),
+  inLanguage: 'fa-IR',
+  dateModified: latestVerifiedAt.toISOString(),
+  mainEntity: itemList,
+};
+const faqPage = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+};
 ---
 
 <BaseLayout
-  title="رادار امروز هوش مصنوعی | MAHSAI AI"
-  description="گزارش تغییرات مهم هوش مصنوعی با منبع رسمی، توضیح اثر واقعی و تاریخ آخرین بررسی؛ بدون شایعه و تیتر اغراق‌آمیز."
+  title="اخبار امروز هوش مصنوعی با منبع رسمی | MAHSAI AI"
+  description="مهم‌ترین تغییرات امروز هوش مصنوعی به زبان ساده؛ با منبع رسمی، تاریخ بررسی، اثر واقعی و کاری که باید انجام دهید."
+  image="/ai/radar-today-social-v2.png"
+  imageAlt="کارت رادار امروز هوش مصنوعی MAHSAI با شعار خبر کمتر، تصمیم بهتر"
+  imageWidth={1731}
+  imageHeight={909}
+  keywords={[
+    'اخبار امروز هوش مصنوعی',
+    'تازه‌های هوش مصنوعی',
+    'تغییرات ChatGPT',
+    'اخبار ابزارهای هوش مصنوعی',
+  ]}
 >
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(collectionPage)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(itemList)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(faqPage)}
+  />
   <PageStage
     eyebrow="رادار روزانه MAHSAI"
-    title="فقط تغییراتی که"
-    highlight="ارزش دانستن دارند."
-    lead="هر گزارش باید به منبع اصلی وصل باشد، اثر عملی تغییر را توضیح دهد و مرز خبر با نظر یا آزمون را روشن نگه دارد."
-    index={`${updates.length} گزارش منتشرشده`}
-    note="در شروع، کیفیت و راستی‌آزمایی بر تعداد خبر اولویت دارد. با شکل‌گیری فرایند روزانه، پوشش گسترده‌تر می‌شود."
-    signals={['منبع رسمی', 'تاریخ بررسی', 'اثر عملی', 'امکان اصلاح']}
+    title="امروز چه چیزی"
+    highlight="ارزش اقدام دارد؟"
+    lead="خلاصهٔ تغییرات مهم هوش مصنوعی برای کاربر فارسی؛ اول نتیجه، بعد اثر واقعی و در پایان کاری که می‌توانید همین امروز انجام دهید."
+    index={`بررسی‌شده در ${formatDate(latestVerifiedAt)}`}
+    note="قاعدهٔ رادار ساده است: در هر نوبت بررسی سراغ منبع رسمی می‌رویم، اما برای پرکردن صفحه خبر نمی‌سازیم. اگر تغییری روی تصمیم شما اثر نگذارد، منتشر نمی‌شود."
+    signals={['منبع اول', 'تاریخ روشن', 'کار پیشنهادی', 'اصلاح‌پذیر']}
     tone="apricot"
   >
     <div slot="actions" class="page-stage-actions">
-      <a class="button" href="/ai/rss.xml">RSS رادار</a>
-      <a class="page-stage-link" href="/ai/sources/">روش انتخاب منابع</a>
+      <a class="button" href="#one-minute">خلاصهٔ یک‌دقیقه‌ای</a>
+      <a class="page-stage-link" href="/ai/rss.xml">دنبال‌کردن با RSS</a>
     </div>
   </PageStage>
-  <section class="section">
-    <div class="shell ai-update-grid">
-      {
-        updates.map((update, index) => (
-          <AIUpdateCard update={update} featured={index === 0} />
-        ))
-      }
+
+  <section id="one-minute" class="section radar-brief-section">
+    <div class="shell">
+      <header class="radar-section-heading">
+        <div>
+          <p class="eyebrow">امروز در یک دقیقه</p>
+          <h2>اول این چهار مورد را ببینید.</h2>
+        </div>
+        <p>
+          هر کارت با «کار پیشنهادی» شروع می‌شود؛ برای جزئیات، محدودیت و منبع
+          اصلی وارد گزارش شوید.
+        </p>
+      </header>
+      <div class="radar-brief-grid">
+        {
+          briefUpdates.map((update, index) => (
+            <article
+              class:list={[
+                'radar-brief-card',
+                {
+                  'is-primary': index === 0,
+                  'is-action': update.data.urgency === 'act',
+                },
+              ]}
+            >
+              <div class="radar-brief-card-top">
+                <span
+                  class:list={['radar-status', `is-${update.data.urgency}`]}
+                >
+                  {updateUrgencyLabels[update.data.urgency]}
+                </span>
+                <span>{updateCategoryLabels[update.data.category]}</span>
+              </div>
+              <h3>
+                <a href={`/ai/today/${update.id}/`}>{update.data.title}</a>
+              </h3>
+              <p>{update.data.action}</p>
+              <a class="story-link" href={`/ai/today/${update.id}/`}>
+                دلیل و منبع <span aria-hidden="true">←</span>
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="radar-proof" aria-label="وضعیت رادار">
+    <div class="shell radar-proof-grid">
+      <div>
+        <strong>{formatNumber(actionCount)}</strong>
+        <span>مورد نیازمند اقدام</span>
+      </div>
+      <div>
+        <strong>{formatNumber(sourceCount)}</strong>
+        <span>منبع رسمی یکتا</span>
+      </div>
+      <div>
+        <strong>{formatNumber(updates.length)}</strong>
+        <span>گزارش قابل بازبینی</span>
+      </div>
+      <a href="/ai/sources/">
+        روش انتخاب منبع و اصلاح <span aria-hidden="true">←</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section radar-archive">
+    <div class="shell">
+      <header class="radar-section-heading">
+        <div>
+          <p class="eyebrow">همهٔ گزارش‌ها</p>
+          <h2>خبر را با زمینهٔ کامل بخوانید.</h2>
+        </div>
+        <p>
+          تاریخ بالای هر کارت، زمان آخرین بررسی منبع است؛ نه تاریخی که برای تازه
+          نشان‌دادن مطلب تغییر کرده باشد.
+        </p>
+      </header>
+      <div class="ai-update-grid">
+        {
+          updates.map((update, index) => (
+            <AIUpdateCard update={update} featured={index === 0} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section radar-method-section">
+    <div class="shell radar-method-grid">
+      <div class="radar-method-copy">
+        <p class="eyebrow">فرم ثابت هر گزارش</p>
+        <h2>سریع بفهمید؛ بعد دقیق تصمیم بگیرید.</h2>
+        <p>
+          هر مطلب با یک جواب کوتاه شروع می‌شود، اثر تغییر را جدا می‌کند و سپس
+          محدودیت‌ها، قدم بعدی و لینک منبع اصلی را نشان می‌دهد.
+        </p>
+        <ol>
+          <li><strong>جواب کوتاه</strong><span>چه اتفاقی افتاده است؟</span></li>
+          <li><strong>اثر واقعی</strong><span>برای چه کسی مهم است؟</span></li>
+          <li>
+            <strong>کار بعدی</strong><span>الان چه کاری انجام دهید؟</span>
+          </li>
+          <li>
+            <strong>مرز اطمینان</strong><span>چه چیزی هنوز آزمون نشده؟</span>
+          </li>
+        </ol>
+      </div>
+      <div class="radar-faq">
+        <p class="eyebrow">پرسش‌های کوتاه</p>
+        <h2>رادار چگونه کار می‌کند؟</h2>
+        {
+          faqs.map((faq, index) => (
+            <details open={index === 0}>
+              <summary>{faq.question}</summary>
+              <p>{faq.answer}</p>
+            </details>
+          ))
+        }
+        <a class="button button-secondary" href="/support/">
+          گزارش خطا یا پیشنهاد منبع
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>

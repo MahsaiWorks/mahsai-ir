@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import PageStage from '../../../components/PageStage.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
-const now = new Date('2026-08-13T12:00:00Z');
+const now = new Date();
 const daysOld = (date: Date) =>
   Math.max(0, Math.floor((now.valueOf() - date.valueOf()) / 86_400_000));
 const guides = (await getCollection('aiGuides')).filter(
@@ -40,6 +40,8 @@ const formatDate = (date: Date) =>
     month: 'long',
     day: 'numeric',
   }).format(date);
+const formatNumber = (number: number) =>
+  new Intl.NumberFormat('fa-IR').format(number);
 ---
 
 <BaseLayout
@@ -51,8 +53,8 @@ const formatDate = (date: Date) =>
     title="تاریخ هر ادعا باید"
     highlight="قابل دیدن باشد."
     lead="این صفحه نشان می‌دهد هر راهنما، ابزار و گزارش چه زمانی از روی منبع رسمی بازبینی شده است. تازه‌بودن به‌تنهایی نشانهٔ درست‌بودن نیست، اما اطلاعات بدون تاریخ قابل اعتماد نیستند."
-    index={`${records.length} صفحهٔ زمان‌دار`}
-    note="بازهٔ ۳۰ روز برای کنترل داخلی است؛ بعضی راهنماهای ماندگار فقط وقتی منبع یا محصول تغییر کند نیاز به بازبینی دارند."
+    index={`محاسبه در ${formatDate(now)}`}
+    note={`${formatNumber(records.length)} صفحهٔ زمان‌دار در این ساخت بررسی شده‌اند. بازهٔ ۳۰ روز برای کنترل داخلی است؛ بعضی راهنماهای ماندگار فقط وقتی منبع یا محصول تغییر کند نیاز به بازبینی دارند.`}
     signals={['تاریخ بررسی', 'نوع محتوا', 'صفحهٔ مقصد', 'بدون عدد ساختگی']}
     tone="paper"
   />

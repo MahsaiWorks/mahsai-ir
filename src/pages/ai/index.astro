@@ -9,11 +9,26 @@ const guides = (await getCollection('aiGuides'))
   .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 const updates = (await getCollection('aiUpdates'))
   .filter((update) => !update.data.draft)
-  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+  .sort(
+    (a, b) =>
+      b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf() ||
+      b.data.priority - a.data.priority,
+  );
 const tools = (await getCollection('aiTools')).sort(
   (a, b) => a.data.order - b.data.order,
 );
 const latestUpdate = updates[0];
+const latestVerifiedAt = updates.reduce(
+  (latest, update) =>
+    update.data.verifiedAt > latest ? update.data.verifiedAt : latest,
+  updates[0]?.data.verifiedAt ?? new Date(),
+);
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('fa-IR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
 
 const itemListStructuredData = {
   '@context': 'https://schema.org',
@@ -79,7 +94,7 @@ const itemListStructuredData = {
         <dl>
           <div><dt>راهنمای عملی</dt><dd>{guides.length}</dd></div>
           <div><dt>ابزار بررسی‌شده</dt><dd>{tools.length}</dd></div>
-          <div><dt>آخرین بررسی</dt><dd>۲۲ مرداد ۱۴۰۵</dd></div>
+          <div><dt>آخرین بررسی</dt><dd>{formatDate(latestVerifiedAt)}</dd></div>
         </dl>
       </aside>
     </div>
@@ -90,9 +105,12 @@ const itemListStructuredData = {
       <section class="ai-latest" aria-labelledby="ai-latest-title">
         <div class="shell ai-latest-grid">
           <div>
-            <p class="eyebrow">تازه‌ترین گزارش تأییدشده</p>
+            <p class="eyebrow">مهم‌ترین اقدام امروز</p>
             <h2 id="ai-latest-title">{latestUpdate.data.title}</h2>
             <p>{latestUpdate.data.description}</p>
+            <p>
+              <strong>کار پیشنهادی:</strong> {latestUpdate.data.action}
+            </p>
             <a class="button" href={`/ai/today/${latestUpdate.id}/`}>
               خواندن گزارش امروز
             </a>

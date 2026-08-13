@@ -1,6 +1,9 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { updateCategoryLabels } from '../data/aiNavigation';
+import {
+  updateCategoryLabels,
+  updateUrgencyLabels,
+} from '../data/aiNavigation';
 
 interface Props {
   update: CollectionEntry<'aiUpdates'>;
@@ -19,14 +22,23 @@ const formatDate = (date: Date) =>
 <article
   class:list={['ai-update-card', { 'ai-update-card-featured': featured }]}
 >
-  <div class="ai-update-card-signal">
-    <span aria-hidden="true"></span>
-    {updateCategoryLabels[update.data.category]}
+  <div class="ai-update-card-top">
+    <div class="ai-update-card-signal">
+      <span aria-hidden="true"></span>
+      {updateCategoryLabels[update.data.category]}
+    </div>
+    <span class:list={['ai-update-urgency', `is-${update.data.urgency}`]}>
+      {updateUrgencyLabels[update.data.urgency]}
+    </span>
   </div>
   <h3><a href={`/ai/today/${update.id}/`}>{update.data.title}</a></h3>
   <p>{update.data.description}</p>
+  <p class="ai-update-action">
+    <strong>کار پیشنهادی</strong>
+    {update.data.action}
+  </p>
   <ul>
-    {update.data.takeaways.slice(0, 2).map((takeaway) => <li>{takeaway}</li>)}
+    {update.data.takeaways.slice(0, 1).map((takeaway) => <li>{takeaway}</li>)}
   </ul>
   <div class="ai-card-meta">
     <time datetime={update.data.verifiedAt.toISOString()}>

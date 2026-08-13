@@ -70,6 +70,12 @@ export const updateCategoryLabels = {
   research: 'پژوهش',
 } as const;
 
+export const updateUrgencyLabels = {
+  act: 'اقدام لازم',
+  use: 'قابل استفاده',
+  watch: 'زیر نظر',
+} as const;
+
 export const toolAccessLabels = {
   cloud: 'ابری',
   local: 'محلی',

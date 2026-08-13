@@ -2,9 +2,10 @@
 interface Props {
   answer: string;
   impact?: string;
+  action?: string;
 }
 
-const { answer, impact } = Astro.props;
+const { answer, impact, action } = Astro.props;
 ---
 
 <aside class="answer-first" aria-labelledby="answer-first-title">
@@ -15,6 +16,13 @@ const { answer, impact } = Astro.props;
     impact && (
       <p class="answer-first-impact">
         <strong>چرا مهم است؟</strong> {impact}
+      </p>
+    )
+  }
+  {
+    action && (
+      <p class="answer-first-action">
+        <strong>الان چه کار کنید؟</strong> {action}
       </p>
     )
   }

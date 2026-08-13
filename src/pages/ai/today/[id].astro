@@ -42,7 +42,7 @@ const structuredData = {
   '@type': 'NewsArticle',
   headline: update.data.title,
   description: update.data.description,
-  image: new URL('/og.png', Astro.site).toString(),
+  image: new URL(socialImage, Astro.site).toString(),
   datePublished: update.data.publishedAt.toISOString(),
   dateModified: modified.toISOString(),
   mainEntityOfPage: canonical.toString(),
@@ -60,6 +60,8 @@ const structuredData = {
       url: new URL('/brand/mahsai-symbol.png', Astro.site).toString(),
     },
   },
+  articleSection: updateCategoryLabels[update.data.category],
+  isBasedOn: update.data.sources.map((source) => source.url),
   keywords: update.data.keywords.join(', '),
 };
 const breadcrumbs = {
@@ -161,6 +163,7 @@ const breadcrumbs = {
         <AnswerFirst
           answer={update.data.answerFirst}
           impact={update.data.impact}
+          action={update.data.action}
         />
         {
           update.data.cover && update.data.coverAlt && (
