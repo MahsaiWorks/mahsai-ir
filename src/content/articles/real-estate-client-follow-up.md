@@ -4,10 +4,10 @@ description: 'تماس تکراری «تصمیم گرفتید؟» معمولاً
 category: 'ارتباط با مشتری'
 publishedAt: '2026-08-02'
 readingTime: '۸ دقیقه'
-cover: '/images/editorial/client-matching-light.webp'
-coverWidth: 1659
-coverHeight: 948
-coverAlt: 'نمای مفهومی تطبیق مشتری با ملک و برنامه‌ریزی پیگیری روی میز کار املاک'
+cover: '/images/editorial/client-matching.webp'
+coverWidth: 1536
+coverHeight: 1024
+coverAlt: 'برنامهٔ پیگیری مشتری و ارتباط میان نیاز متقاضی با فایل‌های مناسب'
 accent: 'teal'
 cluster: 'clients'
 seriesOrder: 4

@@ -49,12 +49,19 @@ const downloadLink = featuredApp
       <ul class="footer-site-links">
         <li><a href="/about/">درباره MAHSAI</a></li>
         <li><a href="/support/">پشتیبانی</a></li>
+        <li><a href="/editorial-policy/">سیاست تحریریه و اصلاحات</a></li>
         <li><a href="/privacy/">حریم خصوصی</a></li>
         <li><a href="/terms/">شرایط استفاده</a></li>
         {
           downloadLink && featuredApp && (
             <li>
-              <a href={downloadLink.url} target="_blank" rel="noopener">
+              <a
+                href={downloadLink.url}
+                target="_blank"
+                rel="noopener"
+                data-event="metrazh_bazaar_click"
+                data-event-location="footer"
+              >
                 دانلود {featuredApp.data.name} از کافه‌بازار
               </a>
             </li>

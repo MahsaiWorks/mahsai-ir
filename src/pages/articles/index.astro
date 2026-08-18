@@ -92,15 +92,21 @@ const clusterArticles = (cluster: (typeof articleClusters)[number]['id']) =>
             id={`cluster-${cluster.id}`}
             aria-labelledby={`cluster-title-${cluster.id}`}
           >
-            <div class="shell">
-              <header class="section-head">
+            <div class="shell article-cluster-layout">
+              <header class="cluster-section-head">
                 <div>
                   <p class="kicker">موضوع</p>
                   <h2 id={`cluster-title-${cluster.id}`}>{cluster.title}</h2>
                 </div>
                 <p>{cluster.description}</p>
               </header>
-              <div class="editorial-grid">
+              <div
+                class:list={[
+                  'editorial-grid',
+                  'article-cluster-grid',
+                  { 'editorial-grid-single': entries.length === 1 },
+                ]}
+              >
                 {entries.map((article, articleIndex) => (
                   <ArticleCard
                     article={article}

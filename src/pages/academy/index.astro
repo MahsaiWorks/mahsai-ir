@@ -123,26 +123,38 @@ const collectionStructuredData = {
             id={cluster.id}
             aria-labelledby={`track-${cluster.id}`}
           >
-            <div class="shell academy-track-head">
-              <div>
-                <p class="kicker">مسیر یادگیری</p>
-                <h2 id={`track-${cluster.id}`}>{cluster.title}</h2>
-                <p>{cluster.description}</p>
+            <div class="shell academy-track-layout">
+              <header class="academy-track-head">
+                <div>
+                  <p class="kicker">مسیر یادگیری</p>
+                  <h2 id={`track-${cluster.id}`}>{cluster.title}</h2>
+                  <p>{cluster.description}</p>
+                </div>
+                <figure>
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    width="1536"
+                    height="1024"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+              </header>
+              <div
+                class:list={[
+                  'editorial-grid',
+                  'academy-track-articles',
+                  { 'editorial-grid-single': entries.length === 1 },
+                ]}
+              >
+                {entries.map((article, articleIndex) => (
+                  <ArticleCard
+                    article={article}
+                    featured={articleIndex === 0}
+                  />
+                ))}
               </div>
-              <figure>
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  width="1536"
-                  height="1024"
-                  loading="lazy"
-                />
-              </figure>
-            </div>
-            <div class="shell editorial-grid">
-              {entries.map((article, articleIndex) => (
-                <ArticleCard article={article} featured={articleIndex === 0} />
-              ))}
             </div>
           </section>
         );
@@ -163,20 +175,22 @@ const collectionStructuredData = {
           دیدن متراژ در عمل
         </a>
       </div>
-      <div class="academy-phone-row" aria-label="تصاویر واقعی متراژ">
+      <div class="academy-phone-row" aria-label="تصاویر رسمی متراژ">
         <img
-          src="/images/apps/metrazh/property.png"
-          alt="جزئیات فایل ملک در متراژ"
+          src="/images/apps/metrazh/bazaar/smart-listing.webp"
+          alt="معرفی رسمی ساخت آگهی از اطلاعات فایل در متراژ"
           width="1080"
-          height="2400"
+          height="1920"
           loading="lazy"
+          decoding="async"
         />
         <img
-          src="/images/apps/metrazh/report.png"
-          alt="گزارش کار در اپلیکیشن متراژ"
+          src="/images/apps/metrazh/bazaar/visit-routing.webp"
+          alt="معرفی رسمی برنامه‌ریزی بازدیدها در متراژ"
           width="1080"
-          height="2400"
+          height="1920"
           loading="lazy"
+          decoding="async"
         />
       </div>
     </div>

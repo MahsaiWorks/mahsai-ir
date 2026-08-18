@@ -5,10 +5,10 @@ category: 'دانش حقوقی عمومی'
 publishedAt: '2026-08-02'
 updatedAt: '2026-08-18'
 readingTime: '۹ دقیقه'
-cover: '/images/editorial/property-workflow-light.webp'
-coverWidth: 1693
-coverHeight: 929
-coverAlt: 'اسناد و پوشه‌های منظم یک پرونده ملکی کنار ماکت ساختمان و کلید'
+cover: '/images/editorial/real/property-document-check.jpg'
+coverWidth: 1536
+coverHeight: 1024
+coverAlt: 'ماکت خانه، برگهٔ قرارداد و کلیدها برای بررسی مدارک معاملهٔ ملک'
 accent: 'sand'
 cluster: 'legal'
 seriesOrder: 1

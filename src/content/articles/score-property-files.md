@@ -4,10 +4,10 @@ description: 'فایل گران‌قیمت همیشه فایل آماده نیس
 category: 'مدیریت فایل'
 publishedAt: '2026-08-02'
 readingTime: '۱۰ دقیقه'
-cover: '/images/editorial/property-workflow-light.webp'
-coverWidth: 1693
-coverHeight: 929
-coverAlt: 'میز کار روشن املاک با پوشه‌های منظم، ماکت ساختمان و ابزارهای بررسی فایل'
+cover: '/images/editorial/real/property-file-review.jpg'
+coverWidth: 1536
+coverHeight: 1024
+coverAlt: 'پوشهٔ فایل ملکی، کلیدها و ماکت‌های خانه روی میز بررسی پرونده'
 accent: 'teal'
 cluster: 'files'
 seriesOrder: 2

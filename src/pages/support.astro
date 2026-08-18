@@ -116,6 +116,26 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
     </div>
   </section>
 
+  <section class="section support-feedback" aria-labelledby="feedback-title">
+    <div class="shell cta-panel">
+      <p class="eyebrow">تجربهٔ واقعی شما</p>
+      <h2 id="feedback-title">
+        متراژ را در کار واقعی استفاده کرده‌اید؟ تجربه‌تان را بفرستید.
+      </h2>
+      <p>
+        بگویید در چه کاری از برنامه استفاده کرده‌اید، چه چیزی مفید بوده و کجا
+        نیاز به اصلاح دارد. هیچ نقل‌قولی بدون بررسی، هماهنگی متن و اجازهٔ روشن
+        شما در سایت منتشر نمی‌شود.
+      </p>
+      <a
+        class="button"
+        href={`mailto:${siteConfig.supportEmail}?subject=${encodeURIComponent('تجربه استفاده از متراژ')}`}
+        data-event="metrazh_feedback_email"
+        data-event-location="support_page">ارسال تجربهٔ استفاده</a
+      >
+    </div>
+  </section>
+
   <section class="section faq-section" aria-labelledby="support-faq-title">
     <div class="shell faq-layout">
       <div>

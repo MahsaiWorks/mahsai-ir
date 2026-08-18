@@ -140,10 +140,17 @@ const breadcrumbStructuredData = {
             <h1>{article.data.title}</h1>
             <p class="article-deck">{article.data.description}</p>
             <div class="article-byline">
-              <span>{siteConfig.brandName}</span>
+              <span>نویسنده: تحریریهٔ {siteConfig.brandName}</span>
               <time datetime={article.data.publishedAt.toISOString()}>
-                {formatDate(article.data.publishedAt)}
+                انتشار: {formatDate(article.data.publishedAt)}
               </time>
+              {
+                article.data.updatedAt && (
+                  <time datetime={article.data.updatedAt.toISOString()}>
+                    به‌روزرسانی: {formatDate(article.data.updatedAt)}
+                  </time>
+                )
+              }
               <span>{article.data.readingTime} مطالعه</span>
             </div>
 
@@ -162,13 +169,17 @@ const breadcrumbStructuredData = {
               width={article.data.coverWidth}
               height={article.data.coverHeight}
               style={`object-position: ${article.data.coverPosition} center`}
+              decoding="async"
             />
           </figure>
         </div>
       </div>
     </header>
 
-    <div class="shell article-reading-layout">
+    <div
+      class="shell article-reading-layout"
+      data-view-event="article_reading_started"
+    >
       <aside class="article-toc" aria-label="فهرست مقاله">
         <p>سریع بروید سراغ بخش موردنظرتان</p>
         <ol>
@@ -182,7 +193,12 @@ const breadcrumbStructuredData = {
               ))
           }
         </ol>
-        <a class="toc-product-link" href="/apps/metrazh/">
+        <a
+          class="toc-product-link"
+          href="/apps/metrazh/"
+          data-event="article_to_metrazh"
+          data-event-location="article_toc"
+        >
           ببینید متراژ چه کمکی می‌کند <span aria-hidden="true">←</span>
         </a>
         <a class="toc-academy-link" href="/academy/">
@@ -193,6 +209,44 @@ const breadcrumbStructuredData = {
       <div class="article-body prose">
         <AnswerFirst answer={article.data.description} />
         <Content />
+        <section class="editorial-note" aria-labelledby="editorial-note-title">
+          <p class="eyebrow">شفافیت تحریریه</p>
+          <h2 id="editorial-note-title">این مطلب چطور تهیه و به‌روز می‌شود؟</h2>
+          <dl>
+            <div>
+              <dt>مسئول محتوا</dt>
+              <dd>تحریریهٔ {siteConfig.brandName}</dd>
+            </div>
+            <div>
+              <dt>روش تهیه</dt>
+              <dd>
+                {
+                  article.data.cluster === 'legal'
+                    ? 'مرور منابع و درگاه‌های رسمی پیوندشده در متن، همراه با هشدار مراجعه به فرد دارای صلاحیت برای هر پرونده.'
+                    : 'آموزش مرحله‌ای و قابل اجرا، با تطبیق ادعاهای محصول با قابلیت‌های مستند نسخهٔ عمومی متراژ.'
+                }
+              </dd>
+            </div>
+            <div>
+              <dt>آخرین بررسی</dt>
+              <dd>
+                {formatDate(article.data.updatedAt ?? article.data.publishedAt)}
+              </dd>
+            </div>
+          </dl>
+          {
+            article.data.cluster === 'legal' && (
+              <p class="editorial-warning">
+                این نوشته تا تاریخ بالا تأییدیهٔ وکیل یا کارشناس حقوقی بیرونی
+                ندارد و جای مشاورهٔ تخصصی برای پروندهٔ واقعی را نمی‌گیرد.
+              </p>
+            )
+          }
+          <p>
+            خطا یا اطلاعات قدیمی دیدید؟ مسیر اصلاح و شیوهٔ پاسخ‌گویی در
+            <a href="/editorial-policy/"> سیاست تحریریه و اصلاحات</a> آمده است.
+          </p>
+        </section>
         <aside class="article-inline-cta">
           <span>متراژ، محصول مهسای</span>
           <h2>اگر این روش به کارتان می‌آید، داخل متراژ مرتب نگهش دارید.</h2>
@@ -200,7 +254,12 @@ const breadcrumbStructuredData = {
             فایل، متقاضی، بازدید و پیگیری را یک‌جا ثبت کنید تا دفعه بعد از صفر
             شروع نکنید و وسط شلوغی دفتر چیزی جا نماند.
           </p>
-          <a class="button" href="/apps/metrazh/">متراژ را ببینید</a>
+          <a
+            class="button"
+            href="/apps/metrazh/"
+            data-event="article_to_metrazh"
+            data-event-location="article_inline_cta">متراژ را ببینید</a
+          >
         </aside>
       </div>
     </div>
@@ -250,6 +309,7 @@ const breadcrumbStructuredData = {
                     width={related.data.coverWidth}
                     height={related.data.coverHeight}
                     loading="lazy"
+                    decoding="async"
                   />
                 </a>
                 <p>{related.data.category}</p>

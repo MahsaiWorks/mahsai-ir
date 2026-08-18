@@ -29,6 +29,8 @@ const {
   imageHeight = 900,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const cloudflareAnalyticsToken = import.meta.env
+  .PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN;
 const socialImage = new URL(image, Astro.site);
 const socialImagePath = socialImage.pathname.toLowerCase();
 const socialImageType = socialImagePath.endsWith('.webp')
@@ -109,5 +111,104 @@ const structuredData = {
       <slot />
     </main>
     <Footer />
+    {
+      cloudflareAnalyticsToken && (
+        <script
+          is:inline
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={JSON.stringify({
+            token: cloudflareAnalyticsToken,
+          })}
+        />
+      )
+    }
+    <script is:inline>
+      (() => {
+        const emit = (name, properties = {}) => {
+          document.dispatchEvent(
+            new CustomEvent('mahsai:measure', {
+              detail: {
+                name,
+                properties: { path: location.pathname, ...properties },
+              },
+            }),
+          );
+        };
+
+        window.mahsaiMeasure = emit;
+
+        document.addEventListener('click', (event) => {
+          if (!(event.target instanceof Element)) return;
+          const target = event.target.closest('a, button, [data-event]');
+          if (!target) return;
+
+          const destination = target.getAttribute('href') || undefined;
+          const name =
+            target.dataset.event ||
+            (destination?.includes('cafebazaar.ir')
+              ? 'metrazh_bazaar_click'
+              : destination?.startsWith('mailto:') ||
+                  (location.pathname === '/support/' &&
+                    destination?.includes('t.me/'))
+                ? 'support_contact_click'
+                : undefined);
+          if (!name) return;
+
+          const fallbackLocation = target.closest('.site-header')
+            ? 'header'
+            : target.closest('.site-footer')
+              ? 'footer'
+              : 'page';
+
+          emit(name, {
+            location: target.dataset.eventLocation || fallbackLocation,
+            destination,
+          });
+        });
+
+        const reached = new Set();
+        addEventListener(
+          'scroll',
+          () => {
+            const available =
+              document.documentElement.scrollHeight - innerHeight;
+            if (available <= 0) return;
+            const depth = Math.round((scrollY / available) * 100);
+
+            for (const threshold of [50, 90]) {
+              if (depth >= threshold && !reached.has(threshold)) {
+                reached.add(threshold);
+                emit('scroll_depth', { depth: threshold });
+              }
+            }
+          },
+          { passive: true },
+        );
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              const name = entry.target.dataset.viewEvent;
+              if (name) emit(name, { location: entry.target.id || undefined });
+              observer.unobserve(entry.target);
+            }
+          },
+          { threshold: 0.45 },
+        );
+
+        document
+          .querySelectorAll('[data-view-event]')
+          .forEach((element) => observer.observe(element));
+
+        addEventListener('error', () =>
+          emit('client_error', { kind: 'error' }),
+        );
+        addEventListener('unhandledrejection', () =>
+          emit('client_error', { kind: 'unhandled_rejection' }),
+        );
+      })();
+    </script>
   </body>
 </html>

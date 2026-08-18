@@ -1,0 +1,32 @@
+---
+interface Props {
+  href: string;
+  location: string;
+  light?: boolean;
+}
+
+const { href, location, light = false } = Astro.props;
+---
+
+<a
+  class:list={['store-badge', { 'store-badge-light': light }]}
+  href={href}
+  target="_blank"
+  rel="noopener"
+  data-event="metrazh_bazaar_click"
+  data-event-location={location}
+  aria-label="دریافت متراژ از صفحهٔ رسمی کافه‌بازار"
+>
+  <img
+    src="/images/stores/cafebazaar-icon.png"
+    alt=""
+    width="192"
+    height="192"
+    aria-hidden="true"
+  />
+  <span>
+    <small>دریافت مستقیم از</small>
+    <strong>کافه‌بازار</strong>
+  </span>
+  <span class="store-badge-arrow" aria-hidden="true">↗</span>
+</a>

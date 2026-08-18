@@ -26,6 +26,8 @@ const formatDate = (date: Date) =>
     class="editorial-card-media"
     href={`/articles/${article.id}/`}
     aria-label={`مطالعه ${article.data.title}`}
+    data-event="article_open"
+    data-event-location="article_card_image"
   >
     <img
       src={article.data.cover}
@@ -33,6 +35,7 @@ const formatDate = (date: Date) =>
       width={article.data.coverWidth}
       height={article.data.coverHeight}
       loading="lazy"
+      decoding="async"
     />
     <span>{article.data.category}</span>
   </a>
@@ -41,11 +44,29 @@ const formatDate = (date: Date) =>
       <time datetime={article.data.publishedAt.toISOString()}>
         {formatDate(article.data.publishedAt)}
       </time>
+      {
+        article.data.updatedAt && (
+          <span>به‌روزرسانی {formatDate(article.data.updatedAt)}</span>
+        )
+      }
       <span>{article.data.readingTime}</span>
     </div>
-    <h3><a href={`/articles/${article.id}/`}>{article.data.title}</a></h3>
+    <h3>
+      <a
+        href={`/articles/${article.id}/`}
+        data-event="article_open"
+        data-event-location="article_card_title"
+      >
+        {article.data.title}
+      </a>
+    </h3>
     <p>{article.data.description}</p>
-    <a class="story-link" href={`/articles/${article.id}/`}>
+    <a
+      class="story-link"
+      href={`/articles/${article.id}/`}
+      data-event="article_open"
+      data-event-location="article_card_text"
+    >
       مطالعهٔ راهنمای کامل <span aria-hidden="true">←</span>
     </a>
   </div>

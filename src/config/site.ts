@@ -19,10 +19,6 @@ export interface SiteConfig {
   };
 }
 
-/**
- * EDIT THIS FILE FIRST.
- * Every value marked REPLACE is a placeholder and must be replaced before launch.
- */
 export const siteConfig: SiteConfig = {
   brandName: 'MAHSAI',
   brandNameFa: 'مهسای',
@@ -31,8 +27,9 @@ export const siteConfig: SiteConfig = {
   biography:
     'MAHSAI خانهٔ محصولات فارسیِ کاربردی است؛ هر محصول فقط پس از انتشار رسمی معرفی می‌شود و آموزش‌های مرتبط با همان حوزه را کنار خود دارد.',
   supportEmail: 'support@mahsai.ir',
-  socialLinks: [], // REPLACE: e.g. { label: 'GitHub', url: 'https://...' }
-  appStoreLinks: [], // REPLACE: real developer/store profile links only
+  // Only verified, public profiles belong in these lists.
+  socialLinks: [],
+  appStoreLinks: [],
   seoDefaults: {
     title: 'MAHSAI | اپلیکیشن‌های فارسی برای کار واقعی',
     description:
