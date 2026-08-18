@@ -6,26 +6,25 @@ import { getCafeBazaarLink } from '../data/appPresentation';
 const path = Astro.url.pathname;
 const links = [
   { href: '/', label: 'خانه' },
-  { href: '/ai/today/', label: 'تازه‌های مهم' },
-  { href: '/ai/learn/', label: 'یادگیری' },
-  { href: '/ai/tools/', label: 'انتخاب ابزار' },
+  { href: '/apps/', label: 'اپلیکیشن‌ها' },
   { href: '/apps/metrazh/', label: 'متراژ' },
+  { href: '/academy/', label: 'آموزش املاک' },
   { href: '/articles/', label: 'مجلهٔ املاک' },
-  { href: '/support/', label: 'پشتیبانی' },
+  { href: '/about/', label: 'دربارهٔ ما' },
 ];
 
 const isActive = (href: string) =>
   href === '/' ? path === '/' : path.startsWith(href);
 
 const featuredApp = (await getCollection('apps'))
-  .filter((app) => app.data.featured)
+  .filter((app) => app.data.featured && app.data.status === 'available')
   .sort((a, b) => a.data.order - b.data.order)[0];
 const downloadLink = featuredApp
   ? getCafeBazaarLink(featuredApp.data.storeLinks)
   : undefined;
 ---
 
-<header class="site-header spatial-header">
+<header class="site-header">
   <div class="shell header-inner">
     <a
       class="brand"
@@ -60,14 +59,15 @@ const downloadLink = featuredApp
       </ul>
     </nav>
 
-    {
-      (
-        <a class="header-cta" href="/ai/today/">
-          امروز چه چیزی مهم است؟
-          <span aria-hidden="true">←</span>
-        </a>
-      )
-    }
+    <a
+      class="header-cta"
+      href={downloadLink?.url ?? '/apps/metrazh/'}
+      target={downloadLink ? '_blank' : undefined}
+      rel={downloadLink ? 'noopener' : undefined}
+    >
+      نصب متراژ
+      <span aria-hidden="true">↗</span>
+    </a>
 
     <details class="mobile-nav">
       <summary aria-label="باز کردن فهرست پیمایش">

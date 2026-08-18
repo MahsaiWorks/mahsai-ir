@@ -5,6 +5,8 @@ category: 'مدیریت فایل'
 publishedAt: '2026-08-02'
 readingTime: '۱۰ دقیقه'
 cover: '/images/editorial/secure-real-estate-data.webp'
+coverWidth: 1536
+coverHeight: 1024
 coverAlt: 'جعبه امن، پوشه‌های ملک، تلفن همراه و حافظه پشتیبان در یک تصویر سه‌بعدی روشن'
 accent: 'navy'
 cluster: 'files'

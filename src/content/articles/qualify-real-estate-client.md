@@ -5,6 +5,8 @@ category: 'مدیریت متقاضی'
 publishedAt: '2026-08-02'
 readingTime: '۱۰ دقیقه'
 cover: '/images/editorial/female-consultant-matching.webp'
+coverWidth: 1536
+coverHeight: 1024
 coverAlt: 'مشاور خانم کنار کارت‌های نیاز مشتری و ماکت ساختمان برای انتخاب فایل مناسب'
 coverPosition: 'left'
 accent: 'teal'

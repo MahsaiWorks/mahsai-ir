@@ -27,7 +27,13 @@ const formatDate = (date: Date) =>
     href={`/articles/${article.id}/`}
     aria-label={`مطالعه ${article.data.title}`}
   >
-    <img src={article.data.cover} alt={article.data.coverAlt} loading="lazy" />
+    <img
+      src={article.data.cover}
+      alt={article.data.coverAlt}
+      width={article.data.coverWidth}
+      height={article.data.coverHeight}
+      loading="lazy"
+    />
     <span>{article.data.category}</span>
   </a>
   <div class="editorial-card-copy">
@@ -40,7 +46,7 @@ const formatDate = (date: Date) =>
     <h3><a href={`/articles/${article.id}/`}>{article.data.title}</a></h3>
     <p>{article.data.description}</p>
     <a class="story-link" href={`/articles/${article.id}/`}>
-      مطالعه راهنمای کامل <span aria-hidden="true">←</span>
+      مطالعهٔ راهنمای کامل <span aria-hidden="true">←</span>
     </a>
   </div>
 </article>

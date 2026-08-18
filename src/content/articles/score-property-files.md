@@ -5,6 +5,8 @@ category: 'مدیریت فایل'
 publishedAt: '2026-08-02'
 readingTime: '۱۰ دقیقه'
 cover: '/images/editorial/property-workflow-light.webp'
+coverWidth: 1693
+coverHeight: 929
 coverAlt: 'میز کار روشن املاک با پوشه‌های منظم، ماکت ساختمان و ابزارهای بررسی فایل'
 accent: 'teal'
 cluster: 'files'

@@ -5,6 +5,8 @@ category: 'مدیریت متقاضی'
 publishedAt: '2026-08-02'
 readingTime: '۸ دقیقه'
 cover: '/images/editorial/client-matching-light.webp'
+coverWidth: 1659
+coverHeight: 948
 coverAlt: 'ماکت‌های ساختمان و کارت‌های مشتری که با یک مسیر مشخص به هم متصل شده‌اند'
 accent: 'navy'
 cluster: 'clients'

@@ -5,6 +5,8 @@ category: 'بازاریابی ملک'
 publishedAt: '2026-08-02'
 readingTime: '۹ دقیقه'
 cover: '/images/editorial/smart-property-ad.webp'
+coverWidth: 1536
+coverHeight: 1024
 coverAlt: 'پرونده ملک، تلفن همراه، کارت‌های محتوا و بلندگو برای ساخت آگهی حرفه‌ای'
 accent: 'sand'
 cluster: 'marketing'

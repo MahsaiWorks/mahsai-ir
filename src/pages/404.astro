@@ -1,45 +1,46 @@
 ---
-import PageStage from '../components/PageStage.astro';
 import { siteConfig } from '../config/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
   title={`صفحه پیدا نشد | ${siteConfig.brandName}`}
-  description="صفحه درخواستی در وب‌سایت مهسای پیدا نشد."
+  description="صفحهٔ درخواستی در وب‌سایت MAHSAI پیدا نشد."
   noindex
 >
-  <PageStage
-    eyebrow="صفحه پیدا نشد"
-    title="مسیر را دوباره"
-    highlight="پیدا کنیم."
-    lead="ممکن است نشانی تغییر کرده باشد یا صفحه‌ای که می‌خواهید دیگر در این مسیر وجود نداشته باشد."
-    note="از مرکز هوش مصنوعی، آموزش‌های رایگان یا معرفی متراژ می‌توانید مسیر درست را ادامه دهید."
-    signals={['مرکز هوش مصنوعی', 'آموزش رایگان', 'معرفی متراژ']}
-    tone="apricot"
-  >
-    <div slot="actions" class="page-stage-actions">
-      <a class="button" href="/">بازگشت به خانه</a>
-      <a class="page-stage-link" href="/ai/">مرکز هوش مصنوعی</a>
+  <header class="not-found-hero">
+    <div class="shell not-found-grid">
+      <div>
+        <p class="kicker">صفحه پیدا نشد</p>
+        <h1>مسیر اشتباه بود؛ مقصدها اینجا هستند.</h1>
+        <p class="lead">
+          ممکن است نشانی تغییر کرده باشد. از محصول منتشرشده، آموزش املاک یا
+          پشتیبانی مسیرتان را ادامه دهید.
+        </p>
+        <a class="button" href="/">بازگشت به صفحهٔ اصلی</a>
+      </div>
+      <img
+        src="/images/editorial/visit-route-planning.webp"
+        alt="برنامه‌ریزی مسیر برای رسیدن به مقصد"
+        width="1536"
+        height="1024"
+      />
     </div>
-  </PageStage>
-
-  <section class="page-section compact-page-section">
+  </header>
+  <nav class="section" aria-label="مسیرهای پیشنهادی">
     <div class="shell route-grid">
-      <a href="/ai/today/"
-        ><strong>تازه‌های مهم</strong><p>
-          تغییرهای اثرگذار همراه با منبع اصلی
-        </p></a
-      >
-      <a href="/ai/learn/"
-        ><strong>راهنماهای رایگان</strong><p>راهنماهای ساده و قدم‌به‌قدم</p></a
-      >
-      <a href="/apps/metrazh/"
-        ><strong>معرفی متراژ</strong><p>قابلیت‌ها و تصاویر واقعی محصول</p></a
-      >
-      <a href="/support/"
-        ><strong>پشتیبانی</strong><p>راه ارتباط رسمی با مهسای</p></a
-      >
+      <a href="/apps/metrazh/">
+        <strong>متراژ</strong><span>معرفی و نصب اپلیکیشن ←</span>
+      </a>
+      <a href="/academy/">
+        <strong>آموزش املاک</strong><span>مسیرهای رایگان و کاربردی ←</span>
+      </a>
+      <a href="/articles/">
+        <strong>مجلهٔ املاک</strong><span>همهٔ مقاله‌ها و راهنماها ←</span>
+      </a>
+      <a href="/support/">
+        <strong>پشتیبانی</strong><span>راه‌های ارتباط رسمی ←</span>
+      </a>
     </div>
-  </section>
+  </nav>
 </BaseLayout>

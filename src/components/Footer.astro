@@ -7,7 +7,7 @@ const year = new Intl.DateTimeFormat('fa-IR', { year: 'numeric' }).format(
   new Date(),
 );
 const featuredApp = (await getCollection('apps'))
-  .filter((app) => app.data.featured)
+  .filter((app) => app.data.featured && app.data.status === 'available')
   .sort((a, b) => a.data.order - b.data.order)[0];
 const downloadLink = featuredApp
   ? getCafeBazaarLink(featuredApp.data.storeLinks)
@@ -29,21 +29,18 @@ const downloadLink = featuredApp
         <span>{siteConfig.brandName}</span>
       </a>
       <p>
-        راهنمای فارسی برای فهمیدن، انتخاب‌کردن و بهتر استفاده‌کردن از هوش
-        مصنوعی.
+        خانهٔ اپلیکیشن‌های فارسی برای کار واقعی؛ همراه معرفی روشن، آموزش کاربردی
+        و پشتیبانی رسمی.
       </p>
     </div>
 
     <nav aria-label="پیوندهای اصلی سایت">
       <h2>دسترسی سریع</h2>
       <ul>
-        <li><a href="/ai/today/">تازه‌های مهم هوش مصنوعی</a></li>
-        <li><a href="/ai/learn/">راهنماهای رایگان</a></li>
-        <li><a href="/ai/tools/">انتخاب ابزار مناسب</a></li>
-        <li><a href="/ai/compare/">مقایسهٔ ابزارها</a></li>
-        <li><a href="/ai/offline/">استفاده بدون اینترنت</a></li>
+        <li><a href="/apps/">اپلیکیشن‌های منتشرشده</a></li>
         <li><a href="/apps/metrazh/">اپلیکیشن متراژ</a></li>
-        <li><a href="/articles/">راهنماهای مشاور املاک</a></li>
+        <li><a href="/academy/">آموزش رایگان املاک</a></li>
+        <li><a href="/articles/">مجلهٔ کاربردی املاک</a></li>
       </ul>
     </nav>
 
@@ -52,8 +49,6 @@ const downloadLink = featuredApp
       <ul class="footer-site-links">
         <li><a href="/about/">درباره MAHSAI</a></li>
         <li><a href="/support/">پشتیبانی</a></li>
-        <li><a href="/ai/sources/">روش بررسی مطالب</a></li>
-        <li><a href="/ai/freshness/">تاریخ بازبینی مطالب</a></li>
         <li><a href="/privacy/">حریم خصوصی</a></li>
         <li><a href="/terms/">شرایط استفاده</a></li>
         {
@@ -90,6 +85,7 @@ const downloadLink = featuredApp
   </div>
   <div class="shell footer-bottom">
     <span>© {year} {siteConfig.brandName}</span>
+    <span>محصول فقط پس از انتشار رسمی معرفی می‌شود.</span>
     <span lang="en" dir="ltr">mahsai.ir</span>
   </div>
 </footer>

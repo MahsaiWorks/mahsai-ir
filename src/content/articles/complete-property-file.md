@@ -6,6 +6,8 @@ publishedAt: '2026-08-01'
 updatedAt: '2026-08-02'
 readingTime: '۹ دقیقه'
 cover: '/images/editorial/property-workflow-light.webp'
+coverWidth: 1693
+coverHeight: 929
 coverAlt: 'میز کار حرفه‌ای املاک با ماکت ساختمان، پوشه‌های فایل، نقشه و تلفن همراه'
 accent: 'navy'
 cluster: 'files'

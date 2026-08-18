@@ -18,9 +18,11 @@ support surface.
   embedding personal facts inside reusable UI components.
 - Never invent biography, work history, apps, projects, clients, numbers, awards,
   testimonials, links, or contact details.
+- Add a product to the public repository and website only at or after its official
+  launch. Never publish the name, category, imagery, or details of an unreleased
+  product.
 - Keep personal information in `src/config/site.ts`, applications in
-  `src/content/apps/`, specialties in `src/data/specialties.ts`, and projects in
-  `src/data/projects.ts`.
+  `src/content/apps/`, and editorial content in `src/content/articles/`.
 - Do not add secrets, analytics, trackers, external fonts, or large UI libraries
   without explicit approval.
 
@@ -29,12 +31,11 @@ support surface.
 - `src/config/`: global typed site settings and SEO defaults.
 - `src/content/apps/`: typed Astro content collection for application records.
 - `src/content/articles/`: typed Markdown articles and SEO metadata.
-- `src/data/`: editable portfolio and specialty data.
+- `src/data/`: typed presentation data derived from published content.
 - `src/components/`: reusable presentational components with no invented content.
 - `src/layouts/`: shared document shell, metadata, structured data, header, footer.
 - `src/pages/`: file-based static routes.
-- `src/styles/global.css`: tokens, responsive layout, light/dark styles, and focus
-  states.
+- `src/styles/site.css`: design tokens, responsive layout, motion, and focus states.
 - `public/`: files copied unchanged into the final build.
 
 ## Required checks
@@ -45,6 +46,7 @@ Use the committed package manager and run all of the following before handing of
 pnpm run format:check
 pnpm run check
 pnpm run build
+pnpm run audit:static
 ```
 
 If formatting fails, run `pnpm run format`, then repeat every check. Inspect `dist/`

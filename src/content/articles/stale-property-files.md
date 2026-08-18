@@ -5,6 +5,8 @@ category: 'مدیریت فایل'
 publishedAt: '2026-08-02'
 readingTime: '۹ دقیقه'
 cover: '/images/editorial/property-workflow-light.webp'
+coverWidth: 1693
+coverHeight: 929
 coverAlt: 'پوشه‌های فایل ملک در یک جریان منظم بازبینی و به‌روزرسانی'
 accent: 'sand'
 cluster: 'files'

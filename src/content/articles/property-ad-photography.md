@@ -5,6 +5,8 @@ category: 'بازاریابی ملک'
 publishedAt: '2026-08-02'
 readingTime: '۱۰ دقیقه'
 cover: '/images/editorial/property-photography.webp'
+coverWidth: 1536
+coverHeight: 1024
 coverAlt: 'عکاسی حرفه‌ای از فضای داخلی یک آپارتمان روشن با تلفن همراه'
 accent: 'sand'
 cluster: 'marketing'

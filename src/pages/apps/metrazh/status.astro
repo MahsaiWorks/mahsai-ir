@@ -9,7 +9,7 @@ import {
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 const app = (await getCollection('apps')).find(
-  (entry) => entry.id === 'metrazh',
+  (entry) => entry.id === 'metrazh' && entry.data.status === 'available',
 );
 
 if (!app) {
@@ -20,6 +20,14 @@ const bazaarLink = app.data.storeLinks.find((link) =>
   link.url.includes('cafebazaar.ir'),
 );
 const releaseCheckpoints = getReleaseCheckpoints(app.data.version);
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('fa-IR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+const storeUpdatedAt = formatDate(app.data.storeUpdatedAt);
+const storeCheckedAt = formatDate(app.data.storeCheckedAt);
 ---
 
 <BaseLayout
@@ -30,10 +38,14 @@ const releaseCheckpoints = getReleaseCheckpoints(app.data.version);
     eyebrow="وضعیت رسمی محصول"
     title={`نسخه ${app.data.version}`}
     highlight="در کافه‌بازار منتشر شده است."
-    lead="نسخه عمومی متراژ از صفحه رسمی کافه‌بازار قابل دریافت است. وضعیت بروزرسانی‌های بعدی پس از تأیید بازار در همین صفحه اعلام می‌شود."
+    lead="نسخه عمومی متراژ از صفحه رسمی کافه‌بازار قابل دریافت است. وضعیت به‌روزرسانی‌های بعدی پس از تأیید بازار در همین صفحه اعلام می‌شود."
     index="متراژ / وضعیت"
     note={app.data.releaseNote}
-    signals={[app.data.minOs, `نسخه ${app.data.version}`, 'دانلود عمومی: فعال']}
+    signals={[
+      app.data.minOs,
+      `به‌روزرسانی بازار: ${storeUpdatedAt}`,
+      `بازبینی لینک: ${storeCheckedAt}`,
+    ]}
     tone="apricot"
   >
     <div slot="actions" class="page-stage-actions">
@@ -72,7 +84,7 @@ const releaseCheckpoints = getReleaseCheckpoints(app.data.version);
         releaseCheckpoints.map((checkpoint) => (
           <article data-status={checkpoint.status}>
             <div>
-              <span>{checkpoint.number}</span>
+              <span class="status-dot" aria-hidden="true" />
               <p>{checkpoint.eyebrow}</p>
             </div>
             <h3>{checkpoint.title}</h3>
@@ -92,8 +104,9 @@ const releaseCheckpoints = getReleaseCheckpoints(app.data.version);
         <p class="eyebrow">یادداشت نسخه فعلی</p>
         <h2 id="version-title">متراژ {app.data.version}</h2>
         <p>
-          این شماره، نسخه عمومی فعلی متراژ در کافه‌بازار است. بروزرسانی بعدی پس
-          از پایان بررسی بازار و قابل‌دریافت‌شدن برای کاربران در این صفحه ثبت
+          این شماره، نسخه عمومی فعلی متراژ در کافه‌بازار است. صفحهٔ بازار در
+          {storeCheckedAt} بررسی شد و آخرین به‌روزرسانی را {storeUpdatedAt} نشان می‌دهد.
+          به‌روزرسانی بعدی فقط پس از قابل‌دریافت‌شدن برای کاربران در این صفحه ثبت
           می‌شود.
         </p>
       </div>
