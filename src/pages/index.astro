@@ -62,13 +62,26 @@ const learningPaths = [
           هر ابزار باید یک کار واقعی را <span>ساده‌تر کند.</span>
         </h1>
         <p class="lead">
-          MAHSAI خانهٔ اپلیکیشن‌های فارسیِ کاربردی است؛ محصول را روشن معرفی
-          می‌کنیم، راه استفاده را ساده آموزش می‌دهیم و مسیر پشتیبانی را همیشه در
-          دسترس می‌گذاریم.
+          MAHSAI خانهٔ رسمی متراژ و اپلیکیشن‌های فارسیِ کاربردی است؛ محصول را
+          روشن معرفی می‌کنیم، راه استفاده را ساده آموزش می‌دهیم و مسیر پشتیبانی
+          را همیشه در دسترس می‌گذاریم.
         </p>
         <div class="hero-actions">
-          <a class="button" href="/apps/metrazh/">آشنایی با متراژ</a>
-          <a class="text-link" href="/academy/">آموزش رایگان املاک ←</a>
+          {
+            bazaarLink && (
+              <a
+                class="button"
+                href={bazaarLink.url}
+                target="_blank"
+                rel="noopener"
+                data-event="metrazh_bazaar_click"
+                data-event-location="home_hero"
+              >
+                نصب متراژ از کافه‌بازار
+              </a>
+            )
+          }
+          <a class="text-link" href="/apps/metrazh/">جزئیات و تصاویر متراژ ←</a>
         </div>
         <ul class="trust-list" aria-label="تعهدهای MAHSAI">
           <li>فقط محصول منتشرشده</li>
