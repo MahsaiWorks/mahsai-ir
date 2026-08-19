@@ -62,7 +62,7 @@ const formatDate = (date: Date) =>
   description={siteConfig.seoDefaults.description}
   preloadImage="/images/apps/metrazh/ui/customers.webp"
   preloadImageWidth={720}
-  preloadImageSizes="(max-width: 56.25rem) 46vw, 18rem"
+  preloadImageSizes="(max-width: 43.75rem) 44vw, (max-width: 56.25rem) 46vw, 18rem"
 >
   <section class="mahsai-hero" aria-labelledby="home-title">
     <div class="shell mahsai-hero-grid">
@@ -109,7 +109,7 @@ const formatDate = (date: Date) =>
             alt="صفحهٔ مشتری‌ها در اپلیکیشن متراژ"
             width="720"
             height="1600"
-            sizes="(max-width: 56.25rem) 48vw, 18rem"
+            sizes="(max-width: 43.75rem) 44vw, (max-width: 56.25rem) 48vw, 18rem"
             fetchpriority="high"
           />
         </figure>
@@ -272,13 +272,14 @@ const formatDate = (date: Date) =>
                     {article.data.category} ·{' '}
                     {formatDate(article.data.publishedAt)}
                   </p>
-                  <h3>
-                    <a href={`/articles/${article.id}/`}>
-                      {article.data.title}
-                    </a>
-                  </h3>
-                  <a class="arrow-link" href={`/articles/${article.id}/`}>
-                    خواندن راهنما <span aria-hidden="true">←</span>
+                  <a
+                    class="journal-entry-link"
+                    href={`/articles/${article.id}/`}
+                  >
+                    <h3>{article.data.title}</h3>
+                    <span class="journal-entry-cta">
+                      خواندن راهنما <span aria-hidden="true">←</span>
+                    </span>
                   </a>
                 </article>
               ))}

@@ -62,7 +62,7 @@ body {
 main
   > section:not(:first-child):not(.faq-section):not(.related-stories):not(
     .latest-reading
-  ) {
+  ):not(.mahsai-journal) {
   content-visibility: auto;
   contain-intrinsic-block-size: auto 48rem;
 }

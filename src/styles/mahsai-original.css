@@ -7,7 +7,7 @@
   --ink: #061a31;
   --ink-soft: #17344c;
   --text: #243647;
-  --muted: #61707d;
+  --muted: #4b5966;
   --paper: #f3f0e8;
   --paper-deep: #e7e1d6;
   --white: #fffefa;
@@ -17,7 +17,7 @@
   --teal-dark: #05685f;
   --mint: #b7dfd7;
   --mint-soft: #e0efea;
-  --orange: #ed6a4a;
+  --orange: #9d3b29;
   --orange-soft: #f6d3c8;
   --shadow-sm: 0 0.5rem 1.5rem rgba(6, 26, 49, 0.05);
   --shadow-md: 0 1rem 2.8rem rgba(6, 26, 49, 0.09);
@@ -628,6 +628,31 @@ h2 {
 
 .journal-list h3 {
   font-size: 1.25rem;
+}
+
+.journal-entry-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.journal-entry-cta {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  gap: 0.45rem;
+  padding-block: 0.5rem;
+  color: var(--ink);
+  border-bottom: 1px solid currentColor;
+  font-weight: 760;
+}
+
+.journal-entry-cta > span {
+  transition: transform 160ms ease;
+}
+
+.journal-entry-link:hover .journal-entry-cta > span {
+  transform: translateX(-0.25rem);
 }
 
 /* Product index */
@@ -1528,6 +1553,8 @@ h2 {
 .capability-group-list li {
   position: relative;
   padding: 0.45rem 1.1rem 0.45rem 0;
+  color: var(--white);
+  background: var(--ink);
 }
 
 .capability-group-list li::before {
@@ -1809,6 +1836,10 @@ h2 {
 
 .article-inline-cta h2 {
   color: var(--ink);
+}
+
+.article-inline-cta > p {
+  color: var(--text);
 }
 
 .article-inline-cta > span {
@@ -2119,7 +2150,7 @@ h2 {
   }
 
   .screen-ledger-main {
-    width: 50%;
+    width: 47%;
   }
 
   .screen-ledger-side-bottom {
