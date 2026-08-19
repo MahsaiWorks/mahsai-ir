@@ -2,16 +2,18 @@
 import ResponsiveImage from './ResponsiveImage.astro';
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
-import { getCafeBazaarLink } from '../data/appPresentation';
+import {
+  getCafeBazaarLink,
+  getTrackedCafeBazaarUrl,
+} from '../data/appPresentation';
 
 const path = Astro.url.pathname;
 const links = [
-  { href: '/', label: 'خانه' },
-  { href: '/apps/', label: 'اپلیکیشن‌ها' },
+  { href: '/apps/', label: 'محصولات' },
   { href: '/apps/metrazh/', label: 'متراژ' },
-  { href: '/guides/', label: 'راهنماهای جامع' },
-  { href: '/academy/', label: 'آموزش املاک' },
-  { href: '/articles/', label: 'مجلهٔ املاک' },
+  { href: '/guides/', label: 'راهنماها' },
+  { href: '/academy/', label: 'آموزش' },
+  { href: '/articles/', label: 'مجله' },
 ];
 
 const isActive = (href: string) =>
@@ -22,6 +24,9 @@ const featuredApp = (await getCollection('apps'))
   .sort((a, b) => a.data.order - b.data.order)[0];
 const downloadLink = featuredApp
   ? getCafeBazaarLink(featuredApp.data.storeLinks)
+  : undefined;
+const downloadUrl = downloadLink
+  ? getTrackedCafeBazaarUrl(downloadLink.url, 'header')
   : undefined;
 ---
 
@@ -41,7 +46,7 @@ const downloadLink = featuredApp
           aria-hidden="true"
         />
       </span>
-      <span>{siteConfig.brandName}</span>
+      <span class="brand-word">{siteConfig.brandName}</span>
     </a>
 
     <nav class="desktop-nav" aria-label="پیمایش اصلی">
@@ -63,11 +68,11 @@ const downloadLink = featuredApp
 
     <a
       class="header-cta"
-      href={downloadLink?.url ?? '/apps/metrazh/'}
+      href={downloadUrl ?? '/apps/metrazh/'}
       target={downloadLink ? '_blank' : undefined}
       rel={downloadLink ? 'noopener' : undefined}
     >
-      نصب متراژ
+      دریافت متراژ
       <span aria-hidden="true">↗</span>
     </a>
 
@@ -95,7 +100,7 @@ const downloadLink = featuredApp
               <li>
                 <a
                   class="mobile-download-link"
-                  href={downloadLink.url}
+                  href={getTrackedCafeBazaarUrl(downloadLink.url, 'mobile_nav')}
                   target="_blank"
                   rel="noopener"
                 >

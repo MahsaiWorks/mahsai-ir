@@ -2,7 +2,10 @@
 import ResponsiveImage from '../components/ResponsiveImage.astro';
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
-import { getCafeBazaarLink } from '../data/appPresentation';
+import {
+  getCafeBazaarLink,
+  getTrackedCafeBazaarUrl,
+} from '../data/appPresentation';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const app = (await getCollection('apps')).find(
@@ -178,7 +181,7 @@ const instagramLink = siteConfig.socialLinks.find((link) =>
             bazaarLink && (
               <a
                 class="text-link"
-                href={bazaarLink.url}
+                href={getTrackedCafeBazaarUrl(bazaarLink.url, 'about_product')}
                 target="_blank"
                 rel="noopener"
               >

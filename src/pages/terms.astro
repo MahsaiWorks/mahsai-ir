@@ -2,7 +2,10 @@
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
 import PageStage from '../components/PageStage.astro';
-import { getCafeBazaarLink } from '../data/appPresentation';
+import {
+  getCafeBazaarLink,
+  getTrackedCafeBazaarUrl,
+} from '../data/appPresentation';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const metrazhApp = (await getCollection('apps')).find(
@@ -48,7 +51,11 @@ const bazaarLink = getCafeBazaarLink(metrazhApp.data.storeLinks);
           کنند. دریافت نسخه رسمی فقط از
           {
             bazaarLink ? (
-              <a href={bazaarLink.url} target="_blank" rel="noopener">
+              <a
+                href={getTrackedCafeBazaarUrl(bazaarLink.url, 'terms_store')}
+                target="_blank"
+                rel="noopener"
+              >
                 صفحه متراژ در کافه‌بازار
               </a>
             ) : (

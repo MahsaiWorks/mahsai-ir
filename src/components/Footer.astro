@@ -2,7 +2,10 @@
 import ResponsiveImage from './ResponsiveImage.astro';
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
-import { getCafeBazaarLink } from '../data/appPresentation';
+import {
+  getCafeBazaarLink,
+  getTrackedCafeBazaarUrl,
+} from '../data/appPresentation';
 
 const year = new Intl.DateTimeFormat('fa-IR', { year: 'numeric' }).format(
   new Date(),
@@ -41,6 +44,7 @@ const downloadLink = featuredApp
       <ul>
         <li><a href="/apps/">اپلیکیشن‌های منتشرشده</a></li>
         <li><a href="/apps/metrazh/">اپلیکیشن متراژ</a></li>
+        <li><a href="/apps/metrazh/download/">دانلود و نصب متراژ</a></li>
         <li><a href="/apps/metrazh/changelog/">تاریخچهٔ نسخه‌های متراژ</a></li>
         <li><a href="/guides/">راهنماهای جامع کار املاک</a></li>
         <li><a href="/academy/">آموزش رایگان املاک</a></li>
@@ -66,7 +70,7 @@ const downloadLink = featuredApp
           downloadLink && featuredApp && (
             <li>
               <a
-                href={downloadLink.url}
+                href={getTrackedCafeBazaarUrl(downloadLink.url, 'footer')}
                 target="_blank"
                 rel="noopener"
                 data-event="metrazh_bazaar_click"

@@ -2,7 +2,10 @@
 import ResponsiveImage from '../components/ResponsiveImage.astro';
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
-import { getCafeBazaarLink } from '../data/appPresentation';
+import {
+  getCafeBazaarLink,
+  getTrackedCafeBazaarUrl,
+} from '../data/appPresentation';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const apps = (await getCollection('apps')).filter(
@@ -32,7 +35,7 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
             bazaarLink && (
               <a
                 class="text-link"
-                href={bazaarLink.url}
+                href={getTrackedCafeBazaarUrl(bazaarLink.url, 'support_hero')}
                 target="_blank"
                 rel="noopener"
               >
@@ -235,7 +238,7 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
         bazaarLink && (
           <a
             class="button button-secondary"
-            href={bazaarLink.url}
+            href={getTrackedCafeBazaarUrl(bazaarLink.url, 'support_feedback')}
             target="_blank"
             rel="noopener"
             data-event="metrazh_bazaar_review_open"
@@ -265,7 +268,14 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
             نسخهٔ {app.data.version} فقط از
             {
               bazaarLink ? (
-                <a href={bazaarLink.url} target="_blank" rel="noopener">
+                <a
+                  href={getTrackedCafeBazaarUrl(
+                    bazaarLink.url,
+                    'support_official_link',
+                  )}
+                  target="_blank"
+                  rel="noopener"
+                >
                   صفحهٔ رسمی متراژ در کافه‌بازار
                 </a>
               ) : (

@@ -6,6 +6,7 @@ import {
   getReleaseCheckpoints,
   releasePrinciples,
 } from '../../../data/metrazhRelease';
+import { getTrackedCafeBazaarUrl } from '../../../data/appPresentation';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 const app = (await getCollection('apps')).find(
@@ -53,7 +54,7 @@ const storeCheckedAt = formatDate(app.data.storeCheckedAt);
         bazaarLink && (
           <a
             class="button"
-            href={bazaarLink.url}
+            href={getTrackedCafeBazaarUrl(bazaarLink.url, 'status_hero')}
             target="_blank"
             rel="noopener"
           >
@@ -129,7 +130,7 @@ const storeCheckedAt = formatDate(app.data.storeCheckedAt);
           bazaarLink && (
             <a
               class="button"
-              href={bazaarLink.url}
+              href={getTrackedCafeBazaarUrl(bazaarLink.url, 'status_download')}
               target="_blank"
               rel="noopener"
             >

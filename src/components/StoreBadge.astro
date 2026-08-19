@@ -1,5 +1,6 @@
 ---
 import ResponsiveImage from './ResponsiveImage.astro';
+import { getTrackedCafeBazaarUrl } from '../data/appPresentation';
 interface Props {
   href: string;
   location: string;
@@ -7,11 +8,12 @@ interface Props {
 }
 
 const { href, location, light = false } = Astro.props;
+const trackedHref = getTrackedCafeBazaarUrl(href, location);
 ---
 
 <a
   class:list={['store-badge', { 'store-badge-light': light }]}
-  href={href}
+  href={trackedHref}
   target="_blank"
   rel="noopener"
   data-event="metrazh_bazaar_click"

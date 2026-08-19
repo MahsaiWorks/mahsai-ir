@@ -143,11 +143,20 @@ for (const file of htmlFiles) {
   )) {
     try {
       const data = JSON.parse(match[1]);
-      if (
-        relativeFile === 'apps/metrazh/index.html' &&
-        data['@type'] === 'SoftwareApplication'
-      ) {
-        metrazhStructuredData = data;
+      if (relativeFile === 'apps/metrazh/index.html') {
+        const structuredNodes = Array.isArray(data['@graph'])
+          ? data['@graph']
+          : [data];
+        const softwareApplication = structuredNodes.find((node) => {
+          const types = Array.isArray(node?.['@type'])
+            ? node['@type']
+            : [node?.['@type']];
+          return types.includes('SoftwareApplication');
+        });
+
+        if (softwareApplication) {
+          metrazhStructuredData = softwareApplication;
+        }
       }
     } catch (error) {
       errors.push(

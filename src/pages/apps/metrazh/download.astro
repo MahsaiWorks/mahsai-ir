@@ -1,0 +1,383 @@
+---
+import { getCollection } from 'astro:content';
+import ResponsiveImage from '../../../components/ResponsiveImage.astro';
+import StoreBadge from '../../../components/StoreBadge.astro';
+import { siteConfig } from '../../../config/site';
+import { getCafeBazaarLink } from '../../../data/appPresentation';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const app = (await getCollection('apps')).find(
+  (entry) => entry.id === 'metrazh' && entry.data.status === 'available',
+);
+
+if (!app) throw new Error('Published Metrazh content entry is missing.');
+
+const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
+if (!bazaarLink) throw new Error('Published Cafe Bazaar link is missing.');
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site).toString();
+const appId = new URL('/apps/metrazh/#software', Astro.site).toString();
+const organizationId = new URL('/#organization', Astro.site).toString();
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('fa-IR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+
+const installSteps = [
+  {
+    title: 'صفحهٔ رسمی بازار را باز کنید',
+    description:
+      'از دکمهٔ همین صفحه وارد نشانی رسمی متراژ در کافه‌بازار شوید. نام برنامه باید «متراژ» و شناسهٔ آن ir.fileryar.amlakyar باشد.',
+  },
+  {
+    title: 'نسخه و سازگاری گوشی را ببینید',
+    description: `نسخهٔ منتشرشدهٔ فعلی ${app.data.version} است و ${app.data.minOs} پشتیبانی می‌شود. اطلاعات داخل بازار معیار نهایی نصب است.`,
+  },
+  {
+    title: 'نصب را از خود کافه‌بازار انجام دهید',
+    description:
+      'فایل APK واسطه از این سایت ارائه نمی‌شود. بازار نصب و به‌روزرسانی نسخهٔ رسمی را مدیریت می‌کند.',
+  },
+  {
+    title: 'با یک فایل آزمایشی شروع کنید',
+    description:
+      'پیش از واردکردن آرشیو واقعی، یک فایل و یک مشتری آزمایشی بسازید، جست‌وجو و پشتیبان‌گیری را امتحان کنید و بعد ادامه دهید.',
+  },
+] as const;
+
+const faqs = [
+  {
+    question: 'لینک رسمی دانلود متراژ کدام است؟',
+    answer:
+      'نسخهٔ رسمی اندروید فقط در صفحهٔ متراژ کافه‌بازار با شناسهٔ ir.fileryar.amlakyar منتشر می‌شود. دکمه‌های این صفحه مستقیماً همان مقصد را باز می‌کنند.',
+  },
+  {
+    question: 'آیا دانلود و نصب متراژ رایگان است؟',
+    answer:
+      'دریافت برنامه از کافه‌بازار رایگان است. صفحهٔ رسمی بازار وجود پرداخت درون‌برنامه‌ای را نشان می‌دهد؛ پیش از هر خرید، توضیح همان بخش را بررسی کنید.',
+  },
+  {
+    question: 'چرا فایل APK مستقیم در سایت نیست؟',
+    answer:
+      'برای اینکه نسخهٔ اشتباه یا قدیمی دست‌به‌دست نشود، نصب و به‌روزرسانی را به صفحهٔ رسمی کافه‌بازار سپرده‌ایم. سایت فایل واسطه ارائه نمی‌کند.',
+  },
+  {
+    question: 'متراژ روی چه نسخه‌ای از اندروید نصب می‌شود؟',
+    answer: `${app.data.minOs} پشتیبانی می‌شود. اگر بازار نصب را ناسازگار نشان داد، اطلاعات همان گوشی و صفحهٔ فروشگاه معیار نهایی است.`,
+  },
+  {
+    question: 'برای انتقال اطلاعات به گوشی جدید چه کار کنم؟',
+    answer:
+      'پیش از تعویض گوشی، نسخهٔ پشتیبان رمزگذاری‌شده بسازید و فایل و رمز را جدا و امن نگه دارید. سپس مسیر بازیابی را روی گوشی مقصد اجرا کنید.',
+  },
+  {
+    question: 'اگر نصب یا به‌روزرسانی انجام نشد چه کنم؟',
+    answer:
+      'فضای خالی، اتصال اینترنت، ورود به کافه‌بازار و نسخهٔ اندروید را بررسی کنید. اگر مشکل ادامه داشت، از صفحهٔ پشتیبانی رسمی مشخصات نسخه و شرح خطا را بفرستید.',
+  },
+] as const;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': `${pageUrl}#webpage`,
+      url: pageUrl,
+      name: `دانلود متراژ برای اندروید؛ نصب از کافه‌بازار | ${siteConfig.brandName}`,
+      description:
+        'لینک رسمی دانلود و نصب اپلیکیشن متراژ برای اندروید از کافه‌بازار، همراه نسخهٔ فعلی، شرایط نصب، به‌روزرسانی و پاسخ مشکلات رایج.',
+      inLanguage: 'fa-IR',
+      about: { '@id': appId },
+      publisher: { '@id': organizationId },
+      potentialAction: {
+        '@type': 'ViewAction',
+        name: 'دریافت متراژ از کافه‌بازار',
+        target: bazaarLink.url,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'خانه',
+          item: new URL('/', Astro.site).toString(),
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'اپلیکیشن متراژ',
+          item: new URL('/apps/metrazh/', Astro.site).toString(),
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: 'دانلود و نصب متراژ',
+          item: pageUrl,
+        },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+      })),
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={`دانلود متراژ برای اندروید؛ نصب از کافه‌بازار | ${siteConfig.brandName}`}
+  description="لینک رسمی دانلود و نصب اپلیکیشن متراژ برای اندروید از کافه‌بازار؛ همراه نسخهٔ فعلی، شرایط نصب، به‌روزرسانی و پاسخ مشکلات رایج."
+  image="/og-metrazh-display-v1.jpg"
+  imageAlt="دانلود رسمی اپلیکیشن متراژ برای اندروید"
+  imageWidth={1200}
+  imageHeight={630}
+  preloadImage="/images/apps/metrazh/bazaar/customer-follow-up.webp"
+  preloadImageWidth={1080}
+  preloadImageSizes="(max-width: 56.25rem) 60vw, 21rem"
+  keywords={[
+    'دانلود متراژ',
+    'دانلود برنامه متراژ',
+    'نصب متراژ',
+    'متراژ اندروید',
+    'اپلیکیشن متراژ املاک',
+    'دانلود برنامه مشاور املاک',
+  ]}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(structuredData)}
+  />
+
+  <header class="download-guide-hero">
+    <div class="shell">
+      <nav class="product-breadcrumb" aria-label="مسیر صفحه">
+        <a href="/">خانه</a><span aria-hidden="true">/</span>
+        <a href="/apps/metrazh/">اپلیکیشن متراژ</a><span aria-hidden="true"
+          >/</span
+        >
+        <span>دانلود و نصب</span>
+      </nav>
+
+      <div class="download-guide-hero-grid">
+        <div>
+          <p class="product-status-line">
+            <span aria-hidden="true"></span> لینک رسمی و بدون فایل واسطه
+          </p>
+          <h1>دانلود متراژ برای اندروید؛ نصب امن از کافه‌بازار.</h1>
+          <p class="lead">
+            متراژ، اپلیکیشن مدیریت فایل و مشتری برای مشاوران املاک است. نسخهٔ
+            رسمی را فقط از کافه‌بازار دریافت کنید تا نصب و به‌روزرسانی از یک
+            مسیر مشخص انجام شود.
+          </p>
+          <div class="hero-actions">
+            <StoreBadge href={bazaarLink.url} location="download_hero" />
+            <a class="arrow-link" href="/apps/metrazh/">
+              اول معرفی کامل متراژ را ببینید <span aria-hidden="true">←</span>
+            </a>
+          </div>
+          <dl class="download-guide-facts">
+            <div><dt>نسخهٔ فعلی</dt><dd>{app.data.version}</dd></div>
+            <div><dt>هزینهٔ دریافت</dt><dd>رایگان</dd></div>
+            <div><dt>پرداخت داخل برنامه</dt><dd>دارد</dd></div>
+            <div>
+              <dt>آخرین بررسی فروشگاه</dt><dd>
+                {formatDate(app.data.storeCheckedAt)}
+              </dd>
+            </div>
+          </dl>
+        </div>
+
+        <figure class="download-guide-visual">
+          <ResponsiveImage
+            src="/images/apps/metrazh/bazaar/customer-follow-up.webp"
+            alt="تصویر رسمی مدیریت و پیگیری مشتری در اپلیکیشن متراژ"
+            width="1080"
+            height="1920"
+            sizes="(max-width: 56.25rem) 68vw, 21rem"
+            fetchpriority="high"
+          />
+          <figcaption>تصویر رسمی متراژ در کافه‌بازار</figcaption>
+        </figure>
+      </div>
+    </div>
+  </header>
+
+  <section class="download-answer" aria-labelledby="download-answer-title">
+    <div class="shell download-answer-grid">
+      <div>
+        <p class="section-sign section-sign-light">پاسخ کوتاه</p>
+        <h2 id="download-answer-title">از کجا متراژ را دانلود کنیم؟</h2>
+      </div>
+      <div>
+        <p>
+          مقصد رسمی دانلود متراژ، صفحهٔ برنامه در کافه‌بازار است. نام برنامه
+          باید «متراژ» و شناسهٔ بسته باید
+          <span dir="ltr">ir.fileryar.amlakyar</span> باشد. این سایت فایل APK جداگانه
+          ارائه نمی‌کند.
+        </p>
+        <StoreBadge href={bazaarLink.url} location="download_answer" light />
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="download-steps"
+    aria-labelledby="download-steps-title"
+    data-view-event="download_guide_viewed"
+  >
+    <div class="shell download-steps-layout">
+      <header>
+        <p class="section-sign">نصب بدون ابهام</p>
+        <h2 id="download-steps-title">چهار قدم تا شروع کار با متراژ.</h2>
+        <p>
+          قبل از انتقال اطلاعات واقعی، مسیر نصب، سازگاری گوشی و پشتیبان‌گیری را
+          یک‌بار با دادهٔ آزمایشی امتحان کنید.
+        </p>
+      </header>
+      <ol>
+        {
+          installSteps.map((step) => (
+            <li>
+              <div>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section
+    class="download-readiness"
+    aria-labelledby="download-readiness-title"
+  >
+    <div class="shell download-readiness-grid">
+      <div>
+        <p class="section-sign">قبل از واردکردن فایل‌ها</p>
+        <h2 id="download-readiness-title">
+          سه نکته‌ای که بعداً دردسر را کم می‌کند.
+        </h2>
+      </div>
+      <div class="download-readiness-list">
+        <article>
+          <h3>اطلاعات اصلی روی همان دستگاه است</h3>
+          <p>
+            نسخهٔ عمومی فعلی همگام‌سازی ابری اختصاصی ندارد؛ پس نگهداری گوشی و
+            فایل پشتیبان اهمیت دارد.
+          </p>
+        </article>
+        <article>
+          <h3>پشتیبان را قبل از نیاز بسازید</h3>
+          <p>
+            فایل پشتیبان رمزگذاری‌شده و رمز آن را در دو جای امن و جدا نگه دارید
+            و یک‌بار بازیابی آزمایشی انجام دهید.
+          </p>
+        </article>
+        <article>
+          <h3>نسخه را فقط از بازار تازه کنید</h3>
+          <p>
+            برای اینکه نسخهٔ قدیمی یا دست‌کاری‌شده نصب نشود، به‌روزرسانی را از
+            همان صفحهٔ رسمی انجام دهید.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="download-next" aria-labelledby="download-next-title">
+    <div class="shell download-next-grid">
+      <div>
+        <p class="section-sign section-sign-light">بعد از نصب</p>
+        <h2 id="download-next-title">اولین فایل را درست ثبت کنید.</h2>
+        <p>
+          یک مسیر رایگان و مرحله‌به‌مرحله آماده کرده‌ایم تا با یک فایل آزمایشی،
+          ساختار ثبت اطلاعات و کنترل نهایی را یاد بگیرید.
+        </p>
+      </div>
+      <div class="download-next-actions">
+        <a
+          class="button button-light"
+          href="/academy/first-organized-property-file/"
+        >
+          شروع آموزش فایل مرتب
+        </a>
+        <a class="arrow-link arrow-link-light" href="/guides/property-files/">
+          راهنمای جامع فایل‌گیری املاک <span aria-hidden="true">←</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="metrazh-faq download-faq"
+    aria-labelledby="download-faq-title"
+  >
+    <div class="shell metrazh-faq-layout">
+      <header>
+        <p class="section-sign">پرسش‌های دانلود و نصب</p>
+        <h2 id="download-faq-title">اگر قبل از نصب سؤال دارید.</h2>
+      </header>
+      <div class="metrazh-faq-list">
+        {
+          faqs.map((faq, index) => (
+            <details open={index === 0}>
+              <summary>{faq.question}</summary>
+              <p>{faq.answer}</p>
+            </details>
+          ))
+        }
+        <p class="faq-footnote">
+          مشکل حل نشد؟ از <a href="/support/">پشتیبانی رسمی متراژ</a> کمک بگیرید.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="metrazh-download" aria-labelledby="download-final-title">
+    <div class="shell metrazh-download-grid">
+      <div class="metrazh-download-brand">
+        <ResponsiveImage
+          src={app.data.icon}
+          alt="نشان اپلیکیشن متراژ"
+          width="512"
+          height="512"
+          sizes="6rem"
+          loading="lazy"
+          decoding="async"
+        />
+        <ResponsiveImage
+          class="metrazh-wordmark-surface"
+          src={app.data.wordmark}
+          alt="متراژ"
+          width="702"
+          height="425"
+          sizes="9rem"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div>
+        <h2 id="download-final-title">نسخهٔ رسمی متراژ را دریافت کنید.</h2>
+        <p>بدون فایل واسطه؛ نصب و به‌روزرسانی از کافه‌بازار.</p>
+      </div>
+      <div class="metrazh-download-actions">
+        <StoreBadge href={bazaarLink.url} location="download_bottom" light />
+        <a class="arrow-link arrow-link-light" href="/support/">
+          پشتیبانی نصب <span aria-hidden="true">←</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

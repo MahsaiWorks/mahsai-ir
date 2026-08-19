@@ -4,6 +4,7 @@ import Footer from '../components/Footer.astro';
 import { siteConfig } from '../config/site';
 import { getResponsiveImageSrcSet } from '../utils/responsiveImages';
 import '../styles/site.css';
+import '../styles/mahsai-original.css';
 
 interface Props {
   title: string;
@@ -47,22 +48,34 @@ const socialImageType = socialImagePath.endsWith('.webp')
 const preloadImageSrcSet = preloadImage
   ? getResponsiveImageSrcSet(preloadImage, preloadImageWidth)
   : undefined;
+const organizationId = new URL('/#organization', Astro.site).toString();
+const websiteId = new URL('/#website', Astro.site).toString();
 const structuredData = {
   '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: siteConfig.brandName,
-  alternateName: siteConfig.brandNameFa,
-  url: Astro.site?.toString(),
-  inLanguage: 'fa-IR',
-  description: siteConfig.seoDefaults.description,
-  publisher: {
-    '@type': 'Organization',
-    name: siteConfig.brandName,
-    alternateName: siteConfig.brandNameFa,
-    url: Astro.site?.toString(),
-    logo: new URL('/brand/mahsai-symbol.png', Astro.site).toString(),
-    sameAs: siteConfig.socialLinks.map((link) => link.url),
-  },
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': organizationId,
+      name: siteConfig.brandName,
+      alternateName: siteConfig.brandNameFa,
+      url: Astro.site?.toString(),
+      logo: {
+        '@type': 'ImageObject',
+        url: new URL('/brand/mahsai-symbol.png', Astro.site).toString(),
+      },
+      sameAs: siteConfig.socialLinks.map((link) => link.url),
+    },
+    {
+      '@type': 'WebSite',
+      '@id': websiteId,
+      name: siteConfig.brandName,
+      alternateName: siteConfig.brandNameFa,
+      url: Astro.site?.toString(),
+      inLanguage: 'fa-IR',
+      description: siteConfig.seoDefaults.description,
+      publisher: { '@id': organizationId },
+    },
+  ],
 };
 ---
 

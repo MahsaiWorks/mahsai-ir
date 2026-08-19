@@ -20,6 +20,11 @@ const apps = defineCollection({
     status: z.enum(['development', 'beta', 'available', 'archived']),
     tagline: z.string(),
     version: z.string(),
+    pricing: z.object({
+      installPrice: z.number().nonnegative(),
+      currency: z.string(),
+      hasInAppPurchase: z.boolean(),
+    }),
     storeUpdatedAt: z.coerce.date(),
     storeCheckedAt: z.coerce.date(),
     minOs: z.string(),
