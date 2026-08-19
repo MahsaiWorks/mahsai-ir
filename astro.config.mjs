@@ -6,7 +6,10 @@ export default defineConfig({
   output: 'static',
   integrations: [
     sitemap({
-      filter: (page) => new URL(page).pathname !== '/ai/',
+      filter: (page) => {
+        const pathname = new URL(page).pathname;
+        return !pathname.startsWith('/ai/') && !pathname.startsWith('/go/');
+      },
     }),
   ],
 });

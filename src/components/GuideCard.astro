@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from './ResponsiveImage.astro';
 import type { GuideTopic } from '../data/guideTopics';
 
 interface Props {
@@ -19,7 +20,7 @@ const { guide, compact = false } = Astro.props;
     aria-label={`مطالعه ${guide.navTitle}`}
   >
     <figure class="guide-card-media">
-      <img
+      <ResponsiveImage
         src={guide.cover}
         alt={guide.coverAlt}
         width={guide.coverWidth}

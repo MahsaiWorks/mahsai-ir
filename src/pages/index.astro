@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from '../components/ResponsiveImage.astro';
 import { getCollection } from 'astro:content';
 import ArticleCard from '../components/ArticleCard.astro';
 import { siteConfig } from '../config/site';
@@ -45,33 +46,14 @@ const learningPaths = [
     href: '/guides/property-ads/',
   },
 ] as const;
-
-const softwareStructuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'SoftwareApplication',
-  name: app.data.name,
-  applicationCategory: 'BusinessApplication',
-  operatingSystem: app.data.minOs,
-  softwareVersion: app.data.version,
-  description: app.data.shortDescription,
-  url: new URL('/apps/metrazh/', Astro.site).toString(),
-  image: new URL(app.data.icon, Astro.site).toString(),
-  downloadUrl: bazaarLink?.url,
-  inLanguage: 'fa-IR',
-  author: { '@type': 'Organization', name: siteConfig.brandName },
-};
 ---
 
 <BaseLayout
   title={siteConfig.seoDefaults.title}
   description={siteConfig.seoDefaults.description}
+  preloadImage="/images/home/metrazh-hero-character.webp"
+  preloadImageWidth={1717}
 >
-  <script
-    type="application/ld+json"
-    is:inline
-    set:html={JSON.stringify(softwareStructuredData)}
-  />
-
   <section class="home-hero" aria-labelledby="home-title">
     <div class="shell home-hero-grid">
       <div class="home-hero-copy">
@@ -96,7 +78,7 @@ const softwareStructuredData = {
       </div>
 
       <figure class="home-hero-visual">
-        <img
+        <ResponsiveImage
           class="home-hero-character"
           src="/images/home/metrazh-hero-character.webp"
           alt="مشاور املاک در حال استفاده از تلفن همراه کنار ماکت ساختمان"
@@ -105,20 +87,22 @@ const softwareStructuredData = {
           fetchpriority="high"
         />
         <div class="hero-phone-card" aria-label="تصویر رسمی اپلیکیشن متراژ">
-          <img
+          <ResponsiveImage
             src="/images/apps/metrazh/bazaar/customer-follow-up.webp"
             alt="معرفی رسمی پیگیری نیاز مشتری در متراژ"
             width="1080"
             height="1920"
+            sizes="25vw"
           />
         </div>
         <figcaption>
-          <img
+          <ResponsiveImage
             class="metrazh-wordmark-surface"
             src="/images/apps/metrazh/wordmark-dark.png"
             alt="متراژ"
             width="702"
             height="425"
+            sizes="6.5rem"
           />
           <span>دستیار فارسی مشاور املاک</span>
         </figcaption>
@@ -130,12 +114,13 @@ const softwareStructuredData = {
     <div class="shell product-spotlight-grid">
       <div class="product-spotlight-copy">
         <p class="kicker kicker-light">محصول منتشرشدهٔ MAHSAI</p>
-        <img
+        <ResponsiveImage
           class="metrazh-wordmark metrazh-wordmark-surface"
           src="/images/apps/metrazh/wordmark-dark.png"
           alt="متراژ"
           width="702"
           height="425"
+          sizes="10rem"
         />
         <h2 id="spotlight-title">
           فایل، مشتری، بازدید و پیگیری؛ یک‌جا و قابل پیدا کردن.
@@ -170,21 +155,23 @@ const softwareStructuredData = {
 
       <div class="product-screen-pair" aria-label="تصاویر رسمی متراژ">
         <figure>
-          <img
+          <ResponsiveImage
             src="/images/apps/metrazh/bazaar/smart-matching.webp"
             alt="معرفی رسمی تطبیق هوشمند فایل و مشتری در متراژ"
             width="1080"
             height="1920"
+            sizes="43vw"
             loading="lazy"
             decoding="async"
           />
         </figure>
         <figure>
-          <img
+          <ResponsiveImage
             src="/images/apps/metrazh/bazaar/smart-listing.webp"
             alt="معرفی رسمی ساخت متن آگهی از اطلاعات فایل در متراژ"
             width="1080"
             height="1920"
+            sizes="43vw"
             loading="lazy"
             decoding="async"
           />
@@ -211,7 +198,7 @@ const softwareStructuredData = {
           learningPaths.map((path) => (
             <article class="visual-path-card">
               <a href={path.href}>
-                <img
+                <ResponsiveImage
                   src={path.image}
                   alt={path.alt}
                   width="1536"
@@ -235,7 +222,7 @@ const softwareStructuredData = {
   <section class="section academy-banner" aria-labelledby="academy-title">
     <div class="shell academy-banner-frame">
       <figure>
-        <img
+        <ResponsiveImage
           src="/images/stock/real-estate-consultation.jpg"
           alt="گفت‌وگوی مشاور املاک با مراجعه‌کننده هنگام بازدید ملک"
           width="1800"

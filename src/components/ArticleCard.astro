@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from './ResponsiveImage.astro';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -29,7 +30,7 @@ const formatDate = (date: Date) =>
     data-event="article_open"
     data-event-location="article_card_image"
   >
-    <img
+    <ResponsiveImage
       src={article.data.cover}
       alt={article.data.coverAlt}
       width={article.data.coverWidth}

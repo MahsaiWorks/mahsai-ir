@@ -1,0 +1,38 @@
+---
+interface Props {
+  title: string;
+  location: 'article' | 'guide';
+}
+
+const { title, location } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(canonical)}&text=${encodeURIComponent(title)}`;
+const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(`${title}\n${canonical}`)}`;
+---
+
+<nav class="share-actions" aria-label="اشتراک‌گذاری این مطلب">
+  <div>
+    <strong>برای همکارتان بفرستید</strong>
+    <span>اگر این راهنما به مسئلهٔ امروز او هم مربوط است.</span>
+  </div>
+  <ul>
+    <li>
+      <a
+        href={telegramUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-event="content_share"
+        data-event-location={`${location}_telegram`}>تلگرام</a
+      >
+    </li>
+    <li>
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-event="content_share"
+        data-event-location={`${location}_whatsapp`}>واتس‌اپ</a
+      >
+    </li>
+  </ul>
+</nav>

@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from '../../components/ResponsiveImage.astro';
 import { getCollection } from 'astro:content';
 import ArticleCard from '../../components/ArticleCard.astro';
 import GuideCard from '../../components/GuideCard.astro';
@@ -48,7 +49,7 @@ const clusterArticles = (cluster: (typeof articleClusters)[number]['id']) =>
           </div>
           <article class="journal-feature-card">
             <a href={`/articles/${featured.id}/`}>
-              <img
+              <ResponsiveImage
                 src={featured.data.cover}
                 alt={featured.data.coverAlt}
                 width={featured.data.coverWidth}
@@ -70,7 +71,7 @@ const clusterArticles = (cluster: (typeof articleClusters)[number]['id']) =>
     <div class="shell cluster-nav-grid">
       {
         articleClusters.map((cluster) => (
-          <a href={`#cluster-${cluster.id}`}>
+          <a href={`/articles/topics/${cluster.id}/`}>
             <strong>{cluster.title}</strong>
             <span>{clusterArticles(cluster.id).length} مطلب</span>
           </a>
@@ -121,6 +122,9 @@ const clusterArticles = (cluster: (typeof articleClusters)[number]['id']) =>
                   <h2 id={`cluster-title-${cluster.id}`}>{cluster.title}</h2>
                 </div>
                 <p>{cluster.description}</p>
+                <a class="text-link" href={`/articles/topics/${cluster.id}/`}>
+                  صفحهٔ کامل این موضوع ←
+                </a>
               </header>
               <div
                 class:list={[
@@ -142,6 +146,29 @@ const clusterArticles = (cluster: (typeof articleClusters)[number]['id']) =>
       })
     }
   </div>
+
+  <section class="section reader-subscription" aria-labelledby="updates-title">
+    <div class="shell reader-subscription-card">
+      <div>
+        <p class="kicker">مطالب تازه، بدون شلوغی</p>
+        <h2 id="updates-title">راهنماهای جدید را با روش دلخواه دنبال کنید.</h2>
+        <p>
+          خوراک RSS فوراً و بدون حساب کاربری در دسترس است. اگر خبرنامهٔ ایمیلی
+          را می‌خواهید، با برنامهٔ ایمیل خودتان درخواست عضویت بفرستید؛ هیچ فرم
+          پنهان یا عضویت خودکاری وجود ندارد.
+        </p>
+      </div>
+      <div class="reader-subscription-actions">
+        <a class="button" href="/articles/rss.xml">دنبال‌کردن با RSS</a>
+        <a
+          class="button button-secondary"
+          href={`mailto:${siteConfig.supportEmail}?subject=${encodeURIComponent('عضویت اختیاری در خبرنامه MAHSAI')}&body=${encodeURIComponent('مایلم خبرنامهٔ مطالب کاربردی املاک MAHSAI را دریافت کنم. می‌دانم هر زمان با پاسخ «لغو» می‌توانم عضویت را متوقف کنم.')}`}
+          data-event="newsletter_interest_email"
+          data-event-location="articles_index">درخواست خبرنامه با ایمیل</a
+        >
+      </div>
+    </div>
+  </section>
 
   <section class="journal-cta">
     <div class="shell journal-cta-inner">

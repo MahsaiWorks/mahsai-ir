@@ -1,0 +1,186 @@
+---
+import ResponsiveImage from '../../components/ResponsiveImage.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const storeUrl = 'https://cafebazaar.ir/app/ir.fileryar.amlakyar';
+const defaultDestination = `${storeUrl}?utm_source=instagram&utm_medium=social&utm_campaign=metrazh_install&utm_content=bio&ref=mahsai_instagram_bio`;
+---
+
+<BaseLayout
+  title="دانلود متراژ از کافه‌بازار | MAHSAI"
+  description="مسیر رسمی دانلود اپلیکیشن متراژ از کافه‌بازار."
+  noindex
+  image="/og-metrazh-display-v1.jpg"
+  imageAlt="اپلیکیشن متراژ؛ میزکار مشاور املاک"
+>
+  <section class="redirect-page" aria-labelledby="redirect-title">
+    <div class="redirect-card">
+      <div class="redirect-brand" aria-hidden="true">
+        <ResponsiveImage
+          src="/images/apps/metrazh/icon-app-official.webp"
+          alt=""
+          width="192"
+          height="192"
+          aria-hidden="true"
+        />
+        <span></span>
+      </div>
+
+      <p class="redirect-eyebrow">لینک رسمی متراژ</p>
+      <h1 id="redirect-title">در حال انتقال به کافه‌بازار</h1>
+      <p class="redirect-copy">
+        چند لحظه صبر کنید؛ صفحه رسمی دانلود متراژ باز می‌شود.
+      </p>
+
+      <a
+        id="bazaar-redirect"
+        class="button redirect-button"
+        href={defaultDestination}
+        data-event="metrazh_bazaar_click"
+        data-event-location="instagram_redirect"
+      >
+        باز کردن صفحه دانلود
+      </a>
+
+      <p class="redirect-note">بدون فایل واسطه؛ دانلود مستقیم از بازار</p>
+    </div>
+  </section>
+
+  <script is:inline define:vars={{ storeUrl }}>
+    (() => {
+      const allowedContent = new Set(['bio', 'post', 'story', 'qr']);
+      const requestedContent = new URLSearchParams(location.search).get(
+        'content',
+      );
+      const content = allowedContent.has(requestedContent)
+        ? requestedContent
+        : 'bio';
+      const target = new URL(storeUrl);
+      target.searchParams.set('utm_source', 'instagram');
+      target.searchParams.set('utm_medium', 'social');
+      target.searchParams.set('utm_campaign', 'metrazh_install');
+      target.searchParams.set('utm_content', content);
+      target.searchParams.set('ref', `mahsai_instagram_${content}`);
+      const destination = target.toString();
+      const link = document.querySelector('#bazaar-redirect');
+      if (link instanceof HTMLAnchorElement) link.href = destination;
+      window.mahsaiMeasure?.('campaign_redirect', {
+        source: 'instagram',
+        content,
+      });
+      const openBazaar = () => window.location.replace(destination);
+      const scheduleRedirect = () => window.setTimeout(openBazaar, 1200);
+
+      if (document.readyState === 'complete') {
+        scheduleRedirect();
+      } else {
+        window.addEventListener('load', scheduleRedirect, { once: true });
+      }
+    })();
+  </script>
+</BaseLayout>
+
+<style>
+  .redirect-page {
+    min-height: calc(100svh - 9rem);
+    display: grid;
+    place-items: center;
+    padding: clamp(2rem, 8vw, 5rem) 1rem;
+    background:
+      radial-gradient(
+        circle at 14% 18%,
+        rgba(210, 153, 65, 0.2),
+        transparent 32%
+      ),
+      radial-gradient(
+        circle at 88% 82%,
+        rgba(17, 110, 91, 0.16),
+        transparent 34%
+      ),
+      #f7f3eb;
+  }
+
+  .redirect-card {
+    width: min(100%, 34rem);
+    padding: clamp(1.75rem, 6vw, 3.25rem);
+    border: 1px solid rgba(7, 20, 38, 0.1);
+    border-radius: 2rem;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 1.5rem 4rem rgba(7, 20, 38, 0.12);
+    text-align: center;
+    backdrop-filter: blur(18px);
+  }
+
+  .redirect-brand {
+    position: relative;
+    width: fit-content;
+    margin: 0 auto 1.5rem;
+  }
+
+  .redirect-brand img {
+    display: block;
+    width: 6.5rem;
+    height: 6.5rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 1rem 2.5rem rgba(7, 20, 38, 0.2);
+  }
+
+  .redirect-brand span {
+    position: absolute;
+    inset: -0.55rem;
+    z-index: -1;
+    border: 1px solid rgba(210, 153, 65, 0.52);
+    border-radius: 1.9rem;
+    animation: redirect-pulse 1.6s ease-out infinite;
+  }
+
+  .redirect-eyebrow {
+    margin: 0 0 0.65rem;
+    color: #9b681f;
+    font-size: 0.86rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+  }
+
+  .redirect-card h1 {
+    margin: 0;
+    color: #071426;
+    font-size: clamp(1.65rem, 7vw, 2.55rem);
+    line-height: 1.25;
+  }
+
+  .redirect-copy {
+    max-width: 28rem;
+    margin: 1rem auto 1.5rem;
+    color: #536071;
+    line-height: 1.9;
+  }
+
+  .redirect-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .redirect-note {
+    margin: 1rem 0 0;
+    color: #6d7683;
+    font-size: 0.82rem;
+  }
+
+  @keyframes redirect-pulse {
+    from {
+      opacity: 0.8;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 0;
+      transform: scale(1.18);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .redirect-brand span {
+      animation: none;
+    }
+  }
+</style>

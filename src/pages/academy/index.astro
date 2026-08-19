@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from '../../components/ResponsiveImage.astro';
 import { getCollection } from 'astro:content';
 import ArticleCard from '../../components/ArticleCard.astro';
 import GuideCard from '../../components/GuideCard.astro';
@@ -30,6 +31,13 @@ const trackImages = {
   },
 } as const;
 
+const voteTopics = [
+  'مرتب‌کردن فایل‌های قدیمی',
+  'پیگیری مشتری مردد',
+  'نوشتن آگهی بهتر',
+  'برنامه‌ریزی بازدیدها',
+] as const;
+
 const collectionStructuredData = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
@@ -38,11 +46,22 @@ const collectionStructuredData = {
     'مسیرهای یادگیری مرحله‌به‌مرحله برای فایل‌گیری، شناخت مشتری، بازدید، پیگیری، آگهی و امنیت اطلاعات در کار املاک.',
   url: new URL('/academy/', Astro.site).toString(),
   inLanguage: 'fa-IR',
-  hasPart: articles.map((article) => ({
-    '@type': 'Article',
-    name: article.data.title,
-    url: new URL(`/articles/${article.id}/`, Astro.site).toString(),
-  })),
+  hasPart: [
+    {
+      '@type': 'Course',
+      name: 'اولین فایل ملکی مرتب در ۳۰ دقیقه',
+      url: new URL(
+        '/academy/first-organized-property-file/',
+        Astro.site,
+      ).toString(),
+      isAccessibleForFree: true,
+    },
+    ...articles.map((article) => ({
+      '@type': 'Article',
+      name: article.data.title,
+      url: new URL(`/articles/${article.id}/`, Astro.site).toString(),
+    })),
+  ],
 };
 ---
 
@@ -66,8 +85,10 @@ const collectionStructuredData = {
           در دفتر دارید. هر مسیر کوتاه، پیوسته و قابل اجراست.
         </p>
         <div class="hero-actions">
-          <a class="button" href="#learning-paths">انتخاب مسیر یادگیری</a>
-          <a class="text-link" href="/apps/metrazh/">آشنایی با متراژ ←</a>
+          <a class="button" href="/academy/first-organized-property-file/"
+            >شروع دورهٔ ۳۰ دقیقه‌ای</a
+          >
+          <a class="text-link" href="#learning-paths">همهٔ مسیرها ←</a>
         </div>
         <ul class="trust-list">
           <li>بدون ثبت‌نام</li>
@@ -76,7 +97,7 @@ const collectionStructuredData = {
         </ul>
       </div>
       <figure>
-        <img
+        <ResponsiveImage
           src="/images/stock/real-estate-consultation.jpg"
           alt="گفت‌وگوی مشاور املاک با مراجعه‌کننده در زمان بازدید"
           width="1800"
@@ -87,6 +108,38 @@ const collectionStructuredData = {
       </figure>
     </div>
   </header>
+
+  <section
+    class="academy-featured-course"
+    aria-labelledby="featured-course-title"
+  >
+    <div class="shell academy-featured-course-grid">
+      <figure>
+        <ResponsiveImage
+          src="/images/editorial/property-workflow-light.webp"
+          alt="مسیر ساده و مرحله‌ای ساخت یک فایل ملکی مرتب"
+          width="1693"
+          height="929"
+        />
+      </figure>
+      <div>
+        <p class="kicker">برای شروع از صفر</p>
+        <h2 id="featured-course-title">یک دوره، یک خروجی واقعی.</h2>
+        <p>
+          در چهار درس و حدود ۳۰ دقیقه، یک فایل تمرینی می‌سازید که قابل جست‌وجو
+          است، اعتبار اطلاعاتش روشن می‌ماند و اقدام بعدی دارد.
+        </p>
+        <ul>
+          <li>بدون اطلاعات واقعی مشتری</li>
+          <li>برگهٔ کنترل قابل چاپ</li>
+          <li>معیار روشن برای پایان تمرین</li>
+        </ul>
+        <a class="button" href="/academy/first-organized-property-file/"
+          >شروع رایگان دوره</a
+        >
+      </div>
+    </div>
+  </section>
 
   <nav class="academy-map" aria-label="مسیرهای آموزش املاک">
     <div class="shell academy-map-grid">
@@ -151,7 +204,7 @@ const collectionStructuredData = {
                   <p>{cluster.description}</p>
                 </div>
                 <figure>
-                  <img
+                  <ResponsiveImage
                     src={image.src}
                     alt={image.alt}
                     width="1536"
@@ -182,6 +235,36 @@ const collectionStructuredData = {
     }
   </div>
 
+  <section class="section academy-vote" aria-labelledby="academy-vote-title">
+    <div class="shell academy-vote-card">
+      <div>
+        <p class="kicker">درس بعدی را شما انتخاب کنید</p>
+        <h2 id="academy-vote-title">
+          کدام مسئله زودتر به آموزش کامل نیاز دارد؟
+        </h2>
+        <p>
+          هر گزینه یک ایمیل کوتاه آماده می‌کند و فقط پس از زدن دکمهٔ ارسال توسط
+          شما ثبت می‌شود. نتیجه تا زمانی که رأی واقعی کافی نباشد اعلام نمی‌شود.
+        </p>
+      </div>
+      <ul>
+        {
+          voteTopics.map((topic) => (
+            <li>
+              <a
+                href={`mailto:${siteConfig.supportEmail}?subject=${encodeURIComponent(`رأی آموزش بعدی: ${topic}`)}&body=${encodeURIComponent(`رأی من برای آموزش بعدی MAHSAI: ${topic}`)}`}
+                data-event="content_vote_email"
+                data-event-location="academy_vote"
+              >
+                {topic}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
   <section class="academy-finish">
     <div class="shell academy-finish-grid">
       <div>
@@ -196,7 +279,7 @@ const collectionStructuredData = {
         </a>
       </div>
       <div class="academy-phone-row" aria-label="تصاویر رسمی متراژ">
-        <img
+        <ResponsiveImage
           src="/images/apps/metrazh/bazaar/smart-listing.webp"
           alt="معرفی رسمی ساخت آگهی از اطلاعات فایل در متراژ"
           width="1080"
@@ -204,7 +287,7 @@ const collectionStructuredData = {
           loading="lazy"
           decoding="async"
         />
-        <img
+        <ResponsiveImage
           src="/images/apps/metrazh/bazaar/visit-routing.webp"
           alt="معرفی رسمی برنامه‌ریزی بازدیدها در متراژ"
           width="1080"

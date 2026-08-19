@@ -1,0 +1,121 @@
+---
+import { getCollection } from 'astro:content';
+import PageStage from '../../../components/PageStage.astro';
+import { siteConfig } from '../../../config/site';
+import { metrazhChangelog } from '../../../data/metrazhChangelog';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const app = (await getCollection('apps')).find(
+  (entry) => entry.id === 'metrazh' && entry.data.status === 'available',
+);
+if (!app) throw new Error('Published Metrazh content entry is missing.');
+
+const formatDate = (value: string) =>
+  new Intl.DateTimeFormat('fa-IR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'Asia/Tehran',
+  }).format(new Date(`${value}T12:00:00Z`));
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'تاریخچهٔ نسخه‌های متراژ',
+  description:
+    'نسخه‌های عمومی و تأییدشدهٔ اپلیکیشن متراژ همراه تاریخ بررسی و خلاصهٔ قابلیت‌های قابل استفاده.',
+  url: new URL('/apps/metrazh/changelog/', Astro.site).toString(),
+  inLanguage: 'fa-IR',
+  isPartOf: new URL('/apps/metrazh/', Astro.site).toString(),
+  about: {
+    '@type': 'SoftwareApplication',
+    name: app.data.name,
+    operatingSystem: 'Android',
+    softwareVersion: app.data.version,
+  },
+};
+---
+
+<BaseLayout
+  title={`تاریخچهٔ نسخه‌های متراژ | ${siteConfig.brandName}`}
+  description="نسخه‌های عمومی و تأییدشدهٔ متراژ؛ تاریخ انتشار در کافه‌بازار، تاریخ بررسی و قابلیت‌های قابل استفاده هر نسخه."
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(structuredData)}
+  />
+
+  <PageStage
+    eyebrow="تغییرات قابل پیگیری"
+    title="تاریخچهٔ نسخه‌های"
+    highlight="متراژ"
+    lead="فقط نسخه‌ای در این صفحه قرار می‌گیرد که انتشار عمومی آن بررسی شده باشد. قابلیت آینده یا نسخهٔ در انتظار بازار، به‌عنوان نسخهٔ قابل دریافت معرفی نمی‌شود."
+    index="متراژ / تاریخچه نسخه‌ها"
+    note={`نسخهٔ عمومی فعلی: ${app.data.version}`}
+    signals={[
+      'اطلاعات قابل استناد',
+      'تاریخ بررسی روشن',
+      'بدون وعدهٔ نسخهٔ آینده',
+    ]}
+    tone="mint"
+  >
+    <div slot="actions" class="page-stage-actions">
+      <a class="button" href="/apps/metrazh/">معرفی و نصب متراژ</a>
+      <a class="page-stage-link" href="/apps/metrazh/status/">وضعیت انتشار</a>
+    </div>
+  </PageStage>
+
+  <section class="section changelog-section" aria-labelledby="changelog-title">
+    <div class="shell changelog-layout">
+      <header>
+        <p class="kicker">نسخه‌های عمومی</p>
+        <h2 id="changelog-title">چه چیزی واقعاً قابل استفاده است؟</h2>
+        <p>
+          این فهرست «تفاوت دقیق با نسخهٔ قبل» را فقط وقتی اعلام می‌کند که
+          یادداشت رسمی همان انتشار در دسترس باشد. فهرست فعلی، قابلیت‌های
+          تأییدشدهٔ نسخهٔ عمومی را نشان می‌دهد.
+        </p>
+      </header>
+
+      <ol class="changelog-list">
+        {
+          metrazhChangelog.map((entry, index) => (
+            <li>
+              <div class="changelog-marker" aria-hidden="true">
+                {index + 1}
+              </div>
+              <article>
+                <div class="changelog-version-row">
+                  <div>
+                    <span>نسخهٔ عمومی</span>
+                    <h3>متراژ {entry.version}</h3>
+                  </div>
+                  <dl>
+                    <div>
+                      <dt>به‌روزرسانی بازار</dt>
+                      <dd>{formatDate(entry.storeUpdatedAt)}</dd>
+                    </div>
+                    <div>
+                      <dt>تأیید انتشار</dt>
+                      <dd>{formatDate(entry.verifiedAt)}</dd>
+                    </div>
+                  </dl>
+                </div>
+                <p>{entry.summary}</p>
+                <ul>
+                  {entry.verifiedCapabilities.map((capability) => (
+                    <li>{capability}</li>
+                  ))}
+                </ul>
+                <p class="changelog-evidence">
+                  <strong>مبنای بررسی:</strong> {entry.evidence}
+                </p>
+              </article>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+</BaseLayout>

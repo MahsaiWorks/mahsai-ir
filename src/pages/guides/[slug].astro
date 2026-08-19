@@ -1,4 +1,6 @@
 ---
+import ResponsiveImage from '../../components/ResponsiveImage.astro';
+import ShareActions from '../../components/ShareActions.astro';
 import { getCollection } from 'astro:content';
 import ArticleCard from '../../components/ArticleCard.astro';
 import { siteConfig } from '../../config/site';
@@ -103,6 +105,8 @@ const faqStructuredData = {
   imageAlt={guide.coverAlt}
   imageWidth={guide.coverWidth}
   imageHeight={guide.coverHeight}
+  preloadImage={guide.cover}
+  preloadImageWidth={guide.coverWidth}
   keywords={guide.keywords}
 >
   <script
@@ -145,11 +149,12 @@ const faqStructuredData = {
             </p>
           </div>
           <figure class="guide-stage-cover">
-            <img
+            <ResponsiveImage
               src={guide.cover}
               alt={guide.coverAlt}
               width={guide.coverWidth}
               height={guide.coverHeight}
+              sizes="(max-width: 56.25rem) 100vw, 50vw"
               fetchpriority="high"
             />
           </figure>
@@ -219,6 +224,12 @@ const faqStructuredData = {
           <ul class="guide-checklist">
             {guide.checklist.map((item) => <li>{item}</li>)}
           </ul>
+          <a
+            class="text-link guide-print-link"
+            href={`/resources/real-estate-checklists/#${guide.slug}`}
+          >
+            نسخهٔ چاپی رایگان این چک‌لیست ←
+          </a>
         </section>
 
         <section
@@ -274,6 +285,7 @@ const faqStructuredData = {
           </p>
           <a href="/editorial-policy/">سیاست تحریریه و مسیر گزارش اصلاح</a>
         </aside>
+        <ShareActions title={guide.title} location="guide" />
       </div>
     </div>
   </article>
@@ -317,7 +329,7 @@ const faqStructuredData = {
         </div>
       </div>
       <figure>
-        <img
+        <ResponsiveImage
           src={guide.productImage}
           alt={guide.productImageAlt}
           width="1080"

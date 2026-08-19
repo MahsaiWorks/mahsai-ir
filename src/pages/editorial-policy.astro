@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from '../components/ResponsiveImage.astro';
 import { siteConfig } from '../config/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
@@ -28,7 +29,7 @@ const formatDate = (date: Date) =>
         </p>
       </div>
       <figure>
-        <img
+        <ResponsiveImage
           src="/images/editorial/secure-real-estate-data.webp"
           alt="پرونده‌های کاری مرتب و محافظت‌شده در کنار ابزارهای دیجیتال"
           width="1536"

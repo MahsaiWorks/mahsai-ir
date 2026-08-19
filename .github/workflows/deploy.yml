@@ -15,8 +15,46 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  quality:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Enable pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.9.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate types and content
+        run: pnpm check
+
+      - name: Build static site
+        run: pnpm build
+
+      - name: Audit links, images, and structured data
+        run: pnpm audit:static
+
+      - name: Audit accessibility, reflow, and search snippets
+        run: pnpm qa:browser
+
+      - name: Enforce Lighthouse performance budgets
+        run: pnpm audit:lighthouse
+
+  build:
+    needs: quality
+    runs-on: ubuntu-latest
+    env:
+      PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN: ${{ secrets.CLOUDFLARE_WEB_ANALYTICS_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7

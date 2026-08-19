@@ -1,4 +1,6 @@
 ---
+import ResponsiveImage from '../../components/ResponsiveImage.astro';
+import ShareActions from '../../components/ShareActions.astro';
 import { getCollection, render } from 'astro:content';
 import { siteConfig } from '../../config/site';
 import { articleClusters } from '../../data/articleClusters';
@@ -95,20 +97,34 @@ const breadcrumbStructuredData = {
     {
       '@type': 'ListItem',
       position: 3,
-      name: article.data.title,
-      item: canonical.toString(),
+      name: cluster?.title ?? article.data.title,
+      item: cluster
+        ? new URL(`/articles/topics/${cluster.id}/`, Astro.site).toString()
+        : canonical.toString(),
     },
+    ...(cluster
+      ? [
+          {
+            '@type': 'ListItem',
+            position: 4,
+            name: article.data.title,
+            item: canonical.toString(),
+          },
+        ]
+      : []),
   ],
 };
 ---
 
 <BaseLayout
-  title={`${article.data.title} | ${siteConfig.brandName}`}
+  title={`${article.data.seoTitle ?? article.data.title} | ${siteConfig.brandName}`}
   description={article.data.description}
   image={article.data.cover}
   imageAlt={article.data.coverAlt}
   imageWidth={article.data.coverWidth}
   imageHeight={article.data.coverHeight}
+  preloadImage={article.data.cover}
+  preloadImageWidth={article.data.coverWidth}
   type="article"
   keywords={article.data.keywords}
 >
@@ -129,7 +145,13 @@ const breadcrumbStructuredData = {
         <nav class="breadcrumbs" aria-label="مسیر صفحه">
           <a href="/">خانه</a><span aria-hidden="true">/</span>
           <a href="/articles/">مجلهٔ املاک</a><span aria-hidden="true">/</span>
-          <span>{cluster?.title ?? article.data.category}</span>
+          {
+            cluster ? (
+              <a href={`/articles/topics/${cluster.id}/`}>{cluster.title}</a>
+            ) : (
+              <span>{article.data.category}</span>
+            )
+          }
         </nav>
 
         <div class="article-stage-grid">
@@ -165,13 +187,14 @@ const breadcrumbStructuredData = {
           </div>
 
           <figure class="article-stage-cover">
-            <img
+            <ResponsiveImage
               src={article.data.cover}
               alt={article.data.coverAlt}
               width={article.data.coverWidth}
               height={article.data.coverHeight}
               style={`object-position: ${article.data.coverPosition} center`}
               decoding="async"
+              fetchpriority="high"
             />
           </figure>
         </div>
@@ -261,6 +284,7 @@ const breadcrumbStructuredData = {
             <a href="/editorial-policy/"> سیاست تحریریه و اصلاحات</a> آمده است.
           </p>
         </section>
+        <ShareActions title={article.data.title} location="article" />
         <aside class="article-inline-cta">
           <span>متراژ، محصول مهسای</span>
           <h2>اگر این روش به کارتان می‌آید، داخل متراژ مرتب نگهش دارید.</h2>
@@ -317,7 +341,7 @@ const breadcrumbStructuredData = {
             {relatedArticles.map((related) => (
               <article class="related-card">
                 <a href={`/articles/${related.id}/`}>
-                  <img
+                  <ResponsiveImage
                     src={related.data.cover}
                     alt={related.data.coverAlt}
                     width={related.data.coverWidth}

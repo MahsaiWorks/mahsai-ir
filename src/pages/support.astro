@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from '../components/ResponsiveImage.astro';
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
 import { getCafeBazaarLink } from '../data/appPresentation';
@@ -26,9 +27,7 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
           پیش از ارسال تصویر، اطلاعات مالک و مشتری را حذف یا بپوشانید.
         </p>
         <div class="hero-actions">
-          <a class="button" href={`mailto:${siteConfig.supportEmail}`}>
-            ارسال ایمیل پشتیبانی
-          </a>
+          <a class="button" href="#support-form">ساخت پیام پشتیبانی</a>
           {
             bazaarLink && (
               <a
@@ -44,7 +43,7 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
         </div>
       </div>
       <figure>
-        <img
+        <ResponsiveImage
           src="/images/editorial/secure-real-estate-data.webp"
           alt="حفاظت از اطلاعات و پرونده‌های کاری املاک"
           width="1536"
@@ -80,6 +79,105 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
           <h3>تصویر امن</h3><p>اطلاعات محرمانه را قبل از ارسال بپوشانید.</p>
         </article>
       </div>
+    </div>
+  </section>
+
+  <section
+    class="section support-form-section"
+    aria-labelledby="support-form-title"
+  >
+    <div class="shell support-form-layout">
+      <div class="support-form-intro">
+        <p class="kicker">یک پیام کامل، در یک مرحله</p>
+        <h2 id="support-form-title">
+          موضوع را دسته‌بندی کنید؛ ایمیل آماده شود.
+        </h2>
+        <p>
+          این فرم چیزی را روی سایت ذخیره یا ارسال نمی‌کند. پس از تکمیل، برنامهٔ
+          ایمیل شما با متن آماده باز می‌شود و دکمهٔ ارسال را خودتان می‌زنید.
+        </p>
+        <div class="support-response-note">
+          <strong>هدف پاسخ اولیه: تا دو روز کاری</strong>
+          <span
+            >برای مسئله‌های پیچیده، زمان بررسی در پاسخ اول اعلام می‌شود.</span
+          >
+        </div>
+      </div>
+
+      <form class="support-form" id="support-form" novalidate>
+        <div class="support-field-grid">
+          <label>
+            <span>موضوع پیام</span>
+            <select name="category" required>
+              <option value="">انتخاب کنید</option>
+              <option value="technical">خطا یا مشکل فنی متراژ</option>
+              <option value="backup">پشتیبان‌گیری یا بازیابی</option>
+              <option value="purchase">خرید و فعال‌سازی</option>
+              <option value="privacy">حریم خصوصی و امنیت</option>
+              <option value="website">اشکال یا پیشنهاد برای سایت</option>
+              <option value="feedback">نظر و تجربهٔ استفاده</option>
+            </select>
+          </label>
+
+          <label>
+            <span>ایمیل شما</span>
+            <input
+              name="replyEmail"
+              type="email"
+              inputmode="email"
+              autocomplete="email"
+              placeholder="name@example.com"
+              dir="ltr"
+              required
+            />
+          </label>
+
+          <label>
+            <span>نسخهٔ متراژ</span>
+            <input name="appVersion" value={app.data.version} maxlength="30" />
+          </label>
+
+          <label>
+            <span>مدل گوشی و اندروید</span>
+            <input
+              name="device"
+              maxlength="100"
+              placeholder="مثلاً پوکو X5، اندروید ۱۳"
+            />
+          </label>
+        </div>
+
+        <label>
+          <span>چه اتفاقی افتاد و چطور تکرار می‌شود؟</span>
+          <textarea
+            name="description"
+            rows="6"
+            minlength="20"
+            maxlength="1500"
+            placeholder="از مرحلهٔ اول تا نتیجه‌ای که دیدید، کوتاه و دقیق بنویسید."
+            required></textarea>
+        </label>
+
+        <label class="support-safety-check">
+          <input name="safeToSend" type="checkbox" required />
+          <span
+            >اطلاعات مالک، مشتری، شماره تماس، مدرک و تصویر محرمانه را وارد
+            نکرده‌ام.</span
+          >
+        </label>
+
+        <div class="support-form-actions">
+          <button class="button" type="submit">آماده‌کردن ایمیل</button>
+          <small>پیوست امن را پس از بازشدن برنامهٔ ایمیل اضافه کنید.</small>
+        </div>
+        <div
+          class="support-form-result"
+          role="status"
+          aria-live="polite"
+          hidden
+        >
+        </div>
+      </form>
     </div>
   </section>
 
@@ -133,6 +231,24 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
         data-event="metrazh_feedback_email"
         data-event-location="support_page">ارسال تجربهٔ استفاده</a
       >
+      {
+        bazaarLink && (
+          <a
+            class="button button-secondary"
+            href={bazaarLink.url}
+            target="_blank"
+            rel="noopener"
+            data-event="metrazh_bazaar_review_open"
+            data-event-location="support_feedback"
+          >
+            ثبت نظر صادقانه در کافه‌بازار
+          </a>
+        )
+      }
+      <p class="support-review-note">
+        امتیاز یا نظر را فقط بر پایهٔ تجربهٔ واقعی بنویسید؛ برای نظر مثبت جایزه
+        یا مزیت در نظر گرفته نمی‌شود.
+      </p>
     </div>
   </section>
 
@@ -176,4 +292,66 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
       </div>
     </div>
   </section>
+
+  <script is:inline define:vars={{ supportEmail: siteConfig.supportEmail }}>
+    (() => {
+      const form = document.querySelector('#support-form');
+      const result = form?.querySelector('.support-form-result');
+      if (
+        !(form instanceof HTMLFormElement) ||
+        !(result instanceof HTMLElement)
+      )
+        return;
+
+      const categoryLabels = {
+        technical: 'خطا یا مشکل فنی متراژ',
+        backup: 'پشتیبان‌گیری یا بازیابی',
+        purchase: 'خرید و فعال‌سازی',
+        privacy: 'حریم خصوصی و امنیت',
+        website: 'اشکال یا پیشنهاد برای سایت',
+        feedback: 'نظر و تجربهٔ استفاده',
+      };
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if (!form.reportValidity()) return;
+
+        const data = new FormData(form);
+        const category = String(data.get('category') || '');
+        const categoryLabel = categoryLabels[category];
+        if (!categoryLabel) return;
+
+        const datePart = new Date()
+          .toISOString()
+          .slice(2, 10)
+          .replaceAll('-', '');
+        const randomPart = crypto
+          .getRandomValues(new Uint16Array(1))[0]
+          .toString(36)
+          .padStart(3, '0')
+          .slice(-3)
+          .toUpperCase();
+        const reference = `MHS-${datePart}-${randomPart}`;
+        const lines = [
+          `کد مرجع پیام: ${reference}`,
+          `موضوع: ${categoryLabel}`,
+          `ایمیل پاسخ: ${String(data.get('replyEmail') || '').trim()}`,
+          `نسخهٔ متراژ: ${String(data.get('appVersion') || 'ذکر نشده').trim()}`,
+          `دستگاه: ${String(data.get('device') || 'ذکر نشده').trim()}`,
+          '',
+          'شرح و مراحل تکرار:',
+          String(data.get('description') || '').trim(),
+          '',
+          'اطلاعات محرمانهٔ مالک و مشتری حذف شده است.',
+        ];
+        const subject = `[${reference}] ${categoryLabel}`;
+        const mailto = `mailto:${supportEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+
+        result.hidden = false;
+        result.innerHTML = `<strong>کد مرجع پیام: <span dir="ltr">${reference}</span></strong><p>برنامهٔ ایمیل باز می‌شود. این کد را از موضوع حذف نکنید؛ ثبت نهایی فقط پس از زدن دکمهٔ ارسال در برنامهٔ ایمیل انجام می‌شود.</p>`;
+        window.mahsaiMeasure?.('support_email_prepared', { category });
+        window.location.href = mailto;
+      });
+    })();
+  </script>
 </BaseLayout>

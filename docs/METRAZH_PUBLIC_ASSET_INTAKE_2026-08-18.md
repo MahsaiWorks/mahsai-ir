@@ -15,7 +15,7 @@
 
 ## تصاویر مجاز سایت
 
-پنج فایل JPG اصلی، تصاویر فعلی صفحهٔ عمومی کافه‌بازارند و هرکدام ابعاد ۱۰۸۰ در ۱۹۲۰ دارند. فایل‌های WebP با کیفیت ۸۶ فقط مشتق کم‌حجم همان تصاویرند.
+پنج فایل JPG اصلی در `source-assets/metrazh/bazaar-originals/` نگهداری می‌شوند و تصاویر فعلی صفحهٔ عمومی کافه‌بازارند. فایل‌های WebP کم‌حجم در `public/images/apps/metrazh/bazaar/` و نسخه‌های responsive در `public/images/responsive/` فقط مشتق همان تصاویرند.
 
 | تصویر                    | SHA-256 فایل اصلی                                                  |
 | ------------------------ | ------------------------------------------------------------------ |
@@ -28,7 +28,7 @@
 دارایی‌های رسمی نشان:
 
 - `icon-app-official.webp`: `BDDEAFE099B51CFBBEB64B3785E909D6806F998ABFC35F6CEB0F6C5D14D9E8F6`
-- `icon-bazaar-official.png`: `752E7F4019C5EF74EDB6F11253080CD67F3913C1A5BBD2E7B2FCCDF20743BC4A`
+- `source-assets/metrazh/archive/icon-bazaar-official.png`: `752E7F4019C5EF74EDB6F11253080CD67F3913C1A5BBD2E7B2FCCDF20743BC4A`
 
 ## مرز انتشار
 

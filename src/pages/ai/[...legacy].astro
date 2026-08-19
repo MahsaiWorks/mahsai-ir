@@ -1,0 +1,49 @@
+---
+export function getStaticPaths() {
+  const legacyRoutes = [
+    'compare',
+    'course',
+    'freshness',
+    'glossary',
+    'learn',
+    'learn/choose-ai-assistant',
+    'learn/first-reliable-ai-workflow',
+    'learn/gemini-notebook-first-research',
+    'learn/offline-ai-windows-ollama-lm-studio',
+    'learn/ollama-vs-lm-studio',
+    'learn/perplexity-projects-simple-guide',
+    'offline',
+    'persian-benchmark-results-v0.1.csv',
+    'persian-benchmark-results-v0.1.json',
+    'persian-benchmark-v0.1.csv',
+    'persian-benchmark-v0.1.json',
+    'persian-lab',
+    'persian-lab/results',
+    'rss.xml',
+    'sources',
+    'today',
+    'today/ai-features-retiring-august-2026',
+    'today/chatgpt-gpt-5-6-august-2026',
+    'today/claude-opus-5-what-changed',
+    'today/hugging-face-token-rotation-july-2026',
+    'today/notebooklm-is-gemini-notebook-2026-08-13',
+    'today/research-modes-verified-2026-08-13',
+    'tools',
+    'tools/anythingllm',
+    'tools/chatgpt',
+    'tools/claude',
+    'tools/gemini',
+    'tools/gemini-notebook',
+    'tools/lm-studio',
+    'tools/microsoft-copilot',
+    'tools/ollama',
+    'tools/open-webui',
+    'tools/perplexity',
+    'workflows',
+  ] as const;
+
+  return legacyRoutes.map((legacy) => ({ params: { legacy } }));
+}
+
+return Astro.redirect('/apps/', 301);
+---

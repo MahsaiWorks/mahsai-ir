@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from '../components/ResponsiveImage.astro';
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
 import { getCafeBazaarLink } from '../data/appPresentation';
@@ -9,6 +10,9 @@ const app = (await getCollection('apps')).find(
 );
 if (!app) throw new Error('Published Metrazh content entry is missing.');
 const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
+const instagramLink = siteConfig.socialLinks.find((link) =>
+  link.url.includes('instagram.com/mahsaiapp'),
+);
 ---
 
 <BaseLayout
@@ -30,7 +34,7 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
         </div>
       </div>
       <figure>
-        <img
+        <ResponsiveImage
           src="/images/editorial/property-workflow.webp"
           alt="میز کار منظم با پرونده‌های املاک و ماکت ساختمان"
           width="1536"
@@ -101,10 +105,44 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
     </div>
   </section>
 
+  {
+    instagramLink && (
+      <section
+        class="section official-channel-section"
+        aria-labelledby="official-channel-title"
+      >
+        <div class="shell official-channel-card">
+          <div>
+            <p class="kicker">صفحهٔ رسمی اپلیکیشن‌ها</p>
+            <h2 id="official-channel-title">
+              MAHSAI را در اینستاگرام دنبال کنید.
+            </h2>
+            <p>
+              در <bdi dir="ltr">@mahsaiapp</bdi> اپلیکیشن‌های منتشرشده،
+              قابلیت‌های قابل استفاده و آموزش‌های کوتاه معرفی می‌شوند. محصولی که
+              هنوز آماده و منتشر نشده باشد در این صفحه وعده داده نمی‌شود.
+            </p>
+          </div>
+          <a
+            class="button"
+            href={instagramLink.url}
+            target="_blank"
+            rel="me noopener"
+            data-event="official_instagram_open"
+            data-event-location="about_page"
+          >
+            دیدن صفحهٔ @mahsaiapp
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </section>
+    )
+  }
+
   <section class="section about-product" aria-labelledby="about-product-title">
     <div class="shell about-product-grid">
       <div class="about-product-visual">
-        <img
+        <ResponsiveImage
           class="about-product-character"
           src="/images/home/metrazh-hero-character.webp"
           alt="مشاور املاک در حال استفاده از تلفن همراه"
@@ -113,7 +151,7 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
           loading="lazy"
           decoding="async"
         />
-        <img
+        <ResponsiveImage
           class="about-product-screen"
           src="/images/apps/metrazh/bazaar/customer-follow-up.webp"
           alt="تصویر رسمی متراژ در کافه‌بازار"
@@ -125,7 +163,7 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
       </div>
       <div>
         <p class="kicker">محصول منتشرشده</p>
-        <img
+        <ResponsiveImage
           class="metrazh-wordmark metrazh-wordmark-dark"
           src={app.data.wordmark}
           alt="متراژ"

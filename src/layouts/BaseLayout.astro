@@ -2,7 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { siteConfig } from '../config/site';
-import '@fontsource-variable/vazirmatn';
+import { getResponsiveImageSrcSet } from '../utils/responsiveImages';
 import '../styles/site.css';
 
 interface Props {
@@ -15,6 +15,9 @@ interface Props {
   imageAlt?: string;
   imageWidth?: number;
   imageHeight?: number;
+  preloadImage?: string;
+  preloadImageWidth?: number;
+  preloadImageSizes?: string;
 }
 
 const {
@@ -27,6 +30,9 @@ const {
   imageAlt = `معرفی اپلیکیشن‌های فارسی ${siteConfig.brandName}`,
   imageWidth = 1600,
   imageHeight = 900,
+  preloadImage,
+  preloadImageWidth = 1600,
+  preloadImageSizes = '(max-width: 56.25rem) 100vw, 50vw',
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const cloudflareAnalyticsToken = import.meta.env
@@ -38,6 +44,9 @@ const socialImageType = socialImagePath.endsWith('.webp')
   : socialImagePath.endsWith('.jpg') || socialImagePath.endsWith('.jpeg')
     ? 'image/jpeg'
     : 'image/png';
+const preloadImageSrcSet = preloadImage
+  ? getResponsiveImageSrcSet(preloadImage, preloadImageWidth)
+  : undefined;
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
@@ -48,7 +57,9 @@ const structuredData = {
   publisher: {
     '@type': 'Organization',
     name: siteConfig.brandName,
+    url: Astro.site?.toString(),
     logo: new URL('/brand/mahsai-symbol.png', Astro.site).toString(),
+    sameAs: siteConfig.socialLinks.map((link) => link.url),
   },
 };
 ---
@@ -60,6 +71,25 @@ const structuredData = {
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon-mahsai-navy.svg" />
+    <link
+      rel="preload"
+      href="/fonts/vazirmatn-arabic-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    {
+      preloadImage && (
+        <link
+          rel="preload"
+          as="image"
+          href={preloadImage}
+          imagesrcset={preloadImageSrcSet}
+          imagesizes={preloadImageSrcSet ? preloadImageSizes : undefined}
+          fetchpriority="high"
+        />
+      )
+    }
     <meta name="theme-color" content="#f7f3eb" />
     <title>{title}</title>
     <meta name="description" content={description} />

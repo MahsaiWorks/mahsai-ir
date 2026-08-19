@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from '../../components/ResponsiveImage.astro';
 import { getCollection } from 'astro:content';
 import ArticleCard from '../../components/ArticleCard.astro';
 import StoreBadge from '../../components/StoreBadge.astro';
@@ -208,9 +209,23 @@ const structuredData = {
   url: new URL(Astro.url.pathname, Astro.site).toString(),
   image: new URL(app.data.icon, Astro.site).toString(),
   downloadUrl: bazaarLink?.url,
+  installUrl: bazaarLink?.url,
   sameAs: bazaarLink ? [bazaarLink.url] : undefined,
-  author: { '@type': 'Organization', name: siteConfig.brandName },
+  author: {
+    '@type': 'Organization',
+    name: siteConfig.brandName,
+    url: new URL('/about/', Astro.site).toString(),
+    sameAs: siteConfig.socialLinks.map((link) => link.url),
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: siteConfig.brandName,
+    url: new URL('/about/', Astro.site).toString(),
+  },
   inLanguage: 'fa-IR',
+  softwareRequirements: app.data.minOs,
+  featureList: app.data.features,
+  releaseNotes: app.data.releaseNote,
   screenshot: app.data.screenshots.map((shot) =>
     new URL(shot.src, Astro.site).toString(),
   ),
@@ -233,10 +248,13 @@ const faqStructuredData = {
 <BaseLayout
   title={`متراژ؛ اپلیکیشن مدیریت فایل و مشتری املاک | ${siteConfig.brandName}`}
   description={app.data.shortDescription}
-  image="/og-metrazh-display-v1.png"
+  image="/og-metrazh-display-v1.jpg"
   imageAlt="معرفی اپلیکیشن متراژ برای مشاوران املاک"
   imageWidth={1200}
   imageHeight={630}
+  preloadImage="/images/apps/metrazh/bazaar/customer-follow-up.webp"
+  preloadImageWidth={1080}
+  preloadImageSizes="(max-width: 56.25rem) 38vw, 17rem"
 >
   <script
     type="application/ld+json"
@@ -253,12 +271,13 @@ const faqStructuredData = {
     <div class="shell metrazh-hero-grid">
       <div class="metrazh-hero-copy">
         <p class="kicker">ساخته‌شده برای مشاوران املاک ایران</p>
-        <img
+        <ResponsiveImage
           class="metrazh-wordmark metrazh-wordmark-dark"
           src={app.data.wordmark}
           alt="متراژ"
           width="702"
           height="425"
+          sizes="11rem"
         />
         <h1>فایل، مشتری و پیگیری؛ بدون دفترهای پراکنده.</h1>
         <p class="lead">
@@ -288,26 +307,29 @@ const faqStructuredData = {
       <div class="metrazh-device-stage" aria-label="تصاویر رسمی متراژ">
         <div class="metrazh-orbit" aria-hidden="true"></div>
         <figure class="device-card device-card-back">
-          <img
+          <ResponsiveImage
             src="/images/apps/metrazh/bazaar/smart-matching.webp"
             alt="معرفی رسمی تطبیق هوشمند فایل و مشتری در متراژ"
             width="1080"
             height="1920"
+            sizes="(max-width: 56.25rem) 38vw, 17rem"
           />
         </figure>
         <figure class="device-card device-card-front">
-          <img
+          <ResponsiveImage
             src="/images/apps/metrazh/bazaar/customer-follow-up.webp"
             alt="معرفی رسمی پیگیری نیاز مشتری در متراژ"
             width="1080"
             height="1920"
+            sizes="(max-width: 56.25rem) 38vw, 17rem"
+            fetchpriority="high"
           />
         </figure>
         <span class="release-chip">منتشرشده در کافه‌بازار</span>
         {
           bazaarLink && (
             <aside class="desktop-install-qr">
-              <img
+              <ResponsiveImage
                 src="/images/apps/metrazh/bazaar-qr.png"
                 alt="رمزینهٔ صفحهٔ رسمی متراژ در کافه‌بازار"
                 width="512"
@@ -334,11 +356,12 @@ const faqStructuredData = {
         data-event="metrazh_bazaar_click"
         data-event-location="mobile_sticky_install"
       >
-        <img
+        <ResponsiveImage
           src="/images/apps/metrazh/icon-app-official.webp"
           alt=""
-          width="512"
-          height="512"
+          width="192"
+          height="192"
+          aria-hidden="true"
         />
         <span>
           <strong>متراژ</strong>
@@ -352,7 +375,7 @@ const faqStructuredData = {
   <section class="section problem-solution" aria-labelledby="benefits-title">
     <div class="shell problem-solution-grid">
       <figure>
-        <img
+        <ResponsiveImage
           src="/images/editorial/property-workflow.webp"
           alt="میز کار املاک با پرونده‌ها، نقشه و ماکت ساختمان"
           width="1536"
@@ -401,7 +424,7 @@ const faqStructuredData = {
         {
           app.data.screenshots.map((screenshot) => (
             <figure>
-              <img
+              <ResponsiveImage
                 src={screenshot.src}
                 alt={screenshot.alt}
                 width="1080"
@@ -440,11 +463,12 @@ const faqStructuredData = {
           quickStart.map((step) => (
             <article>
               <figure>
-                <img
+                <ResponsiveImage
                   src={step.image}
                   alt={step.alt}
                   width="1080"
                   height="1920"
+                  sizes="(max-width: 43.75rem) 8.5rem, 14rem"
                   loading="lazy"
                   decoding="async"
                 />
@@ -489,7 +513,7 @@ const faqStructuredData = {
                 <strong>{scenario.outcome}</strong>
               </div>
               <figure>
-                <img
+                <ResponsiveImage
                   src={scenario.image}
                   alt={scenario.alt}
                   width="1080"
@@ -530,6 +554,9 @@ const faqStructuredData = {
         </p>
         <a class="text-link" href="/apps/metrazh/status/">
           وضعیت رسمی انتشار ←
+        </a>
+        <a class="text-link" href="/apps/metrazh/changelog/">
+          تاریخچهٔ نسخه‌ها ←
         </a>
       </div>
       <div class="capability-list">
@@ -603,19 +630,20 @@ const faqStructuredData = {
 
   <section class="download-panel">
     <div class="shell download-panel-grid">
-      <img
+      <ResponsiveImage
         class="metrazh-wordmark-surface"
         src="/images/apps/metrazh/wordmark-dark.png"
         alt="متراژ"
         width="702"
         height="425"
+        sizes="8.5rem"
       />
       <div>
         <h2>کار روزانه را از یک جای مشخص ادامه دهید.</h2>
         <p>برای نصب و به‌روزرسانی فقط از صفحهٔ رسمی کافه‌بازار استفاده کنید.</p>
       </div>
       <div class="download-panel-install">
-        <img
+        <ResponsiveImage
           class="download-qr"
           src="/images/apps/metrazh/bazaar-qr.png"
           alt="رمزینهٔ نصب متراژ از کافه‌بازار"

@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from '../components/ResponsiveImage.astro';
 import { getCollection } from 'astro:content';
 import ArticleCard from '../components/ArticleCard.astro';
 import { siteConfig } from '../config/site';
@@ -49,7 +50,7 @@ const related = (await getCollection('articles'))
   <section class="published-product" aria-labelledby="published-product-title">
     <div class="shell published-product-grid">
       <div class="published-product-media">
-        <img
+        <ResponsiveImage
           class="published-product-character"
           src="/images/home/metrazh-hero-character.webp"
           alt="مشاور املاک در کنار ماکت ساختمان و تلفن همراه"
@@ -57,7 +58,7 @@ const related = (await getCollection('articles'))
           height="916"
         />
         <figure>
-          <img
+          <ResponsiveImage
             src="/images/apps/metrazh/bazaar/customer-follow-up.webp"
             alt="تصویر رسمی پیگیری مشتری در متراژ"
             width="1080"
@@ -68,7 +69,7 @@ const related = (await getCollection('articles'))
 
       <div class="published-product-copy">
         <span class="status-pill">منتشرشده در کافه‌بازار</span>
-        <img
+        <ResponsiveImage
           class="metrazh-wordmark metrazh-wordmark-dark"
           src={app.data.wordmark}
           alt="متراژ"
@@ -121,7 +122,7 @@ const related = (await getCollection('articles'))
 
       <div class="ecosystem-grid">
         <a href="/apps/metrazh/">
-          <img
+          <ResponsiveImage
             src="/images/editorial/property-workflow-light.webp"
             alt="جریان منظم فایل‌ها و کارهای روزانهٔ املاک"
             width="1693"
@@ -134,7 +135,7 @@ const related = (await getCollection('articles'))
           </div>
         </a>
         <a href="/academy/">
-          <img
+          <ResponsiveImage
             src="/images/editorial/female-consultant-matching.webp"
             alt="مشاور املاک در حال بررسی نیاز مشتری"
             width="1536"
@@ -147,7 +148,7 @@ const related = (await getCollection('articles'))
           </div>
         </a>
         <a href="/support/">
-          <img
+          <ResponsiveImage
             src="/images/editorial/secure-real-estate-data.webp"
             alt="محافظت از اطلاعات کاری و فایل‌های املاک"
             width="1536"

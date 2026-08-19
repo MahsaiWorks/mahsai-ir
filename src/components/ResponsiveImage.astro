@@ -1,0 +1,42 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { getResponsiveImageSrcSet } from '../utils/responsiveImages';
+
+interface Props extends Omit<
+  HTMLAttributes<'img'>,
+  'src' | 'width' | 'height'
+> {
+  src: string;
+  width: number | string;
+  height: number | string;
+  sizes?: string;
+  responsive?: boolean;
+}
+
+const {
+  src,
+  width,
+  height,
+  sizes = '(max-width: 56.25rem) 100vw, 50vw',
+  responsive = true,
+  decoding = 'async',
+  alt,
+  ...attributes
+} = Astro.props;
+const intrinsicWidth = Number(width);
+const srcset =
+  responsive && Number.isFinite(intrinsicWidth)
+    ? getResponsiveImageSrcSet(src, intrinsicWidth)
+    : undefined;
+---
+
+<img
+  src={src}
+  width={width}
+  height={height}
+  srcset={srcset}
+  sizes={srcset ? sizes : undefined}
+  decoding={decoding}
+  {...attributes}
+  alt={alt}
+/>

@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from './ResponsiveImage.astro';
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
 import { getCafeBazaarLink } from '../data/appPresentation';
@@ -19,11 +20,12 @@ const downloadLink = featuredApp
     <div>
       <a class="brand footer-brand" href="/">
         <span class="brand-mark" aria-hidden="true">
-          <img
+          <ResponsiveImage
             src="/brand/mahsai-symbol-reversed.svg"
             alt=""
             width="28"
             height="28"
+            aria-hidden="true"
           />
         </span>
         <span>{siteConfig.brandName}</span>
@@ -39,9 +41,16 @@ const downloadLink = featuredApp
       <ul>
         <li><a href="/apps/">اپلیکیشن‌های منتشرشده</a></li>
         <li><a href="/apps/metrazh/">اپلیکیشن متراژ</a></li>
+        <li><a href="/apps/metrazh/changelog/">تاریخچهٔ نسخه‌های متراژ</a></li>
         <li><a href="/guides/">راهنماهای جامع کار املاک</a></li>
         <li><a href="/academy/">آموزش رایگان املاک</a></li>
         <li><a href="/articles/">مجلهٔ کاربردی املاک</a></li>
+        <li>
+          <a href="/real-estate-software/">راهنمای نرم‌افزار مشاور املاک</a>
+        </li>
+        <li>
+          <a href="/resources/real-estate-checklists/">چک‌لیست‌های رایگان</a>
+        </li>
       </ul>
     </nav>
 
@@ -81,7 +90,13 @@ const downloadLink = featuredApp
           <ul class="social-list">
             {siteConfig.socialLinks.map((link) => (
               <li>
-                <a href={link.url} rel="me noopener" target="_blank">
+                <a
+                  href={link.url}
+                  rel="me noopener"
+                  target="_blank"
+                  data-event="official_instagram_open"
+                  data-event-location="footer"
+                >
                   {link.label}
                 </a>
               </li>

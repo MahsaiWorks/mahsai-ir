@@ -1,0 +1,194 @@
+---
+import ResponsiveImage from '../../../components/ResponsiveImage.astro';
+import { getCollection } from 'astro:content';
+import ArticleCard from '../../../components/ArticleCard.astro';
+import GuideCard from '../../../components/GuideCard.astro';
+import { siteConfig } from '../../../config/site';
+import {
+  articleClusters,
+  type ArticleCluster,
+} from '../../../data/articleClusters';
+import { guideTopics } from '../../../data/guideTopics';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  return articleClusters.map((cluster) => ({
+    params: { cluster: cluster.id },
+    props: { cluster },
+  }));
+}
+
+interface Props {
+  cluster: ArticleCluster;
+}
+
+const { cluster } = Astro.props;
+const articles = (await getCollection('articles'))
+  .filter(
+    (article) => !article.data.draft && article.data.cluster === cluster.id,
+  )
+  .sort((a, b) => a.data.seriesOrder - b.data.seriesOrder);
+const guide = cluster.guideSlug
+  ? guideTopics.find((entry) => entry.slug === cluster.guideSlug)
+  : undefined;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const pageStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: cluster.searchTitle,
+  description: cluster.description,
+  url: canonical.toString(),
+  image: new URL(cluster.cover, Astro.site).toString(),
+  inLanguage: 'fa-IR',
+  publisher: {
+    '@type': 'Organization',
+    name: siteConfig.brandName,
+    url: new URL('/about/', Astro.site).toString(),
+  },
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: articles.map((article, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: article.data.title,
+      url: new URL(`/articles/${article.id}/`, Astro.site).toString(),
+    })),
+  },
+};
+
+const breadcrumbStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'خانه',
+      item: new URL('/', Astro.site).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'مجلهٔ املاک',
+      item: new URL('/articles/', Astro.site).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: cluster.title,
+      item: canonical.toString(),
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={`${cluster.searchTitle} | ${siteConfig.brandName}`}
+  description={`${cluster.description} مقاله‌ها و راهنماهای ساده و کاربردی برای مشاوران املاک ایران.`}
+  image={cluster.cover}
+  imageAlt={cluster.coverAlt}
+  imageWidth={1536}
+  imageHeight={1024}
+  preloadImage={cluster.cover}
+  preloadImageWidth={1536}
+  keywords={cluster.keywords}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(pageStructuredData)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbStructuredData)}
+  />
+
+  <header class="topic-hero">
+    <div class="shell topic-hero-grid">
+      <div>
+        <nav class="breadcrumbs" aria-label="مسیر صفحه">
+          <a href="/">خانه</a><span aria-hidden="true">/</span>
+          <a href="/articles/">مجلهٔ املاک</a><span aria-hidden="true">/</span>
+          <span>{cluster.title}</span>
+        </nav>
+        <p class="kicker">مرجع موضوعی برای مشاور املاک</p>
+        <h1>{cluster.searchTitle}</h1>
+        <p class="lead">{cluster.description}</p>
+      </div>
+      <figure>
+        <ResponsiveImage
+          src={cluster.cover}
+          alt={cluster.coverAlt}
+          width="1536"
+          height="1024"
+          sizes="(max-width: 56.25rem) 100vw, 44vw"
+          fetchpriority="high"
+        />
+      </figure>
+    </div>
+  </header>
+
+  <section class="topic-answer" aria-labelledby="topic-answer-title">
+    <div class="shell topic-answer-grid">
+      <div>
+        <span>پاسخ کوتاه</span>
+        <h2 id="topic-answer-title">اصل این موضوع چیست؟</h2>
+      </div>
+      <p>{cluster.answer}</p>
+    </div>
+  </section>
+
+  {
+    cluster.id === 'legal' && (
+      <aside class="shell topic-caution" role="note">
+        این صفحه آموزش عمومی است و جای بررسی مدارک یا مشاورهٔ حقوقی پروندهٔ
+        واقعی را نمی‌گیرد. تاریخ و منبع هر مطلب را پیش از استفاده دوباره بررسی
+        کنید.
+      </aside>
+    )
+  }
+
+  <section class="section topic-articles" aria-labelledby="topic-list-title">
+    <div class="shell">
+      <header class="section-head">
+        <div>
+          <p class="kicker">از پایه تا اجرا</p>
+          <h2 id="topic-list-title">
+            مقاله‌های این موضوع را به‌ترتیب بخوانید.
+          </h2>
+        </div>
+        <p>
+          هر مطلب یک مسئلهٔ مشخص را باز می‌کند و با قدم بعدی تمام می‌شود؛ لازم
+          نیست همه را یک‌جا بخوانید.
+        </p>
+      </header>
+      <div class="editorial-grid">
+        {
+          articles.map((article, index) => (
+            <ArticleCard article={article} featured={index === 0} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {
+    guide && (
+      <section class="section topic-guide" aria-labelledby="topic-guide-title">
+        <div class="shell topic-guide-grid">
+          <div>
+            <p class="kicker">اگر یک جمع‌بندی کامل می‌خواهید</p>
+            <h2 id="topic-guide-title">همهٔ مسیر را در یک راهنما ببینید.</h2>
+            <p>
+              راهنمای جامع، مراحل، چک‌لیست، اشتباه‌های رایج و پرسش‌های اصلی این
+              موضوع را یک‌جا جمع کرده است.
+            </p>
+          </div>
+          <GuideCard guide={guide} compact />
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>

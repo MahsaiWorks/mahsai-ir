@@ -1,0 +1,385 @@
+---
+import ResponsiveImage from '../components/ResponsiveImage.astro';
+import { getCollection } from 'astro:content';
+import GuideCard from '../components/GuideCard.astro';
+import StoreBadge from '../components/StoreBadge.astro';
+import { siteConfig } from '../config/site';
+import { getCafeBazaarLink } from '../data/appPresentation';
+import { guideTopics } from '../data/guideTopics';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const app = (await getCollection('apps')).find(
+  (entry) => entry.id === 'metrazh' && entry.data.status === 'available',
+);
+if (!app) throw new Error('Published Metrazh content entry is missing.');
+const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const questions = [
+  {
+    question: 'نرم‌افزار مشاور املاک باید چه اطلاعاتی را نگه دارد؟',
+    answer:
+      'حداقل باید فایل ملک، مشخصات و نیاز متقاضی، نتیجهٔ تماس، قرار بازدید، اقدام بعدی و تاریخ آخرین به‌روزرسانی را منظم و قابل جست‌وجو نگه دارد.',
+  },
+  {
+    question: 'اپلیکیشن موبایل بهتر است یا سامانهٔ تیمی؟',
+    answer:
+      'برای مشاور مستقل و کار روی یک دستگاه، اپلیکیشن موبایل می‌تواند ساده‌تر باشد. دفتر چندنفره‌ای که اشتراک هم‌زمان، سطح دسترسی و گزارش مدیریتی می‌خواهد باید سامانهٔ تیمی را جداگانه بررسی کند.',
+  },
+  {
+    question: 'قبل از انتقال اطلاعات چه چیزی را آزمایش کنیم؟',
+    answer:
+      'ابتدا با چند فایل آزمایشی جست‌وجو، خروجی، پشتیبان‌گیری، بازیابی و مسیر حذف اطلاعات را امتحان کنید. سپس برای انتقال دادهٔ واقعی تصمیم بگیرید.',
+  },
+  {
+    question: 'متراژ برای چه کسی مناسب‌تر است؟',
+    answer:
+      'نسخهٔ فعلی متراژ برای مشاور یا کاربری طراحی شده که می‌خواهد فایل، متقاضی، بازدید و پیگیری‌های روزانه را روی دستگاه اندرویدی خود نگه دارد. برای کار تیمی هم‌زمان باید محدودیت نگهداری محلی داده را در نظر گرفت.',
+  },
+] as const;
+
+const pageStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'راهنمای انتخاب نرم‌افزار مشاور املاک',
+  description:
+    'معیارهای ساده و عملی برای انتخاب نرم‌افزار مدیریت فایل، مشتری، بازدید و پیگیری مشاور املاک ایران.',
+  url: canonical.toString(),
+  image: new URL(
+    '/images/editorial/property-workflow-light.webp',
+    Astro.site,
+  ).toString(),
+  inLanguage: 'fa-IR',
+  dateModified: '2026-08-19',
+  publisher: {
+    '@type': 'Organization',
+    name: siteConfig.brandName,
+    url: new URL('/about/', Astro.site).toString(),
+  },
+};
+
+const breadcrumbStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'خانه',
+      item: new URL('/', Astro.site).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'نرم‌افزار مشاور املاک',
+      item: canonical.toString(),
+    },
+  ],
+};
+
+const faqStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: questions.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: { '@type': 'Answer', text: item.answer },
+  })),
+};
+---
+
+<BaseLayout
+  title={`نرم‌افزار مشاور املاک؛ راهنمای انتخاب | ${siteConfig.brandName}`}
+  description="نرم‌افزار مشاور املاک چه کاری باید انجام دهد؟ راهنمای سادهٔ انتخاب ابزار مدیریت فایل، مشتری، بازدید و پیگیری، همراه معرفی شفاف متراژ."
+  image="/images/editorial/property-workflow-light.webp"
+  imageAlt="جریان منظم مدیریت فایل و مشتری در دفتر املاک"
+  imageWidth={1693}
+  imageHeight={929}
+  preloadImage="/images/editorial/property-workflow-light.webp"
+  preloadImageWidth={1693}
+  keywords={[
+    'نرم افزار مشاور املاک',
+    'اپلیکیشن مشاور املاک',
+    'نرم افزار مدیریت املاک',
+    'برنامه فایلینگ املاک',
+    'مدیریت مشتری املاک',
+  ]}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(pageStructuredData)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbStructuredData)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(faqStructuredData)}
+  />
+
+  <header class="software-guide-hero">
+    <div class="shell software-guide-hero-grid">
+      <div>
+        <nav class="breadcrumbs" aria-label="مسیر صفحه">
+          <a href="/">خانه</a><span aria-hidden="true">/</span>
+          <span>نرم‌افزار مشاور املاک</span>
+        </nav>
+        <p class="kicker">راهنمای انتخاب برای کار واقعی</p>
+        <h1>نرم‌افزار مشاور املاک باید چه چیزی را ساده‌تر کند؟</h1>
+        <p class="lead">
+          ابزار مناسب قرار نیست فقط ظاهر دفتر را دیجیتال کند؛ باید فایل را زود
+          پیدا کند، نیاز مشتری را کنار آن نگه دارد و اقدام بعدی را از یاد نبرد.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#selection-checklist">چک‌لیست انتخاب</a>
+          <a class="text-link" href="/apps/metrazh/">دیدن متراژ در عمل ←</a>
+        </div>
+        <p class="page-review-note">آخرین بازبینی: ۲۸ مرداد ۱۴۰۵</p>
+      </div>
+      <div class="software-guide-visual" aria-label="نمونه‌های رسمی متراژ">
+        <ResponsiveImage
+          class="software-guide-backdrop"
+          src="/images/editorial/property-workflow-light.webp"
+          alt="جریان منظم مدیریت اطلاعات در دفتر املاک"
+          width="1693"
+          height="929"
+          sizes="(max-width: 56.25rem) 100vw, 52vw"
+          fetchpriority="high"
+        />
+        <ResponsiveImage
+          class="software-guide-screen software-guide-screen-first"
+          src="/images/apps/metrazh/bazaar/property-catalog.webp"
+          alt="تصویر رسمی کاتالوگ فایل ملک در متراژ"
+          width="1080"
+          height="1920"
+          sizes="27vw"
+        />
+        <ResponsiveImage
+          class="software-guide-screen software-guide-screen-second"
+          src="/images/apps/metrazh/bazaar/customer-follow-up.webp"
+          alt="تصویر رسمی پیگیری مشتری در متراژ"
+          width="1080"
+          height="1920"
+          sizes="27vw"
+        />
+      </div>
+    </div>
+  </header>
+
+  <section class="software-answer" aria-labelledby="software-answer-title">
+    <div class="shell software-answer-grid">
+      <div>
+        <span>پاسخ کوتاه</span>
+        <h2 id="software-answer-title">از مسئله شروع کنید، نه تعداد قابلیت.</h2>
+      </div>
+      <p>
+        ابتدا سه کار پرتکرار خود را بنویسید: پیدا کردن فایل، پیگیری مشتری و
+        برنامه‌ریزی بازدید. بعد ابزار را با همان سه سناریو امتحان کنید. اگر ثبت
+        اطلاعات کند، جست‌وجو مبهم یا بازیابی داده نامطمئن باشد، فهرست بلند
+        امکانات کمکی نمی‌کند.
+      </p>
+    </div>
+  </section>
+
+  <section
+    class="section selection-criteria"
+    id="selection-checklist"
+    aria-labelledby="selection-title"
+  >
+    <div class="shell">
+      <header class="section-head">
+        <div>
+          <p class="kicker">پیش از نصب یا خرید</p>
+          <h2 id="selection-title">شش سؤال که انتخاب را روشن می‌کند.</h2>
+        </div>
+        <p>
+          پاسخ را با جریان واقعی دفتر بسنجید. عبارتی مثل «کامل‌ترین» بدون توضیح
+          دربارهٔ داده، پشتیبان و محدودیت، معیار انتخاب نیست.
+        </p>
+      </header>
+      <ol class="selection-grid">
+        <li>
+          <strong>چه کسی استفاده می‌کند؟</strong><span
+            >یک مشاور، چند همکار یا مدیر دفتر؟</span
+          >
+        </li>
+        <li>
+          <strong>اطلاعات کجا می‌ماند؟</strong><span
+            >روی دستگاه، سرور یا هر دو؟</span
+          >
+        </li>
+        <li>
+          <strong>جست‌وجو چطور کار می‌کند؟</strong><span
+            >با محله، بودجه، ویژگی و وضعیت فایل؟</span
+          >
+        </li>
+        <li>
+          <strong>پیگیری چه شکلی است؟</strong><span
+            >نتیجهٔ تماس، زمان بعدی و مسئول اقدام روشن است؟</span
+          >
+        </li>
+        <li>
+          <strong>خروجی و پشتیبان دارد؟</strong><span
+            >می‌توانید اطلاعات را امن ذخیره و بازیابی کنید؟</span
+          >
+        </li>
+        <li>
+          <strong>پشتیبانی قابل پیدا کردن است؟</strong><span
+            >نسخه، حریم خصوصی و راه تماس رسمی دارد؟</span
+          >
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section
+    class="section software-comparison"
+    aria-labelledby="comparison-title"
+  >
+    <div class="shell">
+      <header class="section-head">
+        <div>
+          <p class="kicker">انتخاب بر اساس اندازهٔ کار</p>
+          <h2 id="comparison-title">دفترچه، اپلیکیشن یا سامانهٔ تیمی؟</h2>
+        </div>
+        <p>
+          هیچ گزینه‌ای برای همه بهترین نیست؛ تفاوت اصلی در جست‌وجو، همکاری و
+          مسئولیت نگهداری داده است.
+        </p>
+      </header>
+      <div
+        class="comparison-table-scroll"
+        tabindex="0"
+        aria-label="جدول مقایسهٔ ابزارهای مدیریت املاک"
+      >
+        <table class="comparison-table">
+          <caption>مقایسهٔ سادهٔ سه روش رایج مدیریت کار مشاور املاک</caption>
+          <thead>
+            <tr
+              ><th scope="col">روش</th><th scope="col">مناسب‌تر برای</th><th
+                scope="col">نقطهٔ قوت</th
+              ><th scope="col">چیزی که باید کنترل شود</th></tr
+            >
+          </thead>
+          <tbody>
+            <tr
+              ><th scope="row">دفترچه یا جدول ساده</th><td>شروع کار و حجم کم</td
+              ><td>راه‌اندازی سریع</td><td
+                >جست‌وجو، نسخه‌های پراکنده و فراموشی پیگیری</td
+              ></tr
+            >
+            <tr
+              ><th scope="row">اپلیکیشن روی گوشی</th><td
+                >مشاور مستقل و کار همراه</td
+              ><td>ثبت و دسترسی در زمان تماس و بازدید</td><td
+                >پشتیبان‌گیری، انتقال دستگاه و محدودیت همکاری هم‌زمان</td
+              ></tr
+            >
+            <tr
+              ><th scope="row">سامانهٔ تیمی</th><td
+                >دفتر چندنفره با فرایند مشترک</td
+              ><td>اشتراک اطلاعات و سطح دسترسی</td><td
+                >هزینه، اینترنت، آموزش تیم و سیاست نگهداری داده</td
+              ></tr
+            >
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="section software-learning"
+    aria-labelledby="software-learning-title"
+  >
+    <div class="shell">
+      <header class="section-head">
+        <div>
+          <p class="kicker">قبل از ابزار، روش را مرتب کنید</p>
+          <h2 id="software-learning-title">سه جریان اصلی دفتر املاک.</h2>
+        </div>
+        <a class="text-link" href="/guides/">همهٔ راهنماهای جامع ←</a>
+      </header>
+      <div class="guide-card-grid">
+        {
+          guideTopics
+            .slice(0, 3)
+            .map((guide) => <GuideCard guide={guide} compact />)
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="software-metrazh" aria-labelledby="software-metrazh-title">
+    <div class="shell software-metrazh-grid">
+      <div>
+        <p class="kicker kicker-light">نمونهٔ منتشرشدهٔ MAHSAI</p>
+        <ResponsiveImage
+          class="metrazh-wordmark metrazh-wordmark-surface"
+          src={app.data.wordmark}
+          alt="متراژ"
+          width="702"
+          height="425"
+          sizes="10rem"
+          loading="lazy"
+          decoding="async"
+        />
+        <h2 id="software-metrazh-title">
+          برای مدیریت شخصی فایل و پیگیری روی اندروید.
+        </h2>
+        <p>
+          متراژ فایل، متقاضی، بازدید، یادآوری و خروجی‌های کاری را کنار هم نگه
+          می‌دارد. داده‌های اصلی نسخهٔ فعلی روی همان دستگاه نگهداری می‌شوند؛
+          بنابراین ساخت پشتیبان و نگهداری امن آن مسئولیت مهم کاربر است.
+        </p>
+        <div class="hero-actions">
+          {
+            bazaarLink && (
+              <StoreBadge
+                href={bazaarLink.url}
+                location="software_reference"
+                light
+              />
+            )
+          }
+          <a class="text-link text-link-light" href="/apps/metrazh/"
+            >قابلیت‌ها و محدودیت‌ها ←</a
+          >
+        </div>
+      </div>
+      <figure>
+        <ResponsiveImage
+          src="/images/apps/metrazh/bazaar/smart-matching.webp"
+          alt="تصویر رسمی تطبیق فایل و مشتری در متراژ"
+          width="1080"
+          height="1920"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section faq-section" aria-labelledby="software-faq-title">
+    <div class="shell faq-layout">
+      <div>
+        <p class="kicker">پرسش‌های انتخاب</p>
+        <h2 id="software-faq-title">قبل از تصمیم، این جواب‌ها را ببینید.</h2>
+      </div>
+      <div class="faq-list">
+        {
+          questions.map((item) => (
+            <details>
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

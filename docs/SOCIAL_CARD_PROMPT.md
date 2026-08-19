@@ -4,7 +4,7 @@
 
 ## ورودی‌های مرجع
 
-- آیکون رسمی متراژ: `public/images/apps/metrazh/icon.png`
+- آیکون منبع متراژ: `source-assets/metrazh/archive/icon.png`
 - تصویر قهرمان متراژ: `public/images/home/metrazh-hero-character.webp`
 
 ## متن درخواست

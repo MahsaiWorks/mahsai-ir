@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from './ResponsiveImage.astro';
 interface Props {
   href: string;
   location: string;
@@ -17,11 +18,12 @@ const { href, location, light = false } = Astro.props;
   data-event-location={location}
   aria-label="دریافت متراژ از صفحهٔ رسمی کافه‌بازار"
 >
-  <img
-    src="/images/stores/cafebazaar-icon.png"
+  <ResponsiveImage
+    src="/images/stores/cafebazaar-icon-48.webp"
     alt=""
-    width="192"
-    height="192"
+    width="48"
+    height="48"
+    responsive={false}
     aria-hidden="true"
   />
   <span>

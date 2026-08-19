@@ -1,0 +1,268 @@
+---
+import ResponsiveImage from '../../components/ResponsiveImage.astro';
+import { siteConfig } from '../../config/site';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const lessons = [
+  {
+    id: 'safe-practice',
+    time: '۵ دقیقه',
+    title: 'یک فایل تمرینی امن بسازید',
+    goal: 'بدون استفاده از نام، شماره، سند یا اطلاعات واقعی مشتری با قالب آشنا شوید.',
+    actions: [
+      'یک ملک فرضی و یک نام بی‌هویت مثل «فایل تمرینی ۱» انتخاب کنید.',
+      'نوع معامله و محدودهٔ فرضی را ثبت کنید.',
+      'روی همان ابتدا بنویسید «نمونهٔ آموزشی؛ قابل انتشار نیست».',
+    ],
+    output: 'یک رکورد تمرینی که هیچ دادهٔ شخصی داخل آن نیست.',
+  },
+  {
+    id: 'searchable-data',
+    time: '۱۰ دقیقه',
+    title: 'اطلاعاتی را ثبت کنید که بعداً پیدا می‌شوند',
+    goal: 'به‌جای متن بلند، فیلدهای ثابت و قابل جست‌وجو بسازید.',
+    actions: [
+      'نوع ملک، معامله، محله، متراژ، اتاق و طبقه را جدا ثبت کنید.',
+      'قیمت و شرایط را با تاریخِ دریافت اطلاعات کنار هم بنویسید.',
+      'سه ویژگی تصمیم‌ساز و یک محدودیت مهم ملک را مشخص کنید.',
+    ],
+    output: 'فایلی که با دو یا سه مشخصهٔ اصلی قابل پیدا کردن است.',
+  },
+  {
+    id: 'next-action',
+    time: '۸ دقیقه',
+    title: 'اعتبار اطلاعات و اقدام بعدی را روشن کنید',
+    goal: 'فایل فقط اطلاعات نباشد؛ معلوم باشد چه زمانی باید دوباره بررسی شود.',
+    actions: [
+      'منبع اطلاعات و تاریخ آخرین تماس را ثبت کنید.',
+      'وضعیت فایل را «تازه»، «نیازمند تأیید» یا «متوقف» بنویسید.',
+      'اقدام بعدی، مسئول و زمان پیگیری را در یک جمله مشخص کنید.',
+    ],
+    output: 'یک اقدام بعدی با زمان روشن؛ نه یادداشت مبهم «بعداً تماس».',
+  },
+  {
+    id: 'quality-check',
+    time: '۷ دقیقه',
+    title: 'فایل را کنترل و مسیر پشتیبان را مشخص کنید',
+    goal: 'قبل از استفادهٔ واقعی، کمبودها و مسئولیت نگهداری را ببینید.',
+    actions: [
+      'با چک‌لیست، فیلد خالی و عدد بدون تاریخ را پیدا کنید.',
+      'ببینید فایل در کمتر از ۳۰ ثانیه با جست‌وجوی منطقی پیدا می‌شود یا نه.',
+      'محل پشتیبان و شیوهٔ نگهداری جداگانهٔ رمز آن را روی کاغذ برنامه‌ریزی کنید.',
+    ],
+    output: 'یک فایل تمرینی کنترل‌شده و برنامهٔ روشن برای پشتیبان‌گیری.',
+  },
+] as const;
+
+const courseStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Course',
+  name: 'اولین فایل ملکی مرتب در ۳۰ دقیقه',
+  description:
+    'دورهٔ رایگان و عملی برای ساخت یک فایل ملکی تمرینی، قابل جست‌وجو و دارای اقدام بعدی؛ بدون ثبت اطلاعات واقعی مشتری.',
+  url: new URL(
+    '/academy/first-organized-property-file/',
+    Astro.site,
+  ).toString(),
+  inLanguage: 'fa-IR',
+  isAccessibleForFree: true,
+  provider: {
+    '@type': 'Organization',
+    name: siteConfig.brandName,
+    url: Astro.site?.toString(),
+  },
+  hasCourseInstance: {
+    '@type': 'CourseInstance',
+    courseMode: 'online',
+    courseWorkload: 'PT30M',
+  },
+};
+---
+
+<BaseLayout
+  title={`دوره رایگان فایل ملکی مرتب در ۳۰ دقیقه | ${siteConfig.brandName}`}
+  description="در ۳۰ دقیقه یک فایل ملکی تمرینی، قابل جست‌وجو و دارای اقدام بعدی بسازید؛ آموزش رایگان، ساده و بدون ثبت‌نام برای مشاور املاک."
+  preloadImage="/images/editorial/property-workflow.webp"
+  preloadImageWidth={1536}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(courseStructuredData)}
+  />
+
+  <header class="course-hero">
+    <div class="shell course-hero-grid">
+      <div>
+        <p class="kicker">دورهٔ رایگان و عملی</p>
+        <h1>اولین فایل ملکی مرتب را در <span>۳۰ دقیقه</span> بسازید.</h1>
+        <p class="lead">
+          چهار درس کوتاه را پشت سر هم اجرا کنید. در پایان، یک فایل تمرینی دارید
+          که سریع پیدا می‌شود، اعتبارش روشن است و اقدام بعدی‌اش فراموش نمی‌شود.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#lesson-safe-practice">شروع درس اول</a>
+          <button
+            class="button button-secondary"
+            id="print-course"
+            type="button"
+          >
+            چاپ برگهٔ تمرین
+          </button>
+        </div>
+        <ul class="trust-list">
+          <li>بدون ثبت‌نام</li>
+          <li>چهار درس کوتاه</li>
+          <li>یک خروجی قابل کنترل</li>
+        </ul>
+      </div>
+      <figure>
+        <ResponsiveImage
+          src="/images/editorial/property-workflow.webp"
+          alt="میز کار منظم برای ساخت و پیگیری پروندهٔ ملکی"
+          width="1536"
+          height="1024"
+          fetchpriority="high"
+        />
+        <figcaption>
+          در تمرین از اطلاعات ساختگی استفاده کنید؛ نه اطلاعات مالک یا مشتری
+          واقعی.
+        </figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <nav class="course-map" aria-label="درس‌های دوره">
+    <div class="shell course-map-grid">
+      {
+        lessons.map((lesson, index) => (
+          <a href={`#lesson-${lesson.id}`}>
+            <span>درس {index + 1}</span>
+            <strong>{lesson.title}</strong>
+            <small>{lesson.time}</small>
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+
+  <section class="course-outcome" aria-labelledby="course-outcome-title">
+    <div class="shell course-outcome-grid">
+      <div>
+        <p class="kicker kicker-light">معیار پایان دوره</p>
+        <h2 id="course-outcome-title">
+          فایل شما باید سه آزمون ساده را رد کند.
+        </h2>
+      </div>
+      <ol>
+        <li>بدون مرور پیام‌ها، در کمتر از ۳۰ ثانیه پیدا شود.</li>
+        <li>تاریخ و منبع آخرین اطلاعات آن مشخص باشد.</li>
+        <li>اقدام بعدی، مسئول و زمان پیگیری روشن داشته باشد.</li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="course-lessons">
+    {
+      lessons.map((lesson, index) => (
+        <section
+          class:list={[
+            'section course-lesson',
+            { 'course-lesson-alt': index % 2 === 1 },
+          ]}
+          id={`lesson-${lesson.id}`}
+          aria-labelledby={`lesson-title-${lesson.id}`}
+        >
+          <div class="shell course-lesson-grid">
+            <header>
+              <span>
+                درس {index + 1} · {lesson.time}
+              </span>
+              <h2 id={`lesson-title-${lesson.id}`}>{lesson.title}</h2>
+              <p>{lesson.goal}</p>
+            </header>
+            <div>
+              <ol class="course-action-list">
+                {lesson.actions.map((action) => (
+                  <li>
+                    <span aria-hidden="true" />
+                    <p>{action}</p>
+                  </li>
+                ))}
+              </ol>
+              <div class="course-output">
+                <strong>خروجی این درس</strong>
+                <p>{lesson.output}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      ))
+    }
+  </div>
+
+  <section class="section course-worksheet" aria-labelledby="worksheet-title">
+    <div class="shell course-worksheet-grid">
+      <div>
+        <p class="kicker">برگهٔ کنترل نهایی</p>
+        <h2 id="worksheet-title">
+          قبل از واقعی‌کردن جریان کار، این هشت مورد را ببینید.
+        </h2>
+        <p>
+          این فهرست را چاپ کنید یا کنار فایل تمرینی نگه دارید. اطلاعات واقعی فقط
+          در ابزار و فضای امن خودتان ثبت شود.
+        </p>
+      </div>
+      <ul>
+        <li>نوع ملک و معامله جدا ثبت شده است.</li>
+        <li>محله، قیمت و متراژ قابل جست‌وجو هستند.</li>
+        <li>عددهای مهم تاریخ دارند.</li>
+        <li>منبع اطلاعات مشخص است.</li>
+        <li>یک محدودیت مهم فایل نوشته شده است.</li>
+        <li>وضعیت اعتبار فایل روشن است.</li>
+        <li>اقدام بعدی زمان و مسئول دارد.</li>
+        <li>مسیر پشتیبان و نگهداری رمز مشخص است.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="course-finish" aria-labelledby="course-finish-title">
+    <div class="shell course-finish-grid">
+      <div>
+        <p class="kicker kicker-light">اگر تمرین را تمام کردید</p>
+        <h2 id="course-finish-title">
+          حالا همان روش را با یک جریان ثابت ادامه دهید.
+        </h2>
+        <p>
+          متراژ برای ثبت فایل، جست‌وجو، پیگیری و پشتیبان‌گیری طراحی شده است. قبل
+          از ورود دادهٔ واقعی، حریم خصوصی و روش پشتیبان را بخوانید.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-light" href="/apps/metrazh/">دیدن متراژ</a>
+          <a class="text-link text-link-light" href="/privacy/">حریم خصوصی</a>
+        </div>
+      </div>
+      <aside class="course-interest">
+        <strong>دورهٔ تکمیلی باید چه ارزشی داشته باشد؟</strong>
+        <p>
+          اگر دورهٔ عمیق‌تر با تمرین و بازخورد روی نمونهٔ بی‌نام برایتان مفید
+          است، علاقه‌مندی خود را ایمیل کنید. این فقط سنجش تقاضاست؛ ثبت‌نام، قیمت
+          یا تعهد خرید نیست.
+        </p>
+        <a
+          class="button"
+          href={`mailto:${siteConfig.supportEmail}?subject=${encodeURIComponent('علاقه‌مندی به دورهٔ تکمیلی مدیریت فایل املاک')}&body=${encodeURIComponent('دورهٔ رایگان «اولین فایل ملکی مرتب» را دیدم. مسئله‌ای که دوست دارم در دورهٔ تکمیلی حل شود:\n\nقالب مطلوب من (ویدئو، تمرین، جلسه زنده یا متن):\n\nاین پیام فقط اعلام علاقه‌مندی است و تعهد خرید نیست.')}`}
+          data-event="paid_course_interest_email"
+          data-event-location="free_course_finish">اعلام علاقه‌مندی بدون خرید</a
+        >
+      </aside>
+    </div>
+  </section>
+
+  <script is:inline>
+    document.querySelector('#print-course')?.addEventListener('click', () => {
+      window.mahsaiMeasure?.('free_course_print', { course: 'first_file' });
+      window.print();
+    });
+  </script>
+</BaseLayout>

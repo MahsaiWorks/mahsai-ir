@@ -1,0 +1,150 @@
+---
+import ResponsiveImage from '../../components/ResponsiveImage.astro';
+import { siteConfig } from '../../config/site';
+import { guideTopics } from '../../data/guideTopics';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'DigitalDocument',
+  name: 'چک‌لیست‌های روز کاری مشاور املاک',
+  description:
+    'چهار چک‌لیست چاپی رایگان برای فایل‌گیری، مشتری، بازدید و آگهی ملک.',
+  url: canonical.toString(),
+  inLanguage: 'fa-IR',
+  isAccessibleForFree: true,
+  publisher: {
+    '@type': 'Organization',
+    name: siteConfig.brandName,
+    url: new URL('/about/', Astro.site).toString(),
+  },
+};
+---
+
+<BaseLayout
+  title={`چک‌لیست رایگان مشاور املاک؛ نسخهٔ چاپی | ${siteConfig.brandName}`}
+  description="چهار چک‌لیست رایگان و قابل چاپ برای فایل‌گیری، نیازسنجی مشتری، هماهنگی بازدید و آماده‌سازی آگهی ملک."
+  image="/images/editorial/property-workflow-light.webp"
+  imageAlt="چک‌لیست‌های منظم کار روزانهٔ مشاور املاک"
+  imageWidth={1693}
+  imageHeight={929}
+  preloadImage="/images/editorial/real/property-file-review.jpg"
+  preloadImageWidth={1536}
+  keywords={[
+    'چک لیست مشاور املاک',
+    'چک لیست فایل گیری املاک',
+    'فرم نیازسنجی مشتری ملک',
+    'چک لیست بازدید ملک',
+  ]}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(structuredData)}
+  />
+
+  <header class="print-resource-hero">
+    <div class="shell print-resource-hero-grid">
+      <div>
+        <nav class="breadcrumbs" aria-label="مسیر صفحه">
+          <a href="/">خانه</a><span aria-hidden="true">/</span>
+          <span>چک‌لیست‌های رایگان</span>
+        </nav>
+        <p class="kicker">برگهٔ آماده برای کنار میز کار</p>
+        <h1>چهار چک‌لیست کوتاه برای روز کاری مشاور املاک.</h1>
+        <p class="lead">
+          صفحه را چاپ کنید یا در پنجرهٔ چاپ، گزینهٔ ذخیره به‌صورت PDF را بزنید.
+          هیچ فرم ثبت‌نام یا دریافت شماره تلفن در کار نیست.
+        </p>
+        <div class="hero-actions print-actions">
+          <button
+            class="button"
+            type="button"
+            data-print-checklists
+            data-event="print_checklists"
+            data-event-location="resource_hero"
+          >
+            چاپ یا ذخیره به‌صورت PDF
+          </button>
+          <a class="text-link" href="/guides/">راهنمای کامل هر موضوع ←</a>
+        </div>
+      </div>
+      <figure>
+        <ResponsiveImage
+          src="/images/editorial/real/property-file-review.jpg"
+          alt="بررسی مرحله‌ای یک پروندهٔ ملکی با چک‌لیست"
+          width="1536"
+          height="1024"
+          sizes="(max-width: 56.25rem) 100vw, 44vw"
+          fetchpriority="high"
+        />
+      </figure>
+    </div>
+  </header>
+
+  <article
+    class="print-checklist-document"
+    aria-label="چک‌لیست‌های مشاور املاک"
+  >
+    <div class="shell print-document-head">
+      <div>
+        <ResponsiveImage
+          src="/brand/mahsai-symbol.svg"
+          alt=""
+          width="40"
+          height="40"
+          aria-hidden="true"
+        />
+        <strong>{siteConfig.brandName}</strong>
+      </div>
+      <p>
+        نام مشاور: ........................ · تاریخ: ........................
+      </p>
+    </div>
+
+    <div class="shell printable-checklist-grid">
+      {
+        guideTopics.map((guide, index) => (
+          <section
+            class="printable-checklist-card"
+            id={guide.slug}
+            aria-labelledby={`print-title-${guide.slug}`}
+          >
+            <header>
+              <span>برگهٔ {index + 1}</span>
+              <h2 id={`print-title-${guide.slug}`}>{guide.navTitle}</h2>
+              <p>{guide.outcomes[0]}</p>
+            </header>
+            <ul>
+              {guide.checklist.map((item) => (
+                <li>
+                  <span aria-hidden="true">□</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <footer>
+              <span>
+                اقدام بعدی: ................................................
+              </span>
+              <a href={`/guides/${guide.slug}/`}>راهنمای کامل در mahsai.ir</a>
+            </footer>
+          </section>
+        ))
+      }
+    </div>
+
+    <aside class="shell print-resource-note" role="note">
+      این برگه برای نظم‌دادن به کار روزانه است. در موضوع‌های حقوقی، هویتی و
+      قراردادی از منبع رسمی و فرد دارای صلاحیت کمک بگیرید و اطلاعات محرمانهٔ
+      مشتری را روی نسخه‌ای که در دسترس دیگران است ننویسید.
+    </aside>
+  </article>
+
+  <script is:inline>
+    document
+      .querySelector('[data-print-checklists]')
+      ?.addEventListener('click', () => window.print());
+  </script>
+</BaseLayout>

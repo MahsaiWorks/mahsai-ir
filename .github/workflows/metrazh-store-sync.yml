@@ -1,0 +1,52 @@
+name: Metrazh store sync
+
+on:
+  schedule:
+    - cron: '15 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metrazh-store-sync
+  cancel-in-progress: false
+
+jobs:
+  refresh-verified-date:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          ref: main
+
+      - name: Enable pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.9.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Compare the public Bazaar release
+        run: pnpm sync:metrazh-store:apply
+
+      - name: Commit a verified check date
+        shell: bash
+        run: |
+          if git diff --quiet -- src/content/apps/metrazh.json; then
+            echo "Store metadata is already current."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/content/apps/metrazh.json
+          git commit -m "Refresh verified Metrazh store check date"
+          git push origin HEAD:main

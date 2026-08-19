@@ -28,12 +28,17 @@ export const siteConfig: SiteConfig = {
     'MAHSAI خانهٔ محصولات فارسیِ کاربردی است؛ هر محصول فقط پس از انتشار رسمی معرفی می‌شود و آموزش‌های مرتبط با همان حوزه را کنار خود دارد.',
   supportEmail: 'support@mahsai.ir',
   // Only verified, public profiles belong in these lists.
-  socialLinks: [],
+  socialLinks: [
+    {
+      label: 'اینستاگرام اپلیکیشن‌های MAHSAI',
+      url: 'https://www.instagram.com/mahsaiapp/',
+    },
+  ],
   appStoreLinks: [],
   seoDefaults: {
     title: 'MAHSAI | اپلیکیشن‌های فارسی برای کار واقعی',
     description:
       'وب‌سایت رسمی MAHSAI؛ معرفی و پشتیبانی اپلیکیشن متراژ برای مشاوران املاک، همراه آموزش‌های رایگان و کاربردی بازار املاک ایران.',
-    image: '/og.png',
+    image: '/og.jpg',
   },
 };

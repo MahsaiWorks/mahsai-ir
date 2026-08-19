@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from './ResponsiveImage.astro';
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
 import { getCafeBazaarLink } from '../data/appPresentation';
@@ -32,11 +33,12 @@ const downloadLink = featuredApp
       aria-label={`${siteConfig.brandName} — صفحه اصلی`}
     >
       <span class="brand-mark" aria-hidden="true">
-        <img
+        <ResponsiveImage
           src="/brand/mahsai-symbol-reversed.svg"
           alt=""
           width="28"
           height="28"
+          aria-hidden="true"
         />
       </span>
       <span>{siteConfig.brandName}</span>
@@ -107,3 +109,40 @@ const downloadLink = featuredApp
     </details>
   </div>
 </header>
+
+<script is:inline>
+  (() => {
+    const menu = document.querySelector('.mobile-nav');
+    if (!(menu instanceof HTMLDetailsElement)) return;
+
+    const summary = menu.querySelector('summary');
+    const closeMenu = () => {
+      if (menu.open) menu.open = false;
+    };
+
+    const updateLabel = () => {
+      summary?.setAttribute(
+        'aria-label',
+        menu.open ? 'بستن فهرست پیمایش' : 'باز کردن فهرست پیمایش',
+      );
+    };
+
+    menu.addEventListener('toggle', updateLabel);
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || !menu.open) return;
+      closeMenu();
+      summary?.focus();
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+      if (!(event.target instanceof Node)) return;
+      if (menu.open && !menu.contains(event.target)) closeMenu();
+    });
+
+    updateLabel();
+  })();
+</script>
