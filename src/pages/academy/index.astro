@@ -1,8 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
 import ArticleCard from '../../components/ArticleCard.astro';
+import GuideCard from '../../components/GuideCard.astro';
 import { siteConfig } from '../../config/site';
 import { articleClusters } from '../../data/articleClusters';
+import { guideTopics } from '../../data/guideTopics';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const articles = (await getCollection('articles'))
@@ -105,6 +107,24 @@ const collectionStructuredData = {
       }
     </div>
   </nav>
+
+  <section class="section guide-preview" aria-labelledby="academy-guides-title">
+    <div class="shell">
+      <header class="section-head">
+        <div>
+          <p class="kicker">اگر نقطهٔ شروع را نمی‌دانید</p>
+          <h2 id="academy-guides-title">اول نقشهٔ کامل کار را ببینید.</h2>
+        </div>
+        <p>
+          راهنماهای جامع، مسئله را از ابتدا تا اقدام بعدی جمع می‌کنند. بعد
+          می‌توانید از هر بخش وارد آموزش جزئی‌تر شوید.
+        </p>
+      </header>
+      <div class="guide-card-grid">
+        {guideTopics.map((guide) => <GuideCard guide={guide} compact />)}
+      </div>
+    </div>
+  </section>
 
   <div id="learning-paths" class="academy-tracks">
     {

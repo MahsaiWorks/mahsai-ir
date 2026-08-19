@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import { siteConfig } from '../../config/site';
 import { articleClusters } from '../../data/articleClusters';
+import { getGuideForArticle } from '../../data/guideTopics';
 import AnswerFirst from '../../components/AnswerFirst.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
@@ -22,6 +23,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 const cluster = articleClusters.find(
   (entry) => entry.id === article.data.cluster,
 );
+const topicGuide = getGuideForArticle(article.id);
 const sameCluster = allArticles
   .filter(
     (entry) =>
@@ -204,6 +206,18 @@ const breadcrumbStructuredData = {
         <a class="toc-academy-link" href="/academy/">
           مسیرهای آموزشی املاک <span aria-hidden="true">←</span>
         </a>
+        {
+          topicGuide && (
+            <a
+              class="toc-guide-link"
+              href={`/guides/${topicGuide.slug}/`}
+              data-event="article_to_guide"
+              data-event-location="article_toc"
+            >
+              {topicGuide.navTitle} <span aria-hidden="true">←</span>
+            </a>
+          )
+        }
       </aside>
 
       <div class="article-body prose">

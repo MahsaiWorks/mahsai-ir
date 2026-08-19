@@ -1,0 +1,38 @@
+---
+import type { GuideTopic } from '../data/guideTopics';
+
+interface Props {
+  guide: GuideTopic;
+  compact?: boolean;
+}
+
+const { guide, compact = false } = Astro.props;
+---
+
+<article
+  class:list={['guide-card', 'spatial-card', { 'guide-card-compact': compact }]}
+>
+  <a
+    href={`/guides/${guide.slug}/`}
+    data-event="guide_open"
+    data-event-location="guide_card"
+    aria-label={`مطالعه ${guide.navTitle}`}
+  >
+    <figure class="guide-card-media">
+      <img
+        src={guide.cover}
+        alt={guide.coverAlt}
+        width={guide.coverWidth}
+        height={guide.coverHeight}
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
+    <div class="guide-card-copy">
+      <span>راهنمای جامع و مرحله‌به‌مرحله</span>
+      <h3>{guide.navTitle}</h3>
+      <p>{guide.description}</p>
+      <strong>شروع راهنما <i aria-hidden="true">←</i></strong>
+    </div>
+  </a>
+</article>

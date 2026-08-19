@@ -1,0 +1,111 @@
+---
+import GuideCard from '../../components/GuideCard.astro';
+import { siteConfig } from '../../config/site';
+import { guideTopics } from '../../data/guideTopics';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const collectionStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'راهنماهای جامع کار مشاور املاک',
+  description:
+    'چهار راهنمای جامع و مرحله‌به‌مرحله برای فایل‌گیری، شناخت مشتری، بازدید و آگهی ملک در بازار ایران.',
+  url: new URL('/guides/', Astro.site).toString(),
+  inLanguage: 'fa-IR',
+  hasPart: guideTopics.map((guide) => ({
+    '@type': 'WebPage',
+    name: guide.title,
+    url: new URL(`/guides/${guide.slug}/`, Astro.site).toString(),
+  })),
+};
+---
+
+<BaseLayout
+  title={`راهنماهای جامع مشاور املاک؛ فایل، مشتری، بازدید و آگهی | ${siteConfig.brandName}`}
+  description="چهار راهنمای جامع، روان و اجرایی برای کار روزانهٔ مشاور املاک؛ از ثبت فایل و نیازسنجی مشتری تا برنامه‌ریزی بازدید و نوشتن آگهی ملک."
+  keywords={[
+    'آموزش مشاور املاک',
+    'فایل گیری املاک',
+    'مدیریت مشتری املاک',
+    'بازدید ملک',
+    'نوشتن آگهی ملک',
+  ]}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(collectionStructuredData)}
+  />
+
+  <header class="guide-index-hero">
+    <div class="shell guide-index-hero-grid">
+      <div>
+        <p class="kicker">راهنمای کار املاک، بدون حرف اضافه</p>
+        <h1>مسئلهٔ امروز دفتر را انتخاب کنید؛ مسیر کار را یک‌جا ببینید.</h1>
+        <p class="lead">
+          این صفحه‌ها مقالهٔ کوتاه و پراکنده نیستند. هر راهنما از یک سؤال واقعی
+          شروع می‌شود، کار را مرحله‌به‌مرحله جلو می‌برد و شما را به چک‌لیست،
+          آموزش جزئی‌تر و ابزار مرتبط می‌رساند.
+        </p>
+        <ul class="trust-list">
+          <li>متن روان و قابل اجرا</li>
+          <li>مثال متناسب با دفتر املاک ایران</li>
+          <li>بدون ادعای نتیجهٔ ساختگی</li>
+        </ul>
+      </div>
+      <figure>
+        <img
+          src="/images/editorial/real/property-file-review.jpg"
+          alt="بررسی دقیق اطلاعات یک فایل ملکی پیش از معرفی به مشتری"
+          width="1800"
+          height="1200"
+          fetchpriority="high"
+        />
+        <figcaption>شروع خوب یعنی مسئله را قبل از ابزار روشن کنیم.</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <section
+    class="section guide-directory"
+    aria-labelledby="guide-directory-title"
+  >
+    <div class="shell">
+      <header class="section-head">
+        <div>
+          <p class="kicker">چهار مسیر اصلی</p>
+          <h2 id="guide-directory-title">از کدام بخش کارتان شروع کنیم؟</h2>
+        </div>
+        <p>
+          اگر مسئله‌تان بین دو مسیر است، از نزدیک‌ترین راهنما شروع کنید؛ درون هر
+          صفحه پیوندهای دقیق به مرحلهٔ بعد را می‌بینید.
+        </p>
+      </header>
+      <div class="guide-card-grid">
+        {guideTopics.map((guide) => <GuideCard guide={guide} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="guide-index-method" aria-labelledby="guide-method-title">
+    <div class="shell guide-index-method-grid">
+      <div>
+        <p class="kicker kicker-light">ساختار ثابت هر راهنما</p>
+        <h2 id="guide-method-title">اول پاسخ؛ بعد اجرا؛ در پایان کنترل.</h2>
+      </div>
+      <ul>
+        <li>
+          <strong>پاسخ کوتاه:</strong> اصل موضوع را همان ابتدای صفحه می‌خوانید.
+        </li>
+        <li><strong>مسیر عملی:</strong> هر گام یک خروجی مشخص دارد.</li>
+        <li>
+          <strong>اشتباه رایج:</strong> مشکل و راه اصلاح کنار هم دیده می‌شوند.
+        </li>
+        <li>
+          <strong>ادامهٔ یادگیری:</strong> مقالهٔ دقیق‌تر و کاربرد متراژ معرفی می‌شود.
+        </li>
+      </ul>
+      <a class="button button-light" href="/academy/">دیدن مسیرهای آموزشی</a>
+    </div>
+  </section>
+</BaseLayout>
