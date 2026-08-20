@@ -23,9 +23,9 @@ export const siteConfig: SiteConfig = {
   brandName: 'MAHSAI',
   brandNameFa: 'مهسای',
   developerName: 'MAHSAI',
-  title: 'خانهٔ اپلیکیشن‌های فارسی برای کار واقعی',
+  title: 'ابزارهای فارسی برای کار مرتب‌تر',
   biography:
-    'MAHSAI خانهٔ محصولات فارسیِ کاربردی است؛ هر محصول فقط پس از انتشار رسمی معرفی می‌شود و آموزش‌های مرتبط با همان حوزه را کنار خود دارد.',
+    'MAHSAI ابزارهای فارسی می‌سازد که اطلاعات پراکنده را جمع می‌کنند و کار بعدی را روشن نگه می‌دارند. هر محصول همراه آموزش و پشتیبانی مرتبط منتشر می‌شود.',
   supportEmail: 'support@mahsai.ir',
   // Only verified, public profiles belong in these lists.
   socialLinks: [
@@ -36,9 +36,9 @@ export const siteConfig: SiteConfig = {
   ],
   appStoreLinks: [],
   seoDefaults: {
-    title: 'MAHSAI | متراژ و اپلیکیشن‌های فارسی برای کار واقعی',
+    title: 'MAHSAI | متراژ؛ مدیریت فایل و مشتری املاک',
     description:
-      'وب‌سایت رسمی MAHSAI؛ سازندهٔ اپلیکیشن‌های فارسی کاربردی و خانهٔ متراژ برای مدیریت فایل، مشتری، بازدید و پیگیری مشاوران املاک ایران.',
+      'وب‌سایت رسمی MAHSAI و متراژ؛ اپلیکیشن فارسی مدیریت فایل ملک، مشتری، بازدید و پیگیری برای مشاوران املاک ایران، همراه آموزش‌های رایگان و کاربردی.',
     image: '/og.jpg',
   },
 };

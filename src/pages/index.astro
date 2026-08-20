@@ -48,13 +48,6 @@ const workRoutes = [
     action: 'آموزش‌های کوتاه و اجرایی',
   },
 ] as const;
-
-const formatDate = (date: Date) =>
-  new Intl.DateTimeFormat('fa-IR', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }).format(date);
 ---
 
 <BaseLayout
@@ -67,14 +60,14 @@ const formatDate = (date: Date) =>
   <section class="mahsai-hero" aria-labelledby="home-title">
     <div class="shell mahsai-hero-grid">
       <div class="mahsai-hero-copy">
-        <p class="brand-intro">MAHSAI / سازندهٔ اپلیکیشن‌های فارسی</p>
+        <p class="brand-intro">MAHSAI / ابزارهای فارسی برای کار روزانه</p>
         <h1 id="home-title">
-          اپلیکیشن فارسی باید <span>وسطِ کار</span> به درد بخورد.
+          کمتر دنبال اطلاعات بگردید؛ <span>بیشتر کارتان را جلو ببرید.</span>
         </h1>
         <p class="lead">
-          ما از دردسرهای واقعی شروع می‌کنیم، نه از فهرست قابلیت‌ها. نخستین محصول
-          MAHSAI، متراژ، فایل ملک، مشتری، بازدید و پیگیری را از پراکندگی بیرون
-          می‌آورد و در یک مسیر روشن نگه می‌دارد.
+          MAHSAI برای بخش‌های شلوغ کار روزانه، ابزارهای فارسیِ ساده می‌سازد.
+          متراژ، اولین محصول ما، فایل‌های ملک، مشتری‌ها و پیگیری‌ها را یک‌جا نگه
+          می‌دارد تا چیزی گم نشود و کار بعدی معلوم باشد.
         </p>
         <div class="hero-actions">
           {
@@ -87,18 +80,18 @@ const formatDate = (date: Date) =>
                 data-event="metrazh_bazaar_click"
                 data-event-location="home_hero"
               >
-                دریافت متراژ از کافه‌بازار
+                نصب رایگان متراژ
               </a>
             )
           }
           <a class="arrow-link" href="/apps/metrazh/">
-            اول ببینید چگونه کار می‌کند <span aria-hidden="true">←</span>
+            قبل از نصب، محیط برنامه را ببینید <span aria-hidden="true">←</span>
           </a>
         </div>
         <dl class="hero-proof-list" aria-label="مشخصات محصول منتشرشده">
-          <div><dt>محصول در دسترس</dt><dd>متراژ</dd></div>
-          <div><dt>مناسب برای</dt><dd>کار روزانهٔ املاک</dd></div>
-          <div><dt>پشتیبانی</dt><dd>فارسی و مستقیم</dd></div>
+          <div><dt>اکنون در دسترس</dt><dd>متراژ</dd></div>
+          <div><dt>ساخته‌شده برای</dt><dd>مشاور و دفتر املاک</dd></div>
+          <div><dt>اگر کمک خواستید</dt><dd>پشتیبانی مستقیم فارسی</dd></div>
         </dl>
       </div>
 
@@ -131,9 +124,6 @@ const formatDate = (date: Date) =>
             sizes="(max-width: 56.25rem) 38vw, 12rem"
           />
         </figure>
-        <p>
-          <span aria-hidden="true"></span> محیط واقعی برنامه، بدون تصویر نمایشی
-        </p>
       </div>
     </div>
   </section>
@@ -141,11 +131,13 @@ const formatDate = (date: Date) =>
   <section class="work-index" aria-labelledby="work-index-title">
     <div class="shell work-index-layout">
       <header class="work-index-head">
-        <p class="section-sign">خطِ کار MAHSAI</p>
-        <h2 id="work-index-title">از اتفاق روزمره تا قدم بعدی.</h2>
+        <p class="section-sign">روش MAHSAI</p>
+        <h2 id="work-index-title">
+          از همان جایی شروع می‌کنیم که کار گره می‌خورد.
+        </h2>
         <p>
-          هر راهنما و هر ابزار باید به یک سؤال ساده جواب بدهد: الان چه کار کنم
-          که کارم مرتب‌تر و مطمئن‌تر جلو برود؟
+          فایل تازه، تماس مشتری یا پیگیری نزدیک؛ هر ابزار و راهنمای MAHSAI باید
+          یکی از این لحظه‌های واقعی را ساده‌تر کند و قدم بعدی را نشان دهد.
         </p>
       </header>
       <div class="work-route-list">
@@ -170,7 +162,7 @@ const formatDate = (date: Date) =>
   <section class="metrazh-evidence" aria-labelledby="metrazh-evidence-title">
     <div class="shell metrazh-evidence-grid">
       <div class="metrazh-evidence-copy">
-        <p class="section-sign section-sign-light">اولین محصول MAHSAI</p>
+        <p class="section-sign section-sign-light">متراژ؛ آمادهٔ نصب</p>
         <ResponsiveImage
           class="metrazh-wordmark metrazh-wordmark-surface"
           src="/images/apps/metrazh/wordmark-dark.png"
@@ -180,12 +172,12 @@ const formatDate = (date: Date) =>
           sizes="10rem"
         />
         <h2 id="metrazh-evidence-title">
-          فایل و مشتری کنار هم؛ نه در چند دفتر و پیام‌رسان.
+          فایل، مشتری و پیگیری؛ کنار هم و پیدا شدنی.
         </h2>
         <p>
-          متراژ برای مشاور املاکی ساخته شده که می‌خواهد اطلاعات کارش پیدا شود،
-          پیگیری‌ها نیمه‌کاره نماند و پیشنهاد فایل بر پایهٔ نیاز ثبت‌شدهٔ مشتری
-          شکل بگیرد.
+          متراژ برای مشاوری ساخته شده که نمی‌خواهد اطلاعات میان دفترچه، گالری و
+          پیام‌رسان گم شود. نیاز مشتری، مشخصات ملک و کار بعدی در یک میزکار قابل
+          جست‌وجو می‌مانند.
         </p>
         <ul class="evidence-list">
           <li>ثبت و جست‌وجوی فایل‌های فروش، رهن و اجاره</li>
@@ -194,10 +186,10 @@ const formatDate = (date: Date) =>
         </ul>
         <div class="hero-actions">
           <a class="button button-light" href="/apps/metrazh/">
-            معرفی کامل متراژ
+            متراژ را کامل ببینید
           </a>
           <a class="arrow-link arrow-link-light" href="/support/">
-            پشتیبانی رسمی <span aria-hidden="true">←</span>
+            سؤال دارید؟ مستقیم بپرسید <span aria-hidden="true">←</span>
           </a>
         </div>
       </div>
@@ -214,10 +206,6 @@ const formatDate = (date: Date) =>
             decoding="async"
           />
         </figure>
-        <div class="evidence-caption">
-          <strong>نمونهٔ واقعی</strong>
-          <span>معیار مشتری ثبت می‌شود؛ نتیجه برای بررسی برمی‌گردد.</span>
-        </div>
       </div>
     </div>
   </section>
@@ -228,13 +216,13 @@ const formatDate = (date: Date) =>
         <div class="shell">
           <header class="journal-intro">
             <div>
-              <p class="section-sign">مجلهٔ کار</p>
+              <p class="section-sign">مجلهٔ کار املاک</p>
               <h2 id="journal-title">
-                مطالبی که بعد از بستن صفحه هم به کار می‌آیند.
+                چیزی بخوانید که همین امروز به کارتان بیاید.
               </h2>
             </div>
             <a class="arrow-link" href="/articles/">
-              همهٔ مقاله‌ها <span aria-hidden="true">←</span>
+              دیدن همهٔ مقاله‌ها <span aria-hidden="true">←</span>
             </a>
           </header>
 
@@ -269,8 +257,7 @@ const formatDate = (date: Date) =>
               {readingList.map((article) => (
                 <article>
                   <p>
-                    {article.data.category} ·{' '}
-                    {formatDate(article.data.publishedAt)}
+                    {article.data.category} · {article.data.readingTime}
                   </p>
                   <a
                     class="journal-entry-link"
@@ -278,7 +265,7 @@ const formatDate = (date: Date) =>
                   >
                     <h3>{article.data.title}</h3>
                     <span class="journal-entry-cta">
-                      خواندن راهنما <span aria-hidden="true">←</span>
+                      خواندن مقاله <span aria-hidden="true">←</span>
                     </span>
                   </a>
                 </article>

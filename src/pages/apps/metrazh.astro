@@ -250,9 +250,6 @@ const faqStructuredData = {
 
       <div class="metrazh-product-grid">
         <div class="metrazh-hero-copy">
-          <p class="product-status-line">
-            <span aria-hidden="true"></span> نسخهٔ رسمی در کافه‌بازار
-          </p>
           <ResponsiveImage
             class="metrazh-title-wordmark metrazh-wordmark-dark"
             src={app.data.wordmark}
@@ -261,11 +258,11 @@ const faqStructuredData = {
             height="425"
             sizes="12rem"
           />
-          <h1>متراژ؛ اپلیکیشن مدیریت فایل و مشتری املاک.</h1>
+          <h1>متراژ؛ فایل و مشتری املاک را یک‌جا مدیریت کنید.</h1>
           <p class="lead">
-            متراژ یک اپلیکیشن اندرویدی فارسی، ساختهٔ MAHSAI، برای ثبت فایل‌های
-            ملکی، مدیریت مشتری، برنامه‌ریزی بازدید و پیگیری کارهای روزانهٔ مشاور
-            املاک است.
+            متراژ، اپلیکیشن فارسی اندروید برای مشاوران املاک است؛ فایل‌های ملک،
+            اطلاعات مشتری، بازدید و پیگیری را یک‌جا نگه می‌دارد تا اطلاعات سریع
+            پیدا شوند و کار بعدی جا نماند.
           </p>
           <div class="hero-actions">
             {
@@ -295,16 +292,6 @@ const faqStructuredData = {
               fetchpriority="high"
             />
           </figure>
-          <div class="screen-note screen-note-top">
-            <span aria-hidden="true"></span>
-            <strong>فایل پیدا می‌شود</strong>
-            <small>جست‌وجو، فیلتر و کد مشخص</small>
-          </div>
-          <div class="screen-note screen-note-bottom">
-            <span aria-hidden="true"></span>
-            <strong>قدم بعدی می‌ماند</strong>
-            <small>مشتری، بازدید و پیگیری</small>
-          </div>
         </div>
       </div>
     </div>
@@ -327,7 +314,7 @@ const faqStructuredData = {
   >
     <div class="shell metrazh-definition-grid">
       <div>
-        <p class="section-sign">تعریف کوتاه و رسمی</p>
+        <p class="section-sign">در یک جمله</p>
         <h2 id="metrazh-definition-title">متراژ چیست؟</h2>
       </div>
       <div>
@@ -354,13 +341,13 @@ const faqStructuredData = {
   >
     <div class="shell">
       <header class="interface-tour-head">
-        <p class="section-sign">سه لحظه از یک روز کاری</p>
+        <p class="section-sign">سه موقعیت آشنا از روز کاری</p>
         <h2 id="interface-tour-title">
-          متراژ را با صفحه‌های واقعی‌اش بشناسید.
+          ببینید متراژ در هر لحظه چه کمکی می‌کند.
         </h2>
         <p>
-          این تصاویر از خود محیط برنامه‌اند. هر بخش با اتفاقی شروع می‌شود که در
-          کار روزانهٔ مشاور املاک رخ می‌دهد، نه با یک نام فنی نامفهوم.
+          سه تصویر واقعی از خود برنامه؛ برای تماس مشتری، ثبت فایل تازه و پیدا
+          کردن گزینه‌های نزدیک‌تر به نیاز او.
         </p>
       </header>
 
@@ -403,11 +390,15 @@ const faqStructuredData = {
   <section class="capability-ledger" aria-labelledby="capability-ledger-title">
     <div class="shell capability-ledger-layout">
       <header>
-        <p class="section-sign section-sign-light">کارهایی که یک‌جا می‌مانند</p>
-        <h2 id="capability-ledger-title">قابلیت‌ها را با نتیجه‌شان بخوانید.</h2>
+        <p class="section-sign section-sign-light">
+          کارهایی که کنار هم می‌مانند
+        </p>
+        <h2 id="capability-ledger-title">
+          متراژ دقیقاً چه کاری از دوش شما برمی‌دارد؟
+        </h2>
         <p>
-          این فهرست بر پایهٔ نسخهٔ عمومی است؛ بدون قابلیت خیالی و بدون وعدهٔ
-          زودهنگام.
+          این فهرست فقط امکانات نسخهٔ عمومی را توضیح می‌دهد؛ هر مورد با نتیجه‌ای
+          که در کار روزانه دارد.
         </p>
         <div class="ledger-links">
           <a href="/apps/metrazh/status/">وضعیت رسمی انتشار ←</a>
@@ -439,9 +430,9 @@ const faqStructuredData = {
       <section class="metrazh-guides" aria-labelledby="metrazh-guides-title">
         <div class="shell metrazh-guides-layout">
           <header>
-            <p class="section-sign">ابزار کافی نیست</p>
+            <p class="section-sign">از نصب تا استفاده</p>
             <h2 id="metrazh-guides-title">
-              روش کار را یاد بگیرید؛ داخل متراژ ادامه دهید.
+              اول روش را یاد بگیرید؛ بعد داخل متراژ اجرایش کنید.
             </h2>
             <p>
               راهنماهای رایگان، کوتاه و اجرایی‌اند؛ برای وقتی که می‌خواهید همین
@@ -473,10 +464,10 @@ const faqStructuredData = {
     <div class="shell metrazh-faq-layout">
       <header>
         <p class="section-sign">پیش از نصب</p>
-        <h2 id="metrazh-faq-title">سؤال مهم را بی‌پاسخ نمی‌گذاریم.</h2>
+        <h2 id="metrazh-faq-title">پاسخ سؤال‌های اصلی، پیش از تصمیم.</h2>
         <p>
-          دربارهٔ نگهداری داده، اینترنت، انتقال اطلاعات و نسخهٔ رسمی اینجا پاسخ
-          کوتاه و روشن می‌گیرید.
+          دربارهٔ نگهداری داده، اینترنت، انتقال اطلاعات و نسخهٔ رسمی، جواب کوتاه
+          و دقیق را همین‌جا بخوانید.
         </p>
       </header>
       <div class="metrazh-faq-list">

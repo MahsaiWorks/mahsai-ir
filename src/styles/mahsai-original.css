@@ -1,6 +1,6 @@
 /*
- * MAHSAI — «خطِ کار»
- * A restrained editorial system built around real product evidence.
+ * MAHSAI — a calm, continuous system for product, learning, and support.
+ * Trust builds the structure, teal marks action, and orange guides attention.
  */
 
 :root {
@@ -19,6 +19,9 @@
   --mint-soft: #e0efea;
   --orange: #9d3b29;
   --orange-soft: #f6d3c8;
+  --brand-trust: var(--ink);
+  --brand-action: var(--teal-dark);
+  --brand-attention: var(--orange);
   --shadow-sm: 0 0.5rem 1.5rem rgba(6, 26, 49, 0.05);
   --shadow-md: 0 1rem 2.8rem rgba(6, 26, 49, 0.09);
   --shadow-device: 0 1.4rem 3.5rem rgba(1, 12, 27, 0.2);
@@ -44,12 +47,12 @@ h4 {
 }
 
 h1 {
-  font-size: clamp(2.75rem, 6.6vw, 5.25rem);
+  font-size: clamp(2.55rem, 5.8vw, 4.65rem);
   line-height: 1.17;
 }
 
 h2 {
-  font-size: clamp(2.1rem, 4.4vw, 3.65rem);
+  font-size: clamp(1.95rem, 3.8vw, 3.35rem);
   line-height: 1.22;
 }
 
@@ -62,6 +65,31 @@ h2 {
     color 160ms ease,
     background 160ms ease,
     border-color 160ms ease;
+}
+
+.button {
+  color: var(--white);
+  background: var(--brand-action);
+  border-color: var(--brand-action);
+}
+
+.button-secondary {
+  color: var(--ink);
+  background: transparent;
+  border-color: var(--ink);
+}
+
+.button-light {
+  color: var(--ink);
+  background: var(--white);
+  border-color: var(--white);
+}
+
+.header-cta,
+.mobile-nav .mobile-download-link {
+  color: var(--white);
+  background: var(--brand-action);
+  border-color: var(--brand-action);
 }
 
 .button:hover,
@@ -349,24 +377,6 @@ h2 {
   inset-block-start: 22.5rem;
 }
 
-.screen-ledger > p {
-  position: absolute;
-  z-index: 4;
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  padding: 0.45rem 0.65rem;
-  margin: 0;
-  inset-inline-end: 1rem;
-  inset-block-end: 1rem;
-  color: var(--ink);
-  background: var(--paper);
-  border: 1px solid var(--ink);
-  font-size: 0.76rem;
-  font-weight: 740;
-}
-
-.screen-ledger > p span,
 .product-status-line span {
   width: 0.55rem;
   height: 0.55rem;
@@ -508,42 +518,27 @@ h2 {
 
 .evidence-visual {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 11rem;
-  align-items: end;
+  min-height: 38rem;
+  place-items: center;
   background: #0c2a42;
   border: 1px solid var(--line-light);
 }
 
 .evidence-visual figure {
+  width: min(68%, 25rem);
   max-height: 38rem;
   overflow: hidden;
-  border-inline-end: 1px solid var(--line-light);
+  border: 1px solid var(--line-light);
+  box-shadow: var(--shadow-device);
 }
 
 .evidence-visual figure img {
   width: 100%;
 }
 
-.evidence-caption {
-  display: flex;
-  min-height: 100%;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 0.35rem;
-  padding: 1.25rem;
-}
-
-.evidence-caption strong {
-  color: var(--orange-soft);
-}
-
-.evidence-caption span {
-  font-size: 0.86rem;
-  line-height: 1.75;
-}
-
 .mahsai-journal {
   padding-block: var(--section-space);
+  background: var(--paper);
 }
 
 .journal-intro {
@@ -746,19 +741,6 @@ h2 {
   inset-inline-end: 5%;
 }
 
-.dossier-screens > p {
-  position: absolute;
-  z-index: 4;
-  padding: 0.45rem 0.7rem;
-  margin: 0;
-  inset-inline-start: 1rem;
-  inset-block-end: 1rem;
-  color: var(--white);
-  background: var(--ink);
-  font-size: 0.76rem;
-  font-weight: 760;
-}
-
 .product-status-line {
   display: flex;
   align-items: center;
@@ -940,7 +922,7 @@ h2 {
 /* Metrazh product story */
 
 .metrazh-product-hero {
-  padding-block: 1.2rem clamp(4rem, 7vw, 6.5rem);
+  padding-block: 0.8rem clamp(3.25rem, 5vw, 4.75rem);
   overflow: hidden;
   border-bottom: 1px solid var(--line);
 }
@@ -949,7 +931,7 @@ h2 {
   display: flex;
   gap: 0.55rem;
   align-items: center;
-  padding-block: 0.65rem 2.7rem;
+  padding-block: 0.65rem 1.6rem;
   color: var(--muted);
   font-size: 0.78rem;
 }
@@ -966,15 +948,15 @@ h2 {
 }
 
 .metrazh-title-wordmark {
-  width: clamp(10rem, 18vw, 13.5rem);
+  width: clamp(8.5rem, 12vw, 9.5rem);
   height: auto;
   margin-bottom: 0.5rem;
 }
 
 .metrazh-hero-copy h1 {
-  max-width: 12ch;
+  max-width: 15ch;
   margin-bottom: 1.3rem;
-  font-size: clamp(2.65rem, 5.8vw, 4.75rem);
+  font-size: clamp(2.4rem, 4.4vw, 3.75rem);
 }
 
 .metrazh-hero-copy .lead {
@@ -1040,51 +1022,6 @@ h2 {
 
 .metrazh-hero-screen figure img {
   width: 100%;
-}
-
-.screen-note {
-  position: absolute;
-  z-index: 2;
-  display: grid;
-  min-width: 11rem;
-  grid-template-columns: 0.65rem 1fr;
-  gap: 0 0.55rem;
-  padding: 0.75rem 0.85rem;
-  background: var(--paper);
-  border: 1px solid var(--ink);
-}
-
-.screen-note > span {
-  width: 0.55rem;
-  height: 0.55rem;
-  grid-row: 1 / span 2;
-  margin-top: 0.38rem;
-  background: var(--teal);
-}
-
-.screen-note strong,
-.screen-note small {
-  line-height: 1.45;
-}
-
-.screen-note strong {
-  color: var(--ink);
-  font-size: 0.82rem;
-}
-
-.screen-note small {
-  color: var(--muted);
-  font-size: 0.7rem;
-}
-
-.screen-note-top {
-  inset-inline-start: 1rem;
-  inset-block-start: 6.5rem;
-}
-
-.screen-note-bottom {
-  inset-inline-end: 1rem;
-  inset-block-end: 2.5rem;
 }
 
 .metrazh-fact-band {
@@ -1727,6 +1664,27 @@ h2 {
 
 /* Editorial pages: fewer panels, stronger rhythm */
 
+.page-stage {
+  border-bottom: 1px solid var(--line);
+}
+
+.page-stage-frame,
+.page-stage[data-tone='mint'] .page-stage-frame,
+.page-stage[data-tone='apricot'] .page-stage-frame {
+  padding: clamp(2rem, 5vw, 4rem) 0;
+  background: transparent;
+  border: 0;
+  border-top: 0.3rem solid var(--brand-attention);
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.page-stage-note {
+  border-inline-start: 0.25rem solid var(--brand-action);
+  border-radius: 0;
+}
+
 .editorial-card,
 .related-card,
 .spatial-card,
@@ -2162,10 +2120,6 @@ h2 {
     inset-block-start: 7rem;
   }
 
-  .screen-ledger > p {
-    max-width: calc(100% - 2rem);
-  }
-
   .work-route-list {
     padding-inline-start: 1.55rem;
   }
@@ -2234,20 +2188,6 @@ h2 {
   .metrazh-hero-screen figure {
     width: 58%;
     max-height: 28rem;
-  }
-
-  .screen-note {
-    min-width: 9rem;
-    padding: 0.55rem;
-  }
-
-  .screen-note-top {
-    inset-inline-start: 0.55rem;
-  }
-
-  .screen-note-bottom {
-    inset-inline-end: 0.55rem;
-    inset-block-end: 1rem;
   }
 
   .metrazh-fact-band dl {
@@ -2332,10 +2272,6 @@ h2 {
   .screen-ledger,
   .dossier-screens {
     min-height: 25rem;
-  }
-
-  .screen-ledger > p {
-    font-size: 0.68rem;
   }
 
   .metrazh-fact-band dl {
