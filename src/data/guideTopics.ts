@@ -155,6 +155,7 @@ export const guideTopics: GuideTopic[] = [
     ],
     articleIds: [
       'complete-property-file',
+      'name-property-files',
       'score-property-files',
       'stale-property-files',
     ],
@@ -517,6 +518,7 @@ export const guideTopics: GuideTopic[] = [
 
 const articleGuideMap: Record<string, GuideTopicSlug> = {
   'complete-property-file': 'property-files',
+  'name-property-files': 'property-files',
   'score-property-files': 'property-files',
   'stale-property-files': 'property-files',
   'secure-real-estate-data': 'property-files',

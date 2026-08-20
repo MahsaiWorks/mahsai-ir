@@ -10,7 +10,7 @@ coverHeight: 1024
 coverAlt: 'جعبه امن، پوشه‌های ملک، تلفن همراه و حافظه پشتیبان در یک تصویر سه‌بعدی روشن'
 accent: 'navy'
 cluster: 'files'
-seriesOrder: 4
+seriesOrder: 5
 related:
   - 'complete-property-file'
   - 'stale-property-files'

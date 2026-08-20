@@ -1,0 +1,355 @@
+<section
+  class="file-name-builder"
+  data-file-name-builder
+  aria-labelledby="file-name-builder-title"
+>
+  <div class="builder-heading">
+    <div>
+      <p>ابزار کاربردی همین راهنما</p>
+      <h2 id="file-name-builder-title">عنوان فایل را همین‌جا بسازید.</h2>
+    </div>
+    <span>اطلاعات فقط در مرورگر شما می‌ماند</span>
+  </div>
+
+  <p class="builder-intro" id="file-name-builder-help">
+    چهار بخش را کامل کنید. خروجی کوتاه و یکدست است و می‌توانید آن را در یادداشت،
+    پوشه یا سامانهٔ فعلی دفترتان استفاده کنید.
+  </p>
+
+  <form autocomplete="off" data-file-name-form>
+    <fieldset aria-describedby="file-name-builder-help">
+      <legend>چهار جزء عنوان</legend>
+      <div class="builder-grid">
+        <label>
+          <span>نوع معامله</span>
+          <select name="transaction" data-file-part required>
+            <option value="">انتخاب کنید</option>
+            <option value="فروش">فروش</option>
+            <option value="رهن و اجاره">رهن و اجاره</option>
+            <option value="پیش‌فروش">پیش‌فروش</option>
+          </select>
+        </label>
+
+        <label>
+          <span>محله</span>
+          <input
+            name="neighborhood"
+            data-file-part
+            type="text"
+            maxlength="40"
+            placeholder="مثلاً جنت‌آباد جنوبی"
+            required
+          />
+        </label>
+
+        <label>
+          <span>نوع ملک</span>
+          <select name="propertyType" data-file-part required>
+            <option value="">انتخاب کنید</option>
+            <option value="آپارتمان">آپارتمان</option>
+            <option value="خانهٔ ویلایی">خانهٔ ویلایی</option>
+            <option value="زمین">زمین</option>
+            <option value="مغازه">مغازه</option>
+            <option value="دفتر کار">دفتر کار</option>
+          </select>
+        </label>
+
+        <label>
+          <span>نشانهٔ تشخیصی</span>
+          <input
+            name="clue"
+            data-file-part
+            type="text"
+            maxlength="60"
+            placeholder="مثلاً ۲خواب، طبقهٔ ۳"
+            required
+          />
+        </label>
+      </div>
+    </fieldset>
+
+    <div class="builder-result">
+      <span>عنوان پیشنهادی</span>
+      <output data-file-name-output aria-live="polite" tabindex="0">
+        بعد از تکمیل چهار بخش، عنوان اینجا ساخته می‌شود.
+      </output>
+    </div>
+
+    <div class="builder-actions">
+      <button
+        class="builder-copy"
+        type="submit"
+        data-file-name-copy
+        data-event="property_file_name_copied"
+        disabled
+      >
+        کپی عنوان
+      </button>
+      <button class="builder-reset" type="reset">پاک‌کردن فرم</button>
+      <p data-file-name-status role="status" aria-live="polite"></p>
+    </div>
+  </form>
+</section>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector('[data-file-name-builder]');
+    if (!root) return;
+
+    const form = root.querySelector('[data-file-name-form]');
+    const output = root.querySelector('[data-file-name-output]');
+    const copyButton = root.querySelector('[data-file-name-copy]');
+    const status = root.querySelector('[data-file-name-status]');
+    const parts = [...root.querySelectorAll('[data-file-part]')];
+
+    if (!form || !output || !copyButton || !status || parts.length === 0) {
+      return;
+    }
+
+    const clean = (value) =>
+      value.replaceAll('|', ' ').replace(/\s+/g, ' ').trim();
+
+    const update = () => {
+      const values = parts.map((part) => clean(part.value));
+      const complete = values.every(Boolean);
+      output.textContent = complete
+        ? values.join(' | ')
+        : 'بعد از تکمیل چهار بخش، عنوان اینجا ساخته می‌شود.';
+      copyButton.disabled = !complete;
+      status.textContent = '';
+    };
+
+    form.addEventListener('input', update);
+    form.addEventListener('reset', () => window.setTimeout(update, 0));
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (copyButton.disabled) return;
+
+      try {
+        if (!navigator.clipboard?.writeText) throw new Error('clipboard');
+        await navigator.clipboard.writeText(output.textContent.trim());
+        status.textContent = 'عنوان کپی شد.';
+      } catch {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(output);
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+        output.focus();
+        status.textContent =
+          'عنوان انتخاب شد؛ برای کپی از کلیدهای کنترل و C استفاده کنید.';
+      }
+    });
+  })();
+</script>
+
+<style>
+  .file-name-builder {
+    position: relative;
+    max-width: 68ch;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    margin-block: 2rem 3.25rem;
+    overflow: hidden;
+    background:
+      radial-gradient(
+        circle at 8% 0%,
+        rgba(188, 235, 220, 0.72),
+        transparent 34%
+      ),
+      var(--white);
+    border: 1px solid rgba(14, 110, 101, 0.2);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .file-name-builder::after {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    width: 5rem;
+    height: 0.35rem;
+    content: '';
+    background: var(--orange);
+    border-end-start-radius: 1rem;
+  }
+
+  .builder-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  .builder-heading p {
+    margin-bottom: 0.3rem;
+    color: var(--teal-dark);
+    font-size: 0.78rem;
+    font-weight: 760;
+  }
+
+  .builder-heading h2 {
+    margin: 0;
+    font-size: clamp(1.55rem, 3.6vw, 2.15rem);
+  }
+
+  .builder-heading > span {
+    padding: 0.45rem 0.7rem;
+    color: var(--teal-dark);
+    background: var(--mint-soft);
+    border: 1px solid rgba(14, 110, 101, 0.14);
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 680;
+    white-space: nowrap;
+  }
+
+  .builder-intro {
+    max-width: 58ch;
+    margin-block: 1rem 1.4rem;
+    color: var(--muted);
+    font-size: 0.94rem;
+  }
+
+  fieldset {
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+  legend {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .builder-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  label {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  label > span {
+    color: var(--ink);
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  input,
+  select {
+    width: 100%;
+    min-height: 3.1rem;
+    padding: 0.7rem 0.85rem;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 0.75rem;
+  }
+
+  input::placeholder {
+    color: #718092;
+  }
+
+  input:focus-visible,
+  select:focus-visible,
+  button:focus-visible {
+    outline: 0.2rem solid var(--orange);
+    outline-offset: 0.15rem;
+  }
+
+  .builder-result {
+    padding: 1rem 1.1rem;
+    margin-top: 1.25rem;
+    color: rgba(255, 255, 255, 0.78);
+    background: var(--ink);
+    border-radius: var(--radius-sm);
+  }
+
+  .builder-result > span {
+    display: block;
+    margin-bottom: 0.35rem;
+    color: var(--mint);
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  output {
+    display: block;
+    color: var(--white);
+    font-size: clamp(1rem, 2.4vw, 1.2rem);
+    font-weight: 720;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+  }
+
+  .builder-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    align-items: center;
+    margin-top: 1rem;
+  }
+
+  .builder-actions button {
+    min-height: 2.8rem;
+    padding: 0.62rem 1rem;
+    border-radius: 0.7rem;
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .builder-copy {
+    color: var(--white);
+    background: var(--teal-dark);
+    border: 1px solid var(--teal-dark);
+  }
+
+  .builder-copy:disabled {
+    cursor: not-allowed;
+    opacity: 0.48;
+  }
+
+  .builder-reset {
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--line);
+  }
+
+  [data-file-name-status] {
+    flex: 1 1 12rem;
+    margin: 0;
+    color: var(--teal-dark);
+    font-size: 0.82rem;
+    font-weight: 650;
+  }
+
+  @media (max-width: 40rem) {
+    .builder-heading,
+    .builder-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .builder-heading > span {
+      width: fit-content;
+      white-space: normal;
+    }
+
+    .builder-actions button {
+      flex: 1 1 8rem;
+    }
+
+    [data-file-name-status] {
+      flex-basis: 100%;
+    }
+  }
+</style>

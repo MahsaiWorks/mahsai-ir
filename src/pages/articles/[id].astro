@@ -6,6 +6,7 @@ import { siteConfig } from '../../config/site';
 import { articleClusters } from '../../data/articleClusters';
 import { getGuideForArticle } from '../../data/guideTopics';
 import AnswerFirst from '../../components/AnswerFirst.astro';
+import PropertyFileNameBuilder from '../../components/PropertyFileNameBuilder.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
@@ -26,6 +27,7 @@ const cluster = articleClusters.find(
   (entry) => entry.id === article.data.cluster,
 );
 const topicGuide = getGuideForArticle(article.id);
+const hasPropertyFileNameBuilder = article.id === 'name-property-files';
 const sameCluster = allArticles
   .filter(
     (entry) =>
@@ -245,6 +247,7 @@ const breadcrumbStructuredData = {
 
       <div class="article-body prose">
         <AnswerFirst answer={article.data.description} />
+        {hasPropertyFileNameBuilder && <PropertyFileNameBuilder />}
         <Content />
         <section class="editorial-note" aria-labelledby="editorial-note-title">
           <p class="eyebrow">شفافیت تحریریه</p>

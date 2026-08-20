@@ -3054,6 +3054,7 @@ ol {
 
 .article-body {
   width: min(100%, 48rem);
+  min-width: 0;
 }
 
 .prose {

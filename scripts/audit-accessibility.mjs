@@ -18,6 +18,7 @@ const accessibilityRoutes = [
   '/articles/',
   '/articles/topics/files/',
   '/articles/complete-property-file/',
+  '/articles/name-property-files/',
   '/resources/real-estate-checklists/',
   '/about/',
   '/support/',
@@ -111,6 +112,45 @@ try {
         failures.push(
           `${profile.name} ${route}: نخستین توقف صفحه‌کلید روی پیوند پرش نیست.`,
         );
+      }
+
+      if (route === '/articles/name-property-files/') {
+        await page.locator('select[name="transaction"]').selectOption('فروش');
+        await page.locator('input[name="neighborhood"]').fill('جنت‌آباد جنوبی');
+        await page
+          .locator('select[name="propertyType"]')
+          .selectOption('آپارتمان');
+        await page.locator('input[name="clue"]').fill('۲خواب، طبقهٔ ۳');
+
+        const builderState = await page.evaluate(() => ({
+          output:
+            document
+              .querySelector('[data-file-name-output]')
+              ?.textContent?.trim() ?? '',
+          copyDisabled:
+            document.querySelector('[data-file-name-copy]')?.disabled ?? true,
+        }));
+        const expectedTitle =
+          'فروش | جنت‌آباد جنوبی | آپارتمان | ۲خواب، طبقهٔ ۳';
+        if (
+          builderState.output !== expectedTitle ||
+          builderState.copyDisabled
+        ) {
+          failures.push(
+            `${profile.name} ${route}: عنوان‌ساز خروجی کامل و قابل کپی نساخت.`,
+          );
+        }
+
+        await page.locator('.builder-reset').click();
+        await page.waitForTimeout(0);
+        const resetDisabled = await page
+          .locator('[data-file-name-copy]')
+          .isDisabled();
+        if (!resetDisabled) {
+          failures.push(
+            `${profile.name} ${route}: پاک‌کردن فرم، کپی عنوان ناقص را غیرفعال نکرد.`,
+          );
+        }
       }
 
       report.push({

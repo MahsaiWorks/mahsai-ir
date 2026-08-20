@@ -10,7 +10,7 @@ coverHeight: 1024
 coverAlt: 'پرونده‌های ملکی، نقشه و ابزارهای بازبینی فایل روی میز کار مشاور'
 accent: 'sand'
 cluster: 'files'
-seriesOrder: 3
+seriesOrder: 4
 related:
   - 'score-property-files'
   - 'complete-property-file'

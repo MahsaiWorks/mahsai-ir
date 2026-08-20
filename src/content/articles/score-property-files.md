@@ -10,7 +10,7 @@ coverHeight: 1024
 coverAlt: 'پوشهٔ فایل ملکی، کلیدها و ماکت‌های خانه روی میز بررسی پرونده'
 accent: 'teal'
 cluster: 'files'
-seriesOrder: 2
+seriesOrder: 3
 related:
   - 'complete-property-file'
   - 'stale-property-files'

@@ -20,6 +20,12 @@
   - منبع: https://www.pexels.com/photo/wooden-house-moder-keys-and-contract-on-table-12955837/
   - مجوز: Pexels License — نسخهٔ ۱۵۳۶ در ۱۰۲۴ پیکسل برای وب بهینه شده است.
 
+- `public/images/editorial/real/property-file-naming.jpg`
+  - عنوان: Close-up of hands organizing papers in a blue folder
+  - سازنده: Anete Lusina
+  - منبع: https://www.pexels.com/photo/person-choosing-document-in-folder-4792285/
+  - مجوز: Pexels License — نسخهٔ ۱۵۳۶ در ۱۰۲۴ پیکسل برای وب بهینه شده است.
+
 ## تصاویر محصول
 
 فایل‌های `public/images/apps/metrazh/` اسکرین‌شات‌ها و دارایی‌های رسمی اپلیکیشن متراژ هستند.
