@@ -11,8 +11,8 @@ const path = Astro.url.pathname;
 const links = [
   { href: '/apps/', label: 'محصولات' },
   { href: '/apps/metrazh/', label: 'متراژ' },
+  { href: '/tools/', label: 'ابزارها' },
   { href: '/guides/', label: 'راهنماها' },
-  { href: '/academy/', label: 'آموزش' },
   { href: '/articles/', label: 'مجله' },
 ];
 
@@ -28,6 +28,20 @@ const downloadLink = featuredApp
 const downloadUrl = downloadLink
   ? getTrackedCafeBazaarUrl(downloadLink.url, 'header')
   : undefined;
+const mobileDownloadUrl = downloadLink
+  ? getTrackedCafeBazaarUrl(downloadLink.url, 'mobile_install_dock')
+  : undefined;
+const showInstallDock =
+  path === '/' ||
+  [
+    '/apps/',
+    '/tools/',
+    '/guides/',
+    '/academy/',
+    '/articles/',
+    '/resources/',
+    '/real-estate-software/',
+  ].some((prefix) => path.startsWith(prefix));
 ---
 
 <header class="site-header">
@@ -114,6 +128,33 @@ const downloadUrl = downloadLink
     </details>
   </div>
 </header>
+
+{
+  mobileDownloadUrl && featuredApp && showInstallDock && (
+    <aside class="mobile-install-dock" aria-label="نصب اپلیکیشن متراژ">
+      <a
+        href={mobileDownloadUrl}
+        target="_blank"
+        rel="noopener"
+        data-event="metrazh_bazaar_click"
+        data-event-location="mobile_install_dock"
+      >
+        <ResponsiveImage
+          src={featuredApp.data.icon}
+          alt=""
+          width="48"
+          height="48"
+          aria-hidden="true"
+        />
+        <span>
+          <strong>متراژ</strong>
+          <small>نصب رایگان از کافه‌بازار</small>
+        </span>
+        <b>نصب</b>
+      </a>
+    </aside>
+  )
+}
 
 <script is:inline>
   (() => {

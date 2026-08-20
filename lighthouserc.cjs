@@ -24,6 +24,7 @@ module.exports = {
       url: [
         'http://localhost/',
         'http://localhost/apps/metrazh/',
+        'http://localhost/tools/',
         'http://localhost/real-estate-software/',
         'http://localhost/articles/complete-property-file/',
       ],

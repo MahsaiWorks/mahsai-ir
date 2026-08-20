@@ -1,12 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
 import ResponsiveImage from '../components/ResponsiveImage.astro';
+import WorkdayNavigator from '../components/WorkdayNavigator.astro';
 import { siteConfig } from '../config/site';
 import {
   getCafeBazaarLink,
   getTrackedCafeBazaarUrl,
 } from '../data/appPresentation';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/real-estate-tools.css';
 
 const app = (await getCollection('apps')).find(
   (entry) => entry.id === 'metrazh' && entry.data.status === 'available',
@@ -28,24 +30,72 @@ const readingList = articles.slice(1, 4);
 
 const workRoutes = [
   {
-    problem: 'مالک همین الان فایل داده',
-    outcome:
-      'قبل از اینکه جزئیات بین پیام‌ها گم شود، فایل را ثبت و پیدا‌کردنی نگه دارید.',
+    id: 'new-file',
+    label: 'فایل تازه رسیده',
+    eyebrow: 'مالک منتظر جواب است',
+    title: 'جزئیات را قبل از گم‌شدن، به یک پروندهٔ قابل پیدا کردن تبدیل کنید.',
+    description:
+      'از همان تماس اول معلوم کنید چه چیزی قطعی است، چه چیزی باید کامل شود و دفعهٔ بعد برای چه موضوعی با مالک تماس می‌گیرید.',
+    steps: [
+      'هویت فایل و نوع معامله را روشن کنید.',
+      'قیمت و امکان بازدید را با تاریخ تأیید بنویسید.',
+      'اقدام بعدی برای تماس با مالک بگذارید.',
+    ],
     href: '/guides/property-files/',
-    action: 'مرتب‌کردن فایل‌ها',
+    action: 'مسیر فایل‌گیری را باز کنید',
+    secondaryHref: '/tools/',
+    secondaryAction: 'عنوان فایل بسازید',
   },
   {
-    problem: 'مشتری دوباره تماس گرفته',
-    outcome:
-      'بودجه، محله و خواسته‌هایش روبه‌روی شماست؛ لازم نیست سؤال‌ها را از اول بپرسید.',
+    id: 'client-call',
+    label: 'مشتری پشت خط است',
+    eyebrow: 'گفت‌وگو نباید از صفر شروع شود',
+    title: 'خواستهٔ واقعی مشتری را از علاقه‌های لحظه‌ای جدا کنید.',
+    description:
+      'بودجه، محله و تعداد اتاق کافی نیست. شرط قطعی، زمان تصمیم و دلیل رد یا پسند فایل قبلی مسیر معرفی بعدی را دقیق می‌کند.',
+    steps: [
+      'شرط قطعی را از ترجیح جدا کنید.',
+      'چند فایل نزدیک را با دلیل انتخاب کنید.',
+      'زمان و موضوع پیگیری بعدی را مشخص کنید.',
+    ],
     href: '/guides/real-estate-clients/',
-    action: 'شناخت بهتر مشتری',
+    action: 'راهنمای شناخت مشتری',
+    secondaryHref: '/articles/match-property-to-client/',
+    secondaryAction: 'تطبیق فایل و مشتری',
   },
   {
-    problem: 'وقت تماس یا بازدید نزدیک شده',
-    outcome: 'قدم بعدی کنار همان مشتری می‌ماند تا وسط شلوغی دفتر از قلم نیفتد.',
-    href: '/academy/',
-    action: 'راهنماهای کوتاه و کاربردی',
+    id: 'visit-time',
+    label: 'قرار بازدید نزدیک است',
+    eyebrow: 'قبل از حرکت، همه‌چیز را یک‌بار ببینید',
+    title: 'بازدید را از یک قرار پراکنده به مسیری روشن تبدیل کنید.',
+    description:
+      'فعال بودن فایل، حضور مالک، ترتیب مسیر و انتظار مشتری را هماهنگ کنید؛ بعد از بازدید هم نتیجه را بدون اقدام بعدی رها نکنید.',
+    steps: [
+      'فایل، مالک و ساعت قرار را دوباره تأیید کنید.',
+      'بین مسیرها زمان واقعی بگذارید.',
+      'بازخورد را به یک اقدام مشخص تبدیل کنید.',
+    ],
+    href: '/guides/property-visits/',
+    action: 'برنامهٔ بازدید را بچینید',
+    secondaryHref: '/resources/real-estate-checklists/#property-visits',
+    secondaryAction: 'چک‌لیست چاپی',
+  },
+  {
+    id: 'choose-tool',
+    label: 'دنبال ابزار مناسبم',
+    eyebrow: 'اول مسئله، بعد نرم‌افزار',
+    title: 'ابزاری را انتخاب کنید که در سه لحظهٔ واقعی روزتان جواب بدهد.',
+    description:
+      'نام قابلیت‌ها کافی نیست. ثبت فایل تازه، پاسخ به مشتری قدیمی و پیگیری بازدید را با اطلاعات واقعی خودتان امتحان کنید.',
+    steps: [
+      'سه مسئلهٔ پرتکرار دفتر را بنویسید.',
+      'سرعت پیدا کردن اطلاعات را آزمایش کنید.',
+      'پشتیبانی، خروجی و امنیت داده را بسنجید.',
+    ],
+    href: '/real-estate-software/',
+    action: 'راهنمای انتخاب نرم‌افزار',
+    secondaryHref: '/apps/metrazh/',
+    secondaryAction: 'دیدن متراژ',
   },
 ] as const;
 ---
@@ -134,34 +184,74 @@ const workRoutes = [
     </div>
   </section>
 
-  <section class="work-index" aria-labelledby="work-index-title">
-    <div class="shell work-index-layout">
-      <header class="work-index-head">
-        <p class="section-sign">سه لحظهٔ آشنا از یک روز کاری</p>
-        <h2 id="work-index-title">
-          فایل رسید، مشتری زنگ زد، وقت پیگیری شد؛ متراژ تکه‌های کار را به هم وصل
-          می‌کند.
-        </h2>
+  <WorkdayNavigator routes={workRoutes} />
+
+  <section class="home-toolkit" aria-labelledby="home-toolkit-title">
+    <div class="shell">
+      <header class="home-toolkit-head">
+        <div>
+          <p class="section-sign">میز ابزار رایگان MAHSAI</p>
+          <h2 id="home-toolkit-title">
+            لازم نیست برای هر جواب ساده، فرم پر کنید یا شماره بدهید.
+          </h2>
+        </div>
         <p>
-          قرار نیست روش کارتان را عوض کنید. فقط اطلاعاتی که هر روز با آن‌ها سر و
-          کار دارید، جای مشخص و قدم بعدی روشن پیدا می‌کنند.
+          ابزارها و برگه‌های آماده مستقیم در مرورگر باز می‌شوند؛ برای استفادهٔ
+          روزمرهٔ دفتر، نه جمع‌کردن اطلاعات شما.
         </p>
       </header>
-      <div class="work-route-list">
-        {
-          workRoutes.map((route) => (
-            <article class="work-route">
-              <span class="work-node" aria-hidden="true" />
-              <div>
-                <p>{route.problem}</p>
-                <h3>{route.outcome}</h3>
-              </div>
-              <a href={route.href}>
-                {route.action} <span aria-hidden="true">←</span>
-              </a>
-            </article>
-          ))
-        }
+
+      <div class="home-toolkit-grid">
+        <article class="tool-preview tool-preview-name">
+          <div class="tool-preview-copy">
+            <span>ابزار تعاملی</span>
+            <h3>عنوان یکدست برای فایل بسازید.</h3>
+            <p>
+              نوع معامله، محله، نوع ملک و نشانهٔ تشخیصی را بدهید؛ یک عنوان کوتاه
+              و پیدا‌کردنی تحویل بگیرید.
+            </p>
+            <a class="button" href="/tools/">ساختن عنوان فایل</a>
+          </div>
+          <div class="file-title-demo" aria-hidden="true">
+            <span>فروش</span><span>جنت‌آباد جنوبی</span><span>آپارتمان</span>
+            <strong>۲خواب، طبقهٔ ۳</strong>
+          </div>
+        </article>
+
+        <article class="tool-preview tool-preview-paper">
+          <div class="checklist-paper" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <div>
+            <span>نسخهٔ چاپی</span>
+            <h3>چهار چک‌لیست کنار میز کار.</h3>
+            <p>
+              فایل‌گیری، نیاز مشتری، بازدید و آگهی؛ آمادهٔ چاپ یا ذخیرهٔ PDF.
+            </p>
+            <a class="arrow-link" href="/resources/real-estate-checklists/">
+              گرفتن چک‌لیست‌ها <span aria-hidden="true">←</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="tool-preview tool-preview-decision">
+          <div class="decision-mark" aria-hidden="true">
+            <span>مسئله</span><i></i><span>آزمون</span><i></i><strong
+              >انتخاب</strong
+            >
+          </div>
+          <div>
+            <span>راهنمای تصمیم</span>
+            <h3>نرم‌افزار را با کار واقعی بسنجید.</h3>
+            <p>
+              یک راهنمای بی‌طرف برای اینکه قبل از انتخاب، سؤال‌های درست را
+              بپرسید.
+            </p>
+            <a class="arrow-link" href="/real-estate-software/">
+              دیدن معیارهای انتخاب <span aria-hidden="true">←</span>
+            </a>
+          </div>
+        </article>
       </div>
     </div>
   </section>

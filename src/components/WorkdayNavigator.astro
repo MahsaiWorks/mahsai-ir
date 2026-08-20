@@ -1,0 +1,118 @@
+---
+export interface WorkdayRoute {
+  id: string;
+  label: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  steps: readonly string[];
+  href: string;
+  action: string;
+  secondaryHref?: string;
+  secondaryAction?: string;
+}
+
+interface Props {
+  routes: readonly WorkdayRoute[];
+}
+
+const { routes } = Astro.props;
+---
+
+<section class="workday-compass" aria-labelledby="workday-compass-title">
+  <div class="shell workday-compass-layout">
+    <header class="workday-compass-head">
+      <p class="section-sign section-sign-light">از مسئلهٔ امروز شروع کنید</p>
+      <h2 id="workday-compass-title">الان کجای کارتان گیر کرده؟</h2>
+      <p>
+        یکی را انتخاب کنید. به‌جای گشتن بین صفحه‌های مختلف، نزدیک‌ترین راه‌حل و
+        قدم بعدی همان‌جا جلوی شما باز می‌شود.
+      </p>
+    </header>
+
+    <div class="workday-compass-board" data-workday-navigator>
+      <div class="workday-choice-list" aria-label="انتخاب مسئلهٔ کاری">
+        {
+          routes.map((route, index) => (
+            <button
+              type="button"
+              class="workday-choice"
+              aria-pressed={index === 0 ? 'true' : 'false'}
+              aria-controls={`workday-panel-${route.id}`}
+              data-workday-choice={route.id}
+            >
+              {route.label}
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="workday-panel-stack">
+        {
+          routes.map((route, index) => (
+            <article
+              class="workday-panel"
+              id={`workday-panel-${route.id}`}
+              data-workday-panel={route.id}
+              hidden={index !== 0}
+            >
+              <div class="workday-panel-copy">
+                <p>{route.eyebrow}</p>
+                <h3>{route.title}</h3>
+                <span>{route.description}</span>
+                <div class="workday-panel-actions">
+                  <a class="button" href={route.href}>
+                    {route.action}
+                  </a>
+                  {route.secondaryHref && route.secondaryAction && (
+                    <a class="arrow-link" href={route.secondaryHref}>
+                      {route.secondaryAction} <span aria-hidden="true">←</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              <ol class="workday-step-list" aria-label="سه قدم پیشنهادی">
+                {route.steps.map((step) => (
+                  <li>{step}</li>
+                ))}
+              </ol>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector('[data-workday-navigator]');
+    if (!root) return;
+
+    const choices = [...root.querySelectorAll('[data-workday-choice]')];
+    const panels = [...root.querySelectorAll('[data-workday-panel]')];
+
+    const selectRoute = (id) => {
+      choices.forEach((choice) => {
+        choice.setAttribute(
+          'aria-pressed',
+          choice.dataset.workdayChoice === id ? 'true' : 'false',
+        );
+      });
+
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.workdayPanel !== id;
+      });
+
+      window.mahsaiMeasure?.('workday_route_selected', { route: id });
+    };
+
+    choices.forEach((choice) => {
+      choice.addEventListener('click', () => {
+        const id = choice.dataset.workdayChoice;
+        if (id) selectRoute(id);
+      });
+    });
+  })();
+</script>

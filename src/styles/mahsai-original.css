@@ -3799,3 +3799,75 @@ h4 {
     transition: none !important;
   }
 }
+
+/* The install dock stays global because it appears on editorial and guide pages. */
+
+.mobile-install-dock {
+  display: none;
+}
+
+@media (max-width: 43.75rem) {
+  body:has(.mobile-install-dock) {
+    padding-block-end: calc(5.7rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .mobile-install-dock {
+    position: fixed;
+    z-index: 95;
+    display: block;
+    inset-inline: 0.65rem;
+    inset-block-end: calc(0.65rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .mobile-install-dock > a {
+    display: grid;
+    min-height: 4.55rem;
+    grid-template-columns: 2.8rem minmax(0, 1fr) auto;
+    gap: 0.7rem;
+    align-items: center;
+    padding: 0.55rem 0.65rem;
+    color: var(--white);
+    background: rgba(12, 34, 52, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 1.25rem;
+    box-shadow: 0 1rem 2.6rem rgba(1, 14, 26, 0.28);
+    text-decoration: none;
+    backdrop-filter: blur(18px);
+  }
+
+  .mobile-install-dock picture,
+  .mobile-install-dock img {
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 0.8rem;
+  }
+
+  .mobile-install-dock > a > span {
+    display: grid;
+    gap: 0.05rem;
+  }
+
+  .mobile-install-dock strong {
+    color: var(--white);
+    font-size: 0.92rem;
+  }
+
+  .mobile-install-dock small {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.72rem;
+  }
+
+  .mobile-install-dock b {
+    padding: 0.55rem 0.85rem;
+    color: var(--ink);
+    background: var(--mint);
+    border-radius: 0.8rem;
+    font-size: 0.82rem;
+  }
+}
+
+@media print {
+  .mobile-install-dock {
+    display: none !important;
+  }
+}

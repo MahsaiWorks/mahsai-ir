@@ -1,0 +1,859 @@
+/* A problem-first workbench gives the real-estate surface its own interaction
+   language instead of repeating a generic marketing-card grid. */
+
+.workday-compass {
+  position: relative;
+  padding-block: var(--section-space);
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.76);
+  background:
+    radial-gradient(
+      circle at 8% 12%,
+      rgba(25, 141, 130, 0.48),
+      transparent 19rem
+    ),
+    radial-gradient(
+      circle at 92% 88%,
+      rgba(227, 104, 75, 0.24),
+      transparent 22rem
+    ),
+    #0c2234;
+}
+
+.workday-compass::before,
+.workday-compass::after {
+  position: absolute;
+  content: '';
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+.workday-compass::before {
+  width: 18rem;
+  height: 18rem;
+  inset-inline-start: -9rem;
+  inset-block-end: -10rem;
+  background: rgba(233, 225, 245, 0.1);
+}
+
+.workday-compass::after {
+  width: 0.72rem;
+  height: 0.72rem;
+  inset-inline-end: 8%;
+  inset-block-start: 12%;
+  background: var(--butter);
+  box-shadow:
+    1.8rem 1rem 0 rgba(191, 229, 216, 0.5),
+    -1rem 2.3rem 0 rgba(227, 104, 75, 0.42);
+}
+
+.workday-compass-layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.48fr) minmax(0, 1.52fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  align-items: start;
+}
+
+.workday-compass-head {
+  position: sticky;
+  inset-block-start: 7rem;
+}
+
+.workday-compass-head h2 {
+  max-width: 9ch;
+  color: var(--white);
+  font-size: clamp(2.2rem, 4.6vw, 4rem);
+}
+
+.workday-compass-head > p:last-child {
+  max-width: 31rem;
+  margin-top: 1.3rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.workday-compass-board {
+  min-width: 0;
+}
+
+.workday-choice-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.workday-choice {
+  min-height: 3rem;
+  padding: 0.68rem 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 720;
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.workday-choice:hover {
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.32);
+  transform: translateY(-0.1rem);
+}
+
+.workday-choice[aria-pressed='true'] {
+  color: var(--ink);
+  background: var(--mint);
+  border-color: var(--mint);
+  box-shadow: 0 0.55rem 1.5rem rgba(25, 141, 130, 0.22);
+}
+
+.workday-choice:focus-visible {
+  outline: 0.2rem solid var(--butter);
+  outline-offset: 0.18rem;
+}
+
+.workday-panel-stack {
+  position: relative;
+}
+
+.workday-panel {
+  position: relative;
+  display: grid;
+  min-height: 26rem;
+  grid-template-columns: minmax(0, 1.08fr) minmax(14rem, 0.72fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  padding: clamp(1.7rem, 4.5vw, 3.6rem);
+  overflow: hidden;
+  color: var(--text);
+  background:
+    radial-gradient(
+      circle at 94% 5%,
+      rgba(255, 240, 184, 0.75),
+      transparent 12rem
+    ),
+    var(--paper);
+  border-radius: 2.4rem;
+  box-shadow: 0 2rem 4.5rem rgba(1, 14, 26, 0.28);
+}
+
+.workday-panel[hidden] {
+  display: none;
+}
+
+.workday-panel::before {
+  position: absolute;
+  width: 8rem;
+  height: 2rem;
+  inset-inline-start: 3rem;
+  inset-block-start: 0;
+  content: '';
+  background: rgba(191, 229, 216, 0.72);
+  border-radius: 0 0 1rem 1rem;
+}
+
+.workday-panel[data-workday-panel='client-call'] {
+  background:
+    radial-gradient(
+      circle at 94% 5%,
+      rgba(255, 226, 214, 0.9),
+      transparent 13rem
+    ),
+    var(--paper);
+}
+
+.workday-panel[data-workday-panel='visit-time'] {
+  background:
+    radial-gradient(
+      circle at 94% 5%,
+      rgba(233, 225, 245, 0.95),
+      transparent 13rem
+    ),
+    var(--paper);
+}
+
+.workday-panel[data-workday-panel='choose-tool'] {
+  background:
+    radial-gradient(
+      circle at 94% 5%,
+      rgba(191, 229, 216, 0.9),
+      transparent 13rem
+    ),
+    var(--paper);
+}
+
+.workday-panel-copy > p {
+  margin-bottom: 0.55rem;
+  color: var(--teal-dark);
+  font-size: 0.8rem;
+  font-weight: 780;
+}
+
+.workday-panel-copy h3 {
+  max-width: 15ch;
+  margin-bottom: 0.8rem;
+  color: var(--ink);
+  font-size: clamp(1.65rem, 3vw, 2.45rem);
+  line-height: 1.5;
+}
+
+.workday-panel-copy > span {
+  display: block;
+  max-width: 54ch;
+  color: var(--muted);
+  line-height: 2;
+}
+
+.workday-panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.workday-step-list {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.workday-step-list li {
+  position: relative;
+  padding: 0.9rem 2.2rem 0.9rem 0.9rem;
+  color: var(--ink);
+  background: rgba(255, 254, 250, 0.82);
+  border: 1px solid rgba(31, 65, 82, 0.07);
+  border-radius: 1rem;
+  box-shadow: 0 0.45rem 1.25rem rgba(33, 52, 63, 0.035);
+}
+
+.workday-step-list li::before {
+  position: absolute;
+  width: 0.62rem;
+  height: 0.62rem;
+  inset-inline-start: 0.95rem;
+  inset-block-start: 1.35rem;
+  content: '';
+  background: var(--orange);
+  border: 0.17rem solid rgba(227, 104, 75, 0.16);
+  border-radius: 50%;
+  background-clip: padding-box;
+}
+
+/* The home toolkit uses familiar desk objects instead of generic icon cards. */
+
+.home-toolkit {
+  padding-block: var(--section-space);
+  background: var(--paper);
+}
+
+.home-toolkit-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.6fr);
+  gap: 2.5rem;
+  align-items: end;
+  margin-bottom: 2.4rem;
+}
+
+.home-toolkit-head h2 {
+  max-width: 19ch;
+}
+
+.home-toolkit-head > p {
+  max-width: 38rem;
+  color: var(--muted);
+}
+
+.home-toolkit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.tool-preview {
+  position: relative;
+  min-width: 0;
+  padding: clamp(1.4rem, 3.5vw, 2.5rem);
+  overflow: hidden;
+  border-radius: 2rem;
+}
+
+.tool-preview > div > span,
+.tool-preview-copy > span {
+  display: inline-block;
+  margin-bottom: 0.45rem;
+  color: var(--teal-dark);
+  font-size: 0.76rem;
+  font-weight: 780;
+}
+
+.tool-preview h3 {
+  margin-bottom: 0.55rem;
+  color: var(--ink);
+  font-size: clamp(1.35rem, 2.5vw, 2rem);
+}
+
+.tool-preview p {
+  max-width: 48ch;
+  color: var(--muted);
+}
+
+.tool-preview-name {
+  display: grid;
+  min-height: 28rem;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 0.78fr) minmax(21rem, 1.22fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: center;
+  background:
+    radial-gradient(
+      circle at 10% 15%,
+      rgba(255, 240, 184, 0.75),
+      transparent 12rem
+    ),
+    linear-gradient(135deg, #dff2e9, #f8e3da);
+}
+
+.file-title-demo {
+  position: relative;
+  display: flex;
+  min-height: 15rem;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-content: center;
+  padding: 3.2rem 2rem 2rem;
+  background: var(--white);
+  border-radius: 1.8rem;
+  box-shadow: var(--shadow-md);
+  transform: rotate(-1deg);
+}
+
+.file-title-demo::before {
+  position: absolute;
+  width: 8.5rem;
+  height: 2.3rem;
+  inset-inline-start: 1.6rem;
+  inset-block-start: 0;
+  content: '';
+  background: var(--mint);
+  border-radius: 0 0 1rem 1rem;
+}
+
+.file-title-demo span {
+  padding: 0.55rem 0.8rem;
+  color: var(--teal-dark);
+  background: var(--mint-soft);
+  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 720;
+}
+
+.file-title-demo strong {
+  width: 100%;
+  padding: 1rem 1.1rem;
+  margin-top: 0.25rem;
+  color: var(--white);
+  background: var(--ink);
+  border-radius: 1rem;
+  font-size: clamp(1.05rem, 2.4vw, 1.45rem);
+  line-height: 1.8;
+}
+
+.tool-preview-paper {
+  display: grid;
+  min-height: 25rem;
+  grid-template-columns: minmax(9rem, 0.6fr) minmax(0, 1fr);
+  gap: 1.8rem;
+  align-items: center;
+  background: #fff0e7;
+}
+
+.checklist-paper {
+  position: relative;
+  display: grid;
+  gap: 1.3rem;
+  min-height: 17rem;
+  padding: 3.5rem 1.2rem 1.2rem;
+  background: var(--white);
+  border-radius: 0.35rem 1.2rem 1.2rem 0.35rem;
+  box-shadow: var(--shadow-sm);
+  transform: rotate(2deg);
+}
+
+.checklist-paper::before {
+  position: absolute;
+  width: 4.8rem;
+  height: 1.1rem;
+  inset-inline-start: 50%;
+  inset-block-start: 1rem;
+  content: '';
+  background: var(--butter);
+  border-radius: 999px;
+  transform: translateX(50%);
+}
+
+.checklist-paper span {
+  position: relative;
+  display: block;
+  height: 0.12rem;
+  margin-inline-start: 1.6rem;
+  background: rgba(31, 65, 82, 0.14);
+}
+
+.checklist-paper span::before {
+  position: absolute;
+  width: 0.75rem;
+  height: 0.75rem;
+  inset-inline-start: -1.55rem;
+  inset-block-start: -0.35rem;
+  content: '';
+  border: 0.12rem solid var(--teal);
+  border-radius: 0.2rem;
+}
+
+.tool-preview-decision {
+  display: grid;
+  min-height: 25rem;
+  align-content: space-between;
+  gap: 2rem;
+  background: #f0ecf8;
+}
+
+.decision-mark {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  padding: 1.1rem;
+  background: rgba(255, 254, 250, 0.72);
+  border-radius: 1.3rem;
+}
+
+.decision-mark span,
+.decision-mark strong {
+  padding: 0.55rem 0.75rem;
+  color: var(--ink);
+  background: var(--white);
+  border-radius: 0.8rem;
+  font-size: 0.84rem;
+}
+
+.decision-mark strong {
+  color: var(--white);
+  background: var(--teal-dark);
+}
+
+.decision-mark i {
+  width: clamp(1.6rem, 4vw, 3.8rem);
+  height: 0.12rem;
+  background: rgba(31, 65, 82, 0.2);
+}
+
+/* Tools index: a bookmarkable utility surface with strong privacy cues. */
+
+.tool-index-hero {
+  padding-block: clamp(2.5rem, 6vw, 6rem);
+  background:
+    radial-gradient(
+      circle at 88% 12%,
+      rgba(255, 240, 184, 0.78),
+      transparent 18rem
+    ),
+    linear-gradient(145deg, var(--paper), #e9f6f0);
+}
+
+.tool-index-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(25rem, 1.08fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  align-items: center;
+}
+
+.tool-index-hero h1 {
+  max-width: 13ch;
+}
+
+.tool-trust-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  padding: 0;
+  margin: 1.5rem 0 1.7rem;
+  list-style: none;
+}
+
+.tool-trust-list li {
+  padding: 0.48rem 0.75rem;
+  color: var(--teal-dark);
+  background: rgba(255, 254, 250, 0.75);
+  border: 1px solid rgba(31, 65, 82, 0.07);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.tool-index-visual {
+  position: relative;
+  padding: 0.7rem;
+  overflow: hidden;
+  background: rgba(255, 254, 250, 0.75);
+  border-radius: 2.4rem;
+  box-shadow: var(--shadow-md);
+}
+
+.tool-index-visual img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 1.9rem;
+}
+
+.tool-index-visual figcaption {
+  position: absolute;
+  inset-inline-start: 1.6rem;
+  inset-block-end: 1.6rem;
+  max-width: min(19rem, calc(100% - 3.2rem));
+  padding: 0.9rem 1rem;
+  background: rgba(255, 254, 250, 0.9);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(10px);
+}
+
+.tool-index-visual figcaption span {
+  display: block;
+  color: var(--orange);
+  font-size: 0.72rem;
+  font-weight: 760;
+}
+
+.tool-index-visual figcaption strong {
+  color: var(--ink);
+  line-height: 1.7;
+}
+
+.tool-workbench {
+  padding-block: var(--section-space);
+  background: var(--white);
+}
+
+.tool-workbench-layout {
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.52fr) minmax(0, 1.48fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  align-items: start;
+}
+
+.tool-workbench-layout > header {
+  position: sticky;
+  inset-block-start: 7rem;
+}
+
+.tool-workbench-layout > header h2 {
+  max-width: 10ch;
+}
+
+.tool-workbench-layout > header > p:last-child {
+  margin-top: 1rem;
+  color: var(--muted);
+}
+
+.tool-workbench .file-name-builder {
+  max-width: none;
+  margin: 0;
+  padding: clamp(1.4rem, 4vw, 2.4rem);
+  background:
+    radial-gradient(
+      circle at 8% 0%,
+      rgba(188, 235, 220, 0.82),
+      transparent 34%
+    ),
+    var(--paper);
+  border: 0;
+  border-radius: 2rem;
+  box-shadow: var(--shadow-md);
+}
+
+.tool-shelf {
+  padding-block: var(--section-space);
+  background: var(--paper);
+}
+
+.tool-shelf-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.tool-shelf-card {
+  display: flex;
+  min-height: 22rem;
+  flex-direction: column;
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+  color: var(--text);
+  background: var(--white);
+  border-radius: 1.8rem;
+  box-shadow: 0 0.6rem 1.8rem rgba(33, 52, 63, 0.05);
+  text-decoration: none;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.tool-shelf-card:hover {
+  color: var(--text);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-0.2rem);
+}
+
+.tool-shelf-card > span {
+  align-self: flex-start;
+  padding: 0.35rem 0.65rem;
+  margin-bottom: auto;
+  color: var(--teal-dark);
+  background: rgba(255, 254, 250, 0.72);
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 760;
+}
+
+.tool-shelf-card h3 {
+  margin-block: 2.2rem 0.65rem;
+  font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+}
+
+.tool-shelf-card p {
+  color: var(--muted);
+}
+
+.tool-shelf-card > strong {
+  margin-top: 1.3rem;
+  color: var(--teal-dark);
+}
+
+.tool-shelf-card-paper {
+  background: #fff0e7;
+}
+
+.tool-shelf-card-guide {
+  background: var(--mint-soft);
+}
+
+.tool-shelf-card-choice {
+  background: #f0ecf8;
+}
+
+.tool-product-bridge {
+  padding-block: clamp(3.5rem, 7vw, 6rem);
+  color: rgba(255, 255, 255, 0.74);
+  background:
+    radial-gradient(
+      circle at 12% 20%,
+      rgba(25, 141, 130, 0.42),
+      transparent 16rem
+    ),
+    #0c2234;
+}
+
+.tool-product-bridge-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.6fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  align-items: end;
+}
+
+.tool-product-bridge h2 {
+  max-width: 19ch;
+  color: var(--white);
+}
+
+.tool-product-bridge p {
+  max-width: 58ch;
+  margin-top: 1rem;
+}
+
+.tool-product-actions {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}
+
+@media (max-width: 70rem) {
+  .workday-compass-layout,
+  .tool-workbench-layout {
+    grid-template-columns: minmax(15rem, 0.58fr) minmax(0, 1.42fr);
+    gap: 3rem;
+  }
+
+  .workday-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .workday-step-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 56.25rem) {
+  .workday-compass-layout,
+  .tool-index-hero-grid,
+  .tool-workbench-layout,
+  .tool-product-bridge-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .workday-compass-head,
+  .tool-workbench-layout > header {
+    position: static;
+  }
+
+  .workday-compass-head h2,
+  .tool-workbench-layout > header h2 {
+    max-width: 14ch;
+  }
+
+  .home-toolkit-head {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .tool-preview-name {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-preview-paper {
+    grid-template-columns: minmax(8rem, 0.42fr) minmax(0, 1fr);
+  }
+
+  .tool-shelf-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-shelf-card {
+    min-height: 17rem;
+  }
+}
+
+@media (max-width: 43.75rem) {
+  .workday-choice-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .workday-choice {
+    width: 100%;
+    min-height: 3.35rem;
+    padding-inline: 0.7rem;
+  }
+
+  .workday-panel {
+    min-height: 0;
+    padding: 1.35rem;
+    padding-block-start: 2.7rem;
+    border-radius: 1.65rem;
+  }
+
+  .workday-panel::before {
+    width: 6rem;
+    inset-inline-start: 1.5rem;
+  }
+
+  .workday-panel-copy h3 {
+    font-size: 1.55rem;
+  }
+
+  .workday-step-list {
+    grid-template-columns: 1fr;
+  }
+
+  .workday-panel-actions,
+  .workday-panel-actions .button {
+    width: 100%;
+  }
+
+  .home-toolkit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-preview {
+    grid-column: auto;
+    padding: 1.25rem;
+    border-radius: 1.55rem;
+  }
+
+  .tool-preview-name {
+    min-height: 0;
+  }
+
+  .file-title-demo {
+    min-height: 12rem;
+    padding: 2.8rem 1rem 1rem;
+    transform: none;
+  }
+
+  .tool-preview-paper {
+    min-height: 0;
+    grid-template-columns: 1fr;
+  }
+
+  .checklist-paper {
+    width: min(72%, 15rem);
+    min-height: 13rem;
+    justify-self: center;
+  }
+
+  .tool-preview-decision {
+    min-height: 0;
+  }
+
+  .tool-index-visual {
+    padding: 0.45rem;
+    border-radius: 1.7rem;
+  }
+
+  .tool-index-visual img {
+    border-radius: 1.35rem;
+  }
+
+  .tool-index-visual figcaption {
+    inset-inline: 0.9rem;
+    inset-block-end: 0.9rem;
+    max-width: none;
+  }
+
+  .tool-trust-list {
+    display: grid;
+  }
+
+  .tool-trust-list li {
+    border-radius: 0.85rem;
+  }
+
+  .tool-workbench .file-name-builder {
+    padding: 1.1rem;
+    border-radius: 1.5rem;
+  }
+
+  .tool-shelf-card {
+    min-height: 15rem;
+    border-radius: 1.45rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workday-choice,
+  .tool-shelf-card {
+    transition: none;
+  }
+}
