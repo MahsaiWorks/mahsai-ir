@@ -106,21 +106,26 @@
       return;
     }
 
+    const emptyOutput = output.textContent.trim();
+
     const clean = (value) =>
       value.replaceAll('|', ' ').replace(/\s+/g, ' ').trim();
 
     const update = () => {
       const values = parts.map((part) => clean(part.value));
       const complete = values.every(Boolean);
-      output.textContent = complete
-        ? values.join(' | ')
-        : 'بعد از تکمیل چهار بخش، عنوان اینجا ساخته می‌شود.';
+      output.textContent = complete ? values.join(' | ') : emptyOutput;
       copyButton.disabled = !complete;
       status.textContent = '';
     };
 
     form.addEventListener('input', update);
-    form.addEventListener('reset', () => window.setTimeout(update, 0));
+    form.addEventListener('reset', () => {
+      copyButton.disabled = true;
+      output.textContent = emptyOutput;
+      status.textContent = '';
+      window.setTimeout(update, 0);
+    });
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (copyButton.disabled) return;
