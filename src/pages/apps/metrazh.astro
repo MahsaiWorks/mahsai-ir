@@ -314,6 +314,51 @@ const faqStructuredData = {
   </section>
 
   <section
+    class="metrazh-site-story"
+    aria-labelledby="metrazh-site-story-title"
+    data-view-event="metrazh_site_story_seen"
+  >
+    <div class="shell metrazh-site-story-shell">
+      <header>
+        <p class="section-sign">متراژ در یک نگاه</p>
+        <h2 id="metrazh-site-story-title">
+          قبل از نصب، متراژ رو توی کار واقعی ببین
+        </h2>
+        <p>
+          این ویدیوی کوتاه نشون می‌ده متراژ چطور فایل، مشتری و پیگیری رو کنار هم
+          نگه می‌داره. تصویرهای داخل گوشی از خود برنامه‌ان.
+        </p>
+        {
+          bazaarLink && (
+            <StoreBadge href={bazaarLink.url} location="metrazh_story" />
+          )
+        }
+      </header>
+
+      <div class="metrazh-site-story-stage">
+        <div class="metrazh-site-story-video">
+          <video
+            controls
+            muted
+            playsinline
+            preload="metadata"
+            poster="/images/apps/metrazh/metrazh-site-story-poster-v1.webp"
+            aria-label="ویدیوی کوتاه معرفی اپلیکیشن متراژ"
+          >
+            <source src="/videos/metrazh-site-story-v1.mp4" type="video/mp4" />
+            مرورگر شما نمایش ویدیو را پشتیبانی نمی‌کند.
+          </video>
+          <span aria-hidden="true">۱۲ ثانیه</span>
+        </div>
+        <p class="metrazh-site-story-note">
+          <strong>یک موقعیت آشنا، یک راه‌حل روشن.</strong>
+          بدون ادعای اضافی؛ با تصویر واقعی از نسخهٔ فعلی متراژ.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section
     class="metrazh-definition"
     aria-labelledby="metrazh-definition-title"
   >

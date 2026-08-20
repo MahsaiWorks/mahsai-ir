@@ -3800,6 +3800,136 @@ h4 {
   }
 }
 
+/* Metrazh film: a short, site-only product story using the real app interface. */
+
+.metrazh-site-story {
+  padding-block: clamp(2.2rem, 5vw, 4.8rem);
+  background: var(--paper);
+}
+
+.metrazh-site-story-shell {
+  display: grid;
+  grid-template-columns: minmax(17rem, 0.7fr) minmax(0, 1.3fr);
+  gap: clamp(1.8rem, 4vw, 3.8rem);
+  align-items: center;
+  padding: clamp(1.35rem, 4vw, 3.2rem);
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 10% 12%,
+      rgba(255, 240, 184, 0.78),
+      transparent 16rem
+    ),
+    radial-gradient(
+      circle at 96% 86%,
+      rgba(227, 104, 75, 0.16),
+      transparent 18rem
+    ),
+    var(--mint-soft);
+  border-radius: 2.4rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.metrazh-site-story header {
+  display: grid;
+  justify-items: start;
+}
+
+.metrazh-site-story h2 {
+  max-width: 12ch;
+  margin-bottom: 1rem;
+}
+
+.metrazh-site-story header > p:not(.section-sign) {
+  max-width: 32rem;
+  margin-bottom: 1.4rem;
+  color: var(--text);
+  font-size: clamp(1rem, 1.45vw, 1.13rem);
+  line-height: 2;
+}
+
+.metrazh-site-story-stage {
+  min-width: 0;
+}
+
+.metrazh-site-story-video {
+  position: relative;
+  overflow: hidden;
+  background: var(--ink);
+  border: 0.34rem solid rgba(255, 254, 250, 0.78);
+  border-radius: 1.8rem;
+  box-shadow: var(--shadow-device);
+}
+
+.metrazh-site-story-video video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--ink);
+}
+
+.metrazh-site-story-video > span {
+  position: absolute;
+  inset-block-start: 0.85rem;
+  inset-inline-start: 0.85rem;
+  padding: 0.3rem 0.65rem;
+  color: var(--white);
+  background: rgba(12, 34, 52, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 720;
+  backdrop-filter: blur(12px);
+  pointer-events: none;
+}
+
+.metrazh-site-story-note {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.55rem;
+  margin: 0.9rem 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.8;
+}
+
+.metrazh-site-story-note strong {
+  color: var(--ink);
+}
+
+@media (max-width: 56.25rem) {
+  .metrazh-site-story-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .metrazh-site-story h2,
+  .metrazh-site-story header > p:not(.section-sign) {
+    max-width: 36rem;
+  }
+}
+
+@media (max-width: 43.75rem) {
+  .metrazh-site-story {
+    padding-block: 1.8rem 3.5rem;
+  }
+
+  .metrazh-site-story-shell {
+    gap: 1.35rem;
+    padding: 1rem;
+    border-radius: 1.65rem;
+  }
+
+  .metrazh-site-story-video {
+    border-width: 0.2rem;
+    border-radius: 1.15rem;
+  }
+
+  .metrazh-site-story header .store-badge {
+    width: 100%;
+  }
+}
+
 /* The install dock stays global because it appears on editorial and guide pages. */
 
 .mobile-install-dock {
