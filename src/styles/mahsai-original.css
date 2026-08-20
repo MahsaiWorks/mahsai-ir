@@ -569,13 +569,16 @@ h2 {
 .journal-feature > a {
   display: block;
   max-height: 30rem;
+  aspect-ratio: var(--journal-cover-ratio, 3 / 2);
   overflow: hidden;
   border: 1px solid var(--line);
 }
 
 .journal-feature img {
+  display: block;
   width: 100%;
-  min-height: 24rem;
+  height: 100%;
+  min-height: 0;
   object-fit: cover;
 }
 
@@ -2151,7 +2154,7 @@ h2 {
   }
 
   .journal-feature img {
-    min-height: 17rem;
+    min-height: 0;
   }
 
   .dossier-screens {

@@ -228,7 +228,10 @@ const workRoutes = [
 
           <div class="journal-spread">
             <article class="journal-feature">
-              <a href={`/articles/${featuredArticle.id}/`}>
+              <a
+                href={`/articles/${featuredArticle.id}/`}
+                style={`--journal-cover-ratio: ${featuredArticle.data.coverWidth} / ${featuredArticle.data.coverHeight};`}
+              >
                 <ResponsiveImage
                   src={featuredArticle.data.cover}
                   alt={featuredArticle.data.coverAlt}
