@@ -22,16 +22,16 @@ const { routes } = Astro.props;
 <section class="workday-compass" aria-labelledby="workday-compass-title">
   <div class="shell workday-compass-layout">
     <header class="workday-compass-head">
-      <p class="section-sign section-sign-light">از مسئلهٔ امروز شروع کنید</p>
+      <p class="section-sign section-sign-light">کار امروزتان را انتخاب کنید</p>
       <h2 id="workday-compass-title">الان کجای کارتان گیر کرده؟</h2>
       <p>
-        یکی را انتخاب کنید. به‌جای گشتن بین صفحه‌های مختلف، نزدیک‌ترین راه‌حل و
-        قدم بعدی همان‌جا جلوی شما باز می‌شود.
+        یکی را انتخاب کنید تا مستقیم بروید سراغ راهنما یا ابزاری که به کارتان
+        می‌آید.
       </p>
     </header>
 
     <div class="workday-compass-board" data-workday-navigator>
-      <div class="workday-choice-list" aria-label="انتخاب مسئلهٔ کاری">
+      <div class="workday-choice-list" aria-label="انتخاب کار موردنظر">
         {
           routes.map((route, index) => (
             <button

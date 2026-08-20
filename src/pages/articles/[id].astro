@@ -263,7 +263,7 @@ const breadcrumbStructuredData = {
                 {
                   article.data.cluster === 'legal'
                     ? 'مرور منابع و درگاه‌های رسمی پیوندشده در متن، همراه با هشدار مراجعه به فرد دارای صلاحیت برای هر پرونده.'
-                    : 'آموزش مرحله‌ای و قابل اجرا، با تطبیق ادعاهای محصول با قابلیت‌های مستند نسخهٔ عمومی متراژ.'
+                    : 'آموزش ساده و مرحله‌به‌مرحله، همراه با بررسی توضیح‌های محصول و امکانات نسخهٔ فعلی متراژ.'
                 }
               </dd>
             </div>
@@ -283,16 +283,14 @@ const breadcrumbStructuredData = {
             )
           }
           <p>
-            خطا یا اطلاعات قدیمی دیدید؟ مسیر اصلاح و شیوهٔ پاسخ‌گویی در
-            <a href="/editorial-policy/"> سیاست تحریریه و اصلاحات</a> آمده است.
+            اشتباه یا اطلاعات قدیمی دیدید؟ روش گزارش و اصلاح آن در
+            <a href="/editorial-policy/"> سیاست تحریریه</a> آمده است.
           </p>
         </section>
         <ShareActions title={article.data.title} location="article" />
         <aside class="article-inline-cta">
           <span>متراژ، محصول مهسای</span>
-          <h2>
-            اگر این روش به کارتان می‌آید، داخل اپلیکیشن متراژ مرتب نگهش دارید.
-          </h2>
+          <h2>این کارها را در متراژ ثبت کنید تا چیزی یادتان نرود</h2>
           <p>
             فایل، متقاضی، بازدید و پیگیری را یک‌جا ثبت کنید تا دفعه بعد از صفر
             شروع نکنید و وسط شلوغی دفتر چیزی جا نماند.
@@ -313,7 +311,7 @@ const breadcrumbStructuredData = {
       <section class="series-next" aria-labelledby="series-next-title">
         <div class="shell series-next-inner">
           <div>
-            <p class="eyebrow">قدم بعدی این مسیر</p>
+            <p class="eyebrow">مقالهٔ بعدی</p>
             <h2 id="series-next-title">
               <a href={`/articles/${nextInSeries.id}/`}>
                 {nextInSeries.data.title}
@@ -322,7 +320,7 @@ const breadcrumbStructuredData = {
             <p>{nextInSeries.data.description}</p>
           </div>
           <a class="button" href={`/articles/${nextInSeries.id}/`}>
-            ادامه مطالعه
+            خواندن مقالهٔ بعدی
           </a>
         </div>
       </section>
@@ -335,8 +333,10 @@ const breadcrumbStructuredData = {
         <div class="shell">
           <div class="journal-section-head">
             <div>
-              <p class="eyebrow">اگر این موضوع برایتان مهم بود</p>
-              <h2 id="related-title">این راهنماها را هم از دست ندهید.</h2>
+              <p class="eyebrow">مطالب مرتبط</p>
+              <h2 id="related-title">
+                این مقاله‌ها هم ممکن است به کارتان بیایند
+              </h2>
             </div>
             <a class="story-link" href="/articles/">
               همهٔ مقاله‌ها
