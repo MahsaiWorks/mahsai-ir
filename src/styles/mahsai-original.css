@@ -272,7 +272,7 @@ h2 {
 }
 
 .mahsai-hero-copy h1 {
-  max-width: 12ch;
+  max-width: min(100%, 32.25rem);
   margin-bottom: 1.5rem;
 }
 
@@ -957,7 +957,7 @@ h2 {
 }
 
 .metrazh-hero-copy h1 {
-  max-width: 15ch;
+  max-width: min(100%, 32.5rem);
   margin-bottom: 1.3rem;
   font-size: clamp(2.4rem, 4.4vw, 3.75rem);
 }
@@ -1923,7 +1923,7 @@ h2 {
 
   .mahsai-hero-copy h1,
   .metrazh-hero-copy h1 {
-    max-width: 14ch;
+    max-width: min(100%, 24.5rem);
   }
 
   .screen-ledger {
