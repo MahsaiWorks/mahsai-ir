@@ -6,5 +6,5 @@
     "verbatimModuleSyntax": true
   },
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"]
+  "exclude": ["dist", "source-assets/video/metrazh-site-story-v1/**/*"]
 }
