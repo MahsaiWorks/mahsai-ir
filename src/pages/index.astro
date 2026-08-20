@@ -28,24 +28,24 @@ const readingList = articles.slice(1, 4);
 
 const workRoutes = [
   {
-    problem: 'فایل تازه می‌رسد',
-    outcome: 'اطلاعات ملک همان لحظه در یک پروندهٔ قابل جست‌وجو ثبت می‌شود.',
+    problem: 'مالک همین الان فایل داده',
+    outcome:
+      'قبل از اینکه جزئیات بین پیام‌ها گم شود، فایل را ثبت و پیدا‌کردنی نگه دارید.',
     href: '/guides/property-files/',
-    action: 'روش نظم‌دادن به فایل‌ها',
+    action: 'مرتب‌کردن فایل‌ها',
   },
   {
-    problem: 'مشتری نیازش را توضیح می‌دهد',
+    problem: 'مشتری دوباره تماس گرفته',
     outcome:
-      'بودجه، محدوده و اولویت‌ها می‌مانند تا گفت‌وگوی بعدی از صفر شروع نشود.',
+      'بودجه، محله و خواسته‌هایش روبه‌روی شماست؛ لازم نیست سؤال‌ها را از اول بپرسید.',
     href: '/guides/real-estate-clients/',
-    action: 'راهنمای شناخت و پیگیری مشتری',
+    action: 'شناخت بهتر مشتری',
   },
   {
-    problem: 'زمان بازدید و پیگیری نزدیک است',
-    outcome:
-      'کار بعدی کنار همان فایل و مشتری روشن می‌ماند؛ نه گوشهٔ دفتر و پیام‌رسان.',
+    problem: 'وقت تماس یا بازدید نزدیک شده',
+    outcome: 'قدم بعدی کنار همان مشتری می‌ماند تا وسط شلوغی دفتر از قلم نیفتد.',
     href: '/academy/',
-    action: 'آموزش‌های کوتاه و اجرایی',
+    action: 'راهنماهای کوتاه و کاربردی',
   },
 ] as const;
 ---
@@ -60,14 +60,14 @@ const workRoutes = [
   <section class="mahsai-hero" aria-labelledby="home-title">
     <div class="shell mahsai-hero-grid">
       <div class="mahsai-hero-copy">
-        <p class="brand-intro">MAHSAI / ابزارهای فارسی برای کار روزانه</p>
+        <p class="brand-intro">برای روزهایی که چند فایل و تماس با هم می‌رسند</p>
         <h1 id="home-title">
-          کمتر دنبال اطلاعات بگردید؛ <span>بیشتر کارتان را جلو ببرید.</span>
+          کار املاک شلوغ است؛ <span>لازم نیست بی‌نظم هم باشد.</span>
         </h1>
         <p class="lead">
-          MAHSAI برای بخش‌های شلوغ کار روزانه، ابزارهای فارسیِ ساده می‌سازد.
-          متراژ، اولین محصول ما، فایل‌های ملک، مشتری‌ها و پیگیری‌ها را یک‌جا نگه
-          می‌دارد تا چیزی گم نشود و کار بعدی معلوم باشد.
+          از تماس مالک تا پیگیری مشتری، اطلاعات بین دفترچه، واتساپ و گالری پخش
+          می‌شود. متراژ همه را روی گوشی شما کنار هم نگه می‌دارد؛ ساده، فارسی و
+          آماده برای روزهای پرکار.
         </p>
         <div class="hero-actions">
           {
@@ -85,13 +85,15 @@ const workRoutes = [
             )
           }
           <a class="arrow-link" href="/apps/metrazh/">
-            قبل از نصب، محیط برنامه را ببینید <span aria-hidden="true">←</span>
+            داخل متراژ را ببینید <span aria-hidden="true">←</span>
           </a>
         </div>
         <dl class="hero-proof-list" aria-label="مشخصات محصول منتشرشده">
-          <div><dt>اکنون در دسترس</dt><dd>متراژ</dd></div>
-          <div><dt>ساخته‌شده برای</dt><dd>مشاور و دفتر املاک</dd></div>
-          <div><dt>اگر کمک خواستید</dt><dd>پشتیبانی مستقیم فارسی</dd></div>
+          <div><dt>برای چه کسی؟</dt><dd>مشاور و دفتر املاک</dd></div>
+          <div><dt>شروع کار</dt><dd>نصب رایگان از بازار</dd></div>
+          <div>
+            <dt>اگر جایی گیر کردید</dt><dd>پشتیبانی فارسی کنار شماست</dd>
+          </div>
         </dl>
       </div>
 
@@ -124,6 +126,10 @@ const workRoutes = [
             sizes="(max-width: 56.25rem) 38vw, 12rem"
           />
         </figure>
+        <p class="screen-ledger-note">
+          <span>وقتی تلفن زنگ می‌خورد</span>
+          <strong>اطلاعات همان‌جا روبه‌روی شماست.</strong>
+        </p>
       </div>
     </div>
   </section>
@@ -131,13 +137,14 @@ const workRoutes = [
   <section class="work-index" aria-labelledby="work-index-title">
     <div class="shell work-index-layout">
       <header class="work-index-head">
-        <p class="section-sign">روش MAHSAI</p>
+        <p class="section-sign">سه لحظهٔ آشنا از یک روز کاری</p>
         <h2 id="work-index-title">
-          از همان جایی شروع می‌کنیم که کار گره می‌خورد.
+          فایل رسید، مشتری زنگ زد، وقت پیگیری شد؛ متراژ تکه‌های کار را به هم وصل
+          می‌کند.
         </h2>
         <p>
-          فایل تازه، تماس مشتری یا پیگیری نزدیک؛ هر ابزار و راهنمای MAHSAI باید
-          یکی از این لحظه‌های واقعی را ساده‌تر کند و قدم بعدی را نشان دهد.
+          قرار نیست روش کارتان را عوض کنید. فقط اطلاعاتی که هر روز با آن‌ها سر و
+          کار دارید، جای مشخص و قدم بعدی روشن پیدا می‌کنند.
         </p>
       </header>
       <div class="work-route-list">
@@ -162,7 +169,9 @@ const workRoutes = [
   <section class="metrazh-evidence" aria-labelledby="metrazh-evidence-title">
     <div class="shell metrazh-evidence-grid">
       <div class="metrazh-evidence-copy">
-        <p class="section-sign section-sign-light">متراژ؛ آمادهٔ نصب</p>
+        <p class="section-sign section-sign-light">
+          متراژ همین حالا قابل نصب است
+        </p>
         <ResponsiveImage
           class="metrazh-wordmark metrazh-wordmark-surface"
           src="/images/apps/metrazh/wordmark-dark.png"
@@ -171,22 +180,20 @@ const workRoutes = [
           height="425"
           sizes="10rem"
         />
-        <h2 id="metrazh-evidence-title">
-          فایل، مشتری و پیگیری؛ کنار هم و پیدا شدنی.
-        </h2>
+        <h2 id="metrazh-evidence-title">هر فایل و مشتری، یک جای مشخص دارد.</h2>
         <p>
-          متراژ برای مشاوری ساخته شده که نمی‌خواهد اطلاعات میان دفترچه، گالری و
-          پیام‌رسان گم شود. نیاز مشتری، مشخصات ملک و کار بعدی در یک میزکار قابل
-          جست‌وجو می‌مانند.
+          اسم مشتری را بزنید و خواسته‌ها، یادداشت آخر و قدم بعدی را ببینید. کد
+          فایل را جست‌وجو کنید و بدون ورق‌زدن دفتر یا بالا و پایین‌کردن پیام‌ها،
+          به همان ملکی برسید که دنبالش هستید.
         </p>
         <ul class="evidence-list">
-          <li>ثبت و جست‌وجوی فایل‌های فروش، رهن و اجاره</li>
-          <li>پروندهٔ مشتری، اولویت‌ها و اقدام بعدی</li>
-          <li>پیشنهاد فایل متناسب با معیارهای ثبت‌شده</li>
+          <li>فایل‌های فروش، رهن و اجاره سریع‌تر پیدا می‌شوند</li>
+          <li>خواسته و پیگیری بعدی مشتری جلوی چشم می‌ماند</li>
+          <li>گزینه‌های نزدیک‌تر به نیاز مشتری برای بررسی جلو می‌آیند</li>
         </ul>
         <div class="hero-actions">
           <a class="button button-light" href="/apps/metrazh/">
-            متراژ را کامل ببینید
+            ببینید متراژ چطور کار می‌کند
           </a>
           <a class="arrow-link arrow-link-light" href="/support/">
             سؤال دارید؟ مستقیم بپرسید <span aria-hidden="true">←</span>
@@ -218,7 +225,7 @@ const workRoutes = [
             <div>
               <p class="section-sign">مجلهٔ کار املاک</p>
               <h2 id="journal-title">
-                چیزی بخوانید که همین امروز به کارتان بیاید.
+                جواب یک سؤال واقعی را در چند دقیقه پیدا کنید.
               </h2>
             </div>
             <a class="arrow-link" href="/articles/">

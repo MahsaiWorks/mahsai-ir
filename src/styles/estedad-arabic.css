@@ -1,0 +1,18 @@
+@font-face {
+  font-family: 'Estedad Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('@fontsource-variable/estedad/files/estedad-arabic-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0600-06ff, U+0750-077f, U+0870-088e, U+0890-0891, U+0897-08e1,
+    U+08e3-08ff, U+200c-200e, U+2010-2011, U+204f, U+2e41, U+fb50-fdff,
+    U+fe70-fe74, U+fe76-fefc, U+102e0-102fb, U+10e60-10e7e, U+10ec2-10ec4,
+    U+10efc-10eff, U+1ee00-1ee03, U+1ee05-1ee1f, U+1ee21-1ee22, U+1ee24,
+    U+1ee27, U+1ee29-1ee32, U+1ee34-1ee37, U+1ee39, U+1ee3b, U+1ee42, U+1ee47,
+    U+1ee49, U+1ee4b, U+1ee4d-1ee4f, U+1ee51-1ee52, U+1ee54, U+1ee57, U+1ee59,
+    U+1ee5b, U+1ee5d, U+1ee5f, U+1ee61-1ee62, U+1ee64, U+1ee67-1ee6a,
+    U+1ee6c-1ee72, U+1ee74-1ee77, U+1ee79-1ee7c, U+1ee7e, U+1ee80-1ee89,
+    U+1ee8b-1ee9b, U+1eea1-1eea3, U+1eea5-1eea9, U+1eeab-1eebb, U+1eef0-1eef1;
+}
