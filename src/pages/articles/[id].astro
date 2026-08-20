@@ -4,6 +4,10 @@ import ShareActions from '../../components/ShareActions.astro';
 import { getCollection, render } from 'astro:content';
 import { siteConfig } from '../../config/site';
 import { articleClusters } from '../../data/articleClusters';
+import {
+  getCafeBazaarLink,
+  getTrackedCafeBazaarUrl,
+} from '../../data/appPresentation';
 import { getGuideForArticle } from '../../data/guideTopics';
 import AnswerFirst from '../../components/AnswerFirst.astro';
 import PropertyFileNameBuilder from '../../components/PropertyFileNameBuilder.astro';
@@ -22,6 +26,18 @@ export async function getStaticPaths() {
 
 const { article, allArticles } = Astro.props;
 const { Content, headings } = await render(article);
+const metrazhApp = (await getCollection('apps')).find(
+  (app) => app.id === 'metrazh' && app.data.status === 'available',
+);
+const bazaarLink = metrazhApp
+  ? getCafeBazaarLink(metrazhApp.data.storeLinks)
+  : undefined;
+const articleInstallUrl = bazaarLink
+  ? getTrackedCafeBazaarUrl(bazaarLink.url, `article_${article.id}_conversion`)
+  : '/apps/metrazh/';
+const metrazhVisual = metrazhApp?.data.screenshots.find((screenshot) =>
+  screenshot.src.includes(article.data.metrazh.visual),
+);
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const cluster = articleClusters.find(
   (entry) => entry.id === article.data.cluster,
@@ -181,7 +197,7 @@ const breadcrumbStructuredData = {
             </div>
 
             <div class="article-takeaways">
-              <p>در این راهنما چه چیزی یاد می‌گیرید؟</p>
+              <p>توی این راهنما چی یاد می‌گیری؟</p>
               <ul>
                 {article.data.takeaways.map((takeaway) => <li>{takeaway}</li>)}
               </ul>
@@ -208,7 +224,7 @@ const breadcrumbStructuredData = {
       data-view-event="article_reading_started"
     >
       <aside class="article-toc" aria-label="فهرست مقاله">
-        <p>سریع بروید سراغ بخش موردنظرتان</p>
+        <p>سریع برو سراغ بخشی که لازم داری</p>
         <ol>
           {
             headings
@@ -222,14 +238,14 @@ const breadcrumbStructuredData = {
         </ol>
         <a
           class="toc-product-link"
-          href="/apps/metrazh/"
-          data-event="article_to_metrazh"
+          href="#metrazh-for-this-article"
+          data-event="article_metrazh_anchor_click"
           data-event-location="article_toc"
         >
-          ببینید اپلیکیشن متراژ چه کمکی می‌کند <span aria-hidden="true">←</span>
+          این کار رو با متراژ انجام بده <span aria-hidden="true">←</span>
         </a>
         <a class="toc-academy-link" href="/academy/">
-          مسیرهای آموزشی املاک <span aria-hidden="true">←</span>
+          راهنماهای بیشتر برای کار املاک <span aria-hidden="true">←</span>
         </a>
         {
           topicGuide && (
@@ -249,6 +265,80 @@ const breadcrumbStructuredData = {
         <AnswerFirst answer={article.data.description} />
         {hasPropertyFileNameBuilder && <PropertyFileNameBuilder />}
         <Content />
+        <aside
+          class="article-inline-cta"
+          id="metrazh-for-this-article"
+          aria-labelledby="metrazh-article-title"
+          data-view-event="article_metrazh_offer_viewed"
+        >
+          <div class="article-inline-cta-copy">
+            <div class="article-metrazh-brand">
+              {
+                metrazhApp && (
+                  <ResponsiveImage
+                    src={metrazhApp.data.icon}
+                    alt=""
+                    width="52"
+                    height="52"
+                    responsive={false}
+                    aria-hidden="true"
+                  />
+                )
+              }
+              <span>حالا با متراژ انجامش بده</span>
+            </div>
+            <h2 id="metrazh-article-title">{article.data.metrazh.title}</h2>
+            <p>{article.data.metrazh.description}</p>
+            <div class="article-inline-cta-actions">
+              <a
+                class="button button-light"
+                href={articleInstallUrl}
+                target={bazaarLink ? '_blank' : undefined}
+                rel={bazaarLink ? 'noopener' : undefined}
+                data-event={bazaarLink
+                  ? 'metrazh_bazaar_click'
+                  : 'article_to_metrazh'}
+                data-event-location={`article_${article.id}_conversion`}
+                aria-label={bazaarLink
+                  ? 'نصب رایگان متراژ از کافه‌بازار'
+                  : 'دیدن صفحهٔ معرفی متراژ'}
+              >
+                {bazaarLink ? 'نصب رایگان متراژ' : 'دیدن متراژ'}
+                <span aria-hidden="true">↗</span>
+              </a>
+              <a
+                class="text-link text-link-light"
+                href="/apps/metrazh/"
+                data-event="article_to_metrazh"
+                data-event-location={`article_${article.id}_details`}
+              >
+                اول خود برنامه رو ببین
+              </a>
+            </div>
+            {
+              bazaarLink && (
+                <small>
+                  دکمهٔ نصب، مستقیم صفحهٔ رسمی متراژ در کافه‌بازار رو باز
+                  می‌کنه.
+                </small>
+              )
+            }
+          </div>
+          {
+            metrazhVisual && (
+              <figure class="article-inline-cta-visual">
+                <ResponsiveImage
+                  src={metrazhVisual.src}
+                  alt={metrazhVisual.alt}
+                  width="720"
+                  height="1280"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            )
+          }
+        </aside>
         <section class="editorial-note" aria-labelledby="editorial-note-title">
           <p class="eyebrow">شفافیت تحریریه</p>
           <h2 id="editorial-note-title">این مطلب چطور تهیه و به‌روز می‌شود؟</h2>
@@ -283,25 +373,11 @@ const breadcrumbStructuredData = {
             )
           }
           <p>
-            اشتباه یا اطلاعات قدیمی دیدید؟ روش گزارش و اصلاح آن در
+            اشتباه یا اطلاعات قدیمی دیدی؟ روش گزارش و اصلاحش در
             <a href="/editorial-policy/"> سیاست تحریریه</a> آمده است.
           </p>
         </section>
         <ShareActions title={article.data.title} location="article" />
-        <aside class="article-inline-cta">
-          <span>متراژ، محصول مهسای</span>
-          <h2>این کارها را در متراژ ثبت کنید تا چیزی یادتان نرود</h2>
-          <p>
-            فایل، متقاضی، بازدید و پیگیری را یک‌جا ثبت کنید تا دفعه بعد از صفر
-            شروع نکنید و وسط شلوغی دفتر چیزی جا نماند.
-          </p>
-          <a
-            class="button"
-            href="/apps/metrazh/"
-            data-event="article_to_metrazh"
-            data-event-location="article_inline_cta">اپلیکیشن متراژ را ببینید</a
-          >
-        </aside>
       </div>
     </div>
   </article>
@@ -320,7 +396,7 @@ const breadcrumbStructuredData = {
             <p>{nextInSeries.data.description}</p>
           </div>
           <a class="button" href={`/articles/${nextInSeries.id}/`}>
-            خواندن مقالهٔ بعدی
+            مقالهٔ بعدی رو بخون
           </a>
         </div>
       </section>
@@ -334,9 +410,7 @@ const breadcrumbStructuredData = {
           <div class="journal-section-head">
             <div>
               <p class="eyebrow">مطالب مرتبط</p>
-              <h2 id="related-title">
-                این مقاله‌ها هم ممکن است به کارتان بیایند
-              </h2>
+              <h2 id="related-title">این مقاله‌ها هم ممکنه به کارت بیان</h2>
             </div>
             <a class="story-link" href="/articles/">
               همهٔ مقاله‌ها

@@ -70,6 +70,17 @@ const articles = defineCollection({
     seriesOrder: z.number().int().positive(),
     related: z.array(z.string()).default([]),
     takeaways: z.array(z.string()).min(2).max(4),
+    metrazh: z.object({
+      title: z.string(),
+      description: z.string(),
+      visual: z.enum([
+        'property-catalog',
+        'smart-matching',
+        'smart-listing',
+        'visit-routing',
+        'customer-follow-up',
+      ]),
+    }),
     keywords: z.array(z.string()),
     draft: z.boolean().default(false),
     featured: z.boolean().default(false),

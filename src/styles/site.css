@@ -3230,15 +3230,38 @@ ol {
 }
 
 .article-inline-cta {
-  max-width: 68ch;
-  padding: 1.5rem;
+  display: grid;
+  max-width: 100%;
+  grid-template-columns: minmax(0, 1fr) minmax(9.5rem, 0.38fr);
+  gap: clamp(1.25rem, 4vw, 2.5rem);
+  align-items: center;
+  padding: clamp(1.4rem, 4vw, 2.2rem);
   margin-top: 3rem;
+  overflow: hidden;
   color: rgba(255, 255, 255, 0.74);
   background: var(--ink);
-  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: clamp(1.4rem, 3vw, 2.2rem);
+  box-shadow: 0 1.4rem 3.6rem rgba(7, 27, 51, 0.2);
+  scroll-margin-top: 6.5rem;
 }
 
-.article-inline-cta > span {
+.article-metrazh-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.article-metrazh-brand img {
+  width: 3.25rem;
+  height: 3.25rem;
+  padding: 0.28rem;
+  object-fit: contain;
+  background: var(--white);
+  border-radius: 1rem;
+}
+
+.article-metrazh-brand span {
   color: var(--mint);
   font-size: 0.78rem;
   font-weight: 720;
@@ -3252,6 +3275,38 @@ ol {
 
 .article-inline-cta p {
   color: rgba(255, 255, 255, 0.74);
+}
+
+.article-inline-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+  align-items: center;
+  margin-top: 1.35rem;
+}
+
+.article-inline-cta small {
+  display: block;
+  margin-top: 0.85rem;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.75rem;
+}
+
+.article-inline-cta-visual {
+  align-self: end;
+  margin: 0;
+}
+
+.article-inline-cta-visual img {
+  width: min(100%, 13rem);
+  max-height: 22rem;
+  margin: 0 auto -3.6rem;
+  object-fit: cover;
+  object-position: top center;
+  background: var(--white);
+  border: 0.32rem solid rgba(255, 255, 255, 0.92);
+  border-radius: 1.55rem 1.55rem 0 0;
+  box-shadow: 0 1.2rem 2.8rem rgba(1, 12, 27, 0.42);
 }
 
 .series-next {
@@ -4101,6 +4156,27 @@ ol {
 
   .article-takeaways {
     padding: 1rem;
+  }
+
+  .article-inline-cta {
+    grid-template-columns: 1fr;
+  }
+
+  .article-inline-cta-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .article-inline-cta-actions .button,
+  .article-inline-cta-actions .text-link {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .article-inline-cta-visual img {
+    width: min(64%, 12rem);
+    max-height: 18rem;
+    margin-bottom: -3rem;
   }
 
   .article-toc {

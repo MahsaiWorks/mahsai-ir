@@ -9,20 +9,20 @@ const { answer, impact, action } = Astro.props;
 ---
 
 <aside class="answer-first" aria-labelledby="answer-first-title">
-  <span>اگر فقط ۳۰ ثانیه وقت دارید</span>
+  <span>اگر فقط ۳۰ ثانیه وقت داری</span>
   <h2 id="answer-first-title">جواب کوتاه</h2>
   <p>{answer}</p>
   {
     impact && (
       <p class="answer-first-impact">
-        <strong>چرا مهم است؟</strong> {impact}
+        <strong>چرا مهمه؟</strong> {impact}
       </p>
     )
   }
   {
     action && (
       <p class="answer-first-action">
-        <strong>الان چه کار کنید؟</strong> {action}
+        <strong>الان چه کار کنی؟</strong> {action}
       </p>
     )
   }
