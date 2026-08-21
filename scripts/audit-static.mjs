@@ -92,6 +92,7 @@ let imageCount = 0;
 let internalReferenceCount = 0;
 const titles = new Map();
 const descriptions = new Map();
+const canonicals = new Map();
 let metrazhStructuredData;
 let metrazhVideoStructuredData;
 
@@ -120,6 +121,28 @@ for (const file of htmlFiles) {
 
     if (!title || !description || !canonical) {
       errors.push(`${relativeFile}: عنوان، توضیح یا canonical کامل نیست.`);
+    }
+    if (canonical && relativeFile !== '404.html') {
+      const routePath =
+        relativeFile === 'index.html'
+          ? '/'
+          : `/${relativeFile.replace(/index\.html$/, '')}`;
+      const expectedCanonical = new URL(
+        routePath,
+        'https://mahsai.ir',
+      ).toString();
+      if (canonical !== expectedCanonical) {
+        errors.push(
+          `${relativeFile}: canonical باید خودارجاع و برابر ${expectedCanonical} باشد.`,
+        );
+      }
+      if (canonicals.has(canonical)) {
+        errors.push(
+          `${relativeFile}: canonical با ${canonicals.get(canonical)} تکراری است.`,
+        );
+      } else {
+        canonicals.set(canonical, relativeFile);
+      }
     }
     if (title) {
       if (titles.has(title)) {
