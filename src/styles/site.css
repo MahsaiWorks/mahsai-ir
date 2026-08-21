@@ -4211,7 +4211,7 @@ ol {
     flex-direction: column;
   }
 
-  body:has(.mobile-install-dock) {
+  body:has(.mobile-install-dock[data-visible='true']) {
     padding-bottom: 5.4rem;
   }
 

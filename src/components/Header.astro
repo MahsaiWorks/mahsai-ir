@@ -131,7 +131,12 @@ const showInstallDock =
 
 {
   mobileDownloadUrl && featuredApp && showInstallDock && (
-    <aside class="mobile-install-dock" aria-label="نصب اپلیکیشن متراژ">
+    <aside
+      class="mobile-install-dock"
+      aria-label="نصب اپلیکیشن متراژ"
+      data-visible="false"
+      hidden
+    >
       <a
         href={mobileDownloadUrl}
         target="_blank"
@@ -190,5 +195,63 @@ const showInstallDock =
     });
 
     updateLabel();
+  })();
+</script>
+
+<script is:inline>
+  (() => {
+    const setupInstallDock = () => {
+      const dock = document.querySelector('.mobile-install-dock');
+      if (!(dock instanceof HTMLElement)) return;
+
+      const evidence = document.querySelector(
+        '[data-install-dock-trigger], [data-view-event="article_metrazh_offer_viewed"], [data-view-event="download_guide_viewed"]',
+      );
+      if (!(evidence instanceof HTMLElement)) return;
+
+      let revealed = false;
+      let observer;
+      const reveal = () => {
+        if (revealed) return;
+        revealed = true;
+        dock.hidden = false;
+        dock.dataset.visible = 'true';
+        observer?.disconnect();
+        window.removeEventListener('scroll', revealIfPassed);
+      };
+
+      const evidenceWasPassed = () =>
+        evidence.getBoundingClientRect().bottom <= window.innerHeight * 0.82;
+      const revealIfPassed = () => {
+        if (evidenceWasPassed()) reveal();
+      };
+
+      if (evidenceWasPassed()) {
+        reveal();
+        return;
+      }
+
+      window.addEventListener('scroll', revealIfPassed, { passive: true });
+
+      if (!('IntersectionObserver' in window)) return;
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((entry) => entry.isIntersecting)) return;
+          reveal();
+        },
+        { threshold: 0.28 },
+      );
+
+      observer.observe(evidence);
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupInstallDock, {
+        once: true,
+      });
+    } else {
+      setupInstallDock();
+    }
   })();
 </script>

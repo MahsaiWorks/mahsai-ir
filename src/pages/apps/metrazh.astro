@@ -217,6 +217,29 @@ const faqStructuredData = {
     },
   })),
 };
+
+const videoStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  '@id': new URL('/apps/metrazh/#video', Astro.site).toString(),
+  name: 'متراژ؛ وقتی مشتری تماس گرفته و دنبال فایل مناسب هستید',
+  description:
+    'روایتی کوتاه از پیدا کردن فایل مناسب برای مشتری و یک‌جا نگه‌داشتن فایل، مشتری و پیگیری در اپلیکیشن متراژ.',
+  thumbnailUrl: new URL(
+    '/images/apps/metrazh/metrazh-site-story-poster-v1.webp',
+    Astro.site,
+  ).toString(),
+  uploadDate: '2026-08-21T11:19:02+03:30',
+  duration: 'PT12S',
+  contentUrl: new URL(
+    '/videos/metrazh-site-story-v1.mp4',
+    Astro.site,
+  ).toString(),
+  inLanguage: 'fa-IR',
+  publisher: { '@id': organizationId },
+  about: { '@id': appId },
+  isPartOf: { '@id': pageId },
+};
 ---
 
 <BaseLayout
@@ -240,6 +263,11 @@ const faqStructuredData = {
     is:inline
     set:html={JSON.stringify(faqStructuredData)}
   />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(videoStructuredData)}
+  />
 
   <header class="metrazh-product-hero">
     <div class="shell">
@@ -259,11 +287,10 @@ const faqStructuredData = {
             height="425"
             sizes="(max-width: 56.25rem) 8.5rem, 9.5rem"
           />
-          <h1>دیگر دنبال فایل‌ها بین دفترچه، واتساپ و گالری نگردید.</h1>
+          <h1>فایل‌ها، مشتری‌ها و پیگیری‌های امروز؛ همه یک‌جا در متراژ.</h1>
           <p class="lead">
-            متراژ یک برنامهٔ فارسی برای مشاور املاک است. فایل ملک، خواستهٔ
-            مشتری، قرار بازدید و یادآوری پیگیری را روی گوشی کنار هم می‌آورد تا
-            وقتی تلفن زنگ می‌خورد، اطلاعات لازم و کار بعدی را همان موقع ببینید.
+            متراژ برای مشاور املاکی ساخته شده که می‌خواهد وسط تماس، مشخصات ملک و
+            نیاز مشتری را سریع پیدا کند و پیگیری بعدی را از یاد نبرد.
           </p>
           <div class="hero-actions">
             {
@@ -271,8 +298,8 @@ const faqStructuredData = {
                 <StoreBadge href={bazaarLink.url} location="metrazh_hero" />
               )
             }
-            <a class="arrow-link" href="/apps/metrazh/download/">
-              راهنمای دانلود و نصب <span aria-hidden="true">←</span>
+            <a class="arrow-link" href="#inside-metrazh">
+              دیدن روش کار <span aria-hidden="true">←</span>
             </a>
           </div>
           <ul class="metrazh-hero-notes">
@@ -316,27 +343,25 @@ const faqStructuredData = {
   >
     <div class="shell metrazh-site-story-shell">
       <header>
-        <p class="section-sign">ویدیوی معرفی</p>
-        <h2 id="metrazh-site-story-title">متراژ را در عمل ببینید</h2>
-        <p>
-          از ثبت فایل تا پیدا کردن گزینهٔ مناسب برای مشتری، مسیر کار را در خود
-          برنامه ببینید.
+        <p class="section-sign">یک موقعیت واقعی</p>
+        <h2 id="metrazh-site-story-title">
+          مشتری تماس گرفته؛ فایل مناسب کجاست؟
+        </h2>
+        <p id="metrazh-site-story-description">
+          وقتی نیاز مشتری و مشخصات فایل‌ها ثبت شده باشند، متراژ گزینه‌های
+          نزدیک‌تر را برای بررسی کنار هم می‌گذارد.
         </p>
-        {
-          bazaarLink && (
-            <StoreBadge href={bazaarLink.url} location="metrazh_story" />
-          )
-        }
       </header>
 
       <div class="metrazh-site-story-stage">
-        <div class="metrazh-site-story-video">
+        <div class="metrazh-site-story-video" data-install-dock-trigger>
           <video
             controls
             playsinline
             preload="metadata"
             poster="/images/apps/metrazh/metrazh-site-story-poster-v1.webp"
-            aria-label="ویدیوی معرفی اپلیکیشن متراژ"
+            aria-label="ویدیوی متراژ درباره پیدا کردن فایل مناسب برای مشتری"
+            aria-describedby="metrazh-site-story-description"
           >
             <source src="/videos/metrazh-site-story-v1.mp4" type="video/mp4" />
             مرورگر شما نمایش ویدیو را پشتیبانی نمی‌کند.
@@ -459,6 +484,56 @@ const faqStructuredData = {
             </article>
           ))
         }
+      </div>
+    </div>
+  </section>
+
+  <section class="metrazh-data-home" aria-labelledby="metrazh-data-home-title">
+    <div class="shell metrazh-data-home-panel">
+      <header class="metrazh-data-home-head">
+        <div>
+          <p class="section-sign">قبل از وارد کردن اطلاعات واقعی</p>
+          <h2 id="metrazh-data-home-title">اطلاعات من کجا می‌ماند؟</h2>
+        </div>
+        <p>
+          جواب کوتاه: فایل‌های ملک، اطلاعات مشتری و پیگیری‌ها روی همان گوشی
+          نگهداری می‌شوند؛ نسخهٔ عمومی فعلی حساب ابری برای این داده‌ها ندارد.
+        </p>
+      </header>
+
+      <div class="metrazh-data-home-grid">
+        <article>
+          <strong>روی همین گوشی</strong>
+          <p>
+            اطلاعات اصلی داخل حافظهٔ برنامه می‌ماند و تا وقتی خودتان آن را پاک
+            نکنید، دادهٔ برنامه را حذف نکنید یا برنامه را پاک نکنید باقی
+            می‌ماند.
+          </p>
+        </article>
+        <article>
+          <strong>وقت تعویض گوشی</strong>
+          <p>
+            باید از داخل متراژ فایل پشتیبان رمزگذاری‌شده بسازید و فایل و رمز آن
+            را جدا نگه دارید؛ انتقال خودکار ابری انجام نمی‌شود.
+          </p>
+        </article>
+        <article>
+          <strong>هنگام استفاده از سرویس‌های دیگر</strong>
+          <p>
+            نقشه، خرید، تشخیص گفتار و اشتراک‌گذاری ممکن است به اینترنت یا
+            برنامه‌های دیگر نیاز داشته باشند و تابع مقررات همان سرویس‌ها هستند.
+          </p>
+        </article>
+      </div>
+
+      <div class="metrazh-data-home-note">
+        <p>
+          اگر اطلاعات گوشی پاک شود و فایل پشتیبان سالم نداشته باشید، MAHSAI
+          نسخه‌ای روی سرور ندارد که آن را برگرداند.
+        </p>
+        <a class="arrow-link" href="/privacy/">
+          جزئیات حریم خصوصی متراژ <span aria-hidden="true">←</span>
+        </a>
       </div>
     </div>
   </section>

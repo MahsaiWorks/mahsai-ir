@@ -2626,6 +2626,90 @@ h4 {
   border-radius: 50%;
 }
 
+.metrazh-data-home {
+  padding-block: clamp(3rem, 7vw, 6rem);
+  background: var(--white);
+}
+
+.metrazh-data-home-panel {
+  padding: clamp(1.5rem, 4vw, 3.2rem);
+  background:
+    radial-gradient(
+      circle at 8% 12%,
+      rgba(255, 240, 184, 0.78),
+      transparent 17rem
+    ),
+    linear-gradient(145deg, #e7f4ee, #f7f3eb);
+  border: 1px solid rgba(31, 65, 82, 0.08);
+  border-radius: 2.4rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.metrazh-data-home-head {
+  display: grid;
+  grid-template-columns: minmax(17rem, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(1.4rem, 5vw, 4rem);
+  align-items: end;
+}
+
+.metrazh-data-home-head h2 {
+  max-width: 11ch;
+  margin: 0;
+}
+
+.metrazh-data-home-head > p {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1rem, 1.4vw, 1.13rem);
+  line-height: 2;
+}
+
+.metrazh-data-home-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: clamp(1.8rem, 4vw, 3rem);
+}
+
+.metrazh-data-home-grid article {
+  padding: 1.35rem;
+  background: rgba(255, 254, 250, 0.84);
+  border: 1px solid rgba(31, 65, 82, 0.08);
+  border-radius: 1.35rem;
+}
+
+.metrazh-data-home-grid strong {
+  display: block;
+  margin-bottom: 0.6rem;
+  color: var(--ink);
+  font-size: 1.04rem;
+}
+
+.metrazh-data-home-grid p,
+.metrazh-data-home-note p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.91rem;
+  line-height: 1.9;
+}
+
+.metrazh-data-home-note {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  align-items: center;
+  padding: 1.05rem 1.2rem;
+  margin-top: 0.85rem;
+  background: rgba(255, 226, 211, 0.72);
+  border-radius: 1.25rem;
+}
+
+.metrazh-data-home-note p {
+  max-width: 48rem;
+  color: var(--text);
+}
+
 .screen-ledger::after {
   width: 10rem;
   height: 10rem;
@@ -3552,7 +3636,12 @@ h4 {
   .changelog-layout,
   .capability-ledger-layout,
   .metrazh-guides-layout,
-  .metrazh-faq-layout {
+  .metrazh-faq-layout,
+  .metrazh-data-home-head {
+    grid-template-columns: 1fr;
+  }
+
+  .metrazh-data-home-grid {
     grid-template-columns: 1fr;
   }
 
@@ -3856,11 +3945,11 @@ h4 {
 }
 
 @media (max-width: 43.75rem) {
-  body:has(.mobile-install-dock) {
+  body:has(.mobile-install-dock[data-visible='true']) {
     padding-block-end: calc(5.7rem + env(safe-area-inset-bottom, 0px));
   }
 
-  .mobile-install-dock {
+  .mobile-install-dock[data-visible='true'] {
     position: fixed;
     z-index: 95;
     display: block;
@@ -3912,6 +4001,15 @@ h4 {
     background: var(--mint);
     border-radius: 0.8rem;
     font-size: 0.82rem;
+  }
+
+  .metrazh-data-home-panel {
+    border-radius: 1.65rem;
+  }
+
+  .metrazh-data-home-note {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 

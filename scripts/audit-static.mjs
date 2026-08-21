@@ -29,6 +29,8 @@ const requiredOutputs = [
   'robots.txt',
   '.well-known/security.txt',
   'images/campaigns/metrazh-instagram-qr.png',
+  'images/apps/metrazh/metrazh-site-story-poster-v1.webp',
+  'videos/metrazh-site-story-v1.mp4',
   'og.jpg',
 ];
 
@@ -91,6 +93,7 @@ let internalReferenceCount = 0;
 const titles = new Map();
 const descriptions = new Map();
 let metrazhStructuredData;
+let metrazhVideoStructuredData;
 
 for (const file of htmlFiles) {
   const relativeFile = path.relative(distRoot, file).replaceAll('\\', '/');
@@ -156,6 +159,17 @@ for (const file of htmlFiles) {
 
         if (softwareApplication) {
           metrazhStructuredData = softwareApplication;
+        }
+
+        const videoObject = structuredNodes.find((node) => {
+          const types = Array.isArray(node?.['@type'])
+            ? node['@type']
+            : [node?.['@type']];
+          return types.includes('VideoObject');
+        });
+
+        if (videoObject) {
+          metrazhVideoStructuredData = videoObject;
         }
       }
     } catch (error) {
@@ -226,6 +240,19 @@ for (const file of htmlFiles) {
     if (html.includes(forbidden)) {
       errors.push(`${relativeFile}: عبارت ممنوع عمومی پیدا شد: ${forbidden}`);
     }
+  }
+}
+
+for (const property of [
+  'name',
+  'description',
+  'thumbnailUrl',
+  'uploadDate',
+  'duration',
+  'contentUrl',
+]) {
+  if (!metrazhVideoStructuredData?.[property]) {
+    errors.push(`دادهٔ VideoObject متراژ ویژگی ضروری داخلی ندارد: ${property}`);
   }
 }
 

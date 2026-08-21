@@ -153,6 +153,55 @@ try {
         }
       }
 
+      if (route === '/apps/metrazh/' && profile.name === 'reflow-400') {
+        const heroActions = await page
+          .locator('.metrazh-product-hero .hero-actions a')
+          .evaluateAll((links) =>
+            links.map((link) => ({
+              href: link.getAttribute('href') ?? '',
+              text: link.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+            })),
+          );
+        if (
+          heroActions.length !== 2 ||
+          !heroActions.some((action) =>
+            action.href.includes('cafebazaar.ir'),
+          ) ||
+          !heroActions.some((action) => action.href === '#inside-metrazh')
+        ) {
+          failures.push(
+            `${profile.name} ${route}: قهرمان صفحه باید فقط اقدام بازار و دیدن روش کار را داشته باشد.`,
+          );
+        }
+
+        const dock = page.locator('.mobile-install-dock');
+        const dockStartsHidden = await dock.evaluate(
+          (element) =>
+            element.hasAttribute('hidden') &&
+            element.getAttribute('data-visible') === 'false',
+        );
+        if (!dockStartsHidden) {
+          failures.push(
+            `${profile.name} ${route}: دکمهٔ نصب چسبان پیش از شاهد محصول پنهان نیست.`,
+          );
+        }
+
+        await page
+          .locator('[data-install-dock-trigger]')
+          .scrollIntoViewIfNeeded();
+        await page.waitForTimeout(250);
+        const dockRevealed = await dock.evaluate(
+          (element) =>
+            !element.hasAttribute('hidden') &&
+            element.getAttribute('data-visible') === 'true',
+        );
+        if (!dockRevealed) {
+          failures.push(
+            `${profile.name} ${route}: دکمهٔ نصب پس از دیده‌شدن شاهد محصول ظاهر نشد.`,
+          );
+        }
+      }
+
       report.push({
         profile: profile.name,
         route,
@@ -212,7 +261,6 @@ try {
       }
 
       const snippet = await page.evaluate(async () => {
-        await document.fonts.ready;
         const title = document.title.trim();
         const description =
           document
@@ -220,6 +268,11 @@ try {
             ?.getAttribute('content')
             ?.trim() ?? '';
         const fontFamily = getComputedStyle(document.body).fontFamily;
+        await Promise.all([
+          document.fonts.load(`600 20px ${fontFamily}`, title),
+          document.fonts.load(`400 14px ${fontFamily}`, description),
+        ]);
+        await document.fonts.ready;
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
         if (!context) {
