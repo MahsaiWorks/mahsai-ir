@@ -2329,7 +2329,7 @@ body {
 
 p,
 li {
-  text-wrap: pretty;
+  text-wrap: wrap;
 }
 
 h1,
@@ -3591,6 +3591,37 @@ h4 {
       transparent 10rem
     ),
     var(--mint-soft);
+}
+
+.article-inline-cta .article-metrazh-brand span {
+  color: var(--teal-dark);
+}
+
+.article-inline-cta h2 {
+  color: var(--ink);
+}
+
+.article-inline-cta p {
+  color: var(--text);
+}
+
+.article-inline-cta small {
+  color: var(--muted);
+}
+
+.article-inline-cta .text-link-light {
+  color: var(--teal-dark);
+}
+
+.article-inline-cta .button-light {
+  color: var(--white);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.article-inline-cta .button-light:hover {
+  color: var(--white);
+  background: var(--teal-dark);
 }
 
 .series-next-inner {

@@ -211,39 +211,52 @@ const showInstallDock =
 
       let revealed = false;
       let observer;
+      let fallbackFrame = 0;
+      let fallbackListening = false;
       const reveal = () => {
         if (revealed) return;
         revealed = true;
         dock.hidden = false;
         dock.dataset.visible = 'true';
         observer?.disconnect();
-        window.removeEventListener('scroll', revealIfPassed);
+        if (fallbackListening) {
+          window.removeEventListener('scroll', queueFallbackCheck);
+          fallbackListening = false;
+        }
       };
 
-      const evidenceWasPassed = () =>
-        evidence.getBoundingClientRect().bottom <= window.innerHeight * 0.82;
-      const revealIfPassed = () => {
-        if (evidenceWasPassed()) reveal();
+      const checkFallback = () => {
+        fallbackFrame = 0;
+        if (
+          evidence.getBoundingClientRect().bottom <=
+          window.innerHeight * 0.82
+        ) {
+          reveal();
+        }
+      };
+      const queueFallbackCheck = () => {
+        if (fallbackFrame === 0) {
+          fallbackFrame = window.requestAnimationFrame(checkFallback);
+        }
       };
 
-      if (evidenceWasPassed()) {
-        reveal();
+      if ('IntersectionObserver' in window) {
+        observer = new IntersectionObserver(
+          (entries) => {
+            const evidenceReached = entries.some(
+              (entry) => entry.isIntersecting,
+            );
+            if (evidenceReached) reveal();
+          },
+          { rootMargin: '0px 0px -18% 0px', threshold: 0 },
+        );
+        observer.observe(evidence);
         return;
       }
 
-      window.addEventListener('scroll', revealIfPassed, { passive: true });
-
-      if (!('IntersectionObserver' in window)) return;
-
-      observer = new IntersectionObserver(
-        (entries) => {
-          if (!entries.some((entry) => entry.isIntersecting)) return;
-          reveal();
-        },
-        { threshold: 0.28 },
-      );
-
-      observer.observe(evidence);
+      fallbackListening = true;
+      window.addEventListener('scroll', queueFallbackCheck, { passive: true });
+      queueFallbackCheck();
     };
 
     if (document.readyState === 'loading') {

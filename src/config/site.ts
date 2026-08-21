@@ -39,6 +39,6 @@ export const siteConfig: SiteConfig = {
     title: 'MAHSAI | متراژ؛ مدیریت فایل و مشتری املاک',
     description:
       'وب‌سایت رسمی MAHSAI و متراژ؛ اپلیکیشن فارسی مدیریت فایل ملک، مشتری، بازدید و پیگیری برای مشاوران املاک ایران، همراه آموزش‌های رایگان و کاربردی.',
-    image: '/og.jpg',
+    image: '/og-mahsai-metrazh-v2.jpg',
   },
 };

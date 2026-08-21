@@ -126,6 +126,14 @@ function describeLimit(options) {
   return entry ? `${entry[0]}=${entry[1]}` : 'configured threshold';
 }
 
+function median(values) {
+  const sorted = values
+    .filter((value) => Number.isFinite(value))
+    .sort((left, right) => left - right);
+  if (sorted.length === 0) return undefined;
+  return sorted[Math.floor(sorted.length / 2)];
+}
+
 async function closeBrowser(browser, userDataDirectory) {
   if (browser.exitCode === null) {
     if (process.platform === 'win32') {
@@ -182,44 +190,93 @@ try {
   for (const configuredUrl of config.ci.collect.url) {
     const pathname = new URL(configuredUrl).pathname;
     const targetUrl = new URL(pathname, baseUrl).toString();
-    process.stdout.write(`Lighthouse: ${targetUrl}\n`);
-
-    const result = await lighthouse(targetUrl, {
-      port,
-      output: 'json',
-      logLevel: 'error',
-      onlyCategories: ['performance', 'accessibility', 'best-practices', 'seo'],
-      maxWaitForLoad: 90_000,
-    });
-
-    if (!result)
-      throw new Error(`Lighthouse returned no result for ${targetUrl}`);
     const slug =
       pathname === '/'
         ? 'home'
         : pathname.replaceAll('/', '-').replace(/^-|-$/g, '');
+    const numberOfRuns = Math.max(
+      1,
+      Number(config.ci.collect.numberOfRuns) || 1,
+    );
+    const lighthouseRuns = [];
+
+    for (let runIndex = 1; runIndex <= numberOfRuns; runIndex += 1) {
+      process.stdout.write(
+        `Lighthouse (${runIndex}/${numberOfRuns}): ${targetUrl}\n`,
+      );
+      const result = await lighthouse(targetUrl, {
+        port,
+        output: 'json',
+        logLevel: 'error',
+        onlyCategories: [
+          'performance',
+          'accessibility',
+          'best-practices',
+          'seo',
+        ],
+        maxWaitForLoad: 90_000,
+      });
+
+      if (!result)
+        throw new Error(`Lighthouse returned no result for ${targetUrl}`);
+      lighthouseRuns.push(result.lhr);
+      await writeFile(
+        join(outputDirectory, `${slug}-run-${runIndex}.json`),
+        JSON.stringify(result.lhr, null, 2),
+        'utf8',
+      );
+    }
+
+    const medianPerformance = median(
+      lighthouseRuns.map((lhr) => lhr.categories.performance?.score),
+    );
+    const representative = lighthouseRuns.reduce((closest, candidate) => {
+      if (medianPerformance === undefined) return closest;
+      const closestDistance = Math.abs(
+        (closest.categories.performance?.score ?? 0) - medianPerformance,
+      );
+      const candidateDistance = Math.abs(
+        (candidate.categories.performance?.score ?? 0) - medianPerformance,
+      );
+      return candidateDistance < closestDistance ? candidate : closest;
+    });
     await writeFile(
       join(outputDirectory, `${slug}.json`),
-      JSON.stringify(result.lhr, null, 2),
+      JSON.stringify(representative, null, 2),
       'utf8',
     );
 
     for (const [assertionId, assertionConfig] of Object.entries(assertions)) {
       const [severity, options = {}] = assertionConfig;
-      const value = assertionValue(result.lhr, assertionId, options);
+      const value = median(
+        lighthouseRuns.map((lhr) => assertionValue(lhr, assertionId, options)),
+      );
       const passed = checkAssertion(value, options);
       rows.push({ page: pathname, assertion: assertionId, value, passed });
       if (!passed && severity === 'error') failed = true;
     }
 
     const categoryScores = Object.fromEntries(
-      Object.entries(result.lhr.categories).map(([id, category]) => [
+      Object.keys(representative.categories).map((id) => [
         id,
-        Math.round((category.score ?? 0) * 100),
+        Math.round(
+          (median(lighthouseRuns.map((lhr) => lhr.categories[id]?.score)) ??
+            0) * 100,
+        ),
       ]),
     );
+    const medianLcp = median(
+      lighthouseRuns.map(
+        (lhr) => lhr.audits['largest-contentful-paint'].numericValue,
+      ),
+    );
+    const medianTbt = median(
+      lighthouseRuns.map(
+        (lhr) => lhr.audits['total-blocking-time'].numericValue,
+      ),
+    );
     process.stdout.write(
-      `  score P${categoryScores.performance} A${categoryScores.accessibility} B${categoryScores['best-practices']} S${categoryScores.seo}; LCP ${Math.round(result.lhr.audits['largest-contentful-paint'].numericValue)} ms\n`,
+      `  median score P${categoryScores.performance} A${categoryScores.accessibility} B${categoryScores['best-practices']} S${categoryScores.seo}; LCP ${Math.round(medianLcp)} ms; TBT ${Math.round(medianTbt)} ms\n`,
     );
   }
 } finally {

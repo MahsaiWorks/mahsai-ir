@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import ResponsiveImage from '../components/ResponsiveImage.astro';
+import LatestSiteUpdates from '../components/LatestSiteUpdates.astro';
 import WorkdayNavigator from '../components/WorkdayNavigator.astro';
 import { siteConfig } from '../config/site';
 import {
@@ -251,6 +252,8 @@ const workRoutes = [
       </div>
     </div>
   </section>
+
+  <LatestSiteUpdates />
 
   <section class="metrazh-evidence" aria-labelledby="metrazh-evidence-title">
     <div class="shell metrazh-evidence-grid">

@@ -1,0 +1,110 @@
+---
+interface Scenario {
+  title: string;
+  situation: string;
+  action: string;
+  result: string;
+}
+
+interface CopyBlock {
+  title: string;
+  intro: string;
+  lines: string[];
+}
+
+interface Props {
+  articleId: string;
+  scenario: Scenario;
+  copyBlock: CopyBlock;
+}
+
+const { articleId, scenario, copyBlock } = Astro.props;
+const copyTargetId = `copy-${articleId}`;
+const copyText = copyBlock.lines.join('\n');
+---
+
+<section class="article-practical-kit" aria-labelledby={`kit-${articleId}`}>
+  <article class="article-scenario">
+    <p class="eyebrow">یک موقعیت واقعی از کار روزانه</p>
+    <h2 id={`kit-${articleId}`}>{scenario.title}</h2>
+    <dl>
+      <div>
+        <dt>چه پیش آمده؟</dt>
+        <dd>{scenario.situation}</dd>
+      </div>
+      <div>
+        <dt>چه کار کنیم؟</dt>
+        <dd>{scenario.action}</dd>
+      </div>
+      <div>
+        <dt>نتیجهٔ قابل انتظار</dt>
+        <dd>{scenario.result}</dd>
+      </div>
+    </dl>
+  </article>
+
+  <aside class="article-copy-block" aria-labelledby={`copy-title-${articleId}`}>
+    <div>
+      <p class="eyebrow">آمادهٔ استفاده</p>
+      <h2 id={`copy-title-${articleId}`}>{copyBlock.title}</h2>
+      <p>{copyBlock.intro}</p>
+    </div>
+    <textarea
+      id={copyTargetId}
+      aria-labelledby={`copy-title-${articleId}`}
+      readonly
+      rows={Math.min(10, copyBlock.lines.length + 1)}>{copyText}</textarea
+    >
+    <div class="article-copy-actions">
+      <button
+        type="button"
+        class="button button-small"
+        data-copy-article-kit
+        data-copy-target={copyTargetId}
+        data-event="article_resource_copied"
+        data-event-location={`article_${articleId}`}
+      >
+        کپی متن آماده
+      </button>
+      <span class="article-copy-status" aria-live="polite"></span>
+    </div>
+  </aside>
+</section>
+
+<script>
+  const fallbackCopy = (field: HTMLTextAreaElement) => {
+    field.focus();
+    field.select();
+    field.setSelectionRange(0, field.value.length);
+    return false;
+  };
+
+  document
+    .querySelectorAll<HTMLButtonElement>('[data-copy-article-kit]')
+    .forEach((button) => {
+      if (button.dataset.copyReady === 'true') return;
+      button.dataset.copyReady = 'true';
+      button.addEventListener('click', async () => {
+        const targetId = button.dataset.copyTarget;
+        const field = targetId ? document.getElementById(targetId) : undefined;
+        if (!(field instanceof HTMLTextAreaElement)) return;
+
+        let copied = false;
+        try {
+          await navigator.clipboard.writeText(field.value);
+          copied = true;
+        } catch {
+          copied = fallbackCopy(field);
+        }
+
+        const status = button.parentElement?.querySelector(
+          '.article-copy-status',
+        );
+        if (status) {
+          status.textContent = copied
+            ? 'کپی شد؛ حالا متناسب با پرونده ویرایشش کن.'
+            : 'متن را انتخاب کن و دستی کپی کن.';
+        }
+      });
+    });
+</script>

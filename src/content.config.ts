@@ -70,6 +70,17 @@ const articles = defineCollection({
     seriesOrder: z.number().int().positive(),
     related: z.array(z.string()).default([]),
     takeaways: z.array(z.string()).min(2).max(4),
+    scenario: z.object({
+      title: z.string(),
+      situation: z.string(),
+      action: z.string(),
+      result: z.string(),
+    }),
+    copyBlock: z.object({
+      title: z.string(),
+      intro: z.string(),
+      lines: z.array(z.string()).min(2).max(12),
+    }),
     metrazh: z.object({
       title: z.string(),
       description: z.string(),

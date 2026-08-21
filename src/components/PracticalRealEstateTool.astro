@@ -1,0 +1,290 @@
+---
+import type { PracticalToolDefinition } from '../data/realEstateTools';
+
+interface Props {
+  tool: PracticalToolDefinition;
+}
+
+const { tool } = Astro.props;
+const formId = `tool-form-${tool.slug}`;
+const resultId = `tool-result-${tool.slug}`;
+---
+
+<div
+  class="practical-tool"
+  data-tool-kind={tool.kind}
+  data-tool-slug={tool.slug}
+>
+  <form id={formId} class="practical-tool-form" data-practical-tool-form>
+    <div class="practical-tool-fields">
+      {
+        tool.fields.map((field) => (
+          <label
+            class:list={[
+              'practical-tool-field',
+              field.type === 'textarea' && 'is-wide',
+            ]}
+          >
+            <span>{field.label}</span>
+            {field.type === 'select' ? (
+              <select name={field.id} required={field.required}>
+                <option value="">انتخاب کنید</option>
+                {field.options?.map((option) => (
+                  <option value={option.value}>{option.label}</option>
+                ))}
+              </select>
+            ) : field.type === 'textarea' ? (
+              <textarea
+                name={field.id}
+                rows="3"
+                placeholder={field.placeholder}
+                required={field.required}
+              />
+            ) : (
+              <input
+                name={field.id}
+                type={field.type}
+                placeholder={field.placeholder}
+                required={field.required}
+                min={field.type === 'number' ? '0' : undefined}
+                inputmode={field.type === 'number' ? 'numeric' : undefined}
+              />
+            )}
+            {field.help && <small>{field.help}</small>}
+          </label>
+        ))
+      }
+    </div>
+
+    <div class="practical-tool-form-actions">
+      <button class="button" type="submit">{tool.submitLabel}</button>
+      <button class="text-button" type="reset">پاک‌کردن فرم</button>
+    </div>
+    <p class="practical-tool-privacy">
+      این فرم در مرورگر شما اجرا می‌شود؛ چیزی برای MAHSAI ارسال یا ذخیره
+      نمی‌شود. اطلاعات هویتی، شماره تماس و نشانی دقیق وارد نکنید.
+    </p>
+  </form>
+
+  <section
+    id={resultId}
+    class="practical-tool-result"
+    aria-labelledby={`${resultId}-title`}
+    aria-live="polite"
+    hidden
+    data-practical-tool-result
+  >
+    <div class="practical-tool-result-head">
+      <div>
+        <p class="eyebrow">آمادهٔ استفاده</p>
+        <h2 id={`${resultId}-title`}>{tool.resultTitle}</h2>
+      </div>
+      <span>اطلاعات فقط روی همین صفحه است</span>
+    </div>
+    <textarea readonly rows="12" data-practical-tool-output></textarea>
+    <div class="practical-tool-result-actions">
+      <button class="button button-small" type="button" data-tool-copy>
+        کپی نتیجه
+      </button>
+      <button
+        class="button button-secondary button-small"
+        type="button"
+        data-tool-print
+      >
+        چاپ یا ذخیره PDF
+      </button>
+      <span data-tool-status aria-live="polite"></span>
+    </div>
+  </section>
+</div>
+
+<script>
+  type ToolKind =
+    'follow-up' | 'owner-call' | 'buyer-needs' | 'stale-file' | 'visit-planner';
+
+  const measureTool = (name: string, slug: string) => {
+    document.dispatchEvent(
+      new CustomEvent('mahsai:measure', {
+        detail: { name, properties: { location: `tool_${slug}` } },
+      }),
+    );
+  };
+
+  const readValue = (form: HTMLFormElement, name: string) => {
+    const field = form.elements.namedItem(name);
+    if (
+      field instanceof HTMLInputElement ||
+      field instanceof HTMLTextAreaElement ||
+      field instanceof HTMLSelectElement
+    ) {
+      return field.value.trim();
+    }
+    return '';
+  };
+
+  const line = (label: string, value: string) => `${label}: ${value || '—'}`;
+
+  const buildFollowUp = (form: HTMLFormElement) => {
+    const property = readValue(form, 'property_label');
+    const liked = readValue(form, 'liked');
+    const concern = readValue(form, 'concern');
+    const timing = readValue(form, 'timing');
+    const nextStep = readValue(form, 'next_step');
+    const endings: Record<string, string> = {
+      answer: `اگر فرصت دارید، نتیجهٔ بررسی ${concern} را تا ${timing} بفرمایید تا قدم بعدی را دقیق‌تر هماهنگ کنیم.`,
+      option: `اگر موافقید، تا ${timing} یک گزینهٔ نزدیک‌تر با توجه به همین نکته برایتان آماده کنم.`,
+      call: `چه زمانی تا ${timing} برای یک تماس کوتاه مناسب‌تر است؟`,
+      second_visit: `اگر موافقید، تا ${timing} زمان مناسب برای یک بازدید دوباره را هماهنگ کنیم.`,
+    };
+    return [
+      `سلام. دربارهٔ ${property}، گفتید ${liked} را پسندیدید و دربارهٔ ${concern} نیاز به بررسی بیشتری داشتید.`,
+      endings[nextStep] ?? `اگر فرصت دارید تا ${timing} نتیجه را بفرمایید.`,
+    ].join('\n\n');
+  };
+
+  const buildOwnerCall = (form: HTMLFormElement) =>
+    [
+      'خلاصهٔ تماس اول با مالک',
+      line('نوع معامله', readValue(form, 'transaction')),
+      line('نوع ملک', readValue(form, 'property_type')),
+      line('محله و محدوده', readValue(form, 'area')),
+      line('مشخصات پایه', readValue(form, 'basics')),
+      line('قیمت و شرایط مالی', readValue(form, 'financial')),
+      line('شرایط بازدید', readValue(form, 'visit')),
+      line('کار بعدی', readValue(form, 'next_action')),
+      '',
+      'یادآوری: پیش از معرفی، قیمت و فعال‌بودن فایل دوباره تأیید شود.',
+    ].join('\n');
+
+  const buildBuyerNeeds = (form: HTMLFormElement) =>
+    [
+      'خلاصهٔ نیاز خریدار یا مستأجر',
+      line('نوع درخواست', readValue(form, 'deal_type')),
+      line('بودجه و شکل پرداخت', readValue(form, 'budget')),
+      line('محدودهٔ اصلی و جایگزین', readValue(form, 'areas')),
+      line('زمان تصمیم یا جابه‌جایی', readValue(form, 'move_time')),
+      line('شرط‌های قطعی', readValue(form, 'must_haves')),
+      line('موارد قابل مذاکره', readValue(form, 'flexible')),
+      line('قدم بعدی', readValue(form, 'next_step')),
+    ].join('\n');
+
+  const buildStaleFile = (form: HTMLFormElement) => {
+    const lastConfirmed = readValue(form, 'last_confirmed');
+    const ownerResponse = readValue(form, 'owner_response');
+    const completeness = readValue(form, 'completeness');
+    let status = 'فعال و قابل معرفی';
+    let reason = 'مالک فعال بودن فایل را تأیید کرده و اطلاعات لازم کامل است.';
+
+    if (ownerResponse === 'closed') {
+      status = 'بایگانی شود';
+      reason = 'مالک اعلام کرده فایل معامله شده یا دیگر فعال نیست.';
+    } else if (ownerResponse === 'no_answer' || lastConfirmed === 'unknown') {
+      status = 'فعلاً معرفی نشود؛ نیازمند تأیید';
+      reason = 'وضعیت فعلی فایل یا تاریخ آخرین تأیید روشن نیست.';
+    } else if (ownerResponse === 'changed') {
+      status = 'نیازمند بازبینی اطلاعات';
+      reason = 'قیمت یا شرایط تغییر کرده و پرونده باید پیش از معرفی اصلاح شود.';
+    } else if (completeness === 'missing') {
+      status = 'نیازمند تکمیل';
+      reason = 'اصل فایل فعال است، اما اطلاعات کافی برای معرفی کامل نیست.';
+    } else if (lastConfirmed === 'old') {
+      status = 'فعال، ولی تأیید دوباره لازم است';
+      reason = 'بیش از سی روز از آخرین تأیید گذشته است.';
+    }
+
+    return [
+      line('فایل', readValue(form, 'file_label')),
+      line('وضعیت پیشنهادی', status),
+      line('دلیل', reason),
+      line('اقدام بعدی', readValue(form, 'next_action')),
+      '',
+      'این نتیجه برای نظم داخلی است؛ پیش از معرفی، وضعیت واقعی را با مالک تأیید کنید.',
+    ].join('\n');
+  };
+
+  const buildVisitPlanner = (form: HTMLFormElement) => {
+    const thirdVisit = readValue(form, 'visit_three');
+    return [
+      'برنامهٔ بازدید ملک',
+      line('تاریخ', readValue(form, 'visit_date')),
+      line('بازدید اول', readValue(form, 'visit_one')),
+      line('بازدید دوم', readValue(form, 'visit_two')),
+      ...(thirdVisit ? [line('بازدید سوم', thirdVisit)] : []),
+      line('زمان حائل میان قرارها', `${readValue(form, 'buffer')} دقیقه`),
+      line('موضوع مقایسه', readValue(form, 'focus')),
+      line('زمان جمع‌بندی و پیگیری', readValue(form, 'follow_up')),
+      '',
+      'پیش از حرکت: فعال‌بودن فایل، ساعت، مالک یا کلیددار و حضور مشتری دوباره تأیید شود.',
+    ].join('\n');
+  };
+
+  const builders: Record<ToolKind, (form: HTMLFormElement) => string> = {
+    'follow-up': buildFollowUp,
+    'owner-call': buildOwnerCall,
+    'buyer-needs': buildBuyerNeeds,
+    'stale-file': buildStaleFile,
+    'visit-planner': buildVisitPlanner,
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-tool-kind]').forEach((root) => {
+    if (root.dataset.toolReady === 'true') return;
+    root.dataset.toolReady = 'true';
+    const form = root.querySelector('[data-practical-tool-form]');
+    const result = root.querySelector('[data-practical-tool-result]');
+    const output = root.querySelector('[data-practical-tool-output]');
+    const copyButton = root.querySelector('[data-tool-copy]');
+    const printButton = root.querySelector('[data-tool-print]');
+    const status = root.querySelector('[data-tool-status]');
+    const kind = root.dataset.toolKind as ToolKind;
+    const slug = root.dataset.toolSlug ?? kind;
+    if (
+      !(form instanceof HTMLFormElement) ||
+      !(result instanceof HTMLElement) ||
+      !(output instanceof HTMLTextAreaElement) ||
+      !(copyButton instanceof HTMLButtonElement) ||
+      !(printButton instanceof HTMLButtonElement)
+    ) {
+      return;
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+      output.value = builders[kind](form);
+      result.hidden = false;
+      const reduceMotion = matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      ).matches;
+      result.scrollIntoView({
+        behavior: reduceMotion ? 'auto' : 'smooth',
+        block: 'start',
+      });
+      measureTool('free_tool_completed', slug);
+    });
+
+    form.addEventListener('reset', () => {
+      result.hidden = true;
+      output.value = '';
+      if (status) status.textContent = '';
+    });
+
+    copyButton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(output.value);
+        if (status) status.textContent = 'کپی شد.';
+      } catch {
+        output.focus();
+        output.select();
+        if (status) status.textContent = 'متن انتخاب شد؛ دستی کپی کنید.';
+      }
+      measureTool('free_tool_copied', slug);
+    });
+
+    printButton.addEventListener('click', () => {
+      root.dataset.printing = 'true';
+      measureTool('free_tool_printed', slug);
+      window.print();
+      delete root.dataset.printing;
+    });
+  });
+</script>

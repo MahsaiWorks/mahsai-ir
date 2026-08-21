@@ -1,0 +1,172 @@
+---
+import { getCollection } from 'astro:content';
+import PracticalRealEstateTool from '../../components/PracticalRealEstateTool.astro';
+import ResponsiveImage from '../../components/ResponsiveImage.astro';
+import { siteConfig } from '../../config/site';
+import {
+  getCafeBazaarLink,
+  getTrackedCafeBazaarUrl,
+} from '../../data/appPresentation';
+import {
+  practicalRealEstateTools,
+  type PracticalToolDefinition,
+} from '../../data/realEstateTools';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/real-estate-tools.css';
+
+export function getStaticPaths() {
+  return practicalRealEstateTools.map((tool) => ({
+    params: { slug: tool.slug },
+    props: { tool },
+  }));
+}
+
+interface Props {
+  tool: PracticalToolDefinition;
+}
+
+const { tool } = Astro.props;
+const app = (await getCollection('apps')).find(
+  (entry) => entry.id === 'metrazh' && entry.data.status === 'available',
+);
+const bazaarLink = app ? getCafeBazaarLink(app.data.storeLinks) : undefined;
+const installUrl = bazaarLink
+  ? getTrackedCafeBazaarUrl(bazaarLink.url, `tool_${tool.slug}`)
+  : '/apps/metrazh/';
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebApplication',
+      name: tool.title,
+      description: tool.description,
+      url: canonical.toString(),
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'Any',
+      browserRequirements: 'Requires JavaScript',
+      isAccessibleForFree: true,
+      inLanguage: 'fa-IR',
+      publisher: {
+        '@type': 'Organization',
+        name: siteConfig.brandName,
+        url: new URL('/', Astro.site).toString(),
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'خانه',
+          item: new URL('/', Astro.site).toString(),
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'ابزارهای رایگان',
+          item: new URL('/tools/', Astro.site).toString(),
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: tool.shortTitle,
+          item: canonical.toString(),
+        },
+      ],
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={`${tool.title}؛ رایگان و بدون ثبت‌نام | ${siteConfig.brandName}`}
+  description={tool.seoDescription}
+  image={tool.cover}
+  imageAlt={tool.coverAlt}
+  imageWidth={1536}
+  imageHeight={1024}
+  preloadImage={tool.cover}
+  preloadImageWidth={1536}
+  keywords={[tool.shortTitle, 'ابزار مشاور املاک', 'فرم رایگان املاک']}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(structuredData)}
+  />
+
+  <header class="practical-tool-hero">
+    <div class="shell practical-tool-hero-grid">
+      <div>
+        <nav class="breadcrumbs" aria-label="مسیر صفحه">
+          <a href="/">خانه</a><span aria-hidden="true">/</span>
+          <a href="/tools/">ابزارهای رایگان</a><span aria-hidden="true">/</span>
+          <span>{tool.shortTitle}</span>
+        </nav>
+        <p class="kicker">{tool.kicker}</p>
+        <h1>{tool.title}</h1>
+        <p class="lead">{tool.description}</p>
+        <ul class="tool-trust-list">
+          <li>رایگان و بدون ثبت‌نام</li>
+          <li>بدون ارسال یا ذخیرهٔ اطلاعات</li>
+          <li>خروجی آمادهٔ کپی و چاپ</li>
+        </ul>
+        <a class="button" href="#start-tool">شروع ابزار</a>
+      </div>
+      <figure>
+        <ResponsiveImage
+          src={tool.cover}
+          alt={tool.coverAlt}
+          width="1536"
+          height="1024"
+          sizes="(max-width: 56.25rem) 100vw, 46vw"
+          fetchpriority="high"
+        />
+      </figure>
+    </div>
+  </header>
+
+  <section class="practical-tool-main" id="start-tool">
+    <div class="shell practical-tool-layout">
+      <div class="practical-tool-intro">
+        <p class="section-sign">فرم را کامل کنید</p>
+        <h2>فقط اطلاعات لازم برای همین کار را بنویسید</h2>
+        <p>
+          نام کامل، شماره تماس، نشانی دقیق یا اطلاعات محرمانه لازم نیست. نتیجه
+          روی همین دستگاه ساخته می‌شود و بعد از بستن صفحه باقی نمی‌ماند.
+        </p>
+        <a class="text-link" href={tool.relatedArticle.href}>
+          {tool.relatedArticle.label} ←
+        </a>
+      </div>
+      <PracticalRealEstateTool tool={tool} />
+    </div>
+  </section>
+
+  <section class="tool-product-bridge" aria-labelledby="tool-product-title">
+    <div class="shell tool-product-bridge-grid">
+      <div>
+        <p class="kicker kicker-light">برای استفادهٔ مداوم</p>
+        <h2 id="tool-product-title">{tool.metrazhTitle}</h2>
+        <p>{tool.metrazhDescription}</p>
+      </div>
+      <div class="tool-product-actions">
+        <a
+          class="button button-light"
+          href={installUrl}
+          target={bazaarLink ? '_blank' : undefined}
+          rel={bazaarLink ? 'noopener' : undefined}
+          data-event={bazaarLink
+            ? 'metrazh_bazaar_click'
+            : 'article_to_metrazh'}
+          data-event-location={`tool_${tool.slug}`}
+        >
+          {bazaarLink ? 'نصب رایگان متراژ' : 'دیدن متراژ'}
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

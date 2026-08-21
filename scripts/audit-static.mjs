@@ -10,9 +10,16 @@ const requiredOutputs = [
   '404.html',
   'apps/index.html',
   'apps/metrazh/index.html',
+  'apps/metrazh/download/index.html',
   'apps/metrazh/status/index.html',
   'apps/metrazh/changelog/index.html',
   'real-estate-software/index.html',
+  'tools/index.html',
+  'tools/follow-up-message/index.html',
+  'tools/owner-call-checklist/index.html',
+  'tools/buyer-needs-form/index.html',
+  'tools/stale-file-decision/index.html',
+  'tools/visit-planner/index.html',
   'academy/index.html',
   'academy/first-organized-property-file/index.html',
   'articles/index.html',
@@ -31,7 +38,7 @@ const requiredOutputs = [
   'images/campaigns/metrazh-instagram-qr.png',
   'images/apps/metrazh/metrazh-site-story-poster-v1.webp',
   'videos/metrazh-site-story-v1.mp4',
-  'og.jpg',
+  'og-mahsai-metrazh-v2.jpg',
 ];
 
 function walk(directory, extension) {
@@ -95,6 +102,7 @@ const descriptions = new Map();
 const canonicals = new Map();
 let metrazhStructuredData;
 let metrazhVideoStructuredData;
+const structuredToolPages = new Set();
 
 for (const file of htmlFiles) {
   const relativeFile = path.relative(distRoot, file).replaceAll('\\', '/');
@@ -195,6 +203,24 @@ for (const file of htmlFiles) {
           metrazhVideoStructuredData = videoObject;
         }
       }
+
+      if (
+        relativeFile.startsWith('tools/') &&
+        relativeFile !== 'tools/index.html'
+      ) {
+        const structuredNodes = Array.isArray(data['@graph'])
+          ? data['@graph']
+          : [data];
+        const webApplication = structuredNodes.find((node) => {
+          const types = Array.isArray(node?.['@type'])
+            ? node['@type']
+            : [node?.['@type']];
+          return types.includes('WebApplication');
+        });
+        if (webApplication?.isAccessibleForFree === true) {
+          structuredToolPages.add(relativeFile);
+        }
+      }
     } catch (error) {
       errors.push(
         `${relativeFile}: دادهٔ ساختاریافته JSON معتبر نیست: ${error.message}`,
@@ -245,6 +271,24 @@ for (const file of htmlFiles) {
     }
   }
 
+  for (const match of html.matchAll(
+    /<figcaption\b[^>]*>([\s\S]*?)<\/figcaption>/gi,
+  )) {
+    const caption = match[1]
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (
+      /^(این |در این )?(عکس|تصویر|ویدیو)( بالا| زیر| را می‌بینید| را نشان می‌دهد)?[.!؟]?$/.test(
+        caption,
+      )
+    ) {
+      errors.push(
+        `${relativeFile}: کپشن بدیهی و بدون اطلاعات تازه پیدا شد: ${caption}`,
+      );
+    }
+  }
+
   for (const match of html.matchAll(/\bsrcset=["']([^"']+)["']/gi)) {
     const candidates = match[1]
       .split(',')
@@ -259,11 +303,44 @@ for (const file of htmlFiles) {
     }
   }
 
-  for (const forbidden of ['هوش مصنوعی', 'Meyar', 'MEYAR', 'رادار']) {
+  for (const forbidden of [
+    'هوش مصنوعی',
+    'Meyar',
+    'MEYAR',
+    'رادار',
+    '1.6.1',
+    '۱.۶.۱',
+  ]) {
+    if (
+      forbidden === 'هوش مصنوعی' &&
+      relativeFile === 'editorial-policy/index.html'
+    ) {
+      continue;
+    }
     if (html.includes(forbidden)) {
       errors.push(`${relativeFile}: عبارت ممنوع عمومی پیدا شد: ${forbidden}`);
     }
   }
+
+  for (const genericCopy of [
+    'در دنیای امروز',
+    'راهکار جامع و هوشمند',
+    'تحول دیجیتال',
+    'به سطح بعدی ببرید',
+    'تجربه‌ای بی‌نظیر',
+  ]) {
+    if (html.includes(genericCopy)) {
+      errors.push(
+        `${relativeFile}: عبارت تبلیغاتی آماده و غیرطبیعی پیدا شد: ${genericCopy}`,
+      );
+    }
+  }
+}
+
+if (structuredToolPages.size !== 5) {
+  errors.push(
+    `پنج ابزار رایگان باید WebApplication معتبر داشته باشند؛ فعلاً ${structuredToolPages.size} صفحه تأیید شد.`,
+  );
 }
 
 for (const property of [

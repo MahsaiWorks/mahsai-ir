@@ -10,6 +10,7 @@ import {
 } from '../../data/appPresentation';
 import { getGuideForArticle } from '../../data/guideTopics';
 import AnswerFirst from '../../components/AnswerFirst.astro';
+import ArticlePracticalKit from '../../components/ArticlePracticalKit.astro';
 import PropertyFileNameBuilder from '../../components/PropertyFileNameBuilder.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
@@ -197,7 +198,7 @@ const breadcrumbStructuredData = {
             </div>
 
             <div class="article-takeaways">
-              <p>توی این راهنما چی یاد می‌گیری؟</p>
+              <p>توی این راهنما چی یاد می‌گیرید؟</p>
               <ul>
                 {article.data.takeaways.map((takeaway) => <li>{takeaway}</li>)}
               </ul>
@@ -224,7 +225,7 @@ const breadcrumbStructuredData = {
       data-view-event="article_reading_started"
     >
       <aside class="article-toc" aria-label="فهرست مقاله">
-        <p>سریع برو سراغ بخشی که لازم داری</p>
+        <p>سریع بروید سراغ بخشی که لازم دارید</p>
         <ol>
           {
             headings
@@ -242,7 +243,7 @@ const breadcrumbStructuredData = {
           data-event="article_metrazh_anchor_click"
           data-event-location="article_toc"
         >
-          این کار رو با متراژ انجام بده <span aria-hidden="true">←</span>
+          این کار را با متراژ انجام بدهید <span aria-hidden="true">←</span>
         </a>
         <a class="toc-academy-link" href="/academy/">
           راهنماهای بیشتر برای کار املاک <span aria-hidden="true">←</span>
@@ -262,9 +263,17 @@ const breadcrumbStructuredData = {
       </aside>
 
       <div class="article-body prose">
-        <AnswerFirst answer={article.data.description} />
+        <AnswerFirst
+          answer={article.data.description}
+          actions={article.data.takeaways}
+        />
         {hasPropertyFileNameBuilder && <PropertyFileNameBuilder />}
         <Content />
+        <ArticlePracticalKit
+          articleId={article.id}
+          scenario={article.data.scenario}
+          copyBlock={article.data.copyBlock}
+        />
         <aside
           class="article-inline-cta"
           id="metrazh-for-this-article"
@@ -285,7 +294,7 @@ const breadcrumbStructuredData = {
                   />
                 )
               }
-              <span>حالا با متراژ انجامش بده</span>
+              <span>حالا با متراژ انجامش بدهید</span>
             </div>
             <h2 id="metrazh-article-title">{article.data.metrazh.title}</h2>
             <p>{article.data.metrazh.description}</p>
@@ -312,14 +321,14 @@ const breadcrumbStructuredData = {
                 data-event="article_to_metrazh"
                 data-event-location={`article_${article.id}_details`}
               >
-                اول خود برنامه رو ببین
+                اول خود برنامه را ببینید
               </a>
             </div>
             {
               bazaarLink && (
                 <small>
-                  دکمهٔ نصب، مستقیم صفحهٔ رسمی متراژ در کافه‌بازار رو باز
-                  می‌کنه.
+                  دکمهٔ نصب، مستقیم صفحهٔ رسمی متراژ در کافه‌بازار را باز
+                  می‌کند.
                 </small>
               )
             }
@@ -358,6 +367,13 @@ const breadcrumbStructuredData = {
               </dd>
             </div>
             <div>
+              <dt>وضعیت بازبینی میدانی</dt>
+              <dd>
+                این نسخه هنوز تأیید مستقل یک مشاور بیرون از MAHSAI را ندارد؛
+                تجربه یا نقل‌قول ساختگی به متن اضافه نشده است.
+              </dd>
+            </div>
+            <div>
               <dt>آخرین بررسی</dt>
               <dd>
                 {formatDate(article.data.updatedAt ?? article.data.publishedAt)}
@@ -373,7 +389,7 @@ const breadcrumbStructuredData = {
             )
           }
           <p>
-            اشتباه یا اطلاعات قدیمی دیدی؟ روش گزارش و اصلاحش در
+            اشتباه یا اطلاعات قدیمی دیدید؟ روش گزارش و اصلاحش در
             <a href="/editorial-policy/"> سیاست تحریریه</a> آمده است.
           </p>
         </section>
@@ -396,7 +412,7 @@ const breadcrumbStructuredData = {
             <p>{nextInSeries.data.description}</p>
           </div>
           <a class="button" href={`/articles/${nextInSeries.id}/`}>
-            مقالهٔ بعدی رو بخون
+            مقالهٔ بعدی را بخوانید
           </a>
         </div>
       </section>
@@ -410,7 +426,9 @@ const breadcrumbStructuredData = {
           <div class="journal-section-head">
             <div>
               <p class="eyebrow">مطالب مرتبط</p>
-              <h2 id="related-title">این مقاله‌ها هم ممکنه به کارت بیان</h2>
+              <h2 id="related-title">
+                این مقاله‌ها هم ممکن است به کارتان بیایند
+              </h2>
             </div>
             <a class="story-link" href="/articles/">
               همهٔ مقاله‌ها

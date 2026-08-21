@@ -11,6 +11,8 @@ const accessibilityRoutes = [
   '/apps/metrazh/',
   '/apps/metrazh/changelog/',
   '/real-estate-software/',
+  '/tools/',
+  '/tools/follow-up-message/',
   '/guides/',
   '/guides/property-files/',
   '/academy/',
@@ -51,6 +53,10 @@ if (!executablePath) {
 
 const profiles = [
   { name: 'desktop', viewport: { width: 1440, height: 1000 } },
+  { name: 'desktop-1024', viewport: { width: 1024, height: 900 } },
+  { name: 'tablet-768', viewport: { width: 768, height: 900 } },
+  { name: 'mobile-390', viewport: { width: 390, height: 844 } },
+  { name: 'mobile-360', viewport: { width: 360, height: 800 } },
   { name: 'reflow-400', viewport: { width: 320, height: 800 } },
 ];
 const failures = [];
@@ -149,6 +155,64 @@ try {
         if (!resetDisabled) {
           failures.push(
             `${profile.name} ${route}: پاک‌کردن فرم، کپی عنوان ناقص را غیرفعال نکرد.`,
+          );
+        }
+      }
+
+      if (route === '/tools/follow-up-message/') {
+        await page
+          .locator('input[name="property_label"]')
+          .fill('آپارتمان دوخواب جنت‌آباد');
+        await page
+          .locator('input[name="liked"]')
+          .fill('نور خانه و نقشهٔ آشپزخانه');
+        await page.locator('input[name="concern"]').fill('شرایط پرداخت');
+        await page.locator('select[name="next_step"]').selectOption('answer');
+        await page.locator('input[name="timing"]').fill('فردا ساعت ۱۱');
+        await page
+          .locator('[data-practical-tool-form] button[type="submit"]')
+          .click();
+
+        const toolResult = page.locator('[data-practical-tool-result]');
+        const toolOutput = await page
+          .locator('[data-practical-tool-output]')
+          .inputValue();
+        if (
+          !(await toolResult.isVisible()) ||
+          !toolOutput.includes('آپارتمان دوخواب جنت‌آباد') ||
+          !toolOutput.includes('شرایط پرداخت')
+        ) {
+          failures.push(
+            `${profile.name} ${route}: ابزار پیگیری خروجی مرتبط و قابل مشاهده نساخت.`,
+          );
+        }
+
+        await page
+          .locator('[data-practical-tool-form] button[type="reset"]')
+          .click();
+        if (await toolResult.isVisible()) {
+          failures.push(
+            `${profile.name} ${route}: پاک‌کردن فرم باید نتیجهٔ قبلی را پنهان کند.`,
+          );
+        }
+      }
+
+      if (route === '/academy/') {
+        const voteLinks = await page.locator('.academy-vote-card a').count();
+        if (voteLinks !== 0) {
+          failures.push(
+            `${profile.name} ${route}: رأی‌گیری نباید ایمیل یا پیوند واسط باز کند.`,
+          );
+        }
+        const firstVote = page.locator('[data-topic-vote]').first();
+        await firstVote.click();
+        const voteState = await firstVote.getAttribute('aria-pressed');
+        const voteStatus = await page
+          .locator('[data-vote-status]')
+          .textContent();
+        if (voteState !== 'true' || !voteStatus?.includes('ثبت شد')) {
+          failures.push(
+            `${profile.name} ${route}: رأی یک‌کلیکی بازخورد روشن نشان نداد.`,
           );
         }
       }

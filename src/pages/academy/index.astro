@@ -32,10 +32,10 @@ const trackImages = {
 } as const;
 
 const voteTopics = [
-  'مرتب‌کردن فایل‌های قدیمی',
-  'پیگیری مشتری مردد',
-  'نوشتن آگهی بهتر',
-  'برنامه‌ریزی بازدیدها',
+  { id: 'stale_files', label: 'مرتب‌کردن فایل‌های قدیمی' },
+  { id: 'client_followup', label: 'پیگیری مشتری مردد' },
+  { id: 'property_ads', label: 'نوشتن آگهی بهتر' },
+  { id: 'visit_planning', label: 'برنامه‌ریزی بازدیدها' },
 ] as const;
 
 const collectionStructuredData = {
@@ -244,27 +244,70 @@ const collectionStructuredData = {
           دوست دارید آموزش بعدی دربارهٔ چه چیزی باشد؟
         </h2>
         <p>
-          با انتخاب هر گزینه، یک ایمیل آماده باز می‌شود. رأی فقط وقتی ثبت می‌شود
-          که خودتان ایمیل را ارسال کنید.
+          فقط یک گزینه را بزنید. نیازی به ورود، ایمیل یا نوشتن توضیح نیست و متن
+          انتخاب شما در سایت نمایش داده نمی‌شود.
         </p>
       </div>
       <ul>
         {
           voteTopics.map((topic) => (
             <li>
-              <a
-                href={`mailto:${siteConfig.supportEmail}?subject=${encodeURIComponent(`رأی آموزش بعدی: ${topic}`)}&body=${encodeURIComponent(`رأی من برای آموزش بعدی MAHSAI: ${topic}`)}`}
+              <button
+                type="button"
+                data-topic-vote={topic.id}
+                aria-pressed="false"
                 data-event="content_vote_email"
-                data-event-location="academy_vote"
+                data-event-location={`academy_vote_${topic.id}`}
               >
-                {topic}
-              </a>
+                {topic.label}
+              </button>
             </li>
           ))
         }
       </ul>
+      <p class="academy-vote-status" data-vote-status aria-live="polite"></p>
     </div>
   </section>
+
+  <script is:inline>
+    (() => {
+      const buttons = [...document.querySelectorAll('[data-topic-vote]')];
+      const status = document.querySelector('[data-vote-status]');
+      if (!buttons.length || !status) return;
+
+      const markVote = (selected) => {
+        for (const button of buttons) {
+          const isSelected = button === selected;
+          button.toggleAttribute('data-selected', isSelected);
+          button.setAttribute('aria-pressed', String(isSelected));
+          button.disabled = true;
+        }
+        status.textContent = 'ممنون؛ انتخابت ثبت شد.';
+      };
+
+      let savedVote = '';
+      try {
+        savedVote = sessionStorage.getItem('mahsai_academy_vote') || '';
+      } catch {}
+      const savedButton = buttons.find(
+        (button) => button.dataset.topicVote === savedVote,
+      );
+      if (savedButton) markVote(savedButton);
+
+      for (const button of buttons) {
+        button.addEventListener('click', () => {
+          if (button.disabled || button.hasAttribute('data-selected')) return;
+          try {
+            sessionStorage.setItem(
+              'mahsai_academy_vote',
+              button.dataset.topicVote || '',
+            );
+          } catch {}
+          markVote(button);
+        });
+      }
+    })();
+  </script>
 
   <section class="academy-finish">
     <div class="shell academy-finish-grid">

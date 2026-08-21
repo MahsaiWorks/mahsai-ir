@@ -1,0 +1,36 @@
+---
+import { siteUpdates } from '../data/siteUpdates';
+---
+
+<section class="latest-site-updates" aria-labelledby="latest-updates-title">
+  <div class="shell latest-site-updates-shell">
+    <header class="latest-site-updates-head">
+      <div>
+        <p class="section-sign">تازه‌های MAHSAI</p>
+        <h2 id="latest-updates-title">تازه چه چیزهایی به سایت اضافه شده؟</h2>
+      </div>
+      <p>
+        این بخش فقط وقتی تغییر می‌کند که چیزی واقعاً آمادهٔ استفاده شده باشد؛ نه
+        برای پرکردن تقویم.
+      </p>
+    </header>
+
+    <div class="latest-site-updates-grid">
+      {
+        siteUpdates.map((update) => (
+          <article>
+            <div class="latest-site-update-meta">
+              <span>{update.type}</span>
+              <time>{update.date}</time>
+            </div>
+            <h3>{update.title}</h3>
+            <p>{update.description}</p>
+            <a class="arrow-link" href={update.href}>
+              {update.action} <span aria-hidden="true">←</span>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

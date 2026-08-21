@@ -1,17 +1,27 @@
 ---
 interface Props {
   answer: string;
+  actions?: string[];
   impact?: string;
   action?: string;
 }
 
-const { answer, impact, action } = Astro.props;
+const { answer, actions = [], impact, action } = Astro.props;
 ---
 
 <aside class="answer-first" aria-labelledby="answer-first-title">
-  <span>اگر فقط ۳۰ ثانیه وقت داری</span>
+  <span>اگر عجله دارید</span>
   <h2 id="answer-first-title">جواب کوتاه</h2>
   <p>{answer}</p>
+  {
+    actions.length > 0 && (
+      <ol class="answer-first-actions">
+        {actions.slice(0, 3).map((item) => (
+          <li>{item}</li>
+        ))}
+      </ol>
+    )
+  }
   {
     impact && (
       <p class="answer-first-impact">

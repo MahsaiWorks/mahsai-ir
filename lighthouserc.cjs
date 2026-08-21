@@ -28,7 +28,7 @@ module.exports = {
         'http://localhost/real-estate-software/',
         'http://localhost/articles/complete-property-file/',
       ],
-      numberOfRuns: 1,
+      numberOfRuns: 3,
       chromePath,
       settings: {
         chromeFlags: '--headless=new --no-sandbox --disable-gpu',

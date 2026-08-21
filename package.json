@@ -16,6 +16,7 @@
     "audit:external": "node scripts/audit-external-links.mjs",
     "audit:lighthouse": "lhci autorun",
     "audit:lighthouse:local": "start-test \"pnpm preview --host 127.0.0.1\" http://127.0.0.1:4321 \"node scripts/audit-lighthouse-local.mjs\"",
+    "audit:visual": "start-test \"pnpm preview --host 127.0.0.1\" http://127.0.0.1:4321 \"node scripts/capture-visual-qa.mjs\"",
     "audit:stale": "node scripts/report-stale-content.mjs",
     "qa:browser": "start-test \"pnpm preview --host 127.0.0.1\" http://127.0.0.1:4321 \"pnpm audit:accessibility\"",
     "images:responsive": "node scripts/generate-responsive-images.mjs",
