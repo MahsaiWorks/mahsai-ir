@@ -192,6 +192,123 @@ const structuredData = {
 
         window.mahsaiMeasure = emit;
 
+        const allowedMeasurementEvents = new Set([
+          'guide_open',
+          'guide_reading_started',
+          'guide_to_metrazh',
+          'article_open',
+          'article_reading_started',
+          'article_to_guide',
+          'scroll_depth',
+          'article_to_metrazh',
+          'article_metrazh_anchor_click',
+          'article_metrazh_offer_viewed',
+          'metrazh_page_view',
+          'metrazh_screenshots_open',
+          'metrazh_quick_start_view',
+          'metrazh_scenarios_view',
+          'metrazh_site_story_seen',
+          'metrazh_interface_seen',
+          'download_guide_viewed',
+          'metrazh_bazaar_click',
+          'metrazh_bazaar_review_open',
+          'official_instagram_open',
+          'print_checklists',
+          'property_file_name_copied',
+          'support_contact_click',
+          'support_email_prepared',
+          'metrazh_feedback_email',
+          'content_share',
+          'newsletter_interest_email',
+          'campaign_redirect',
+          'content_vote_email',
+          'free_course_print',
+          'paid_course_interest_email',
+          'editorial_correction_email',
+          'workday_route_selected',
+          'client_error',
+        ]);
+
+        const fixedLabel = (value) => {
+          if (typeof value !== 'string') return undefined;
+          const label = value
+            .normalize('NFKC')
+            .trim()
+            .toLowerCase()
+            .replace(/[^a-z0-9_:-]+/g, '_')
+            .replace(/_+/g, '_')
+            .replace(/^_+|_+$/g, '')
+            .slice(0, 80);
+          return /^[a-z0-9]/.test(label) ? label : undefined;
+        };
+
+        const measurementLocation = (name, properties) => {
+          const direct = fixedLabel(properties.location);
+          if (direct) return direct;
+
+          if (name === 'scroll_depth') {
+            return properties.depth === 90 ? 'depth_90' : 'depth_50';
+          }
+          if (name === 'client_error') {
+            return properties.kind === 'unhandled_rejection'
+              ? 'unhandled_rejection'
+              : 'error';
+          }
+
+          const fixedProperty =
+            name === 'workday_route_selected'
+              ? fixedLabel(properties.route)
+              : name === 'campaign_redirect'
+                ? fixedLabel(properties.campaign)
+                : name === 'free_course_print'
+                  ? fixedLabel(properties.course)
+                  : name === 'support_email_prepared'
+                    ? fixedLabel(properties.category)
+                    : undefined;
+          return fixedProperty
+            ? `${name}:${fixedProperty}`.slice(0, 80)
+            : 'page';
+        };
+
+        document.addEventListener('mahsai:measure', (event) => {
+          if (!(event instanceof CustomEvent)) return;
+          const detail = event.detail;
+          if (!detail || typeof detail !== 'object') return;
+
+          const name = detail.name;
+          const properties =
+            detail.properties && typeof detail.properties === 'object'
+              ? detail.properties
+              : {};
+          if (typeof name !== 'string' || !allowedMeasurementEvents.has(name)) {
+            return;
+          }
+
+          const payload = JSON.stringify({
+            schema: 'mahsai_site_event_v1',
+            name,
+            path: location.pathname,
+            location: measurementLocation(name, properties),
+          });
+          const endpoint = '/api/events';
+          const queued =
+            typeof navigator.sendBeacon === 'function' &&
+            navigator.sendBeacon(
+              endpoint,
+              new Blob([payload], { type: 'application/json' }),
+            );
+
+          if (!queued) {
+            fetch(endpoint, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: payload,
+              keepalive: true,
+              credentials: 'omit',
+            }).catch(() => {});
+          }
+        });
+
         document.addEventListener('click', (event) => {
           if (!(event.target instanceof Element)) return;
           const target = event.target.closest('a, button, [data-event]');
