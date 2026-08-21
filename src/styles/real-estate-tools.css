@@ -519,30 +519,6 @@
   border-radius: 1.9rem;
 }
 
-.tool-index-visual figcaption {
-  position: absolute;
-  inset-inline-start: 1.6rem;
-  inset-block-end: 1.6rem;
-  max-width: min(19rem, calc(100% - 3.2rem));
-  padding: 0.9rem 1rem;
-  background: rgba(255, 254, 250, 0.9);
-  border-radius: 1rem;
-  box-shadow: var(--shadow-sm);
-  backdrop-filter: blur(10px);
-}
-
-.tool-index-visual figcaption span {
-  display: block;
-  color: var(--orange);
-  font-size: 0.72rem;
-  font-weight: 760;
-}
-
-.tool-index-visual figcaption strong {
-  color: var(--ink);
-  line-height: 1.7;
-}
-
 .tool-workbench {
   padding-block: var(--section-space);
   background: var(--white);
@@ -824,12 +800,6 @@
 
   .tool-index-visual img {
     border-radius: 1.35rem;
-  }
-
-  .tool-index-visual figcaption {
-    inset-inline: 0.9rem;
-    inset-block-end: 0.9rem;
-    max-width: none;
   }
 
   .tool-trust-list {

@@ -2673,41 +2673,6 @@ h4 {
   transform: rotate(1.4deg);
 }
 
-.screen-ledger-note,
-.metrazh-screen-note {
-  position: absolute;
-  z-index: 4;
-  display: grid;
-  gap: 0.15rem;
-  max-width: 15.5rem;
-  padding: 0.9rem 1rem;
-  margin: 0;
-  color: var(--ink);
-  background: rgba(255, 254, 250, 0.94);
-  border: 1px solid rgba(31, 65, 82, 0.08);
-  border-radius: 1.2rem;
-  box-shadow: var(--shadow-sm);
-  backdrop-filter: blur(10px);
-}
-
-.screen-ledger-note {
-  inset-inline-start: 5%;
-  inset-block-end: 2.2rem;
-}
-
-.screen-ledger-note span,
-.metrazh-screen-note span {
-  color: var(--orange);
-  font-size: 0.72rem;
-  font-weight: 760;
-}
-
-.screen-ledger-note strong,
-.metrazh-screen-note strong {
-  font-size: 0.9rem;
-  line-height: 1.65;
-}
-
 .work-index {
   padding-block: var(--section-space);
   background: var(--white);
@@ -3120,11 +3085,6 @@ h4 {
 
 .metrazh-hero-screen figure {
   transform: rotate(-0.8deg);
-}
-
-.metrazh-screen-note {
-  inset-inline-start: 1.7rem;
-  inset-block-end: 1.7rem;
 }
 
 .metrazh-fact-band {
@@ -3692,12 +3652,6 @@ h4 {
     inset-block-start: 6rem;
   }
 
-  .screen-ledger-note {
-    max-width: 13rem;
-    inset-inline-start: 1rem;
-    inset-block-end: 1rem;
-  }
-
   .work-route {
     grid-template-columns: 1fr;
     gap: 0.8rem;
@@ -3738,12 +3692,6 @@ h4 {
 
   .metrazh-hero-screen figure {
     width: 64%;
-  }
-
-  .metrazh-screen-note {
-    max-width: 12rem;
-    inset-inline-start: 1rem;
-    inset-block-end: 1rem;
   }
 
   .metrazh-fact-band dl {
@@ -3867,35 +3815,6 @@ h4 {
   aspect-ratio: 16 / 9;
   object-fit: cover;
   background: var(--ink);
-}
-
-.metrazh-site-story-video > span {
-  position: absolute;
-  inset-block-start: 0.85rem;
-  inset-inline-start: 0.85rem;
-  padding: 0.3rem 0.65rem;
-  color: var(--white);
-  background: rgba(12, 34, 52, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 999px;
-  font-size: 0.76rem;
-  font-weight: 720;
-  backdrop-filter: blur(12px);
-  pointer-events: none;
-}
-
-.metrazh-site-story-note {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 0.55rem;
-  margin: 0.9rem 0 0;
-  color: var(--muted);
-  font-size: 0.86rem;
-  line-height: 1.8;
-}
-
-.metrazh-site-story-note strong {
-  color: var(--ink);
 }
 
 @media (max-width: 56.25rem) {
