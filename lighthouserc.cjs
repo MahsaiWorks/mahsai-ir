@@ -32,6 +32,7 @@ module.exports = {
       chromePath,
       settings: {
         chromeFlags: '--headless=new --no-sandbox --disable-gpu',
+        blockedUrlPatterns: ['*://trustseal.enamad.ir/*'],
         maxWaitForLoad: 90000,
       },
     },
