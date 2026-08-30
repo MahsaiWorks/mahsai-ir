@@ -71,6 +71,11 @@ try {
       viewport: profile.viewport,
       reducedMotion: 'reduce',
     });
+    // The official Enamad badge is third-party and may be filtered or slow in CI.
+    // Keep local accessibility and reflow QA deterministic without weakening it.
+    await context.route('https://trustseal.enamad.ir/**', (route) =>
+      route.abort(),
+    );
 
     for (const route of accessibilityRoutes) {
       const page = await context.newPage();
