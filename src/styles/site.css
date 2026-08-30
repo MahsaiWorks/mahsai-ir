@@ -643,7 +643,9 @@ ol {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: minmax(16rem, 1.25fr) repeat(2, minmax(11rem, 0.75fr));
+  grid-template-columns:
+    minmax(16rem, 1.25fr) repeat(2, minmax(11rem, 0.75fr))
+    minmax(9rem, 0.55fr);
   gap: 3.5rem;
 }
 
@@ -676,6 +678,31 @@ ol {
 
 .footer-email {
   margin-top: 1rem;
+}
+
+.footer-trust {
+  align-self: start;
+}
+
+.footer-trust > p {
+  max-width: 13rem;
+  margin-bottom: 0.9rem;
+  font-size: 0.92rem;
+}
+
+.footer-trust-badge {
+  width: fit-content;
+  padding: 0.45rem;
+  background: var(--white);
+  border-radius: 1rem;
+}
+
+.footer-trust-badge a {
+  min-height: 0;
+}
+
+.footer-trust-badge img {
+  display: block;
 }
 
 .footer-bottom {

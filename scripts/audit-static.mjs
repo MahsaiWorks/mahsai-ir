@@ -242,10 +242,16 @@ for (const file of htmlFiles) {
   for (const match of html.matchAll(/<img\b[^>]*>/gi)) {
     imageCount += 1;
     const tag = match[0];
+    const source = tag.match(/\bsrc=["']([^"']+)["']/i)?.[1];
+    const isOfficialEnamadBadge =
+      source ===
+        'https://trustseal.enamad.ir/logo.aspx?id=7506195&Code=OHQG1aXCXFqM3gYapj2Mb7b109YIqMOn' &&
+      /\bcode=["']OHQG1aXCXFqM3gYapj2Mb7b109YIqMOn["']/i.test(tag);
     if (!/\balt(?:\s|=|>)/i.test(tag)) {
       errors.push(`${relativeFile}: تصویر بدون alt پیدا شد.`);
     }
     if (
+      !isOfficialEnamadBadge &&
       (/\balt(?=\s|>)/i.test(tag) || /\balt=["']["']/i.test(tag)) &&
       !/\baria-hidden=["']true["']/i.test(tag) &&
       !/\brole=["'](?:presentation|none)["']/i.test(tag)
@@ -255,12 +261,11 @@ for (const file of htmlFiles) {
       );
     }
     if (
-      !/\bwidth=["']\d+["']/i.test(tag) ||
-      !/\bheight=["']\d+["']/i.test(tag)
+      !isOfficialEnamadBadge &&
+      (!/\bwidth=["']\d+["']/i.test(tag) || !/\bheight=["']\d+["']/i.test(tag))
     ) {
       errors.push(`${relativeFile}: تصویر بدون width و height صریح پیدا شد.`);
     }
-    const source = tag.match(/\bsrc=["']([^"']+)["']/i)?.[1];
     const width = Number(tag.match(/\bwidth=["'](\d+)["']/i)?.[1]);
     if (
       source?.startsWith('/images/') &&

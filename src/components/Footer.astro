@@ -16,6 +16,8 @@ const featuredApp = (await getCollection('apps'))
 const downloadLink = featuredApp
   ? getCafeBazaarLink(featuredApp.data.storeLinks)
   : undefined;
+// Fixed, trusted markup issued by Enamad. Keep its custom `code` attribute verbatim.
+const enamadBadgeHtml = `<a referrerpolicy='origin' target='_blank' aria-label='مشاهده شناسنامه رسمی اینماد متراژ' href='https://trustseal.enamad.ir/?id=7506195&Code=OHQG1aXCXFqM3gYapj2Mb7b109YIqMOn'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=7506195&Code=OHQG1aXCXFqM3gYapj2Mb7b109YIqMOn' alt='' style='cursor:pointer' code='OHQG1aXCXFqM3gYapj2Mb7b109YIqMOn'></a>`;
 ---
 
 <footer class="site-footer">
@@ -110,6 +112,12 @@ const downloadLink = featuredApp
           </ul>
         )
       }
+    </div>
+
+    <div class="footer-trust">
+      <h2>اعتماد و مجوز</h2>
+      <p>شناسنامه رسمی کسب‌وکار متراژ در سامانه اینماد</p>
+      <div class="footer-trust-badge" set:html={enamadBadgeHtml} />
     </div>
   </div>
   <div class="shell footer-bottom">
