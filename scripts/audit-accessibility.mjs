@@ -315,6 +315,9 @@ try {
       locale: 'fa-IR',
       viewport: { width: 1440, height: 1000 },
     });
+    await context.route('https://trustseal.enamad.ir/**', (route) =>
+      route.abort(),
+    );
     const titles = new Map();
     const descriptions = new Map();
 
