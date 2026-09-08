@@ -12,3 +12,6 @@ Thumbs.db
 *.log
 .idea/
 .vscode/
+
+# Materialized from checksum-verified release parts before every build.
+/public/downloads/metrazh-1.6.6-24.apk

@@ -161,11 +161,11 @@ const structuredData = {
   </head>
   <body>
     <a class="skip-link" href="#main-content">رفتن به محتوای اصلی</a>
-    <Header />
+    <slot name="header"><Header /></slot>
     <main id="main-content">
       <slot />
     </main>
-    <Footer />
+    <slot name="footer"><Footer /></slot>
     {
       cloudflareAnalyticsToken && (
         <script
