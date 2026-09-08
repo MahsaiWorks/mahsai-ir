@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import PageStage from '../../../components/PageStage.astro';
 import { siteConfig } from '../../../config/site';
+import { metrazhDirectRelease as direct } from '../../../data/metrazhDirectRelease';
 import {
   getReleaseCheckpoints,
   releasePrinciples,
@@ -33,13 +34,13 @@ const storeCheckedAt = formatDate(app.data.storeCheckedAt);
 
 <BaseLayout
   title={`وضعیت انتشار متراژ | ${siteConfig.brandName}`}
-  description={`وضعیت رسمی انتشار متراژ، نسخه عمومی ${app.data.version} و مسیر دانلود تأییدشده از کافه‌بازار.`}
+  description={`دانلود مستقیم متراژ ${direct.versionFa} برای اندروید، همراه وضعیت نسخهٔ کافه‌بازار و تاریخچهٔ تغییرات.`}
 >
   <PageStage
     eyebrow="وضعیت رسمی محصول"
-    title={`نسخه ${app.data.version}`}
-    highlight="در کافه‌بازار منتشر شده است."
-    lead="نسخه عمومی متراژ از صفحه رسمی کافه‌بازار قابل دریافت است. وضعیت به‌روزرسانی‌های بعدی پس از تأیید بازار در همین صفحه اعلام می‌شود."
+    title={`متراژ ${direct.versionFa}`}
+    highlight="مستقیم از سایت دریافت کنید."
+    lead="نسخهٔ مستقیم اندروید با ورود پیامکی و پرداخت از زیبال آمادهٔ دریافت است. نسخهٔ کافه‌بازار هم از صفحهٔ رسمی فروشگاه در دسترس است."
     index="متراژ / وضعیت"
     note={app.data.releaseNote}
     signals={[
@@ -50,6 +51,7 @@ const storeCheckedAt = formatDate(app.data.storeCheckedAt);
     tone="apricot"
   >
     <div slot="actions" class="page-stage-actions">
+      <a class="button" href="/apps/metrazh/download/">دانلود مستقیم اندروید</a>
       {
         bazaarLink && (
           <a
@@ -123,9 +125,12 @@ const storeCheckedAt = formatDate(app.data.storeCheckedAt);
   <section class="cta-section">
     <div class="shell cta-panel">
       <p class="eyebrow">دانلود رسمی</p>
-      <h2>متراژ را از کافه‌بازار دریافت کنید.</h2>
-      <p>این لینک به صفحه عمومی و تأییدشده متراژ در کافه‌بازار متصل است.</p>
+      <h2>روش دریافت متراژ را انتخاب کنید.</h2>
+      <p>دانلود مستقیم از سایت رسمی یا نصب از کافه‌بازار.</p>
       <div class="cta-actions">
+        <a class="button" href="/apps/metrazh/download/"
+          >دانلود مستقیم اندروید</a
+        >
         {
           bazaarLink && (
             <a

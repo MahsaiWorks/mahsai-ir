@@ -233,13 +233,13 @@ try {
           );
         if (
           heroActions.length !== 2 ||
-          !heroActions.some((action) =>
-            action.href.includes('cafebazaar.ir'),
+          !heroActions.some(
+            (action) => action.href === '/apps/metrazh/download/',
           ) ||
           !heroActions.some((action) => action.href === '#inside-metrazh')
         ) {
           failures.push(
-            `${profile.name} ${route}: قهرمان صفحه باید فقط اقدام بازار و دیدن روش کار را داشته باشد.`,
+            `${profile.name} ${route}: قهرمان صفحه باید اقدام دانلود رسمی و دیدن روش کار را داشته باشد.`,
           );
         }
 

@@ -1,3 +1,5 @@
+import { metrazhDirectRelease } from './metrazhDirectRelease';
+
 export interface ReleaseCheckpoint {
   status: 'ready' | 'review' | 'pending';
   eyebrow: string;
@@ -6,6 +8,13 @@ export interface ReleaseCheckpoint {
 }
 
 export const getReleaseCheckpoints = (version: string): ReleaseCheckpoint[] => [
+  {
+    status: 'ready',
+    eyebrow: 'دانلود مستقیم سایت',
+    title: `متراژ ${metrazhDirectRelease.versionFa}`,
+    description:
+      'نسخهٔ مستقیم اندروید با ورود پیامکی، خرید از زیبال و بازیابی اشتراک با شمارهٔ همراه از صفحهٔ دانلود سایت قابل دریافت است.',
+  },
   {
     status: 'ready',
     eyebrow: 'آماده در نسخه فعلی',
@@ -31,6 +40,6 @@ export const getReleaseCheckpoints = (version: string): ReleaseCheckpoint[] => [
 
 export const releasePrinciples = [
   'شماره نسخه و وضعیت انتشار از داده رسمی محصول خوانده می‌شوند.',
-  'دانلود فقط به صفحه رسمی متراژ در کافه‌بازار هدایت می‌شود.',
+  'دانلود از فایل رسمی سایت و صفحه رسمی متراژ در کافه‌بازار در دسترس است.',
   'محصول و به‌روزرسانی فقط پس از انتشار رسمی در سایت معرفی می‌شوند.',
 ];

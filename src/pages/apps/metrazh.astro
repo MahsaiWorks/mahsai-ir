@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import ResponsiveImage from '../../components/ResponsiveImage.astro';
 import StoreBadge from '../../components/StoreBadge.astro';
 import { siteConfig } from '../../config/site';
+import { metrazhDirectRelease as direct } from '../../data/metrazhDirectRelease';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const app = (await getCollection('apps')).find(
@@ -122,7 +123,7 @@ const faqs = [
   {
     question: 'نسخهٔ رسمی و پشتیبانی را از کجا بگیرم؟',
     answer:
-      'دانلود و به‌روزرسانی فقط از صفحهٔ رسمی متراژ در کافه‌بازار انجام می‌شود. مسیرهای ایمیل و تلگرام رسمی در صفحهٔ پشتیبانی سایت قرار دارند.',
+      'دانلود و به‌روزرسانی از صفحهٔ دانلود رسمی سایت یا کافه‌بازار انجام می‌شود. مسیرهای ایمیل و تلگرام رسمی در صفحهٔ پشتیبانی سایت قرار دارند.',
   },
 ] as const;
 
@@ -153,7 +154,7 @@ const structuredData = {
       applicationCategory: 'BusinessApplication',
       applicationSubCategory: 'مدیریت فایل و مشتری املاک',
       operatingSystem: 'ANDROID',
-      softwareVersion: app.data.version,
+      softwareVersion: direct.version,
       dateModified: app.data.storeUpdatedAt.toISOString(),
       description: app.data.shortDescription,
       url: pageUrl,
@@ -293,11 +294,9 @@ const videoStructuredData = {
             نیاز مشتری را سریع پیدا کند و پیگیری بعدی را از یاد نبرد.
           </p>
           <div class="hero-actions">
-            {
-              bazaarLink && (
-                <StoreBadge href={bazaarLink.url} location="metrazh_hero" />
-              )
-            }
+            <a class="button" href="/apps/metrazh/download/">
+              دانلود مستقیم اندروید · {direct.versionFa}
+            </a>
             <a class="arrow-link" href="#inside-metrazh">
               دیدن روش کار <span aria-hidden="true">←</span>
             </a>
@@ -328,9 +327,9 @@ const videoStructuredData = {
   <section class="metrazh-fact-band" aria-label="مشخصات نسخهٔ منتشرشده">
     <div class="shell">
       <dl>
-        <div><dt>نسخهٔ منتشرشده</dt><dd>{app.data.version}</dd></div>
+        <div><dt>نسخهٔ مستقیم</dt><dd>{direct.versionFa}</dd></div>
         <div><dt>سیستم‌عامل</dt><dd>{app.data.minOs}</dd></div>
-        <div><dt>محل دریافت</dt><dd>کافه‌بازار</dd></div>
+        <div><dt>محل دریافت</dt><dd>سایت رسمی و کافه‌بازار</dd></div>
         <div><dt>وضعیت</dt><dd>قابل دانلود</dd></div>
       </dl>
     </div>
@@ -390,7 +389,7 @@ const videoStructuredData = {
         </p>
         <p>
           دریافت برنامه رایگان است و بعضی امکانات پرداخت درون‌برنامه‌ای دارند.
-          نسخهٔ رسمی فقط از کافه‌بازار منتشر می‌شود.
+          نسخهٔ رسمی از همین سایت و کافه‌بازار قابل دریافت است.
         </p>
         <a class="arrow-link" href="/apps/metrazh/download/">
           دانلود رسمی اپلیکیشن متراژ <span aria-hidden="true">←</span>
@@ -627,9 +626,12 @@ const videoStructuredData = {
         <h2 id="metrazh-download-title">
           متراژ را نصب کنید و اولین فایل را مرتب ثبت کنید
         </h2>
-        <p>نصب و به‌روزرسانی فقط از صفحهٔ رسمی متراژ در کافه‌بازار.</p>
+        <p>دریافت رایگان از سایت رسمی یا کافه‌بازار.</p>
       </div>
       <div class="metrazh-download-actions">
+        <a class="button button-light" href="/apps/metrazh/download/">
+          دانلود مستقیم اندروید · {direct.versionFa}
+        </a>
         {
           bazaarLink && (
             <StoreBadge href={bazaarLink.url} location="metrazh_bottom" light />

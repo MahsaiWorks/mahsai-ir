@@ -26,10 +26,14 @@ const downloadLink = featuredApp
   ? getCafeBazaarLink(featuredApp.data.storeLinks)
   : undefined;
 const downloadUrl = downloadLink
-  ? getTrackedCafeBazaarUrl(downloadLink.url, 'header')
+  ? featuredApp?.id === 'metrazh'
+    ? '/apps/metrazh/download/'
+    : getTrackedCafeBazaarUrl(downloadLink.url, 'header')
   : undefined;
 const mobileDownloadUrl = downloadLink
-  ? getTrackedCafeBazaarUrl(downloadLink.url, 'mobile_install_dock')
+  ? featuredApp?.id === 'metrazh'
+    ? '/apps/metrazh/download/'
+    : getTrackedCafeBazaarUrl(downloadLink.url, 'mobile_install_dock')
   : undefined;
 const showInstallDock =
   path === '/' ||
@@ -83,8 +87,8 @@ const showInstallDock =
     <a
       class="header-cta"
       href={downloadUrl ?? '/apps/metrazh/'}
-      target={downloadLink ? '_blank' : undefined}
-      rel={downloadLink ? 'noopener' : undefined}
+      target={downloadUrl?.startsWith('https:') ? '_blank' : undefined}
+      rel={downloadUrl?.startsWith('https:') ? 'noopener' : undefined}
     >
       نصب رایگان متراژ
       <span aria-hidden="true">↗</span>
@@ -114,9 +118,13 @@ const showInstallDock =
               <li>
                 <a
                   class="mobile-download-link"
-                  href={getTrackedCafeBazaarUrl(downloadLink.url, 'mobile_nav')}
-                  target="_blank"
-                  rel="noopener"
+                  href={downloadUrl}
+                  target={
+                    downloadUrl?.startsWith('https:') ? '_blank' : undefined
+                  }
+                  rel={
+                    downloadUrl?.startsWith('https:') ? 'noopener' : undefined
+                  }
                 >
                   نصب رایگان {featuredApp.data.name}
                 </a>
@@ -139,9 +147,9 @@ const showInstallDock =
     >
       <a
         href={mobileDownloadUrl}
-        target="_blank"
-        rel="noopener"
-        data-event="metrazh_bazaar_click"
+        target={mobileDownloadUrl.startsWith('https:') ? '_blank' : undefined}
+        rel={mobileDownloadUrl.startsWith('https:') ? 'noopener' : undefined}
+        data-event="metrazh_download_click"
         data-event-location="mobile_install_dock"
       >
         <ResponsiveImage
@@ -153,7 +161,7 @@ const showInstallDock =
         />
         <span>
           <strong>متراژ</strong>
-          <small>نصب رایگان از کافه‌بازار</small>
+          <small>دانلود رایگان اندروید</small>
         </span>
         <b>نصب</b>
       </a>

@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import PageStage from '../../../components/PageStage.astro';
 import { siteConfig } from '../../../config/site';
 import { metrazhChangelog } from '../../../data/metrazhChangelog';
+import { metrazhDirectRelease as direct } from '../../../data/metrazhDirectRelease';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 const app = (await getCollection('apps')).find(
@@ -31,14 +32,14 @@ const structuredData = {
     '@type': 'SoftwareApplication',
     name: app.data.name,
     operatingSystem: 'Android',
-    softwareVersion: app.data.version,
+    softwareVersion: direct.version,
   },
 };
 ---
 
 <BaseLayout
   title={`تاریخچهٔ نسخه‌های متراژ | ${siteConfig.brandName}`}
-  description="نسخه‌های عمومی و تأییدشدهٔ متراژ؛ تاریخ انتشار در کافه‌بازار، تاریخ بررسی و قابلیت‌های قابل استفاده هر نسخه."
+  description="تغییرات نسخه‌های متراژ؛ دانلود مستقیم اندروید و کافه‌بازار، امکانات تازه و بهبودهای هر نسخه."
 >
   <script
     type="application/ld+json"
@@ -50,9 +51,9 @@ const structuredData = {
     eyebrow="تغییرات قابل پیگیری"
     title="تاریخچهٔ نسخه‌های"
     highlight="متراژ"
-    lead="فقط نسخه‌ای در این صفحه قرار می‌گیرد که انتشار عمومی آن بررسی شده باشد. قابلیت آینده یا نسخهٔ در انتظار بازار، به‌عنوان نسخهٔ قابل دریافت معرفی نمی‌شود."
+    lead="امکانات تازه و اصلاحات هر نسخه را ببینید و نسخهٔ مناسب را از سایت رسمی یا کافه‌بازار دریافت کنید."
     index="متراژ / تاریخچه نسخه‌ها"
-    note={`نسخهٔ عمومی فعلی: ${app.data.version}`}
+    note={`جدیدترین نسخهٔ مستقیم: ${direct.versionFa}`}
     signals={[
       'اطلاعات قابل استناد',
       'تاریخ بررسی روشن',
@@ -71,11 +72,7 @@ const structuredData = {
       <header>
         <p class="kicker">نسخه‌های عمومی</p>
         <h2 id="changelog-title">چه چیزی واقعاً قابل استفاده است؟</h2>
-        <p>
-          این فهرست «تفاوت دقیق با نسخهٔ قبل» را فقط وقتی اعلام می‌کند که
-          یادداشت رسمی همان انتشار در دسترس باشد. فهرست فعلی، قابلیت‌های
-          تأییدشدهٔ نسخهٔ عمومی را نشان می‌دهد.
-        </p>
+        <p>اصلاحات و امکانات تازه، همراه با مسیر دریافت هر نسخه.</p>
       </header>
 
       <ol class="changelog-list">
@@ -88,12 +85,20 @@ const structuredData = {
               <article>
                 <div class="changelog-version-row">
                   <div>
-                    <span>نسخهٔ عمومی</span>
+                    <span>
+                      {entry.channel === 'direct'
+                        ? 'دانلود مستقیم سایت'
+                        : 'کافه‌بازار'}
+                    </span>
                     <h3>متراژ {entry.version}</h3>
                   </div>
                   <dl>
                     <div>
-                      <dt>به‌روزرسانی بازار</dt>
+                      <dt>
+                        {entry.channel === 'direct'
+                          ? 'انتشار نسخهٔ سایت'
+                          : 'به‌روزرسانی بازار'}
+                      </dt>
                       <dd>{formatDate(entry.storeUpdatedAt)}</dd>
                     </div>
                     <div>

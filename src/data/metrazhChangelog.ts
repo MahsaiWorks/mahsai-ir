@@ -1,6 +1,9 @@
+import { metrazhDirectRelease } from './metrazhDirectRelease';
+
 export interface MetrazhChangelogEntry {
   version: string;
   status: 'public';
+  channel?: 'direct' | 'bazaar';
   storeUpdatedAt: string;
   verifiedAt: string;
   summary: string;
@@ -9,6 +12,18 @@ export interface MetrazhChangelogEntry {
 }
 
 export const metrazhChangelog: MetrazhChangelogEntry[] = [
+  {
+    version: metrazhDirectRelease.version,
+    status: 'public',
+    channel: 'direct',
+    storeUpdatedAt: '2026-09-08',
+    verifiedAt: '2026-09-08',
+    summary:
+      'نسخهٔ مستقیم سایت با نمایش نام مالک در جزئیات ملک و خرید و بازیابی اشتراک از طریق شمارهٔ همراه.',
+    verifiedCapabilities: [...metrazhDirectRelease.changes],
+    evidence:
+      'فایل نصب رسمی اندروید از صفحهٔ دانلود سایت در دسترس است. به‌روزرسانی را روی برنامهٔ فعلی نصب کنید تا اطلاعات ثبت‌شده حفظ شوند.',
+  },
   {
     version: '1.0.4',
     status: 'public',
