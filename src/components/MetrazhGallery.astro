@@ -1,0 +1,128 @@
+---
+import ResponsiveImage from './ResponsiveImage.astro';
+import {
+  metrazhScreenshots,
+  metrazhSubscriptionScreenshot,
+} from '../data/metrazhScreenshots';
+const screenshots = [
+  ...metrazhScreenshots,
+  {
+    ...metrazhSubscriptionScreenshot,
+    title: 'انتخاب اشتراک',
+    description: 'پلن ماهانه یا سالانه را داخل برنامه انتخاب کنید',
+  },
+];
+---
+
+<section
+  class="metrazh-screen-gallery section"
+  id="screenshots"
+  aria-labelledby="screenshots-title"
+>
+  <div class="shell">
+    <header class="section-head">
+      <div>
+        <p class="kicker">از محیط متراژ</p><h2 id="screenshots-title">
+          برنامه را از نزدیک ببینید
+        </h2>
+      </div>
+      <div class="metrazh-gallery-help">
+        <p>
+          تصاویر واقعی برنامه با اطلاعات نمونه<br />برای دیدن جزئیات، تصویر را
+          باز کنید
+        </p>
+        <div class="metrazh-gallery-controls" data-gallery-controls hidden>
+          <button
+            type="button"
+            data-gallery-previous
+            aria-label="تصویر قبلی"
+            aria-controls="metrazh-screenshot-track"
+            disabled><span aria-hidden="true">→</span></button
+          >
+          <button
+            type="button"
+            data-gallery-next
+            aria-label="تصویر بعدی"
+            aria-controls="metrazh-screenshot-track"
+            ><span aria-hidden="true">←</span></button
+          >
+        </div>
+      </div>
+    </header>
+    <div
+      class="metrazh-gallery-track"
+      id="metrazh-screenshot-track"
+      tabindex="0"
+      role="region"
+      aria-label="گالری تصاویر متراژ؛ برای دیدن بقیهٔ تصاویر به چپ یا راست حرکت کنید"
+    >
+      {
+        screenshots.map((shot) => (
+          <figure class="metrazh-gallery-item">
+            <a
+              href={shot.src}
+              target="_blank"
+              rel="noopener"
+              aria-label={`باز کردن تصویر کامل ${shot.title}`}
+            >
+              <ResponsiveImage
+                src={shot.src}
+                width={shot.width}
+                height={shot.height}
+                alt={shot.alt}
+                sizes="(max-width: 600px) 76vw, 260px"
+                loading="lazy"
+              />
+            </a>
+            <figcaption>
+              <>
+                <h3>{shot.title}</h3>
+                <p>{shot.description}</p>
+              </>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  const track = document.querySelector<HTMLElement>(
+    '#metrazh-screenshot-track',
+  );
+  const controls = document.querySelector<HTMLElement>(
+    '[data-gallery-controls]',
+  );
+  const previous = controls?.querySelector<HTMLButtonElement>(
+    '[data-gallery-previous]',
+  );
+  const next = controls?.querySelector<HTMLButtonElement>(
+    '[data-gallery-next]',
+  );
+  if (track && controls && previous && next) {
+    const update = () => {
+      const end = Math.max(0, track.scrollWidth - track.clientWidth);
+      previous.disabled = track.scrollLeft >= -6;
+      next.disabled = -track.scrollLeft >= end - 6;
+    };
+    const move = (direction: number) => {
+      const item = track.querySelector<HTMLElement>('.metrazh-gallery-item');
+      const distance =
+        (item?.getBoundingClientRect().width ?? track.clientWidth) +
+        parseFloat(getComputedStyle(track).gap);
+      track.scrollBy({
+        left: direction * distance,
+        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches
+          ? 'instant'
+          : 'smooth',
+      });
+    };
+    previous.addEventListener('click', () => move(1));
+    next.addEventListener('click', () => move(-1));
+    track.addEventListener('scroll', update, { passive: true });
+    new ResizeObserver(update).observe(track);
+    controls.hidden = false;
+    update();
+  }
+</script>

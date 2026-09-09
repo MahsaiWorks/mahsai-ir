@@ -1,0 +1,650 @@
+.mahsai-site,
+.brand-home {
+  font-family: 'Vazirmatn Variable', Tahoma, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.95;
+}
+.mahsai-site :is(h1, h2, h3, h4),
+.brand-home :is(h1, h2, h3, h4) {
+  font-family: 'Estedad Variable', 'Vazirmatn Variable', Tahoma, sans-serif;
+  font-weight: 700;
+  line-height: 1.75;
+  letter-spacing: -0.025em;
+}
+.mahsai-site :is(p, li, dd),
+.brand-home :is(p, li) {
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+.mahsai-site .section-head h2 {
+  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+}
+.mahsai-site .section-head > p {
+  font-size: 1rem;
+}
+.mahsai-site input,
+.mahsai-site select,
+.mahsai-site textarea,
+.mahsai-site button {
+  font-family: inherit;
+  font-size: 1rem;
+}
+.mahsai-site :is(.button, .text-link, .arrow-link) {
+  font-weight: 600;
+}
+.mahsai-site .arrow-link-light {
+  color: #fff;
+}
+.mahsai-site .arrow-link-light:hover {
+  color: var(--mint);
+}
+.mahsai-site .kicker.kicker-light,
+.mahsai-site .section-sign.section-sign-light {
+  color: var(--mint);
+  background: none;
+  border: 0;
+  padding: 0;
+}
+.mahsai-site .brand-home .course-copy h3 {
+  color: #fff;
+}
+.mahsai-site .brand-home .support-band p:not(.eyebrow) {
+  color: #526271;
+}
+.mahsai-site .page-stage-note {
+  color: var(--muted);
+  background: #f3f6f5;
+  border-inline-start: 3px solid var(--teal);
+}
+.brand-app-list {
+  display: grid;
+  gap: 3rem;
+}
+.brand-app-card {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 4rem;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background: #fff;
+}
+.brand-app-copy {
+  padding: 3rem;
+}
+.brand-app-identity {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+.brand-app-identity img {
+  width: 72px;
+  height: 72px;
+  border-radius: 1rem;
+}
+.brand-app-identity p {
+  margin: 0;
+}
+.brand-app-identity h2 {
+  margin: 0.3rem 0 0;
+  font-size: 2rem;
+}
+.brand-app-copy h3 {
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+}
+.brand-app-copy > p {
+  color: var(--muted);
+}
+.brand-app-features {
+  display: flex;
+  gap: 0.65rem 1.5rem;
+  flex-wrap: wrap;
+  padding: 0;
+  list-style: none;
+  margin-block: 1.5rem;
+}
+.brand-app-features li {
+  font-size: 0.875rem;
+}
+.brand-app-features li::before {
+  content: '✓';
+  color: var(--teal-dark);
+  margin-inline-end: 0.5rem;
+}
+.brand-app-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  font-size: 0.875rem;
+  margin: 1.6rem 0 0.35rem;
+}
+.brand-app-access {
+  font-size: 0.875rem;
+  margin: 0;
+}
+.brand-app-picture {
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  padding: 3rem 2rem;
+  background: #edf4f3;
+}
+.brand-app-picture img {
+  width: min(100%, 260px);
+  height: auto;
+  border-radius: 1.2rem;
+  border: 5px solid var(--ink);
+  box-shadow: 0 1rem 2.5rem #07142615;
+}
+.brand-next-steps {
+  background: #f5f7f7;
+}
+.brand-link-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.brand-link-grid > a {
+  position: relative;
+  padding: 1.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+  background: white;
+  text-decoration: none;
+  transition: border-color 0.15s;
+}
+.brand-link-grid > a:hover {
+  border-color: var(--teal-dark);
+}
+.brand-link-grid > a > span {
+  color: var(--teal-dark);
+  font-size: 0.875rem;
+}
+.brand-link-grid h3 {
+  font-size: 1.25rem;
+  margin: 1rem 0 0.5rem;
+}
+.brand-link-grid p {
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+  font-size: 1rem;
+}
+.brand-link-grid b {
+  font-weight: 400;
+}
+.brand-contact-row {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand-contact-row > div {
+  max-width: 48rem;
+}
+.brand-contact-row h2 {
+  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+}
+.brand-contact-row p {
+  color: var(--muted);
+}
+.brand-contact-row > a {
+  flex-shrink: 0;
+}
+.brand-journal-header {
+  padding-block: 3rem;
+  border-bottom: 1px solid var(--line);
+}
+.brand-journal-header h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin: 0.5rem 0;
+}
+.brand-journal-header > p:last-child {
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin: 0;
+}
+.brand-journal-feature {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 3.5rem;
+  align-items: center;
+  padding-block: 3rem;
+}
+.brand-journal-cover {
+  display: block;
+  overflow: hidden;
+  border-radius: 1.1rem;
+}
+.brand-journal-cover img {
+  width: 100%;
+  aspect-ratio: 8/5;
+  object-fit: cover;
+}
+.brand-journal-feature h2 {
+  font-size: clamp(1.5rem, 2.8vw, 2.3rem);
+  margin-block: 0.75rem;
+}
+.brand-journal-feature h2 a {
+  text-decoration: none;
+}
+.brand-journal-feature > div > p:not(.kicker) {
+  color: var(--muted);
+}
+.brand-reading-meta {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin-block: 1.25rem;
+}
+.brand-topic-nav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-block: 1px solid var(--line);
+}
+.brand-topic-nav a {
+  padding: 1.3rem;
+  border-inline-start: 1px solid var(--line);
+  text-decoration: none;
+}
+.brand-topic-nav a:first-child {
+  border-inline-start: 0;
+}
+.brand-topic-nav strong {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.brand-topic-nav span {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+.brand-reading-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+}
+.brand-reading-grid .editorial-card {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+.brand-reading-grid .editorial-card-media {
+  border-radius: 0.8rem;
+}
+.brand-reading-grid .editorial-card-media img {
+  aspect-ratio: 8/5;
+  object-fit: cover;
+}
+.brand-reading-grid .editorial-card-copy {
+  padding: 1.25rem 0;
+}
+.brand-reading-grid .editorial-card-copy h3 {
+  font-size: 1.1rem;
+}
+.brand-reading-grid .editorial-card-copy > p {
+  font-size: 1rem;
+}
+.brand-reading-grid .article-meta {
+  font-size: 0.75rem;
+  line-height: 1.8;
+}
+.brand-topic-directory {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+}
+.brand-topic-directory > div {
+  border-top: 1px solid #c2cdd0;
+  padding-top: 1.5rem;
+}
+.brand-topic-directory h3 {
+  font-size: 1.3rem;
+}
+.brand-topic-directory h3 a {
+  text-decoration: none;
+}
+.brand-topic-directory ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.brand-topic-directory li a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.brand-topic-directory a:hover {
+  color: var(--teal-dark);
+}
+.metrazh-screen-gallery {
+  background: #f3f6f5;
+  color: var(--ink);
+}
+.metrazh-gallery-help p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 0;
+}
+.metrazh-gallery-controls:not([hidden]) {
+  display: flex;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+.metrazh-gallery-controls button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid #93a6ab;
+  border-radius: 50%;
+  color: var(--ink);
+  background: white;
+  cursor: pointer;
+}
+.metrazh-gallery-controls button:not(:disabled):hover {
+  background: var(--ink);
+  color: white;
+}
+.metrazh-gallery-controls button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.metrazh-gallery-track {
+  display: flex;
+  gap: 1.6rem;
+  overflow-x: auto;
+  padding: 0.5rem 0.3rem 1.5rem;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  scrollbar-color: #91a9a6 #e2e9e7;
+}
+.metrazh-gallery-item {
+  flex: 0 0 260px;
+  margin: 0;
+  min-width: 0;
+  scroll-snap-align: start;
+}
+.metrazh-gallery-item > a {
+  display: block;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid #c9d2d6;
+  background: white;
+}
+.metrazh-gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.metrazh-gallery-item h3 {
+  font-size: 1.1rem;
+  margin: 1.1rem 0 0.4rem;
+}
+.metrazh-gallery-item p {
+  color: var(--muted);
+  font-size: 1rem;
+  margin: 0;
+}
+.mahsai-site .metrazh-product-hero {
+  background: white;
+  padding-block: 1.5rem 3.5rem;
+}
+.mahsai-site .metrazh-product-grid {
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 4rem;
+  align-items: center;
+}
+.mahsai-site .metrazh-hero-copy h1 {
+  font-size: clamp(2rem, 3.6vw, 3.15rem);
+  line-height: 1.65;
+  max-width: 38rem;
+}
+.mahsai-site .metrazh-hero-copy .lead {
+  font-size: 1.0625rem;
+  line-height: 2;
+}
+.mahsai-site .metrazh-title-wordmark {
+  width: 7rem;
+  margin-bottom: 1rem;
+}
+.mahsai-site .metrazh-hero-screen {
+  padding: 2rem;
+  background: #eff5f4;
+  border-radius: 1.5rem;
+  min-height: 0;
+}
+.mahsai-site .metrazh-hero-screen::before,
+.mahsai-site .download-guide-visual::before {
+  display: none;
+}
+.mahsai-site .metrazh-hero-screen figure {
+  width: min(100%, 250px);
+  transform: none;
+  padding: 0;
+  border-radius: 1.1rem;
+  border: 4px solid var(--ink);
+  box-shadow: 0 1rem 3rem #07142616;
+}
+.mahsai-site .metrazh-hero-screen figure img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0.85rem;
+}
+.mahsai-site .metrazh-fact-band {
+  background: #f5f7f7;
+}
+.mahsai-site .metrazh-download-grid {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 2rem;
+  background: var(--ink);
+  border-radius: 1.5rem;
+  box-shadow: none;
+}
+.mahsai-site .metrazh-download-grid > * {
+  min-width: 0;
+}
+.mahsai-site .metrazh-download h2 {
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+}
+.mahsai-site .metrazh-download-actions {
+  flex-wrap: wrap;
+}
+.mahsai-site .metrazh-site-story {
+  padding-block: 3.5rem;
+}
+.mahsai-site .metrazh-site-story-shell {
+  max-width: 66rem;
+}
+.mahsai-site .metrazh-site-story-stage {
+  margin-top: 2rem;
+}
+.mahsai-site .metrazh-site-story-video {
+  max-width: 48rem;
+  margin-inline: auto;
+}
+.mahsai-site .metrazh-site-story video {
+  width: 100%;
+  height: auto;
+  max-height: 30rem;
+}
+.mahsai-site .download-guide-hero {
+  background: white;
+}
+.mahsai-site .download-guide-visual {
+  padding: 2rem;
+  background: #eff5f4;
+  border-radius: 1.5rem;
+}
+.mahsai-site .download-guide-visual img {
+  width: min(100%, 230px);
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  margin-inline: auto;
+  transform: none;
+  border-radius: 1rem;
+  border: 4px solid var(--ink);
+}
+.mahsai-site .guide-index-hero {
+  background: white;
+}
+.mahsai-site .guide-index-hero h1 {
+  font-size: clamp(2rem, 3.8vw, 3.25rem);
+  line-height: 1.7;
+}
+.mahsai-site .guide-index-hero figure {
+  border-radius: 1.2rem;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.mahsai-site :is(.kicker, .brand-intro) {
+  background: none;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+  color: var(--teal-dark);
+}
+.mahsai-site .brand-page-intro {
+  padding-block: 3.25rem;
+}
+.mahsai-site .brand-page-intro + .section {
+  padding-top: 3rem;
+}
+@media (max-width: 1050px) {
+  .mahsai-site .metrazh-download-grid {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .mahsai-site .metrazh-download-actions {
+    grid-column: 1 / -1;
+    flex-direction: row;
+  }
+  .brand-app-card {
+    gap: 1rem;
+  }
+  .brand-app-copy {
+    padding: 2rem;
+  }
+  .brand-link-grid {
+    gap: 1rem;
+  }
+  .brand-reading-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .mahsai-site .metrazh-download-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+  .mahsai-site .metrazh-download-brand {
+    gap: 0.75rem;
+  }
+  .mahsai-site .metrazh-download-brand > :first-child {
+    width: 4rem;
+    height: 4rem;
+    flex: 0 0 4rem;
+  }
+  .mahsai-site .metrazh-download-brand .metrazh-wordmark-surface {
+    width: 7rem;
+  }
+  .mahsai-site .metrazh-download-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .mahsai-site .metrazh-download-actions > a {
+    max-width: 100%;
+    justify-content: center;
+  }
+  .brand-app-card,
+  .brand-journal-feature {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .brand-app-copy {
+    padding: 1.5rem;
+  }
+  .brand-app-picture {
+    padding: 2rem;
+  }
+  .brand-app-picture img {
+    max-width: 215px;
+  }
+  .brand-app-identity img {
+    width: 60px;
+    height: 60px;
+  }
+  .brand-link-grid {
+    grid-template-columns: 1fr;
+  }
+  .brand-contact-row {
+    align-items: start;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .brand-journal-header {
+    padding-block: 2rem;
+  }
+  .brand-journal-feature {
+    padding-block: 2rem;
+  }
+  .brand-topic-nav {
+    grid-template-columns: 1fr 1fr;
+  }
+  .brand-topic-nav a:nth-child(odd) {
+    border-inline-start: 0;
+  }
+  .brand-topic-nav a:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+  .brand-topic-directory {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .mahsai-site .metrazh-product-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .mahsai-site .metrazh-hero-copy h1 {
+    font-size: 2rem;
+  }
+  .mahsai-site .metrazh-hero-screen {
+    padding: 1.5rem;
+  }
+  .mahsai-site .metrazh-hero-screen figure {
+    max-width: 200px;
+  }
+  .mahsai-site .download-guide-hero-grid {
+    grid-template-columns: 1fr;
+  }
+  .mahsai-site .download-guide-visual {
+    max-width: 26rem;
+    width: 100%;
+    margin-inline: auto;
+  }
+  .mahsai-site .download-guide-visual img {
+    max-width: 185px;
+  }
+}
+@media (max-width: 480px) {
+  .brand-reading-grid {
+    grid-template-columns: 1fr;
+  }
+  .metrazh-gallery-item {
+    flex-basis: 76vw;
+    max-width: 260px;
+  }
+  .mahsai-site .section-head {
+    gap: 1rem;
+  }
+  .mahsai-site h1 {
+    text-wrap: balance;
+  }
+}

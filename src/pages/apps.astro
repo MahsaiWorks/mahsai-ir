@@ -1,215 +1,122 @@
 ---
 import { getCollection } from 'astro:content';
-import ResponsiveImage from '../components/ResponsiveImage.astro';
-import { siteConfig } from '../config/site';
-import {
-  getCafeBazaarLink,
-  getTrackedCafeBazaarUrl,
-} from '../data/appPresentation';
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const publishedApps = (await getCollection('apps'))
-  .filter(
-    (entry) =>
-      entry.data.status === 'available' && entry.data.storeLinks.length > 0,
-  )
+import BrandPageIntro from '../components/BrandPageIntro.astro';
+import ResponsiveImage from '../components/ResponsiveImage.astro';
+import { metrazhDirectRelease as direct } from '../data/metrazhDirectRelease';
+const apps = (await getCollection('apps'))
+  .filter((app) => app.data.status === 'available')
   .sort((a, b) => a.data.order - b.data.order);
-
-const app = publishedApps.find((entry) => entry.id === 'metrazh');
-if (!app) throw new Error('Published Metrazh content entry is missing.');
-
-const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
-const related = (await getCollection('articles'))
-  .filter((article) => !article.data.draft && article.data.featured)
-  .sort((a, b) => a.data.seriesOrder - b.data.seriesOrder)
-  .slice(0, 3);
-
-const productLinks = [
-  {
-    title: 'یادگیری متراژ',
-    description: 'شروع سریع و روش‌های اجرایی برای کار روزانهٔ املاک',
-    href: '/academy/',
-  },
-  {
-    title: 'وضعیت نسخه',
-    description: 'نسخهٔ منتشرشده، زمان بررسی و تاریخچهٔ تغییرات',
-    href: '/apps/metrazh/status/',
-  },
-  {
-    title: 'پشتیبانی رسمی',
-    description: 'پاسخ پرسش‌ها، گزارش مشکل و مسیرهای ارتباط مستقیم',
-    href: '/support/',
-  },
-] as const;
 ---
 
 <BaseLayout
-  title={`اپلیکیشن‌های منتشرشده | ${siteConfig.brandName}`}
-  description="فهرست رسمی اپلیکیشن‌های منتشرشدهٔ MAHSAI؛ معرفی متراژ با تصویر واقعی، قابلیت‌های فعلی، راه نصب و پشتیبانی فارسی."
-  preloadImage="/images/apps/metrazh/ui/properties.webp"
-  preloadImageWidth={720}
-  preloadImageSizes="(max-width: 56.25rem) 46vw, 17rem"
+  title="اپلیکیشن‌های مهسای | ابزارهای فارسی برای کار روزانه"
+  description="اپلیکیشن‌های مهسای را با تصاویر واقعی و راهنمای استفاده بشناسید؛ دریافت رسمی متراژ برای اندروید و دسترسی به آموزش و پشتیبانی فارسی."
 >
-  <header class="product-index-hero">
-    <div class="shell product-index-hero-grid">
-      <div>
-        <p class="brand-intro">اپلیکیشن‌های منتشرشدهٔ MAHSAI</p>
-        <h1>متراژ برای اندروید <span>آمادهٔ نصب است</span></h1>
-      </div>
-      <div class="product-index-intro">
-        <p>
-          تصاویر واقعی برنامه، امکانات نسخهٔ فعلی و راه‌های پشتیبانی را ببینید و
-          بعد تصمیم بگیرید.
-        </p>
-        <span>فعلاً: متراژ برای اندروید</span>
+  <BrandPageIntro
+    eyebrow="اپلیکیشن‌های مهسای"
+    title="برنامه‌های فارسی برای کار روزانه"
+    description="محیط برنامه، امکانات و روش استفاده را ببینید و ابزار متناسب با نیازتان را انتخاب کنید."
+  >
+    <a class="button" href="/apps/metrazh/download/">دانلود متراژ</a><a
+      class="text-link"
+      href="/support/">راهنمای نصب ←</a
+    >
+  </BrandPageIntro>
+  <section class="section" aria-label="اپلیکیشن‌های قابل دریافت">
+    <div class="shell brand-app-list">
+      {
+        apps.map((app) => (
+          <article class="brand-app-card">
+            <div class="brand-app-copy">
+              <div class="brand-app-identity">
+                <>
+                  <ResponsiveImage
+                    src={app.data.icon}
+                    width="512"
+                    height="512"
+                    sizes="72px"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                  <div>
+                    <>
+                      <p class="kicker">دستیار فارسی مشاور املاک</p>
+                      <h2>{app.data.name}</h2>
+                    </>
+                  </div>
+                </>
+              </div>
+              <h3>فایل، مشتری و پیگیری در یک برنامه</h3>
+              <p>{app.data.shortDescription}</p>
+              <ul class="brand-app-features">
+                <>
+                  <li>مدیریت پرونده‌های ملکی</li>
+                  <li>پیشنهاد فایل و مشتری</li>
+                  <li>بازدید و پیگیری روزانه</li>
+                </>
+              </ul>
+              <div class="brand-page-actions">
+                <>
+                  <a class="button" href={`/apps/${app.id}/download/`}>
+                    دریافت {app.data.name}
+                  </a>
+                  <a class="text-link" href={`/apps/${app.id}/`}>
+                    مشاهدهٔ امکانات ←
+                  </a>
+                </>
+              </div>
+              <p class="brand-app-meta">
+                اندروید ۷ و بالاتر <span>نسخهٔ مستقیم {direct.versionFa}</span>
+              </p>
+              <p class="brand-app-access">
+                نصب رایگان؛ امکانات حرفه‌ای با اشتراک
+              </p>
+            </div>
+            <div class="brand-app-picture">
+              <ResponsiveImage
+                src="/images/apps/metrazh/current/property-details.webp"
+                width="1080"
+                height="2460"
+                sizes="(max-width:760px) 60vw, 260px"
+                alt="پروندهٔ یک ملک نمونه در متراژ"
+                fetchpriority="high"
+              />
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+  <section
+    class="section brand-next-steps"
+    aria-labelledby="after-install-title"
+  >
+    <div class="shell">
+      <header class="section-head">
+        <div>
+          <p class="kicker">همراه برنامه</p><h2 id="after-install-title">
+            از نصب تا استفادهٔ روزانه
+          </h2>
+        </div>
+      </header>
+      <div class="brand-link-grid">
+        <a href="/academy/"
+          ><span>۰۱</span><h3>یادگیری</h3><p>
+            با آموزش‌های کوتاه و تمرین شروع کنید
+          </p><b aria-hidden="true">←</b></a
+        >
+        <a href="/support/"
+          ><span>۰۲</span><h3>پشتیبانی</h3><p>
+            پاسخ پرسش‌ها و راه ارتباط مستقیم را پیدا کنید
+          </p><b aria-hidden="true">←</b></a
+        >
+        <a href="/apps/metrazh/changelog/"
+          ><span>۰۳</span><h3>به‌روزرسانی</h3><p>
+            تغییرات و نسخهٔ تازهٔ متراژ را ببینید
+          </p><b aria-hidden="true">←</b></a
+        >
       </div>
     </div>
-  </header>
-
-  <div class="product-index-main">
-    <section class="product-dossier" aria-labelledby="product-dossier-title">
-      <div class="shell product-dossier-layout">
-        <div class="dossier-screens" aria-label="تصاویر واقعی اپلیکیشن متراژ">
-          <figure class="dossier-screen dossier-screen-primary">
-            <ResponsiveImage
-              src="/images/apps/metrazh/ui/properties.webp"
-              alt="فهرست فایل‌های ملکی در اپلیکیشن متراژ"
-              width="720"
-              height="1600"
-              sizes="(max-width: 56.25rem) 48vw, 18rem"
-              fetchpriority="high"
-            />
-          </figure>
-          <figure class="dossier-screen dossier-screen-secondary">
-            <ResponsiveImage
-              src="/images/apps/metrazh/ui/customers.webp"
-              alt="فهرست مشتری‌ها در اپلیکیشن متراژ"
-              width="720"
-              height="1600"
-              sizes="(max-width: 56.25rem) 38vw, 13rem"
-            />
-          </figure>
-        </div>
-
-        <div class="dossier-copy">
-          <p class="product-status-line">
-            <span aria-hidden="true"></span> منتشرشده در کافه‌بازار
-          </p>
-          <div class="dossier-brand-row">
-            <ResponsiveImage
-              class="dossier-icon"
-              src={app.data.icon}
-              alt="نشان اپلیکیشن متراژ"
-              width="512"
-              height="512"
-              sizes="5rem"
-            />
-            <ResponsiveImage
-              class="metrazh-wordmark metrazh-wordmark-dark"
-              src={app.data.wordmark}
-              alt="متراژ"
-              width="702"
-              height="425"
-              sizes="9rem"
-            />
-          </div>
-          <h2 id="product-dossier-title">
-            وقتی مشتری تماس می‌گیرد، فایل و یادداشت آخر جلوی شماست.
-          </h2>
-          <p>
-            متراژ برای مشاوری ساخته شده که نمی‌خواهد جزئیات ملک و خواستهٔ مشتری
-            میان دفترچه، پیام‌ها و گالری گم شود.
-          </p>
-          <ul class="dossier-feature-list">
-            <li>فایل‌های ملکی با جست‌وجو و فیلتر</li>
-            <li>نیاز مشتری و پیگیری بعدی</li>
-            <li>پیشنهاد فایل متناسب با معیارهای ثبت‌شده</li>
-            <li>قرار بازدید، یادآوری و گزارش‌های کاری</li>
-          </ul>
-          <div class="hero-actions">
-            <a class="button" href="/apps/metrazh/">متراژ را کامل ببینید</a>
-            {
-              bazaarLink && (
-                <a
-                  class="arrow-link"
-                  href={getTrackedCafeBazaarUrl(bazaarLink.url, 'apps_dossier')}
-                  target="_blank"
-                  rel="noopener"
-                  data-event="metrazh_bazaar_click"
-                  data-event-location="apps_dossier"
-                >
-                  دریافت از کافه‌بازار <span aria-hidden="true">↗</span>
-                </a>
-              )
-            }
-          </div>
-          <dl class="dossier-facts">
-            <div><dt>نسخهٔ منتشرشده</dt><dd>{app.data.version}</dd></div>
-            <div><dt>سیستم‌عامل</dt><dd>اندروید</dd></div>
-            <div><dt>زبان و پشتیبانی</dt><dd>فارسی</dd></div>
-          </dl>
-        </div>
-      </div>
-    </section>
-
-    <section class="product-compass" aria-labelledby="product-compass-title">
-      <div class="shell product-compass-layout">
-        <header>
-          <p class="section-sign">آموزش و پشتیبانی کنار محصول</p>
-          <h2 id="product-compass-title">
-            بعد از نصب هم راهنما و پشتیبانی در دسترس است
-          </h2>
-        </header>
-        <div class="product-link-list">
-          {
-            productLinks.map((item) => (
-              <a href={item.href}>
-                <div>
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                </div>
-                <span aria-hidden="true">←</span>
-              </a>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    {
-      related.length > 0 && (
-        <section
-          class="product-reading"
-          aria-labelledby="product-reading-title"
-        >
-          <div class="shell product-reading-layout">
-            <header>
-              <p class="section-sign">برای شروع مرتب‌تر</p>
-              <h2 id="product-reading-title">
-                برای شروع کار با متراژ، این سه راهنما را بخوانید
-              </h2>
-              <a class="arrow-link" href="/articles/">
-                همهٔ مقاله‌ها <span aria-hidden="true">←</span>
-              </a>
-            </header>
-            <div class="reading-row-list">
-              {related.map((article) => (
-                <article>
-                  <p>
-                    {article.data.category} · {article.data.readingTime}
-                  </p>
-                  <h3>
-                    <a href={`/articles/${article.id}/`}>
-                      {article.data.title}
-                    </a>
-                  </h3>
-                  <span>{article.data.description}</span>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      )
-    }
-  </div>
+  </section>
 </BaseLayout>

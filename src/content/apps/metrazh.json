@@ -6,31 +6,39 @@
   "wordmark": "/images/apps/metrazh/wordmark-dark.png",
   "screenshots": [
     {
-      "src": "/images/apps/metrazh/bazaar/customer-follow-up.webp",
-      "alt": "معرفی رسمی پیگیری نیاز مشتری در صفحه متراژ کافه‌بازار"
+      "src": "/images/apps/metrazh/current/workspace.webp",
+      "alt": "میزکار متراژ با اطلاعات نمونه"
     },
     {
-      "src": "/images/apps/metrazh/bazaar/smart-matching.webp",
-      "alt": "معرفی رسمی تطبیق هوشمند فایل و مشتری در متراژ"
+      "src": "/images/apps/metrazh/current/property-details.webp",
+      "alt": "پروندهٔ یک ملک نمونه در متراژ"
     },
     {
-      "src": "/images/apps/metrazh/bazaar/smart-listing.webp",
-      "alt": "معرفی رسمی ساخت متن آگهی از اطلاعات فایل در متراژ"
+      "src": "/images/apps/metrazh/current/matching.webp",
+      "alt": "پیشنهاد فایل و مشتری در متراژ"
     },
     {
-      "src": "/images/apps/metrazh/bazaar/property-catalog.webp",
-      "alt": "معرفی رسمی ساخت کاتالوگ حرفه‌ای ملک در متراژ"
+      "src": "/images/apps/metrazh/current/smart-entry.webp",
+      "alt": "نتیجهٔ ثبت اطلاعات ملک از متن در متراژ"
     },
     {
-      "src": "/images/apps/metrazh/bazaar/visit-routing.webp",
-      "alt": "معرفی رسمی ثبت موقعیت و مسیریابی بازدیدها در متراژ"
+      "src": "/images/apps/metrazh/current/ad-assistant.webp",
+      "alt": "آماده‌سازی آگهی ملک در متراژ"
+    },
+    {
+      "src": "/images/apps/metrazh/current/visits.webp",
+      "alt": "برنامهٔ بازدیدهای نمونه در متراژ"
     }
   ],
   "platforms": ["اندروید"],
   "status": "available",
   "tagline": "مدیریت فایل و پیگیری مشاور املاک، با نگهداری محلی داده‌ها",
   "version": "1.0.4",
-  "pricing": { "installPrice": 0, "currency": "IRR", "hasInAppPurchase": true },
+  "pricing": {
+    "installPrice": 0,
+    "currency": "IRR",
+    "hasInAppPurchase": true
+  },
   "storeUpdatedAt": "2026-08-11",
   "storeCheckedAt": "2026-09-07",
   "minOs": "اندروید ۷ و بالاتر",
@@ -62,8 +70,14 @@
   "supportUrl": "/support/",
   "privacyUrl": "/privacy/",
   "supportLinks": [
-    { "label": "تلگرام پشتیبانی", "url": "https://t.me/Mahsaisupport" },
-    { "label": "کانال متراژ", "url": "https://t.me/metrazhapp" }
+    {
+      "label": "تلگرام پشتیبانی",
+      "url": "https://t.me/Mahsaisupport"
+    },
+    {
+      "label": "کانال متراژ",
+      "url": "https://t.me/metrazhapp"
+    }
   ],
   "featured": true,
   "order": 1

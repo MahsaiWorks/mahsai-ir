@@ -1,278 +1,94 @@
 ---
-import ResponsiveImage from './ResponsiveImage.astro';
-import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
-import {
-  getCafeBazaarLink,
-  getTrackedCafeBazaarUrl,
-} from '../data/appPresentation';
-
+import MetrazhInstallDock from './MetrazhInstallDock.astro';
 const path = Astro.url.pathname;
 const links = [
-  { href: '/apps/', label: 'محصولات' },
-  { href: '/apps/metrazh/', label: 'متراژ' },
+  { href: '/apps/', label: 'اپلیکیشن‌ها' },
+  { href: '/academy/', label: 'آموزش' },
+  { href: '/articles/', label: 'مجلهٔ مهسای' },
   { href: '/tools/', label: 'ابزارها' },
-  { href: '/guides/', label: 'راهنماها' },
-  { href: '/articles/', label: 'مجله' },
+  { href: '/about/', label: 'دربارهٔ مهسای' },
 ];
-
-const isActive = (href: string) =>
-  href === '/' ? path === '/' : path.startsWith(href);
-
-const featuredApp = (await getCollection('apps'))
-  .filter((app) => app.data.featured && app.data.status === 'available')
-  .sort((a, b) => a.data.order - b.data.order)[0];
-const downloadLink = featuredApp
-  ? getCafeBazaarLink(featuredApp.data.storeLinks)
-  : undefined;
-const downloadUrl = downloadLink
-  ? featuredApp?.id === 'metrazh'
-    ? '/apps/metrazh/download/'
-    : getTrackedCafeBazaarUrl(downloadLink.url, 'header')
-  : undefined;
-const mobileDownloadUrl = downloadLink
-  ? featuredApp?.id === 'metrazh'
-    ? '/apps/metrazh/download/'
-    : getTrackedCafeBazaarUrl(downloadLink.url, 'mobile_install_dock')
-  : undefined;
-const showInstallDock =
-  path === '/' ||
-  [
-    '/apps/',
-    '/tools/',
-    '/guides/',
-    '/academy/',
-    '/articles/',
-    '/resources/',
-    '/real-estate-software/',
-  ].some((prefix) => path.startsWith(prefix));
+const active = (href: string) => path.startsWith(href);
 ---
 
-<header class="site-header">
-  <div class="shell header-inner">
-    <a
-      class="brand"
-      href="/"
-      aria-label={`${siteConfig.brandName} — صفحه اصلی`}
-    >
-      <span class="brand-mark" aria-hidden="true">
-        <ResponsiveImage
-          src="/brand/mahsai-symbol-reversed.svg"
-          alt=""
-          width="28"
-          height="28"
-          aria-hidden="true"
-        />
-      </span>
-      <span class="brand-word">{siteConfig.brandName}</span>
+<header class="mahsai-header">
+  <div class="shell mahsai-header-inner">
+    <a class="mahsai-brand" href="/" aria-label="مهسای؛ صفحهٔ نخست">
+      <img
+        src="/brand/mahsai-symbol-navy-on-white.svg"
+        width="43"
+        height="43"
+        alt=""
+        aria-hidden="true"
+      />
+      <span dir="ltr">{siteConfig.brandName}</span>
     </a>
-
-    <nav class="desktop-nav" aria-label="پیمایش اصلی">
-      <ul>
+    <nav class="mahsai-nav" aria-label="فهرست اصلی">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            aria-current={active(link.href) ? 'page' : undefined}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+    <a class="mahsai-support-link" href="/support/"
+      >پشتیبانی <span aria-hidden="true">↖</span></a
+    >
+    <details class="mahsai-mobile-menu">
+      <summary>فهرست</summary>
+      <nav aria-label="فهرست موبایل">
         {
           links.map((link) => (
-            <li>
-              <a
-                href={link.href}
-                aria-current={isActive(link.href) ? 'page' : undefined}
-              >
-                {link.label}
-              </a>
-            </li>
+            <a
+              href={link.href}
+              aria-current={active(link.href) ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
           ))
         }
-      </ul>
-    </nav>
-
-    <a
-      class="header-cta"
-      href={downloadUrl ?? '/apps/metrazh/'}
-      target={downloadUrl?.startsWith('https:') ? '_blank' : undefined}
-      rel={downloadUrl?.startsWith('https:') ? 'noopener' : undefined}
-    >
-      نصب رایگان متراژ
-      <span aria-hidden="true">↗</span>
-    </a>
-
-    <details class="mobile-nav">
-      <summary aria-label="باز کردن فهرست پیمایش">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </summary>
-      <nav aria-label="پیمایش موبایل">
-        <ul>
-          {
-            links.map((link) => (
-              <li>
-                <a
-                  href={link.href}
-                  aria-current={isActive(link.href) ? 'page' : undefined}
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))
-          }
-          {
-            downloadLink && featuredApp && (
-              <li>
-                <a
-                  class="mobile-download-link"
-                  href={downloadUrl}
-                  target={
-                    downloadUrl?.startsWith('https:') ? '_blank' : undefined
-                  }
-                  rel={
-                    downloadUrl?.startsWith('https:') ? 'noopener' : undefined
-                  }
-                >
-                  نصب رایگان {featuredApp.data.name}
-                </a>
-              </li>
-            )
-          }
-        </ul>
+        <a href="/support/">پشتیبانی</a>
       </nav>
     </details>
   </div>
 </header>
 
-{
-  mobileDownloadUrl && featuredApp && showInstallDock && (
-    <aside
-      class="mobile-install-dock"
-      aria-label="نصب اپلیکیشن متراژ"
-      data-visible="false"
-      hidden
-    >
-      <a
-        href={mobileDownloadUrl}
-        target={mobileDownloadUrl.startsWith('https:') ? '_blank' : undefined}
-        rel={mobileDownloadUrl.startsWith('https:') ? 'noopener' : undefined}
-        data-event="metrazh_download_click"
-        data-event-location="mobile_install_dock"
-      >
-        <ResponsiveImage
-          src={featuredApp.data.icon}
-          alt=""
-          width="48"
-          height="48"
-          aria-hidden="true"
-        />
-        <span>
-          <strong>متراژ</strong>
-          <small>دانلود رایگان اندروید</small>
-        </span>
-        <b>نصب</b>
-      </a>
-    </aside>
-  )
-}
+{path.replace(/\/$/, '') === '/apps/metrazh' && <MetrazhInstallDock />}
 
 <script is:inline>
   (() => {
-    const menu = document.querySelector('.mobile-nav');
+    const menu = document.querySelector('.mahsai-mobile-menu');
     if (!(menu instanceof HTMLDetailsElement)) return;
-
     const summary = menu.querySelector('summary');
     const closeMenu = () => {
-      if (menu.open) menu.open = false;
+      menu.open = false;
     };
-
-    const updateLabel = () => {
+    menu.addEventListener('toggle', () => {
       summary?.setAttribute(
         'aria-label',
-        menu.open ? 'بستن فهرست پیمایش' : 'باز کردن فهرست پیمایش',
+        menu.open ? 'بستن فهرست' : 'باز کردن فهرست',
       );
-    };
-
-    menu.addEventListener('toggle', updateLabel);
-    menu.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', closeMenu);
     });
-
+    menu
+      .querySelectorAll('a')
+      .forEach((link) => link.addEventListener('click', closeMenu));
     document.addEventListener('keydown', (event) => {
       if (event.key !== 'Escape' || !menu.open) return;
       closeMenu();
       summary?.focus();
     });
-
     document.addEventListener('pointerdown', (event) => {
-      if (!(event.target instanceof Node)) return;
-      if (menu.open && !menu.contains(event.target)) closeMenu();
+      if (
+        event.target instanceof Node &&
+        menu.open &&
+        !menu.contains(event.target)
+      )
+        closeMenu();
     });
-
-    updateLabel();
-  })();
-</script>
-
-<script is:inline>
-  (() => {
-    const setupInstallDock = () => {
-      const dock = document.querySelector('.mobile-install-dock');
-      if (!(dock instanceof HTMLElement)) return;
-
-      const evidence = document.querySelector(
-        '[data-install-dock-trigger], [data-view-event="article_metrazh_offer_viewed"], [data-view-event="download_guide_viewed"]',
-      );
-      if (!(evidence instanceof HTMLElement)) return;
-
-      let revealed = false;
-      let observer;
-      let fallbackFrame = 0;
-      let fallbackListening = false;
-      const reveal = () => {
-        if (revealed) return;
-        revealed = true;
-        dock.hidden = false;
-        dock.dataset.visible = 'true';
-        observer?.disconnect();
-        if (fallbackListening) {
-          window.removeEventListener('scroll', queueFallbackCheck);
-          fallbackListening = false;
-        }
-      };
-
-      const checkFallback = () => {
-        fallbackFrame = 0;
-        if (
-          evidence.getBoundingClientRect().bottom <=
-          window.innerHeight * 0.82
-        ) {
-          reveal();
-        }
-      };
-      const queueFallbackCheck = () => {
-        if (fallbackFrame === 0) {
-          fallbackFrame = window.requestAnimationFrame(checkFallback);
-        }
-      };
-
-      if ('IntersectionObserver' in window) {
-        observer = new IntersectionObserver(
-          (entries) => {
-            const evidenceReached = entries.some(
-              (entry) => entry.isIntersecting,
-            );
-            if (evidenceReached) reveal();
-          },
-          { rootMargin: '0px 0px -18% 0px', threshold: 0 },
-        );
-        observer.observe(evidence);
-        return;
-      }
-
-      fallbackListening = true;
-      window.addEventListener('scroll', queueFallbackCheck, { passive: true });
-      queueFallbackCheck();
-    };
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', setupInstallDock, {
-        once: true,
-      });
-    } else {
-      setupInstallDock();
-    }
   })();
 </script>

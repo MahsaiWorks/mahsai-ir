@@ -1,0 +1,92 @@
+---
+import ResponsiveImage from './ResponsiveImage.astro';
+import { getEntry } from 'astro:content';
+const app = await getEntry('apps', 'metrazh');
+---
+
+{
+  app && (
+    <aside
+      class="mobile-install-dock"
+      aria-label="نصب اپلیکیشن متراژ"
+      data-visible="false"
+      hidden
+    >
+      <a
+        href="/apps/metrazh/download/"
+        data-event="metrazh_download_click"
+        data-event-location="mobile_install_dock"
+      >
+        <ResponsiveImage
+          src={app.data.icon}
+          alt=""
+          width="48"
+          height="48"
+          aria-hidden="true"
+        />
+        <span>
+          <>
+            <strong>متراژ</strong>
+            <small>دانلود رایگان اندروید</small>
+          </>
+        </span>
+        <b>نصب</b>
+      </a>
+    </aside>
+  )
+}
+
+<script is:inline>
+  (() => {
+    const setupInstallDock = () => {
+      const dock = document.querySelector('.mobile-install-dock');
+      const evidence = document.querySelector('[data-install-dock-trigger]');
+      if (!(dock instanceof HTMLElement) || !(evidence instanceof HTMLElement))
+        return;
+      let revealed = false;
+      let observer;
+      let fallbackFrame = 0;
+      const reveal = () => {
+        if (revealed) return;
+        revealed = true;
+        dock.hidden = false;
+        dock.dataset.visible = 'true';
+        observer?.disconnect();
+        window.removeEventListener('scroll', queueFallbackCheck);
+      };
+      const checkFallback = () => {
+        fallbackFrame = 0;
+        if (
+          evidence.getBoundingClientRect().bottom <=
+          window.innerHeight * 0.82
+        )
+          reveal();
+      };
+      const queueFallbackCheck = () => {
+        if (fallbackFrame === 0)
+          fallbackFrame = window.requestAnimationFrame(checkFallback);
+      };
+      if ('IntersectionObserver' in window) {
+        observer = new IntersectionObserver(
+          (entries) => {
+            if (entries.some((entry) => entry.isIntersecting)) reveal();
+          },
+          { rootMargin: '0px 0px -18% 0px', threshold: 0 },
+        );
+        observer.observe(evidence);
+      } else {
+        window.addEventListener('scroll', queueFallbackCheck, {
+          passive: true,
+        });
+        queueFallbackCheck();
+      }
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupInstallDock, {
+        once: true,
+      });
+    } else {
+      setupInstallDock();
+    }
+  })();
+</script>

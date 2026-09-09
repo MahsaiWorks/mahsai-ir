@@ -1,0 +1,19 @@
+---
+import ResponsiveImage from './ResponsiveImage.astro';
+interface Props {
+  eager?: boolean;
+}
+const { eager = false } = Astro.props;
+---
+
+<figure class="brand-companion">
+  <ResponsiveImage
+    src="/images/brand/mahsai-people.webp"
+    width="1200"
+    height="750"
+    alt="دو همراه مهسای در حال یادگیری و کار با تبلت، در حیاطی با معماری ایرانی"
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : 'auto'}
+    sizes="(max-width: 760px) 100vw, 50vw"
+  />
+</figure>

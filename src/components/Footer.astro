@@ -1,128 +1,75 @@
 ---
-import ResponsiveImage from './ResponsiveImage.astro';
-import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
-import {
-  getCafeBazaarLink,
-  getTrackedCafeBazaarUrl,
-} from '../data/appPresentation';
-
 const year = new Intl.DateTimeFormat('fa-IR', { year: 'numeric' }).format(
   new Date(),
 );
-const featuredApp = (await getCollection('apps'))
-  .filter((app) => app.data.featured && app.data.status === 'available')
-  .sort((a, b) => a.data.order - b.data.order)[0];
-const downloadLink = featuredApp
-  ? getCafeBazaarLink(featuredApp.data.storeLinks)
-  : undefined;
-// Fixed, trusted markup issued by Enamad. Keep its custom `code` attribute verbatim.
 const enamadBadgeHtml = `<a referrerpolicy='origin' target='_blank' aria-label='مشاهده شناسنامه رسمی اینماد متراژ' href='https://trustseal.enamad.ir/?id=7506195&Code=OHQG1aXCXFqM3gYapj2Mb7b109YIqMOn'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=7506195&Code=OHQG1aXCXFqM3gYapj2Mb7b109YIqMOn' alt='' style='cursor:pointer' code='OHQG1aXCXFqM3gYapj2Mb7b109YIqMOn'></a>`;
 ---
 
-<footer class="site-footer">
-  <div class="shell footer-grid">
-    <div>
-      <a class="brand footer-brand" href="/">
-        <span class="brand-mark" aria-hidden="true">
-          <ResponsiveImage
-            src="/brand/mahsai-symbol-reversed.svg"
-            alt=""
-            width="28"
-            height="28"
-            aria-hidden="true"
-          />
-        </span>
-        <span>{siteConfig.brandName}</span>
+<footer class="mahsai-footer">
+  <div class="shell mahsai-footer-grid">
+    <div class="mahsai-footer-intro">
+      <a class="mahsai-brand" href="/" aria-label="مهسای؛ صفحهٔ نخست">
+        <img
+          src="/brand/mahsai-symbol-navy-on-white.svg"
+          width="43"
+          height="43"
+          alt=""
+          aria-hidden="true"
+        />
+        <span dir="ltr">{siteConfig.brandName}</span>
       </a>
-      <p>
-        MAHSAI ابزارهای فارسی می‌سازد که اطلاعات پراکنده را جمع می‌کنند و کار
-        بعدی را جلوی چشم می‌گذارند. متراژ، اولین محصول ما برای کار روزانهٔ املاک
-        است.
-      </p>
+      <p>اپلیکیشن‌ها، ابزارها و آموزش‌های فارسی برای کار روزانه</p>
+      <a href="/about/">با مهسای آشنا شوید ←</a>
     </div>
-
-    <nav aria-label="پیوندهای اصلی سایت">
-      <h2>دسترسی سریع</h2>
+    <nav aria-label="کشف مهسای">
+      <h2>کشف مهسای</h2>
       <ul>
-        <li><a href="/apps/">اپلیکیشن‌های MAHSAI</a></li>
-        <li><a href="/apps/metrazh/">معرفی کامل متراژ</a></li>
-        <li><a href="/apps/metrazh/download/">نصب متراژ از کافه‌بازار</a></li>
-        <li><a href="/apps/metrazh/changelog/">نسخه‌های متراژ</a></li>
-        <li><a href="/tools/">ابزارهای رایگان مشاور املاک</a></li>
-        <li><a href="/guides/">راهنمای جامع املاک</a></li>
-        <li><a href="/academy/">آموزش‌های رایگان املاک</a></li>
-        <li><a href="/articles/">مقاله‌های کاربردی املاک</a></li>
-        <li>
-          <a href="/real-estate-software/">راهنمای نرم‌افزار مشاور املاک</a>
-        </li>
-        <li>
-          <a href="/resources/real-estate-checklists/">چک‌لیست‌های رایگان</a>
-        </li>
+        <li><a href="/apps/">اپلیکیشن‌ها</a></li>
+        <li><a href="/apps/metrazh/">متراژ</a></li>
+        <li><a href="/apps/metrazh/download/">دریافت متراژ</a></li>
+        <li><a href="/tools/">ابزارهای آنلاین</a></li>
+        <li><a href="/academy/">آموزش‌های رایگان</a></li>
+        <li><a href="/articles/">مجلهٔ مهسای</a></li>
+        <li><a href="/guides/">راهنماهای موضوعی</a></li>
       </ul>
     </nav>
-
-    <div>
-      <h2>ارتباط</h2>
-      <ul class="footer-site-links">
-        <li><a href="/about/">درباره MAHSAI</a></li>
-        <li><a href="/support/">پشتیبانی</a></li>
-        <li><a href="/editorial-policy/">سیاست تحریریه و اصلاحات</a></li>
+    <nav aria-label="پشتیبانی و اطلاعات رسمی">
+      <h2>کنار شما</h2>
+      <ul>
+        <li><a href="/support/">راهنما و پشتیبانی</a></li>
+        <li><a href="/apps/metrazh/status/">وضعیت نسخهٔ متراژ</a></li>
+        <li><a href="/apps/metrazh/changelog/">تاریخچهٔ تغییرات</a></li>
+        <li>
+          <a href="/resources/real-estate-checklists/">چک‌لیست‌های آماده</a>
+        </li>
+        <li><a href="/editorial-policy/">سیاست تحریریه</a></li>
         <li><a href="/privacy/">حریم خصوصی</a></li>
-        <li><a href="/terms/">شرایط استفاده</a></li>
-        {
-          downloadLink && featuredApp && (
-            <li>
-              <a
-                href={getTrackedCafeBazaarUrl(downloadLink.url, 'footer')}
-                target="_blank"
-                rel="noopener"
-                data-event="metrazh_bazaar_click"
-                data-event-location="footer"
-              >
-                دانلود {featuredApp.data.name} از کافه‌بازار
-              </a>
-            </li>
-          )
-        }
+        <li><a href="/terms/">شرایط استفاده و خرید</a></li>
       </ul>
-      <a
-        class="footer-email"
-        href={`mailto:${siteConfig.supportEmail}`}
-        dir="ltr"
+    </nav>
+    <div class="mahsai-footer-contact">
+      <h2>در ارتباط باشیم</h2>
+      <a href={`mailto:${siteConfig.supportEmail}`} dir="ltr"
+        >{siteConfig.supportEmail}</a
       >
-        {siteConfig.supportEmail}
-      </a>
       {
-        siteConfig.socialLinks.length > 0 && (
-          <ul class="social-list">
-            {siteConfig.socialLinks.map((link) => (
-              <li>
-                <a
-                  href={link.url}
-                  rel="me noopener"
-                  target="_blank"
-                  data-event="official_instagram_open"
-                  data-event-location="footer"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        )
+        siteConfig.socialLinks.map((link) => (
+          <a href={link.url} rel="me noopener noreferrer" target="_blank">
+            {link.label} ↖
+          </a>
+        ))
       }
-    </div>
-
-    <div class="footer-trust">
-      <h2>اعتماد و مجوز</h2>
-      <p>شناسنامه رسمی کسب‌وکار متراژ در سامانه اینماد</p>
-      <div class="footer-trust-badge" set:html={enamadBadgeHtml} />
+      <div class="mahsai-trust">
+        <div set:html={enamadBadgeHtml} /><p>
+          شناسنامهٔ رسمی کسب‌وکار متراژ در سامانهٔ اینماد
+        </p>
+      </div>
     </div>
   </div>
-  <div class="shell footer-bottom">
-    <span>© {year} {siteConfig.brandName}</span>
-    <span>نسخه‌های رسمی فقط از مسیرهای اعلام‌شده در همین سایت.</span>
-    <span lang="en" dir="ltr">mahsai.ir</span>
+  <div class="shell mahsai-footer-bottom">
+    <span>© {year} MAHSAI · مهسای</span><span>وب‌سایت رسمی مهسای</span><span
+      dir="ltr">mahsai.ir</span
+    >
   </div>
 </footer>

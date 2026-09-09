@@ -1,0 +1,432 @@
+:root {
+  --ink: #071426;
+  --ink-soft: #173247;
+  --text: #223344;
+  --muted: #526271;
+  --paper: #fff;
+  --paper-deep: #f2f5f5;
+  --line: #dfe5e7;
+  --teal: #13756b;
+  --teal-dark: #115d56;
+  --mint: #a4e8d9;
+  --mint-soft: #eff8f5;
+  --orange: #cb593f;
+  --shadow-sm: 0 8px 28px #07142608;
+  --shadow-md: 0 20px 56px #0714260c;
+  --radius-sm: 0.6rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+  --shell: min(76rem, calc(100% - 3rem));
+}
+.mahsai-site {
+  background: #fff;
+}
+.mahsai-site :is(h1, h2, h3) {
+  letter-spacing: -0.035em;
+}
+.mahsai-site .button {
+  border-radius: 0.6rem;
+  box-shadow: none;
+}
+.mahsai-site .button:not(.button-light):not(.button-ghost) {
+  background: var(--ink);
+  color: white;
+}
+.mahsai-site .button:not(.button-light):not(.button-ghost):hover {
+  background: var(--ink-soft);
+}
+.mahsai-site :is(.kicker, .brand-intro) {
+  font-size: 0.875rem;
+  font-weight: 650;
+}
+.mahsai-site main > section {
+  content-visibility: visible;
+}
+.mahsai-header {
+  background: white;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  z-index: 30;
+}
+.mahsai-header-inner {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+.mahsai-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: var(--ink);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.mahsai-brand img {
+  width: 43px;
+  height: 43px;
+  background: white;
+}
+.mahsai-brand span {
+  font-size: 1.55rem;
+  font-weight: 850;
+  letter-spacing: 0.11em;
+  line-height: 1;
+}
+.mahsai-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-inline: auto;
+}
+.mahsai-nav a {
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding-block: 1rem;
+  text-decoration: none;
+  position: relative;
+}
+.mahsai-nav a:hover,
+.mahsai-nav a[aria-current='page'] {
+  color: var(--teal-dark);
+}
+.mahsai-nav a[aria-current='page']::after {
+  content: '';
+  position: absolute;
+  bottom: 0.45rem;
+  inset-inline: 0;
+  height: 2px;
+  background: currentColor;
+}
+.mahsai-support-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.3rem;
+  min-height: 44px;
+  padding: 0.55rem 1.15rem;
+  border: 1px solid #c6cfd3;
+  border-radius: 0.55rem;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+.mahsai-support-link:hover {
+  background: var(--paper-deep);
+}
+.mahsai-mobile-menu {
+  display: none;
+}
+.mahsai-footer {
+  margin-top: 5rem;
+  padding: 4.5rem 0 1.5rem;
+  background: #f4f6f6;
+  border-top: 1px solid var(--line);
+}
+.mahsai-footer-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1.25fr;
+  gap: 3rem;
+}
+.mahsai-footer-intro p {
+  max-width: 23rem;
+  margin: 1.25rem 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 2;
+}
+.mahsai-footer h2 {
+  margin: 0 0 1.1rem;
+  font-size: 0.95rem;
+}
+.mahsai-footer ul {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mahsai-footer a:not(.mahsai-brand) {
+  font-size: 0.875rem;
+  color: var(--muted);
+  text-decoration: none;
+}
+.mahsai-footer a:hover {
+  color: var(--teal-dark);
+}
+.mahsai-footer-contact > a {
+  display: block;
+  width: fit-content;
+  margin-bottom: 0.7rem;
+  overflow-wrap: anywhere;
+}
+.mahsai-trust {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.75rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line);
+}
+.mahsai-trust p {
+  max-width: 9rem;
+  font-size: 0.75rem;
+  line-height: 1.9;
+  color: var(--muted);
+}
+.mahsai-trust img {
+  width: 70px;
+  max-height: 90px;
+  object-fit: contain;
+}
+.mahsai-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+.brand-page-intro {
+  padding-block: clamp(3rem, 7vw, 6rem);
+  border-bottom: 1px solid var(--line);
+  background: white;
+}
+.brand-page-intro .shell {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  align-items: end;
+  gap: 5rem;
+}
+.brand-page-intro h1 {
+  max-width: 48rem;
+  margin: 0.75rem 0 0;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.6;
+}
+.brand-page-intro p {
+  color: var(--muted);
+  line-height: 2.1;
+  margin: 0;
+}
+.brand-page-intro .kicker {
+  color: var(--teal-dark);
+}
+.brand-page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+.brand-companion {
+  margin-block: 2rem;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  background: #f2f3ee;
+}
+.brand-companion img {
+  width: 100%;
+  height: auto;
+  background: none;
+}
+.brand-feature-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-block: 3rem;
+}
+.brand-feature-strip article {
+  padding-inline-start: 1.25rem;
+  border-inline-start: 1px solid #bdc9ce;
+}
+.brand-feature-strip h3 {
+  font-size: 1.15rem;
+  margin: 0 0 0.5rem;
+}
+.brand-feature-strip p {
+  color: var(--muted);
+  margin: 0;
+  font-size: 1rem;
+}
+/* Shared rhythm preserves the existing reading and tool workflows. */
+.mahsai-site
+  :is(.inner-hero, .academy-hero, .journal-hero, .tools-hero, .page-stage) {
+  background: #fff;
+  color: var(--ink);
+  padding-block: clamp(2.5rem, 5vw, 4.5rem);
+}
+.mahsai-site :is(.inner-hero, .academy-hero, .journal-hero) h1 {
+  color: var(--ink);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.6;
+}
+.mahsai-site :is(.inner-hero, .academy-hero, .journal-hero) .lead {
+  color: var(--muted);
+  max-width: 37rem;
+  font-size: 1.0625rem;
+  line-height: 2.05;
+}
+.mahsai-site :is(.inner-hero, .academy-hero) figure {
+  border-radius: 1.25rem;
+  box-shadow: none;
+}
+.mahsai-site :is(.inner-hero, .academy-hero) figure img {
+  object-fit: contain;
+  height: auto;
+  background: transparent;
+}
+.mahsai-site
+  :is(
+    .academy-featured-course,
+    .journal-guides,
+    .support-report,
+    .article-cluster:nth-child(even)
+  ) {
+  background: #f5f7f7;
+}
+.mahsai-site
+  :is(.guide-card, .article-card, .tool-card, .support-step-grid article) {
+  box-shadow: none;
+  border-radius: 0.85rem;
+}
+.mahsai-site .page-stage-frame {
+  box-shadow: none;
+  border-radius: 0;
+  border: 0;
+  background: none;
+}
+.mahsai-site .page-stage-frame::before,
+.mahsai-site .page-stage-frame::after {
+  display: none;
+}
+.mahsai-site .cluster-nav,
+.mahsai-site .academy-map {
+  background: #f5f7f7;
+  border-block: 1px solid var(--line);
+}
+.mahsai-site .cluster-nav a,
+.mahsai-site .academy-map a {
+  box-shadow: none;
+  border-radius: 0.6rem;
+}
+.mahsai-site .article-card h3 {
+  line-height: 1.9;
+}
+.mahsai-site .article-hero {
+  background: white;
+}
+@media (max-width: 1050px) {
+  .mahsai-header-inner {
+    gap: 1.3rem;
+  }
+  .mahsai-nav {
+    gap: 1.3rem;
+  }
+  .mahsai-footer-grid {
+    gap: 2rem;
+    grid-template-columns: 1.3fr 1fr 1fr;
+  }
+  .mahsai-footer-contact {
+    grid-column: 1/-1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    gap: 1rem 2rem;
+  }
+  .mahsai-footer-contact h2 {
+    width: 100%;
+    margin: 0;
+  }
+  .mahsai-trust {
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+  .brand-page-intro .shell {
+    gap: 2.5rem;
+  }
+}
+@media (max-width: 760px) {
+  :root {
+    --shell: min(76rem, calc(100% - 2rem));
+  }
+  .mahsai-header-inner {
+    min-height: 80px;
+    gap: 1rem;
+  }
+  .mahsai-brand img {
+    width: 35px;
+    height: 35px;
+  }
+  .mahsai-brand span {
+    font-size: 1.25rem;
+  }
+  .mahsai-nav,
+  .mahsai-header-inner > .mahsai-support-link {
+    display: none;
+  }
+  .mahsai-mobile-menu {
+    display: block;
+    margin-inline-start: auto;
+  }
+  .mahsai-mobile-menu summary {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.875rem;
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+  .mahsai-mobile-menu nav {
+    position: absolute;
+    top: calc(100% - 1px);
+    inset-inline: 0;
+    background: white;
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow-sm);
+    padding: 0.75rem 1rem;
+    display: grid;
+  }
+  .mahsai-mobile-menu a {
+    padding: 0.65rem;
+    min-height: 44px;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+  .mahsai-mobile-menu a[aria-current='page'] {
+    color: var(--teal-dark);
+    font-weight: 750;
+  }
+  .mahsai-footer {
+    padding-top: 3rem;
+    margin-top: 3rem;
+  }
+  .mahsai-footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem 1.25rem;
+  }
+  .mahsai-footer-intro,
+  .mahsai-footer-contact {
+    grid-column: 1/-1;
+  }
+  .brand-page-intro .shell {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .brand-feature-strip {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mahsai-site *,
+  .mahsai-site *::before,
+  .mahsai-site *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

@@ -1,4 +1,5 @@
 ---
+import BrandCompanion from '../../components/BrandCompanion.astro';
 import ResponsiveImage from '../../components/ResponsiveImage.astro';
 import { getCollection } from 'astro:content';
 import ArticleCard from '../../components/ArticleCard.astro';
@@ -66,7 +67,7 @@ const collectionStructuredData = {
 ---
 
 <BaseLayout
-  title={`آموزش رایگان مشاور املاک؛ از فایل تا پیگیری | ${siteConfig.brandName}`}
+  title={`آموزش‌های مهسای؛ آسان یاد بگیرید و شروع کنید | ${siteConfig.brandName}`}
   description="آموزش ساده، تصویری و مرحله‌به‌مرحله برای مشاوران املاک ایران؛ فایل‌گیری، نیازسنجی مشتری، بازدید، پیگیری، آگهی‌نویسی و امنیت اطلاعات."
 >
   <script
@@ -78,8 +79,8 @@ const collectionStructuredData = {
   <header class="academy-hero">
     <div class="shell academy-hero-grid">
       <div>
-        <p class="kicker">آموزش‌های کوتاه و رایگان</p>
-        <h1>یاد بگیرید و همان روز <span>در کارتان استفاده کنید</span></h1>
+        <p class="kicker">آموزش‌های مهسای</p>
+        <h1>کار با متراژ را یاد بگیرید</h1>
         <p class="lead">
           آموزش‌ها کوتاه و مرحله‌به‌مرحله‌اند. موضوعی را انتخاب کنید که امروز به
           کارتان می‌آید و همراه مثال جلو بروید.
@@ -96,15 +97,7 @@ const collectionStructuredData = {
           <li>مناسب بازار ایران</li>
         </ul>
       </div>
-      <figure>
-        <ResponsiveImage
-          src="/images/stock/real-estate-consultation.jpg"
-          alt="گفت‌وگوی مشاور املاک با مراجعه‌کننده در زمان بازدید"
-          width="1800"
-          height="1200"
-          fetchpriority="high"
-        />
-      </figure>
+      <BrandCompanion eager />
     </div>
   </header>
 

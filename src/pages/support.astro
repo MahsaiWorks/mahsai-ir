@@ -1,5 +1,5 @@
 ---
-import ResponsiveImage from '../components/ResponsiveImage.astro';
+import BrandCompanion from '../components/BrandCompanion.astro';
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
 import {
@@ -23,8 +23,8 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
   <header class="inner-hero support-hero">
     <div class="shell inner-hero-grid">
       <div>
-        <p class="kicker">پشتیبانی رسمی</p>
-        <h1>مشکل را کامل توضیح دهید تا زودتر کمکتان کنیم</h1>
+        <p class="kicker">پشتیبانی مهسای</p>
+        <h1>چطور می‌توانیم کمک کنیم؟</h1>
         <p class="lead">
           اگر در متراژ یا سایت مشکلی دیدید، از راه‌های همین صفحه پیام بدهید. پیش
           از فرستادن تصویر، اطلاعات مالک و مشتری را حذف یا بپوشانید.
@@ -45,14 +45,7 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
           }
         </div>
       </div>
-      <figure>
-        <ResponsiveImage
-          src="/images/editorial/secure-real-estate-data.webp"
-          alt="حفاظت از اطلاعات و پرونده‌های کاری املاک"
-          width="1536"
-          height="1024"
-        />
-      </figure>
+      <BrandCompanion eager />
     </div>
   </header>
 
@@ -61,7 +54,7 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
       <header class="section-head">
         <div>
           <p class="kicker">برای اینکه مشکل را پیدا کنیم</p>
-          <h2 id="report-title">این چهار مورد را همراه پیام بفرستید</h2>
+          <h2 id="report-title">برای بررسی بهتر، این اطلاعات را بفرستید</h2>
         </div>
         <p>
           یک پیام کامل بهتر از چند پیام پراکنده است و کمک می‌کند مشکل را دوباره
@@ -187,7 +180,7 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
       <header class="section-head">
         <div>
           <p class="kicker">راه‌های ارتباط</p>
-          <h2 id="channels-title">فقط از کانال رسمی استفاده کنید.</h2>
+          <h2 id="channels-title">فقط از کانال رسمی استفاده کنید</h2>
         </div>
       </header>
       <div class="support-channel-grid">
@@ -219,7 +212,7 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
     <div class="shell cta-panel">
       <p class="eyebrow">تجربهٔ واقعی شما</p>
       <h2 id="feedback-title">
-        متراژ را در کار واقعی استفاده کرده‌اید؟ تجربه‌تان را بفرستید.
+        متراژ را در کار واقعی استفاده کرده‌اید؟ تجربه‌تان را بفرستید
       </h2>
       <p>
         بگویید در چه کاری از برنامه استفاده کرده‌اید، چه چیزی مفید بوده و کجا
@@ -257,7 +250,7 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
     <div class="shell faq-layout">
       <div>
         <p class="kicker">پیش از ارسال</p>
-        <h2 id="support-faq-title">پاسخ چند پرسش رایج.</h2>
+        <h2 id="support-faq-title">پاسخ چند پرسش رایج</h2>
       </div>
       <div class="faq-list">
         <details>

@@ -7,6 +7,8 @@ import estedadArabicFont from '@fontsource-variable/estedad/files/estedad-arabic
 import '../styles/estedad-arabic.css';
 import '../styles/site.css';
 import '../styles/mahsai-original.css';
+import '../styles/brand-system.css';
+import '../styles/brand-pages.css';
 
 interface Props {
   title: string;
@@ -88,7 +90,11 @@ const structuredData = {
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="enamad" content="4941961" />
-    <link rel="icon" type="image/svg+xml" href="/favicon-mahsai-navy.svg" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/brand/mahsai-symbol-navy-on-white.svg"
+    />
     <link
       rel="preload"
       href="/fonts/vazirmatn-arabic-wght-normal.woff2"
@@ -115,7 +121,7 @@ const structuredData = {
         />
       )
     }
-    <meta name="theme-color" content="#fffaf2" />
+    <meta name="theme-color" content="#ffffff" />
     <title>{title}</title>
     <meta name="description" content={description} />
     {
@@ -159,7 +165,7 @@ const structuredData = {
       set:html={JSON.stringify(structuredData)}
     />
   </head>
-  <body>
+  <body class="mahsai-site">
     <a class="skip-link" href="#main-content">رفتن به محتوای اصلی</a>
     <slot name="header"><Header /></slot>
     <main id="main-content">

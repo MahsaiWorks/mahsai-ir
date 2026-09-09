@@ -42,14 +42,14 @@
 }
 
 html {
-  min-width: 20rem;
+  min-width: 0;
   scroll-behavior: smooth;
   scroll-padding-top: 6rem;
   background: var(--paper);
 }
 
 body {
-  min-width: 20rem;
+  min-width: 0;
   margin: 0;
   overflow-x: clip;
   color: var(--text);
@@ -5815,6 +5815,8 @@ ol {
   .skip-link,
   .site-header,
   .site-footer,
+  .mahsai-header,
+  .mahsai-footer,
   .print-resource-hero,
   .print-resource-note {
     display: none !important;
