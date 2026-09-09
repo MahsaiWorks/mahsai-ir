@@ -2,8 +2,8 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { siteConfig } from '../config/site';
-import { getResponsiveImageSrcSet } from '../utils/responsiveImages';
 import estedadArabicFont from '@fontsource-variable/estedad/files/estedad-arabic-wght-normal.woff2?url';
+import { getResponsiveImageSrcSet } from '../utils/responsiveImages';
 import '../styles/estedad-arabic.css';
 import '../styles/site.css';
 import '../styles/mahsai-original.css';
@@ -24,6 +24,7 @@ interface Props {
   preloadImage?: string;
   preloadImageWidth?: number;
   preloadImageSizes?: string;
+  preloadImageMedia?: string;
 }
 
 const {
@@ -39,6 +40,7 @@ const {
   preloadImage,
   preloadImageWidth = 1600,
   preloadImageSizes = '(max-width: 56.25rem) 100vw, 50vw',
+  preloadImageMedia,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const cloudflareAnalyticsToken = import.meta.env
@@ -110,6 +112,13 @@ const structuredData = {
       type="font/woff2"
       crossorigin
     />
+    <link
+      rel="preload"
+      href="/fonts/vazirmatn-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     {
       preloadImage && (
         <link
@@ -118,6 +127,7 @@ const structuredData = {
           href={preloadImage}
           imagesrcset={preloadImageSrcSet}
           imagesizes={preloadImageSrcSet ? preloadImageSizes : undefined}
+          media={preloadImageMedia}
           fetchpriority="high"
         />
       )

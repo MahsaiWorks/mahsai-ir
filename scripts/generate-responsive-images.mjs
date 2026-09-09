@@ -54,7 +54,14 @@ for (const sourcePath of sourceFiles) {
 
   const metadata = await sharp(sourcePath).metadata();
   if (!metadata.width) continue;
-  const targetWidths = widths.filter((width) => width <= metadata.width);
+  const availableWidths = relativeBase
+    .replaceAll('\\', '/')
+    .startsWith('apps/metrazh/current/')
+    ? [240, 260, 320, 340, 460, 480, 720]
+    : widths;
+  const targetWidths = availableWidths.filter(
+    (width) => width <= metadata.width,
+  );
   if (targetWidths.length === 0) continue;
 
   const outputDirectory = path.join(outputRoot, path.dirname(relativeBase));

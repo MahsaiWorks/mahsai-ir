@@ -66,7 +66,7 @@ for (const capture of captures) {
   await sharp(input)
     .webp({ quality: 93, smartSubsample: true, effort: 6 })
     .toFile(path.join(output, capture.name + '.webp'));
-  for (const width of [240, 320, 480, 720])
+  for (const width of [240, 260, 320, 340, 460, 480, 720])
     await sharp(input)
       .resize({ width })
       .webp({ quality: 90, smartSubsample: true, effort: 6 })

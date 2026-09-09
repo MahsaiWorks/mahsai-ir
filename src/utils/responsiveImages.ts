@@ -17,7 +17,10 @@ export function getResponsiveImageSrcSet(
   const outputExtension = /^(?:editorial|home|stock)\//.test(relativeBase)
     ? 'avif'
     : 'webp';
-  const widths = responsiveWidths.filter((width) => width <= intrinsicWidth);
+  const availableWidths = relativeBase.startsWith('apps/metrazh/current/')
+    ? [240, 260, 320, 340, 460, 480, 720]
+    : responsiveWidths;
+  const widths = availableWidths.filter((width) => width <= intrinsicWidth);
   if (widths.length === 0) return;
 
   return widths

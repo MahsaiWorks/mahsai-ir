@@ -1372,7 +1372,8 @@
     padding-block: 39px;
   }
   .brand-home .course-cover {
-    height: 218px;
+    height: auto;
+    aspect-ratio: 3 / 2;
   }
   .brand-home .course-copy {
     padding: 25px 23px 30px;

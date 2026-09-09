@@ -70,7 +70,7 @@ const screenshots = [
                 width={shot.width}
                 height={shot.height}
                 alt={shot.alt}
-                sizes="(max-width: 600px) 76vw, 260px"
+                sizes="(max-width: 342px) calc(76vw - 2px), 258px"
                 loading="lazy"
               />
             </a>
@@ -101,28 +101,38 @@ const screenshots = [
     '[data-gallery-next]',
   );
   if (track && controls && previous && next) {
-    const update = () => {
-      const end = Math.max(0, track.scrollWidth - track.clientWidth);
-      previous.disabled = track.scrollLeft >= -6;
-      next.disabled = -track.scrollLeft >= end - 6;
-    };
-    const move = (direction: number) => {
-      const item = track.querySelector<HTMLElement>('.metrazh-gallery-item');
-      const distance =
-        (item?.getBoundingClientRect().width ?? track.clientWidth) +
-        parseFloat(getComputedStyle(track).gap);
-      track.scrollBy({
-        left: direction * distance,
-        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches
-          ? 'instant'
-          : 'smooth',
-      });
-    };
-    previous.addEventListener('click', () => move(1));
-    next.addEventListener('click', () => move(-1));
-    track.addEventListener('scroll', update, { passive: true });
-    new ResizeObserver(update).observe(track);
-    controls.hidden = false;
-    update();
+    const visibility = new IntersectionObserver(
+      (entries, observer) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        observer.disconnect();
+        const update = () => {
+          const left = track.scrollLeft;
+          const end = Math.max(0, track.scrollWidth - track.clientWidth);
+          previous.disabled = left >= -6;
+          next.disabled = -left >= end - 6;
+        };
+        const move = (direction: number) => {
+          const item = track.querySelector<HTMLElement>(
+            '.metrazh-gallery-item',
+          );
+          const distance =
+            (item?.getBoundingClientRect().width ?? track.clientWidth) +
+            parseFloat(getComputedStyle(track).gap);
+          track.scrollBy({
+            left: direction * distance,
+            behavior: matchMedia('(prefers-reduced-motion: reduce)').matches
+              ? 'instant'
+              : 'smooth',
+          });
+        };
+        previous.addEventListener('click', () => move(1));
+        next.addEventListener('click', () => move(-1));
+        track.addEventListener('scroll', update, { passive: true });
+        new ResizeObserver(update).observe(track);
+        controls.hidden = false;
+      },
+      { rootMargin: '400px' },
+    );
+    visibility.observe(track);
   }
 </script>
