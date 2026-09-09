@@ -1,0 +1,335 @@
+/* Editorial pages and tools share the same scale as the MAHSAI home page. */
+.mahsai-site
+  :is(
+    .tool-index-hero,
+    .practical-tool-hero,
+    .software-guide-hero,
+    .print-resource-hero,
+    .course-hero,
+    .guide-stage,
+    .article-stage,
+    .topic-stage
+  ) {
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+  background: #fff;
+  color: var(--ink);
+}
+.mahsai-site
+  :is(
+    .tool-index-hero,
+    .practical-tool-hero,
+    .software-guide-hero,
+    .print-resource-hero,
+    .course-hero,
+    .guide-stage,
+    .article-stage,
+    .topic-stage
+  )
+  h1 {
+  max-width: 40rem;
+  font-size: clamp(2rem, 3.8vw, 3.25rem);
+  line-height: 1.7;
+  margin-block: 0.75rem 1.25rem;
+  color: var(--ink);
+}
+.mahsai-site
+  :is(
+    .tool-index-hero,
+    .practical-tool-hero,
+    .software-guide-hero,
+    .print-resource-hero,
+    .course-hero,
+    .guide-stage,
+    .article-stage,
+    .topic-stage
+  )
+  .lead {
+  max-width: 38rem;
+  color: var(--muted);
+  font-size: 1.0625rem;
+  line-height: 2;
+}
+.mahsai-site
+  :is(
+    .tool-index-hero-grid,
+    .practical-tool-hero-grid,
+    .software-guide-hero-grid,
+    .print-resource-hero-grid,
+    .course-hero-grid,
+    .guide-stage-grid,
+    .article-stage-grid,
+    .topic-stage-grid
+  ) {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 3.5rem;
+}
+.mahsai-site
+  :is(
+    .tool-index-visual,
+    .practical-tool-hero figure,
+    .print-resource-hero figure,
+    .course-hero figure
+  ) {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: none;
+  background: transparent;
+}
+.mahsai-site
+  :is(
+    .tool-index-visual,
+    .practical-tool-hero figure,
+    .print-resource-hero figure,
+    .course-hero figure
+  )
+  img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  object-position: center;
+  border-radius: inherit;
+}
+.mahsai-site .tool-trust-list {
+  gap: 0.65rem 1.25rem;
+  margin-block: 1.5rem;
+}
+.mahsai-site .tool-trust-list li {
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+.mahsai-site :is(.tool-workbench, .practical-tool-main) {
+  padding-block: 4rem;
+  background: #f4f7f6;
+}
+.mahsai-site :is(.tool-workbench-layout, .practical-tool-layout) {
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+  gap: 3rem;
+  align-items: start;
+}
+.mahsai-site :is(.tool-workbench-layout > header, .practical-tool-intro) {
+  position: static;
+}
+.mahsai-site :is(.tool-workbench-layout > header, .practical-tool-intro) h2 {
+  max-width: none;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  line-height: 1.8;
+}
+.mahsai-site .file-name-builder,
+.mahsai-site .practical-tool {
+  min-width: 0;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  box-shadow: none;
+}
+.mahsai-site .file-name-builder::before,
+.mahsai-site .file-name-builder::after {
+  display: none;
+}
+.mahsai-site .builder-heading h2 {
+  font-size: 1.35rem;
+  line-height: 1.8;
+}
+.mahsai-site :is(.tool-shelf, .tool-practical-shelf) {
+  padding-block: 4rem;
+  background: #fff;
+}
+.mahsai-site :is(.practical-tool-card-grid, .tool-shelf-grid) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+.mahsai-site :is(.practical-tool-card, .tool-shelf-card) {
+  grid-column: auto;
+  min-height: 0;
+  padding: 1.75rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  box-shadow: none;
+  background: #fff;
+  transform: none;
+}
+.mahsai-site :is(.practical-tool-card, .tool-shelf-card):hover {
+  border-color: var(--teal);
+  background: #f7faf9;
+  transform: none;
+}
+.mahsai-site :is(.practical-tool-card, .tool-shelf-card) > span {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--teal-dark);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.mahsai-site :is(.practical-tool-card, .tool-shelf-card) h3 {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  margin-block: 1rem 0.75rem;
+}
+.mahsai-site :is(.practical-tool-card, .tool-shelf-card) p {
+  font-size: 1rem;
+  color: var(--muted);
+}
+.mahsai-site :is(.practical-tool-card, .tool-shelf-card) strong {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.mahsai-site .tool-product-bridge {
+  background: var(--ink);
+  padding-block: 3.5rem;
+}
+.mahsai-site .tool-product-bridge h2 {
+  max-width: 45rem;
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  line-height: 1.8;
+}
+.mahsai-site .practical-tool-card:nth-child(n) {
+  grid-column: auto;
+}
+.mahsai-site .tool-workbench .file-name-builder {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  box-shadow: none;
+}
+.mahsai-site .practical-tool {
+  background: transparent;
+  border: 0;
+}
+.mahsai-site :is(.practical-tool-form, .practical-tool-result) {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  box-shadow: none;
+}
+.mahsai-site .topic-hero {
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+  background: #fff;
+}
+.mahsai-site .topic-hero h1 {
+  max-width: 40rem;
+  font-size: clamp(2rem, 3.8vw, 3.25rem);
+  line-height: 1.7;
+}
+.mahsai-site .topic-hero-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 3.5rem;
+  align-items: center;
+}
+.mahsai-site :is(.article-stage-cover, .guide-stage-cover, .topic-hero figure) {
+  border: 0;
+  padding: 0;
+  border-radius: 1.25rem;
+  background: transparent;
+  box-shadow: none;
+  overflow: hidden;
+}
+.mahsai-site
+  :is(.article-stage-cover, .guide-stage-cover, .topic-hero figure)
+  img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  object-position: center;
+}
+.mahsai-site .article-deck {
+  color: var(--muted);
+  font-size: 1.0625rem;
+  line-height: 2;
+}
+.mahsai-site
+  :is(
+    .builder-grid input,
+    .builder-grid select,
+    .practical-tool-field input,
+    .practical-tool-field select,
+    .practical-tool-field textarea
+  ):focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 3px;
+  border-color: var(--teal);
+}
+@media (max-width: 1050px) {
+  .mahsai-site
+    :is(
+      .tool-index-hero-grid,
+      .practical-tool-hero-grid,
+      .software-guide-hero-grid,
+      .print-resource-hero-grid,
+      .course-hero-grid,
+      .guide-stage-grid,
+      .article-stage-grid,
+      .topic-stage-grid
+    ) {
+    gap: 2rem;
+  }
+  .mahsai-site :is(.tool-workbench-layout, .practical-tool-layout) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+  .mahsai-site :is(.practical-tool-card-grid, .tool-shelf-grid) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .mahsai-site .topic-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+  .mahsai-site .topic-hero h1 {
+    font-size: 2rem;
+  }
+  .mahsai-site
+    :is(
+      .tool-index-hero-grid,
+      .practical-tool-hero-grid,
+      .software-guide-hero-grid,
+      .print-resource-hero-grid,
+      .course-hero-grid,
+      .guide-stage-grid,
+      .article-stage-grid,
+      .topic-stage-grid
+    ) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .mahsai-site
+    :is(
+      .tool-index-hero,
+      .practical-tool-hero,
+      .software-guide-hero,
+      .print-resource-hero,
+      .course-hero,
+      .guide-stage,
+      .article-stage,
+      .topic-stage
+    )
+    h1 {
+    font-size: 2rem;
+  }
+  .mahsai-site
+    :is(
+      .tool-workbench,
+      .practical-tool-main,
+      .tool-shelf,
+      .tool-practical-shelf
+    ) {
+    padding-block: 2.75rem;
+  }
+}
+@media (max-width: 480px) {
+  .mahsai-site :is(.practical-tool-card-grid, .tool-shelf-grid) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -6,10 +6,10 @@ category: 'بازاریابی ملک'
 publishedAt: '2026-08-02'
 updatedAt: '2026-08-21'
 readingTime: '۱۰ دقیقه'
-cover: '/images/editorial/property-photography.webp'
+cover: '/images/brand/editorial/article-photography-v5.webp'
 coverWidth: 1536
 coverHeight: 1024
-coverAlt: 'عکاسی حرفه‌ای از فضای داخلی یک آپارتمان روشن با تلفن همراه'
+coverAlt: 'مشاور املاک در حال عکاسی از فضای روشن یک ملک با تلفن همراه'
 accent: 'sand'
 cluster: 'marketing'
 seriesOrder: 1

@@ -72,12 +72,12 @@ const structuredData = {
 <BaseLayout
   title={`ابزارهای رایگان مشاور املاک؛ عنوان فایل و چک‌لیست | ${siteConfig.brandName}`}
   description="ابزارهای رایگان و بدون ثبت‌نام برای مشاوران املاک؛ ساخت عنوان یکدست فایل، چک‌لیست چاپی فایل‌گیری و بازدید و راهنمای انتخاب نرم‌افزار املاک."
-  image="/images/editorial/real/property-file-review.jpg"
-  imageAlt="ابزارها و چک‌لیست‌های منظم روی میز کار مشاور املاک"
-  imageWidth={1800}
-  imageHeight={1200}
-  preloadImage="/images/editorial/real/property-file-review.jpg"
-  preloadImageWidth={1800}
+  image="/images/brand/editorial/digital-workspace-metrazh-v4.webp"
+  imageAlt="مشاور املاک در حال مدیریت اطلاعات با گوشی و لپ‌تاپ، از نمای بالا"
+  imageWidth={1536}
+  imageHeight={1024}
+  preloadImage="/images/brand/editorial/digital-workspace-metrazh-v4.webp"
+  preloadImageWidth={1536}
   keywords={[
     'ابزار مشاور املاک',
     'فرم فایل املاک',
@@ -102,49 +102,32 @@ const structuredData = {
         <p class="kicker">ابزارهای رایگان</p>
         <h1>ابزارهای رایگان برای مشاوران املاک</h1>
         <p class="lead">
-          عنوان فایل بسازید، چک‌لیست‌های آماده را چاپ کنید و راهنمای موردنیازتان
-          را پیدا کنید؛ بدون ثبت‌نام و بدون دادن شماره تلفن.
+          متن پیگیری بنویسید، بازدیدها را برنامه‌ریزی کنید و به فایل‌ها نظم
+          بدهید؛ رایگان و بدون ثبت‌نام.
         </p>
         <ul class="tool-trust-list">
           <li>رایگان و بدون ثبت‌نام</li>
           <li>اطلاعات شما از مرورگر خارج نمی‌شود</li>
           <li>چک‌لیست‌ها آمادهٔ چاپ هستند</li>
         </ul>
-        <a class="button" href="#file-name-tool">ساختن عنوان فایل</a>
+        <div class="hero-actions">
+          <a class="button" href="#practical-tools-title">انتخاب ابزار</a>
+          <a class="text-link" href="#file-name-tool">ساخت عنوان فایل ←</a>
+        </div>
       </div>
 
       <figure class="tool-index-visual">
         <ResponsiveImage
-          src="/images/editorial/real/property-file-review.jpg"
-          alt="بررسی مرحله‌ای اطلاعات یک فایل ملکی روی میز کار"
-          width="1800"
-          height="1200"
+          src="/images/brand/editorial/digital-workspace-metrazh-v4.webp"
+          alt="مشاور املاک در حال مدیریت اطلاعات با گوشی و لپ‌تاپ، از نمای بالا"
+          width="1536"
+          height="1024"
           sizes="(max-width: 56.25rem) 100vw, 46vw"
           fetchpriority="high"
         />
       </figure>
     </div>
   </header>
-
-  <section
-    class="tool-workbench"
-    id="file-name-tool"
-    aria-labelledby="tool-workbench-title"
-  >
-    <div class="shell tool-workbench-layout">
-      <header>
-        <p class="section-sign">عنوان‌ساز فایل</p>
-        <h2 id="tool-workbench-title">
-          برای فایلتان یک اسم مرتب و مشخص بسازید
-        </h2>
-        <p>
-          عنوان داخل همین صفحه ساخته می‌شود و جایی فرستاده نمی‌شود. نام مالک،
-          شماره تماس، نشانی دقیق یا اطلاعات محرمانه را در عنوان فایل ننویسید.
-        </p>
-      </header>
-      <PropertyFileNameBuilder />
-    </div>
-  </section>
 
   <section
     class="tool-shelf tool-practical-shelf"
@@ -165,6 +148,12 @@ const structuredData = {
       </header>
 
       <div class="practical-tool-card-grid">
+        <a class="practical-tool-card" href="#file-name-tool">
+          <span>مرتب‌کردن فایل‌ها</span>
+          <h3>ساخت عنوان فایل</h3>
+          <p>برای هر ملک یک عنوان مشخص بسازید تا سریع‌تر پیدایش کنید.</p>
+          <strong>باز کردن ابزار ←</strong>
+        </a>
         {
           practicalRealEstateTools.map((tool) => (
             <a class="practical-tool-card" href={`/tools/${tool.slug}/`}>
@@ -176,6 +165,26 @@ const structuredData = {
           ))
         }
       </div>
+    </div>
+  </section>
+
+  <section
+    class="tool-workbench"
+    id="file-name-tool"
+    aria-labelledby="tool-workbench-title"
+  >
+    <div class="shell tool-workbench-layout">
+      <header>
+        <p class="section-sign">عنوان‌ساز فایل</p>
+        <h2 id="tool-workbench-title">
+          برای فایلتان یک اسم مرتب و مشخص بسازید
+        </h2>
+        <p>
+          عنوان داخل همین صفحه ساخته می‌شود و جایی فرستاده نمی‌شود. نام مالک،
+          شماره تماس، نشانی دقیق یا اطلاعات محرمانه را در عنوان فایل ننویسید.
+        </p>
+      </header>
+      <PropertyFileNameBuilder />
     </div>
   </section>
 

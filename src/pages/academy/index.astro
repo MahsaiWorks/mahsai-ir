@@ -15,19 +15,19 @@ const articles = (await getCollection('articles'))
 
 const trackImages = {
   files: {
-    src: '/images/editorial/property-workflow.webp',
+    src: '/images/brand/editorial/between-visits-metrazh-v4.webp',
     alt: 'میز کار منظم مشاور املاک با پرونده‌ها و ماکت ساختمان',
   },
   clients: {
-    src: '/images/editorial/visit-route-planning.webp',
+    src: '/images/brand/editorial/article-visits-v5.webp',
     alt: 'برنامه‌ریزی مسیر بازدید چند ملک',
   },
   marketing: {
-    src: '/images/editorial/smart-property-ad.webp',
+    src: '/images/brand/editorial/article-photography-v5.webp',
     alt: 'آماده‌سازی متن و تصویر برای آگهی یک ملک',
   },
   legal: {
-    src: '/images/editorial/secure-real-estate-data.webp',
+    src: '/images/brand/editorial/article-security-v5.webp',
     alt: 'حفاظت از اسناد و اطلاعات کاری املاک',
   },
 } as const;
@@ -97,7 +97,7 @@ const collectionStructuredData = {
           <li>مناسب بازار ایران</li>
         </ul>
       </div>
-      <BrandCompanion eager />
+      <BrandCompanion eager scene="digital-workspace-metrazh-v4" />
     </div>
   </header>
 
@@ -108,10 +108,10 @@ const collectionStructuredData = {
     <div class="shell academy-featured-course-grid">
       <figure>
         <ResponsiveImage
-          src="/images/editorial/property-workflow-light.webp"
-          alt="مسیر ساده و مرحله‌ای ساخت یک فایل ملکی مرتب"
-          width="1693"
-          height="929"
+          src="/images/brand/editorial/digital-workspace-metrazh-v4.webp"
+          alt="مشاور املاک در حال مدیریت اطلاعات با گوشی و لپ‌تاپ، از نمای بالا"
+          width="1536"
+          height="1024"
         />
       </figure>
       <div>
@@ -317,18 +317,18 @@ const collectionStructuredData = {
       </div>
       <div class="academy-phone-row" aria-label="تصاویر رسمی متراژ">
         <ResponsiveImage
-          src="/images/apps/metrazh/bazaar/smart-listing.webp"
+          src="/images/apps/metrazh/current/ad-assistant.webp"
           alt="معرفی رسمی ساخت آگهی از اطلاعات فایل در متراژ"
           width="1080"
-          height="1920"
+          height="2460"
           loading="lazy"
           decoding="async"
         />
         <ResponsiveImage
-          src="/images/apps/metrazh/bazaar/visit-routing.webp"
+          src="/images/apps/metrazh/current/visits.webp"
           alt="معرفی رسمی برنامه‌ریزی بازدیدها در متراژ"
           width="1080"
-          height="1920"
+          height="2460"
           loading="lazy"
           decoding="async"
         />

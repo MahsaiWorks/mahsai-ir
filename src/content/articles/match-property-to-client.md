@@ -6,10 +6,10 @@ category: 'مدیریت متقاضی'
 publishedAt: '2026-08-02'
 updatedAt: '2026-08-21'
 readingTime: '۸ دقیقه'
-cover: '/images/editorial/client-matching-light.webp'
-coverWidth: 1659
-coverHeight: 948
-coverAlt: 'ماکت‌های ساختمان و کارت‌های مشتری که با یک مسیر مشخص به هم متصل شده‌اند'
+cover: '/images/brand/editorial/article-client-v5.webp'
+coverWidth: 1536
+coverHeight: 1024
+coverAlt: 'مشاور املاک در حال گفت‌وگو با مشتری و معرفی فضای یک آپارتمان روشن'
 accent: 'navy'
 cluster: 'clients'
 seriesOrder: 2

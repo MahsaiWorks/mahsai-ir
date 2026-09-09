@@ -5,11 +5,11 @@ category: 'مدیریت متقاضی'
 publishedAt: '2026-08-02'
 updatedAt: '2026-08-21'
 readingTime: '۱۰ دقیقه'
-cover: '/images/editorial/female-consultant-matching.webp'
+cover: '/images/brand/editorial/article-client-v5.webp'
 coverWidth: 1536
 coverHeight: 1024
-coverAlt: 'مشاور خانم کنار کارت‌های نیاز مشتری و ماکت ساختمان برای انتخاب فایل مناسب'
-coverPosition: 'left'
+coverAlt: 'مشاور املاک در حال گفت‌وگو با مشتری و معرفی فضای یک آپارتمان روشن'
+coverPosition: 'center'
 accent: 'teal'
 cluster: 'clients'
 seriesOrder: 1

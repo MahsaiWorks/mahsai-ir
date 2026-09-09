@@ -5,10 +5,10 @@ category: 'بازدید و پیگیری'
 publishedAt: '2026-08-02'
 updatedAt: '2026-08-21'
 readingTime: '۱۰ دقیقه'
-cover: '/images/editorial/visit-route-planning.webp'
+cover: '/images/brand/editorial/article-visits-v5.webp'
 coverWidth: 1536
 coverHeight: 1024
-coverAlt: 'مشاور املاک کنار نقشه مسیر، سه ساختمان، تقویم و ساعت برای برنامه‌ریزی بازدیدها'
+coverAlt: 'مشاور املاک کنار خودروی پارک‌شده، در حال بررسی قرارها با تلفن همراه'
 accent: 'teal'
 cluster: 'clients'
 seriesOrder: 3

@@ -2,16 +2,29 @@
 import ResponsiveImage from './ResponsiveImage.astro';
 interface Props {
   eager?: boolean;
+  scene?:
+    | 'paperless-colleagues-metrazh-v4'
+    | 'digital-workspace-metrazh-v4'
+    | 'article-followup-v5';
 }
-const { eager = false } = Astro.props;
+const { eager = false, scene = 'paperless-colleagues-metrazh-v4' } =
+  Astro.props;
+const descriptions = {
+  'paperless-colleagues-metrazh-v4':
+    'دو همکار مهسای در دفتر، در حال مدیریت کارهایشان با تلفن همراه',
+  'digital-workspace-metrazh-v4':
+    'مشاور املاک در حال مدیریت اطلاعات با گوشی و لپ‌تاپ، از نمای بالا',
+  'article-followup-v5':
+    'کاراکتر مرد مهسای با لبخند در حال گفت‌وگوی تلفنی با مشتری',
+};
 ---
 
 <figure class="brand-companion">
   <ResponsiveImage
-    src="/images/brand/mahsai-people.webp"
-    width="1200"
-    height="750"
-    alt="دو همراه مهسای در حال یادگیری و کار با تبلت، در حیاطی با معماری ایرانی"
+    src={`/images/brand/editorial/${scene}.webp`}
+    width="1536"
+    height="1024"
+    alt={descriptions[scene]}
     loading={eager ? 'eager' : 'lazy'}
     fetchpriority={eager ? 'high' : 'auto'}
     sizes="(max-width: 760px) 100vw, 50vw"

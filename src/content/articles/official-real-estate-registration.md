@@ -6,10 +6,10 @@ category: 'دانش حقوقی عمومی'
 publishedAt: '2026-08-02'
 updatedAt: '2026-08-21'
 readingTime: '۹ دقیقه'
-cover: '/images/editorial/real/property-document-check.jpg'
+cover: '/images/brand/editorial/article-files-v5.webp'
 coverWidth: 1536
 coverHeight: 1024
-coverAlt: 'ماکت خانه، برگهٔ قرارداد و کلیدها برای بررسی مدارک معاملهٔ ملک'
+coverAlt: 'مشاور املاک در دفتر، در حال بررسی و مرتب‌کردن تصاویر ملک روی لپ‌تاپ'
 accent: 'sand'
 cluster: 'legal'
 seriesOrder: 1

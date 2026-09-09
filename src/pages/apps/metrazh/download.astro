@@ -6,6 +6,7 @@ import { siteConfig } from '../../../config/site';
 import { getCafeBazaarLink } from '../../../data/appPresentation';
 import { metrazhDirectRelease as direct } from '../../../data/metrazhDirectRelease';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import MetrazhGallery from '../../../components/MetrazhGallery.astro';
 
 const app = (await getCollection('apps')).find(
   (entry) => entry.id === 'metrazh' && entry.data.status === 'available',
@@ -211,6 +212,8 @@ const structuredData = {
       </div>
     </div>
   </header>
+
+  <MetrazhGallery />
 
   <section class="download-answer" aria-labelledby="download-answer-title">
     <div class="shell download-answer-grid">

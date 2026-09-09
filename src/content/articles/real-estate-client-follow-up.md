@@ -5,10 +5,10 @@ category: 'ارتباط با مشتری'
 publishedAt: '2026-08-02'
 updatedAt: '2026-08-21'
 readingTime: '۸ دقیقه'
-cover: '/images/editorial/client-matching.webp'
+cover: '/images/brand/editorial/article-followup-v5.webp'
 coverWidth: 1536
 coverHeight: 1024
-coverAlt: 'برنامهٔ پیگیری مشتری و ارتباط میان نیاز متقاضی با فایل‌های مناسب'
+coverAlt: 'مشاور املاک کنار پنجرهٔ دفتر، در حال پیگیری تلفنی با مشتری'
 accent: 'teal'
 cluster: 'clients'
 seriesOrder: 4

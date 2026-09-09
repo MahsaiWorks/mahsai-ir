@@ -5,10 +5,10 @@ category: 'مدیریت فایل'
 publishedAt: '2026-08-02'
 updatedAt: '2026-08-21'
 readingTime: '۹ دقیقه'
-cover: '/images/editorial/property-workflow.webp'
+cover: '/images/brand/editorial/article-visits-v5.webp'
 coverWidth: 1536
 coverHeight: 1024
-coverAlt: 'پرونده‌های ملکی، نقشه و ابزارهای بازبینی فایل روی میز کار مشاور'
+coverAlt: 'مشاور املاک کنار خودروی پارک‌شده، در حال بررسی قرارها با تلفن همراه'
 accent: 'sand'
 cluster: 'files'
 seriesOrder: 4

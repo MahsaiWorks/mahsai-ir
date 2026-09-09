@@ -5,10 +5,10 @@ category: 'مدیریت فایل'
 publishedAt: '2026-08-01'
 updatedAt: '2026-08-21'
 readingTime: '۹ دقیقه'
-cover: '/images/editorial/property-workflow-light.webp'
-coverWidth: 1693
-coverHeight: 929
-coverAlt: 'میز کار حرفه‌ای املاک با ماکت ساختمان، پوشه‌های فایل، نقشه و تلفن همراه'
+cover: '/images/brand/editorial/article-files-v5.webp'
+coverWidth: 1536
+coverHeight: 1024
+coverAlt: 'مشاور املاک در دفتر، در حال بررسی و مرتب‌کردن تصاویر ملک روی لپ‌تاپ'
 accent: 'navy'
 cluster: 'files'
 seriesOrder: 1

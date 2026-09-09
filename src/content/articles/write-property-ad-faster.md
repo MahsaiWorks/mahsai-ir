@@ -6,10 +6,10 @@ category: 'بازاریابی ملک'
 publishedAt: '2026-08-02'
 updatedAt: '2026-08-21'
 readingTime: '۹ دقیقه'
-cover: '/images/editorial/smart-property-ad.webp'
+cover: '/images/brand/editorial/article-photography-v5.webp'
 coverWidth: 1536
 coverHeight: 1024
-coverAlt: 'پرونده ملک، تلفن همراه، کارت‌های محتوا و بلندگو برای ساخت آگهی حرفه‌ای'
+coverAlt: 'مشاور املاک در حال عکاسی از فضای روشن یک ملک با تلفن همراه'
 accent: 'sand'
 cluster: 'marketing'
 seriesOrder: 2

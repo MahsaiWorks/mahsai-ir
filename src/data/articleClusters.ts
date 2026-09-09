@@ -19,8 +19,9 @@ export const articleClusters: ArticleCluster[] = [
     searchTitle: 'فایلینگ املاک؛ ثبت و نگهداری فایل ملک',
     answer:
       'فایلینگ املاک یعنی اطلاعات هر ملک را با یک روش ثابت، تاریخ آخرین تماس و کار بعدی ثبت کنید. در این صورت فایل‌های آماده، ناقص و قدیمی از هم جدا می‌شوند و برای پیدا کردنشان به حافظه وابسته نیستید.',
-    cover: '/images/editorial/property-workflow-light.webp',
-    coverAlt: 'چیدمان منظم اطلاعات و مدارک فایل‌های ملکی',
+    cover: '/images/brand/editorial/digital-workspace-metrazh-v4.webp',
+    coverAlt:
+      'مشاور املاک در حال مدیریت اطلاعات با گوشی و لپ‌تاپ، از نمای بالا',
     keywords: [
       'مدیریت فایل املاک',
       'فایلینگ املاک',
@@ -37,8 +38,8 @@ export const articleClusters: ArticleCluster[] = [
     searchTitle: 'مدیریت مشتری و پیگیری املاک؛ از نیازسنجی تا بازدید',
     answer:
       'مدیریت مشتری املاک از ثبت بودجه و محله شروع می‌شود و با معرفی فایل، بازدید و پیگیری ادامه پیدا می‌کند. بعد از هر تماس باید معلوم باشد چه کاری را چه زمانی انجام می‌دهید.',
-    cover: '/images/editorial/female-consultant-matching.webp',
-    coverAlt: 'مشاور املاک در حال نیازسنجی و بررسی فایل مناسب مشتری',
+    cover: '/images/brand/editorial/article-client-v5.webp',
+    coverAlt: 'مشاور املاک با دقت به نیازهای مشتری در تماس تلفنی گوش می‌دهد',
     keywords: [
       'مدیریت مشتری املاک',
       'پیگیری مشتری مشاور املاک',
@@ -55,8 +56,8 @@ export const articleClusters: ArticleCluster[] = [
     searchTitle: 'آگهی و معرفی ملک؛ عکس بهتر و متن روشن‌تر',
     answer:
       'معرفی مؤثر ملک با اطلاعات کامل، عکس واقعی و عنوان روشن ساخته می‌شود. هدف فقط کلیک بیشتر نیست؛ باید متقاضی پیش از تماس بداند ملک برای نیاز او مناسب است یا نه.',
-    cover: '/images/editorial/property-photography.webp',
-    coverAlt: 'آماده‌سازی عکس روشن و متن دقیق برای آگهی ملک',
+    cover: '/images/brand/editorial/article-photography-v5.webp',
+    coverAlt: 'مشاور املاک از فضای یک آپارتمان با تلفن همراه عکس می‌گیرد',
     keywords: [
       'نوشتن آگهی ملک',
       'عکاسی ملک برای آگهی',
@@ -73,8 +74,9 @@ export const articleClusters: ArticleCluster[] = [
     searchTitle: 'دانش رسمی عمومی معاملات ملک؛ منبع، تاریخ و احتیاط',
     answer:
       'در موضوع‌های ثبتی و حقوقی، راهنمای عمومی فقط نقطهٔ شروع است. منبع رسمی، تاریخ بررسی و محدودهٔ اعتبار اطلاعات باید روشن باشد و تصمیم پروندهٔ واقعی به فرد دارای صلاحیت سپرده شود.',
-    cover: '/images/editorial/real/property-document-check.jpg',
-    coverAlt: 'بررسی مدارک و اطلاعات رسمی یک پروندهٔ ملکی',
+    cover: '/images/brand/editorial/article-files-v5.webp',
+    coverAlt:
+      'مشاور املاک با تمرکز اطلاعات یک فایل را در تلفن همراه بررسی می‌کند',
     keywords: [
       'ثبت رسمی معاملات املاک',
       'سامانه کاتب املاک',

@@ -5,10 +5,10 @@ category: 'مدیریت فایل'
 publishedAt: '2026-08-02'
 updatedAt: '2026-08-21'
 readingTime: '۱۰ دقیقه'
-cover: '/images/editorial/secure-real-estate-data.webp'
+cover: '/images/brand/editorial/article-security-v5.webp'
 coverWidth: 1536
 coverHeight: 1024
-coverAlt: 'جعبه امن، پوشه‌های ملک، تلفن همراه و حافظه پشتیبان در یک تصویر سه‌بعدی روشن'
+coverAlt: 'مشاور املاک در حال بررسی اطلاعات دیجیتال روی گوشی و لپ‌تاپ'
 accent: 'navy'
 cluster: 'files'
 seriesOrder: 5

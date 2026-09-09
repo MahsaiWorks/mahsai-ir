@@ -6,10 +6,10 @@ category: 'مدیریت فایل'
 publishedAt: '2026-08-20'
 updatedAt: '2026-08-21'
 readingTime: '۸ دقیقه'
-cover: '/images/editorial/real/property-file-naming.jpg'
+cover: '/images/brand/editorial/article-files-v5.webp'
 coverWidth: 1536
 coverHeight: 1024
-coverAlt: 'دست‌های یک کاربر در حال پیدا کردن پرونده از میان پوشه‌های مرتب'
+coverAlt: 'مشاور املاک در دفتر، در حال بررسی و مرتب‌کردن تصاویر ملک روی لپ‌تاپ'
 coverPosition: 'center'
 accent: 'teal'
 cluster: 'files'

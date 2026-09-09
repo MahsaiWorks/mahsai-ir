@@ -47,9 +47,9 @@ export const practicalRealEstateTools: PracticalToolDefinition[] = [
       'موضوع گفت‌وگوی قبلی را وارد کنید و یک پیام کوتاه، محترمانه و مرتبط برای پیگیری بعد از معرفی یا بازدید بسازید.',
     seoDescription:
       'پیام پیگیری مشتری املاک را بر اساس گفت‌وگوی قبلی بسازید؛ رایگان، بدون ثبت‌نام و بدون ارسال اطلاعات.',
-    kicker: 'یک پیام مرتبط، نه «تصمیم گرفتید؟»',
-    cover: '/images/editorial/client-matching.webp',
-    coverAlt: 'یادداشت پیگیری مشتری کنار فایل‌های ملکی مرتب',
+    kicker: 'پس از معرفی یا بازدید',
+    cover: '/images/brand/editorial/article-followup-v5.webp',
+    coverAlt: 'مشاور املاک با لبخند در حال پیگیری تلفنی مشتری',
     fields: [
       {
         id: 'property_label',
@@ -112,9 +112,10 @@ export const practicalRealEstateTools: PracticalToolDefinition[] = [
       'اطلاعات پایهٔ یک فایل را با ترتیب ثابت جمع کنید و در پایان یک برگهٔ مرتب برای ثبت در پرونده بگیرید.',
     seoDescription:
       'فرم تماس اول با مالک برای جمع‌کردن مشخصات فایل و گرفتن خروجی قابل کپی یا چاپ؛ رایگان و بدون ثبت‌نام.',
-    kicker: 'قبل از تمام‌شدن تماس، جای خالی‌ها را ببینید',
-    cover: '/images/editorial/property-workflow-light.webp',
-    coverAlt: 'برگهٔ فایل‌گیری و تلفن روی میز کار مشاور املاک',
+    kicker: 'ثبت اطلاعات ملک',
+    cover: '/images/brand/editorial/digital-workspace-metrazh-v4.webp',
+    coverAlt:
+      'مشاور املاک در حال مدیریت اطلاعات با گوشی و لپ‌تاپ، از نمای بالا',
     fields: [
       {
         id: 'transaction',
@@ -189,9 +190,9 @@ export const practicalRealEstateTools: PracticalToolDefinition[] = [
       'شرط‌های قطعی، بودجه، محدوده و زمان تصمیم را از ترجیح‌های قابل مذاکره جدا کنید و یک خلاصهٔ قابل استفاده بسازید.',
     seoDescription:
       'فرم رایگان نیازسنجی خریدار یا مستأجر؛ بودجه، محله، شرط‌های قطعی و قدم بعدی را در یک خلاصه مرتب کنید.',
-    kicker: 'قبل از فرستادن فایل، نیاز واقعی را روشن کنید',
-    cover: '/images/editorial/female-consultant-matching.webp',
-    coverAlt: 'مشاور املاک در حال مرتب‌کردن نیازهای مشتری',
+    kicker: 'پیش از معرفی ملک',
+    cover: '/images/brand/editorial/article-client-v5.webp',
+    coverAlt: 'مشاور املاک با دقت به نیازهای مشتری در تماس تلفنی گوش می‌دهد',
     fields: [
       {
         id: 'deal_type',
@@ -265,9 +266,10 @@ export const practicalRealEstateTools: PracticalToolDefinition[] = [
       'تازگی اطلاعات، پاسخ مالک و کامل‌بودن پرونده را بررسی کنید تا فایل بین «فعال»، «نیازمند تأیید» و «بایگانی» گم نشود.',
     seoDescription:
       'فایل قدیمی املاک را با تازگی اطلاعات و پاسخ مالک بسنجید و برای تأیید، اصلاح یا بایگانی تصمیم بگیرید.',
-    kicker: 'فایل قدیمی را عجولانه حذف نکنید',
-    cover: '/images/editorial/property-workflow.webp',
-    coverAlt: 'پرونده‌های ملکی در حال بازبینی و دسته‌بندی',
+    kicker: 'به‌روزرسانی فایل‌ها',
+    cover: '/images/brand/editorial/between-visits-metrazh-v4.webp',
+    coverAlt:
+      'مشاور املاک در خودروی پارک‌شده، بین دو بازدید اطلاعات فایل‌ها را با گوشی بررسی می‌کند',
     fields: [
       {
         id: 'file_label',
@@ -334,12 +336,12 @@ export const practicalRealEstateTools: PracticalToolDefinition[] = [
     title: 'برنامه‌ریز بازدید ملک',
     shortTitle: 'برنامه‌ریز بازدید',
     description:
-      'تا سه بازدید را با ساعت، ترتیب، زمان حائل و کار بعدی روی یک برگهٔ ساده و قابل چاپ بچینید.',
+      'زمان و ترتیب سه بازدید را مشخص کنید و برای مسیر و پیگیری بعدی هم وقت بگذارید.',
     seoDescription:
       'تا سه بازدید ملک را با ساعت، زمان حائل و پیگیری بعدی بچینید و برنامه را رایگان چاپ یا کپی کنید.',
-    kicker: 'برای مسیر، تأخیر و جمع‌بندی جا بگذارید',
-    cover: '/images/editorial/visit-route-planning.webp',
-    coverAlt: 'تقویم و نقشه برای چیدن چند بازدید ملک',
+    kicker: 'قرارها و مسیر بازدید',
+    cover: '/images/brand/editorial/article-visits-v5.webp',
+    coverAlt: 'مشاور املاک با تلفن همراه در مسیر بازدید یک ملک',
     fields: [
       {
         id: 'visit_date',

@@ -5,10 +5,10 @@ category: 'مدیریت فایل'
 publishedAt: '2026-08-02'
 updatedAt: '2026-08-21'
 readingTime: '۱۰ دقیقه'
-cover: '/images/editorial/real/property-file-review.jpg'
+cover: '/images/brand/editorial/article-files-v5.webp'
 coverWidth: 1536
 coverHeight: 1024
-coverAlt: 'پوشهٔ فایل ملکی، کلیدها و ماکت‌های خانه روی میز بررسی پرونده'
+coverAlt: 'مشاور املاک در دفتر، در حال بررسی و مرتب‌کردن تصاویر ملک روی لپ‌تاپ'
 accent: 'teal'
 cluster: 'files'
 seriesOrder: 3

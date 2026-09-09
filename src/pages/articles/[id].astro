@@ -13,6 +13,7 @@ import AnswerFirst from '../../components/AnswerFirst.astro';
 import ArticlePracticalKit from '../../components/ArticlePracticalKit.astro';
 import PropertyFileNameBuilder from '../../components/PropertyFileNameBuilder.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { metrazhScreenshots } from '../../data/metrazhScreenshots';
 
 export async function getStaticPaths() {
   const articles = (await getCollection('articles')).filter(
@@ -36,8 +37,16 @@ const bazaarLink = metrazhApp
 const articleInstallUrl = bazaarLink
   ? getTrackedCafeBazaarUrl(bazaarLink.url, `article_${article.id}_conversion`)
   : '/apps/metrazh/';
-const metrazhVisual = metrazhApp?.data.screenshots.find((screenshot) =>
-  screenshot.src.includes(article.data.metrazh.visual),
+const featureScreenshots = {
+  'property-catalog': 'property-details',
+  'smart-matching': 'matching',
+  'smart-listing': 'ad-assistant',
+  'visit-routing': 'visits',
+  'customer-follow-up': 'workspace',
+} as const;
+const metrazhVisual = metrazhScreenshots.find(
+  (screenshot) =>
+    screenshot.id === featureScreenshots[article.data.metrazh.visual],
 );
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const cluster = articleClusters.find(
@@ -339,8 +348,8 @@ const breadcrumbStructuredData = {
                 <ResponsiveImage
                   src={metrazhVisual.src}
                   alt={metrazhVisual.alt}
-                  width="720"
-                  height="1280"
+                  width={metrazhVisual.width}
+                  height={metrazhVisual.height}
                   loading="lazy"
                   decoding="async"
                 />

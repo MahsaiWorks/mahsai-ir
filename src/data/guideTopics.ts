@@ -54,11 +54,12 @@ export const guideTopics: GuideTopic[] = [
       'راهنمای سادهٔ فایل‌گیری املاک؛ از ثبت اطلاعات و به‌روزرسانی قیمت تا پیدا کردن فایل مناسب، بدون تکیه بر حافظه و کاغذهای پراکنده.',
     answer:
       'فایل خوب فقط نام مالک و قیمت نیست. باید مشخصات قابل جست‌وجو، شرایط معامله، وضعیت دسترسی، نکتهٔ برجسته، محدودیت و زمان آخرین تأیید را یک‌جا داشته باشد. بعد از ثبت نیز باید معلوم باشد چه زمانی دوباره با مالک تماس می‌گیرید و فایل چه وقت باید بایگانی شود.',
-    cover: '/images/editorial/property-workflow-light.webp',
-    coverAlt: 'چیدمان منظم اطلاعات و مدارک یک فایل ملکی روی میز کار',
+    cover: '/images/brand/editorial/digital-workspace-metrazh-v4.webp',
+    coverAlt:
+      'مشاور املاک در حال مدیریت اطلاعات با گوشی و لپ‌تاپ، از نمای بالا',
     coverWidth: 1536,
     coverHeight: 1024,
-    productImage: '/images/apps/metrazh/bazaar/property-catalog.webp',
+    productImage: '/images/apps/metrazh/current/property-details.webp',
     productImageAlt: 'تصویر رسمی کاتالوگ و مدیریت فایل‌های ملکی در متراژ',
     updatedAt: '2026-08-19',
     keywords: [
@@ -172,11 +173,11 @@ export const guideTopics: GuideTopic[] = [
       'راهنمای نیازسنجی مشتری املاک، ساخت فهرست کوتاه فایل‌های مناسب و پیگیری محترمانه؛ برای اینکه معرفی‌ها کمتر و دقیق‌تر شوند.',
     answer:
       'نیاز مشتری را به سه دسته تقسیم کنید: شرط‌های قطعی، ترجیح‌ها و موارد قابل مذاکره. بودجه، محله، زمان تصمیم و دلیل جابه‌جایی را روشن کنید؛ سپس فقط چند فایل نزدیک به اولویت اصلی نشان دهید و نتیجهٔ هر معرفی را برای پیگیری بعدی ثبت کنید.',
-    cover: '/images/editorial/female-consultant-matching.webp',
-    coverAlt: 'مشاور املاک در حال تطبیق نیاز مشتری با گزینه‌های مناسب',
+    cover: '/images/brand/editorial/article-client-v5.webp',
+    coverAlt: 'مشاور املاک با دقت به نیازهای مشتری در تماس تلفنی گوش می‌دهد',
     coverWidth: 1536,
     coverHeight: 1024,
-    productImage: '/images/apps/metrazh/bazaar/smart-matching.webp',
+    productImage: '/images/apps/metrazh/current/matching.webp',
     productImageAlt: 'تصویر رسمی تطبیق فایل و نیاز مشتری در متراژ',
     updatedAt: '2026-08-19',
     keywords: [
@@ -289,11 +290,11 @@ export const guideTopics: GuideTopic[] = [
       'راهنمای سادهٔ برنامه‌ریزی بازدید ملک؛ از تأیید فایل و ساعت قرار تا چیدن راه، ثبت نظر مشتری و پیگیری بعد از بازدید.',
     answer:
       'بازدید موفق قبل از رسیدن به ملک شروع می‌شود. فعال بودن فایل، حضور مالک یا کلیددار، زمان حرکت و اولویت مشتری را تأیید کنید. مسیر را بر اساس محله و زمان بچینید، بعد از هر بازدید بازخورد را همان لحظه ثبت کنید و قرار بعدی را مبهم رها نکنید.',
-    cover: '/images/editorial/visit-route-planning.webp',
-    coverAlt: 'برنامه‌ریزی مسیر چند بازدید ملک روی نقشه و تقویم کاری',
+    cover: '/images/brand/editorial/article-visits-v5.webp',
+    coverAlt: 'مشاور املاک با تلفن همراه در مسیر بازدید یک ملک',
     coverWidth: 1536,
     coverHeight: 1024,
-    productImage: '/images/apps/metrazh/bazaar/visit-routing.webp',
+    productImage: '/images/apps/metrazh/current/visits.webp',
     productImageAlt: 'تصویر رسمی برنامه‌ریزی مسیر بازدیدها در متراژ',
     updatedAt: '2026-08-19',
     keywords: [
@@ -406,11 +407,11 @@ export const guideTopics: GuideTopic[] = [
       'راهنمای نوشتن متن آگهی ملک و انتخاب عکس؛ از آماده‌سازی اطلاعات و تصویر اول تا توضیح شفاف مزیت و محدودیت برای کاهش تماس‌های بی‌ربط.',
     answer:
       'آگهی مؤثر باید سریع بگوید ملک چیست، کجاست، برای چه کسی مناسب است و چه شرط مهمی دارد. عکس اول باید روشن، واقعی و نمایندهٔ فضای اصلی باشد. عنوان اغراق‌آمیز و حذف محدودیت شاید کلیک بسازد، اما تماس نامرتبط و بی‌اعتمادی هم بیشتر می‌کند.',
-    cover: '/images/editorial/property-photography.webp',
-    coverAlt: 'آماده‌سازی عکس روشن و متن دقیق برای آگهی یک ملک',
+    cover: '/images/brand/editorial/article-photography-v5.webp',
+    coverAlt: 'مشاور املاک از فضای یک آپارتمان با تلفن همراه عکس می‌گیرد',
     coverWidth: 1536,
     coverHeight: 1024,
-    productImage: '/images/apps/metrazh/bazaar/smart-listing.webp',
+    productImage: '/images/apps/metrazh/current/ad-assistant.webp',
     productImageAlt: 'تصویر رسمی ساخت متن آگهی از اطلاعات فایل در متراژ',
     updatedAt: '2026-08-19',
     keywords: [
