@@ -7,7 +7,7 @@
 }
 .mahsai-site :is(h1, h2, h3, h4),
 .brand-home :is(h1, h2, h3, h4) {
-  font-family: 'Estedad Variable', 'Vazirmatn Variable', Tahoma, sans-serif;
+  font-family: 'Vazirmatn Variable', Tahoma, sans-serif;
   font-weight: 700;
   line-height: 1.75;
   letter-spacing: -0.025em;

@@ -215,6 +215,7 @@ try {
           'seo',
         ],
         maxWaitForLoad: 90_000,
+        blockedUrlPatterns: config.ci.collect.settings?.blockedUrlPatterns,
       });
 
       if (!result)
