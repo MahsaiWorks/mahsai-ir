@@ -2,7 +2,7 @@ export const metrazhDirectRelease = {
   version: '1.6.6',
   versionFa: '۱.۶.۶',
   versionCode: 24,
-  downloadUrl: '/downloads/metrazh-1.6.6-24.apk',
+  downloadUrl: 'https://android-pay.mahsai.ir/downloads/metrazh-1.6.6-24.apk',
   minOs: 'اندروید ۷ و بالاتر',
   changes: [
     'انتخاب ماهانه و سالانه، حتی پس از خروج از درگاه، اصلاح شد؛ هر خرید قبلی همچنان قابل پیگیری است.',
