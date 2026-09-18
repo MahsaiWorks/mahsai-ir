@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "filename": "metrazh-1.6.7-25.apk",
+  "bytes": 16733943,
+  "sha256": "64721ca9a8f890c8e36cf5adce70ea717940ded903e81ecd5c8f22541401697c",
+  "parts": [
+    {
+      "name": "part-01.bin",
+      "bytes": 1048576,
+      "sha256": "29bbecc89906d1f2ece08640e0cd3b7ee8ace1d4c7f4b9930f14b4fdc289ca56"
+    },
+    {
+      "name": "part-02.bin",
+      "bytes": 1048576,
+      "sha256": "8450a30e647e993ee834303773f262520a32a4d80df01d02367c23c37d88cf22"
+    },
+    {
+      "name": "part-03.bin",
+      "bytes": 1048576,
+      "sha256": "e27890bcb4aa07dab5e1dc25cb99ac1ef1d45c78e962e556cb8d8c9c59a138bb"
+    },
+    {
+      "name": "part-04.bin",
+      "bytes": 1048576,
+      "sha256": "a7b86a737e1ad1fd715e9532247db1464b9726dc219315a0ac4f7148ada701a1"
+    },
+    {
+      "name": "part-05.bin",
+      "bytes": 1048576,
+      "sha256": "509d5555bc2736a4ae55273d7975a3750b772c913d47f0d99bbb19193f47244e"
+    },
+    {
+      "name": "part-06.bin",
+      "bytes": 1048576,
+      "sha256": "caa6628fe738d7730cc96f1773cb2bb19f99cda5b3ba3652231d1e846ec7cb11"
+    },
+    {
+      "name": "part-07.bin",
+      "bytes": 1048576,
+      "sha256": "cb375610f12f5126136e814e5d6d6a317f41cf908c4945438a5fcee8b9641f01"
+    },
+    {
+      "name": "part-08.bin",
+      "bytes": 1048576,
+      "sha256": "81e84e8338d4492438ea05155937874cb9c04bbf144835a1d6f41954700d6301"
+    },
+    {
+      "name": "part-09.bin",
+      "bytes": 1048576,
+      "sha256": "5cee94b399213c8d993dda52febceba7db36af75cf1d4cbd0f18ee0f3030b4ad"
+    },
+    {
+      "name": "part-10.bin",
+      "bytes": 1048576,
+      "sha256": "d6fb0f7df9602b594ddf1fe2f49e1ec53a72fbb912d2c302482936beded520d2"
+    },
+    {
+      "name": "part-11.bin",
+      "bytes": 1048576,
+      "sha256": "baffc6c56f505faab6dc8d6821e4c6e74ac4c01b332304a174e7cca0a44a2d78"
+    },
+    {
+      "name": "part-12.bin",
+      "bytes": 1048576,
+      "sha256": "38950a96bc9386b6a46095c5cf55ff6171b89906a27f8d11402f143e328cb966"
+    },
+    {
+      "name": "part-13.bin",
+      "bytes": 1048576,
+      "sha256": "42fe6aa2f21ca4b2b36fae7d21d3cdcb5df3083bd1d55ff06773024d6b00bbc9"
+    },
+    {
+      "name": "part-14.bin",
+      "bytes": 1048576,
+      "sha256": "b54b4079160b49dfebefd3be82af0fd0acfe7788779137c15623f3b5d1fb9e76"
+    },
+    {
+      "name": "part-15.bin",
+      "bytes": 1048576,
+      "sha256": "5d0d9e3bc2aa8b1fa7a4f9260f02fdc16ce5656d351f80e19f69aaa279d74df5"
+    },
+    {
+      "name": "part-16.bin",
+      "bytes": 1005303,
+      "sha256": "6221d3d158d35ba15649f7bb8e89a071a458be27a516d8bcbdd27b0c407fc07f"
+    }
+  ]
+}
