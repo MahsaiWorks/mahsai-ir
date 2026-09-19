@@ -2,13 +2,16 @@
 import ResponsiveImage from '../../components/ResponsiveImage.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const storeUrl = 'https://cafebazaar.ir/app/ir.fileryar.amlakyar';
-const defaultDestination = `${storeUrl}?utm_source=instagram&utm_medium=social&utm_campaign=metrazh_install&utm_content=bio&ref=mahsai_instagram_bio`;
+const downloadPageUrl = new URL(
+  '/apps/metrazh/download/',
+  Astro.site,
+).toString();
+const defaultDestination = `${downloadPageUrl}?utm_source=instagram&utm_medium=social&utm_campaign=metrazh_install&utm_content=bio&ref=mahsai_instagram_bio`;
 ---
 
 <BaseLayout
-  title="دانلود متراژ از کافه‌بازار | MAHSAI"
-  description="مسیر رسمی دانلود اپلیکیشن متراژ از کافه‌بازار."
+  title="دانلود مستقیم متراژ | MAHSAI"
+  description="مسیر رسمی دانلود مستقیم اپلیکیشن متراژ از سایت MAHSAI."
   noindex
   image="/og-metrazh-display-v1.jpg"
   imageAlt="اپلیکیشن متراژ؛ میزکار مشاور املاک"
@@ -27,26 +30,26 @@ const defaultDestination = `${storeUrl}?utm_source=instagram&utm_medium=social&u
       </div>
 
       <p class="redirect-eyebrow">لینک رسمی متراژ</p>
-      <h1 id="redirect-title">در حال انتقال به کافه‌بازار</h1>
+      <h1 id="redirect-title">در حال انتقال به دانلود مستقیم</h1>
       <p class="redirect-copy">
-        چند لحظه صبر کنید؛ صفحه رسمی دانلود متراژ باز می‌شود.
+        چند لحظه صبر کنید؛ صفحهٔ رسمی دانلود متراژ باز می‌شود.
       </p>
 
       <a
-        id="bazaar-redirect"
+        id="download-redirect"
         class="button redirect-button"
         href={defaultDestination}
-        data-event="metrazh_bazaar_click"
+        data-event="metrazh_direct_download_landing_click"
         data-event-location="instagram_redirect"
       >
         باز کردن صفحه دانلود
       </a>
 
-      <p class="redirect-note">بدون فایل واسطه؛ دانلود مستقیم از بازار</p>
+      <p class="redirect-note">دانلود رسمی و خرید مستقیم از سایت متراژ</p>
     </div>
   </section>
 
-  <script is:inline define:vars={{ storeUrl }}>
+  <script is:inline define:vars={{ downloadPageUrl }}>
     (() => {
       const allowedContent = new Set(['bio', 'post', 'story', 'qr']);
       const requestedContent = new URLSearchParams(location.search).get(
@@ -55,21 +58,21 @@ const defaultDestination = `${storeUrl}?utm_source=instagram&utm_medium=social&u
       const content = allowedContent.has(requestedContent)
         ? requestedContent
         : 'bio';
-      const target = new URL(storeUrl);
+      const target = new URL(downloadPageUrl);
       target.searchParams.set('utm_source', 'instagram');
       target.searchParams.set('utm_medium', 'social');
       target.searchParams.set('utm_campaign', 'metrazh_install');
       target.searchParams.set('utm_content', content);
       target.searchParams.set('ref', `mahsai_instagram_${content}`);
       const destination = target.toString();
-      const link = document.querySelector('#bazaar-redirect');
+      const link = document.querySelector('#download-redirect');
       if (link instanceof HTMLAnchorElement) link.href = destination;
       window.mahsaiMeasure?.('campaign_redirect', {
         source: 'instagram',
         content,
       });
-      const openBazaar = () => window.location.replace(destination);
-      const scheduleRedirect = () => window.setTimeout(openBazaar, 1200);
+      const openDownloadPage = () => window.location.replace(destination);
+      const scheduleRedirect = () => window.setTimeout(openDownloadPage, 1200);
 
       if (document.readyState === 'complete') {
         scheduleRedirect();

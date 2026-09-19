@@ -1,9 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import ResponsiveImage from '../../../components/ResponsiveImage.astro';
-import StoreBadge from '../../../components/StoreBadge.astro';
 import { siteConfig } from '../../../config/site';
-import { getCafeBazaarLink } from '../../../data/appPresentation';
 import { metrazhDirectRelease as direct } from '../../../data/metrazhDirectRelease';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import MetrazhGallery from '../../../components/MetrazhGallery.astro';
@@ -13,9 +11,6 @@ const app = (await getCollection('apps')).find(
 );
 
 if (!app) throw new Error('Published Metrazh content entry is missing.');
-
-const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
-if (!bazaarLink) throw new Error('Published Cafe Bazaar link is missing.');
 
 const pageUrl = new URL(Astro.url.pathname, Astro.site).toString();
 const appId = new URL('/apps/metrazh/#software', Astro.site).toString();
@@ -53,7 +48,7 @@ const faqs = [
   {
     question: 'لینک رسمی دانلود متراژ کدام است؟',
     answer:
-      'متراژ را از دکمهٔ دانلود مستقیم همین صفحه یا صفحهٔ رسمی آن در کافه‌بازار دریافت کنید. هر دو نسخه شناسهٔ ir.fileryar.amlakyar دارند.',
+      'متراژ را از دکمهٔ دانلود مستقیم همین صفحه دریافت کنید. اگر هنگام استفاده از VPN خطای Not Found دیدید، دکمهٔ «دانلود جایگزین برای VPN» را بزنید. هر دو دکمه همان نسخهٔ رسمی با شناسهٔ ir.fileryar.amlakyar را دریافت می‌کنند.',
   },
   {
     question: 'آیا دانلود و نصب متراژ رایگان است؟',
@@ -88,7 +83,7 @@ const structuredData = {
       '@type': 'WebPage',
       '@id': `${pageUrl}#webpage`,
       url: pageUrl,
-      name: `دانلود متراژ برای اندروید؛ مستقیم و کافه‌بازار | ${siteConfig.brandName}`,
+      name: `دانلود مستقیم متراژ برای اندروید | ${siteConfig.brandName}`,
       description:
         'دانلود مستقیم نسخهٔ جدید متراژ برای اندروید؛ مدیریت فایل و مشتری، تطبیق پیشنهادها و مسیریابی بازدید، همراه راهنمای نصب و به‌روزرسانی.',
       inLanguage: 'fa-IR',
@@ -136,7 +131,7 @@ const structuredData = {
 ---
 
 <BaseLayout
-  title={`دانلود متراژ برای اندروید؛ مستقیم و کافه‌بازار | ${siteConfig.brandName}`}
+  title={`دانلود مستقیم متراژ برای اندروید | ${siteConfig.brandName}`}
   description="دانلود مستقیم نسخهٔ جدید متراژ برای اندروید؛ مدیریت فایل و مشتری، تطبیق پیشنهادها و مسیریابی بازدید، همراه راهنمای نصب و به‌روزرسانی."
   image="/og-mahsai-metrazh-v2.jpg"
   imageAlt="دانلود رسمی متراژ، دستیار فارسی مشاور املاک از MAHSAI"
@@ -185,7 +180,9 @@ const structuredData = {
             <a class="button" href={direct.downloadUrl} download>
               دانلود مستقیم متراژ
             </a>
-            <StoreBadge href={bazaarLink.url} location="download_hero" />
+            <a class="arrow-link" href={direct.fallbackDownloadUrl} download>
+              دانلود جایگزین برای VPN <span aria-hidden="true">←</span>
+            </a>
           </div>
           <dl class="download-guide-facts">
             <div><dt>نسخهٔ مستقیم</dt><dd>{direct.versionFa}</dd></div>
@@ -219,15 +216,15 @@ const structuredData = {
     <div class="shell download-answer-grid">
       <div>
         <p class="section-sign section-sign-light">پاسخ کوتاه</p>
-        <h2 id="download-answer-title">از کجا متراژ را دانلود کنیم؟</h2>
+        <h2 id="download-answer-title">دانلود رسمی متراژ از همین سایت</h2>
       </div>
       <div>
         <p>
-          فایل APK رسمی را از همین سایت دریافت کنید یا از کافه‌بازار نصب کنید.
-          نسخهٔ سایت خرید از زیبال و ورود با شمارهٔ همراه دارد؛ خریدهای قبلی
-          بازار هم از بخش بازیابی خرید بازار قابل مدیریت هستند.
+          فایل APK رسمی را از دکمهٔ دانلود مستقیم همین صفحه دریافت کنید. نسخهٔ
+          سایت ورود و بازیابی اشتراک با شمارهٔ همراه و خرید مستقیم از زیبال
+          دارد. اگر VPN مسیر اصلی را مسدود کرد، دکمهٔ دانلود جایگزین همان فایل
+          رسمی را در اختیارتان می‌گذارد.
         </p>
-        <StoreBadge href={bazaarLink.url} location="download_answer" light />
       </div>
     </div>
   </section>
@@ -395,7 +392,13 @@ const structuredData = {
         <a class="button button-light" href={direct.downloadUrl} download>
           دانلود مستقیم متراژ
         </a>
-        <StoreBadge href={bazaarLink.url} location="download_bottom" light />
+        <a
+          class="arrow-link arrow-link-light"
+          href={direct.fallbackDownloadUrl}
+          download
+        >
+          دانلود جایگزین برای VPN <span aria-hidden="true">←</span>
+        </a>
         <a class="arrow-link arrow-link-light" href="/support/">
           پشتیبانی نصب <span aria-hidden="true">←</span>
         </a>
