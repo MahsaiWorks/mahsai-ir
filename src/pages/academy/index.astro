@@ -1,5 +1,7 @@
 ---
 import ResponsiveImage from '../../components/ResponsiveImage.astro';
+import { Image } from 'astro:assets';
+import academyHero from '../../assets/academy/hero-scene.webp';
 import { getCollection } from 'astro:content';
 import ArticleCard from '../../components/ArticleCard.astro';
 import GuideCard from '../../components/GuideCard.astro';
@@ -80,8 +82,6 @@ const collectionStructuredData = {
   imageAlt="آکادمی مهسای؛ دورهٔ ابر مشاور و نمونه‌های ساخت محتوا با هوش مصنوعی"
   imageWidth={1280}
   imageHeight={550}
-  preloadImage="/assets/academy/abr-moshaver/hero-scene.webp"
-  preloadImageWidth={1280}
 >
   <script
     type="application/ld+json"
@@ -112,10 +112,15 @@ const collectionStructuredData = {
         </ul>
       </div>
       <figure class="academy-course-visual">
-        <ResponsiveImage
-          src="/assets/academy/abr-moshaver/hero-scene.webp"
-          width="1280"
-          height="550"
+        <Image
+          src={academyHero}
+          width={1280}
+          height={550}
+          widths={[320, 480, 640, 768, 960, 1280]}
+          sizes="(max-width: 900px) calc(100vw - 48px), 600px"
+          format="webp"
+          quality={85}
+          loading="eager"
           alt="دورهٔ ابر مشاور؛ چند نمونه از ساخت سریال، رشته‌استوری، انیمیشن و قبل‌وبعد"
           fetchpriority="high"
         />
