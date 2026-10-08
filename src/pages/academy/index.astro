@@ -1,10 +1,8 @@
 ---
-import BrandCompanion from '../../components/BrandCompanion.astro';
 import ResponsiveImage from '../../components/ResponsiveImage.astro';
 import { getCollection } from 'astro:content';
 import ArticleCard from '../../components/ArticleCard.astro';
 import GuideCard from '../../components/GuideCard.astro';
-import { siteConfig } from '../../config/site';
 import { articleClusters } from '../../data/articleClusters';
 import { guideTopics } from '../../data/guideTopics';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -42,12 +40,21 @@ const voteTopics = [
 const collectionStructuredData = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
-  name: 'آموزش رایگان مشاور املاک',
+  name: 'آکادمی مهسای؛ دوره‌ها و آموزش‌های کاربردی',
   description:
-    'مسیرهای یادگیری مرحله‌به‌مرحله برای فایل‌گیری، شناخت مشتری، بازدید، پیگیری، آگهی و امنیت اطلاعات در کار املاک.',
+    'دورهٔ ابر مشاور برای ساخت محتوا با هوش مصنوعی، در کنار آموزش‌های رایگان و مرحله‌به‌مرحله برای کار با متراژ و مدیریت اطلاعات املاک.',
   url: new URL('/academy/', Astro.site).toString(),
   inLanguage: 'fa-IR',
   hasPart: [
+    {
+      '@type': 'Course',
+      name: 'دوره آموزشی ساخت ویدیو و استوری با هوش مصنوعی (ابر مشاور)',
+      url: new URL(
+        '/academy/courses/ai-content-real-estate/',
+        Astro.site,
+      ).toString(),
+      isAccessibleForFree: false,
+    },
     {
       '@type': 'Course',
       name: 'اولین فایل ملکی مرتب در ۳۰ دقیقه',
@@ -67,8 +74,14 @@ const collectionStructuredData = {
 ---
 
 <BaseLayout
-  title={`آموزش‌های مهسای؛ آسان یاد بگیرید و شروع کنید | ${siteConfig.brandName}`}
-  description="آموزش ساده، تصویری و مرحله‌به‌مرحله برای مشاوران املاک ایران؛ فایل‌گیری، نیازسنجی مشتری، بازدید، پیگیری، آگهی‌نویسی و امنیت اطلاعات."
+  title={`آکادمی مهسای | دورهٔ هوش مصنوعی و آموزش‌های کاربردی`}
+  description="دورهٔ ابر مشاور برای ساخت عکس، ویدیو و استوری با هوش مصنوعی؛ سرفصل‌ها و نمونه‌های دوره را ببینید و آموزش‌های رایگان متراژ را قدم‌به‌قدم دنبال کنید."
+  image="/assets/academy/abr-moshaver/hero-scene.webp"
+  imageAlt="آکادمی مهسای؛ دورهٔ ابر مشاور و نمونه‌های ساخت محتوا با هوش مصنوعی"
+  imageWidth={1280}
+  imageHeight={550}
+  preloadImage="/assets/academy/abr-moshaver/hero-scene.webp"
+  preloadImageWidth={1280}
 >
   <script
     type="application/ld+json"
@@ -79,30 +92,57 @@ const collectionStructuredData = {
   <header class="academy-hero">
     <div class="shell academy-hero-grid">
       <div>
-        <p class="kicker">آموزش‌های مهسای</p>
-        <h1>کار با متراژ را یاد بگیرید</h1>
+        <p class="kicker">آکادمی مهسای</p>
+        <h1>دوره‌ها و آموزش‌های کاربردی</h1>
         <p class="lead">
-          آموزش‌ها کوتاه و مرحله‌به‌مرحله‌اند. موضوعی را انتخاب کنید که امروز به
-          کارتان می‌آید و همراه مثال جلو بروید.
+          ساخت محتوا با هوش مصنوعی را یاد بگیر یا با آموزش‌های رایگان، کار با
+          متراژ را شروع کن. مسیر مناسب خودت را انتخاب کن.
         </p>
         <div class="hero-actions">
-          <a class="button" href="/academy/first-organized-property-file/"
-            >ساخت اولین فایل مرتب</a
+          <a class="button" href="/academy/courses/ai-content-real-estate/"
+            >دیدن دورهٔ ابر مشاور</a
           >
-          <a class="text-link" href="#learning-paths">همهٔ آموزش‌ها ←</a>
+          <a class="text-link" href="#free-training">آموزش‌های رایگان متراژ ←</a
+          >
         </div>
         <ul class="trust-list">
-          <li>بدون ثبت‌نام</li>
-          <li>رایگان</li>
-          <li>مناسب بازار ایران</li>
+          <li>آموزش عملی</li>
+          <li>همراه مثال</li>
+          <li>متن و آموزش فارسی</li>
         </ul>
       </div>
-      <BrandCompanion eager scene="digital-workspace-metrazh-v4" />
+      <figure class="academy-course-visual">
+        <ResponsiveImage
+          src="/assets/academy/abr-moshaver/hero-scene.webp"
+          width="1280"
+          height="550"
+          alt="دورهٔ ابر مشاور؛ چند نمونه از ساخت سریال، رشته‌استوری، انیمیشن و قبل‌وبعد"
+          fetchpriority="high"
+        />
+      </figure>
     </div>
   </header>
 
   <section
+    class="section academy-course-introduction"
+    aria-labelledby="abr-moshaver-title"
+  >
+    <div class="shell">
+      <p class="kicker">دورهٔ آنلاین ابر مشاور</p>
+      <h2 id="abr-moshaver-title">ساخت ویدیو و استوری با هوش مصنوعی</h2>
+      <p>
+        با یک گوشی ساده، برای پیج، شغل و برند شخصی خودت محتوا بساز. ۱۵ درس عملی
+        با مجموع ۱ ساعت و ۴۰ دقیقه و ۲۴ ثانیه آموزش.
+      </p>
+      <a class="button" href="/academy/courses/ai-content-real-estate/"
+        >سرفصل‌ها و نمونه‌های دوره</a
+      >
+    </div>
+  </section>
+
+  <section
     class="academy-featured-course"
+    id="free-training"
     aria-labelledby="featured-course-title"
   >
     <div class="shell academy-featured-course-grid">
@@ -115,7 +155,7 @@ const collectionStructuredData = {
         />
       </figure>
       <div>
-        <p class="kicker">از این آموزش شروع کنید</p>
+        <p class="kicker">آموزش رایگان · بدون ثبت‌نام</p>
         <h2 id="featured-course-title">در ۳۰ دقیقه، یک فایل مرتب بسازید</h2>
         <p>
           چهار درس کوتاه را انجام می‌دهید و یک فایل تمرینی می‌سازید که راحت پیدا
@@ -336,3 +376,16 @@ const collectionStructuredData = {
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .academy-hero .academy-course-visual {
+    min-height: 0;
+  }
+
+  .academy-hero .academy-course-visual :global(img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1280 / 550;
+    object-fit: contain;
+  }
+</style>

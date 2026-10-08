@@ -29,36 +29,40 @@ const lessons = [
 ---
 
 <BaseLayout
-  title="مهسای | اپلیکیشن‌ها و آموزش‌های کاربردی"
-  description="اپلیکیشن‌ها، آموزش‌های کاربردی و مجلهٔ مهسای؛ از پیدا کردن ابزار مناسب تا استفادهٔ بهتر در کار روزانه."
-  preloadImage="/images/brand/editorial/paperless-colleagues-metrazh-v4.webp"
-  preloadImageWidth={1536}
+  title="مهسای | آموزش هوش مصنوعی و دوره‌های تولید محتوا"
+  description="آکادمی مهسای و دورهٔ ابر مشاور برای یادگیری ساخت عکس، ویدیو و استوری با هوش مصنوعی؛ در کنار آموزش‌های رایگان، ابزارهای فارسی و اپلیکیشن متراژ."
+  image="/assets/academy/abr-moshaver/hero-scene.webp"
+  imageAlt="آکادمی مهسای؛ نمونه‌های دورهٔ ابر مشاور برای ساخت محتوا با هوش مصنوعی"
+  imageWidth={1280}
+  imageHeight={550}
+  preloadImage="/assets/academy/abr-moshaver/hero-scene.webp"
+  preloadImageWidth={1280}
 >
   <div class="brand-home">
     <section class="brand-hero wrap" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow">اپلیکیشن‌ها و آموزش‌های مهسای</p>
+        <p class="eyebrow">آکادمی مهسای</p>
         <h1 id="hero-title">
-          کارهای روزمره<br /><span>ساده‌تر با مهسای</span>
+          هوش مصنوعی را یاد بگیر<br /><span>محتوای خودت را بساز</span>
         </h1>
         <p class="hero-description">
-          اپلیکیشن‌های فارسی، آموزش‌های کوتاه و ابزارهایی که در کار روزانه به
-          کمک شما می‌آیند.
+          از عکس و ویدیو تا استوری و سریال؛ با آموزش‌های عملی، ایده‌هایت را برای
+          پیج و کار خودت به محتوا تبدیل کن.
         </p>
         <div class="hero-actions">
-          <a class="button-primary" href="/apps/"
-            >مشاهدهٔ اپلیکیشن‌ها <span aria-hidden="true">←</span></a
-          ><a class="text-link" href="/academy/"
-            >آموزش‌های رایگان <span aria-hidden="true">↙</span></a
+          <a class="button-primary" href="/academy/"
+            >مشاهدهٔ دوره‌ها <span aria-hidden="true">←</span></a
+          ><a class="text-link" href="/apps/"
+            >اپلیکیشن‌های مهسای <span aria-hidden="true">↙</span></a
           >
         </div>
       </div>
       <figure class="hero-visual">
         <ResponsiveImage
-          src="/images/brand/editorial/paperless-colleagues-metrazh-v4.webp"
-          width="1536"
-          height="1024"
-          alt="دو همکار مهسای در دفتر، در حال مدیریت کارهایشان با تلفن همراه"
+          src="/assets/academy/abr-moshaver/hero-scene.webp"
+          width="1280"
+          height="550"
+          alt="دورهٔ ابر مشاور؛ چند نمونه از ساخت سریال، رشته‌استوری، انیمیشن و قبل‌وبعد"
           fetchpriority="high"
         />
       </figure>
@@ -93,8 +97,8 @@ const lessons = [
             ></path></svg
           ></span
         ><span
-          ><strong>کار با برنامه را یاد بگیرید</strong><small
-            >آموزش‌های کوتاه و کاربردی</small
+          ><strong>دورهٔ مناسب را پیدا کنید</strong><small
+            >آکادمی مهسای و آموزش‌های عملی</small
           ></span
         ><span class="path-arrow" aria-hidden="true">↙</span></a
       >
@@ -239,13 +243,45 @@ const lessons = [
       <div class="wrap">
         <header class="section-header">
           <div>
-            <p class="eyebrow">آموزش‌های مهسای</p><h2 id="academy-title">
-              آسان یاد بگیرید و شروع کنید
+            <p class="eyebrow">دوره‌ها و آموزش‌ها</p><h2 id="academy-title">
+              مسیر یادگیری خودت را انتخاب کن
             </h2>
           </div><a class="section-link" href="/academy/"
-            >همهٔ آموزش‌ها <span aria-hidden="true">←</span></a
+            >دیدن آکادمی <span aria-hidden="true">←</span></a
           >
         </header>
+        <article class="course-feature ai-course-feature">
+          <div class="course-cover">
+            <ResponsiveImage
+              src="/assets/academy/abr-moshaver/hero-scene.webp"
+              width="1280"
+              height="550"
+              alt="چند نمونه از آموزش‌های دورهٔ ابر مشاور"
+              loading="lazy"
+            />
+          </div>
+          <div class="course-copy">
+            <div class="course-meta">
+              <span>آموزش هوش مصنوعی</span><span
+                >۱۵ درس · ۱ ساعت و ۴۰ دقیقه</span
+              >
+            </div>
+            <h3>ابر مشاور</h3>
+            <p>
+              ساخت عکس، ویدیو، رشته‌استوری، شخصیت مجازی و محتوای سریالی برای پیج
+              و کار خودت.
+            </p>
+            <a
+              class="button-mint"
+              href="/academy/courses/ai-content-real-estate/"
+            >
+              آشنایی با دوره <span aria-hidden="true">←</span>
+            </a>
+            <small class="course-access"
+              >این‌ها فقط چند نمونه از آموزش‌های دوره‌اند.</small
+            >
+          </div>
+        </article>
         <div class="course-feature">
           <div class="course-cover">
             <ResponsiveImage

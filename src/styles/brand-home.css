@@ -265,8 +265,8 @@
 .brand-home .hero-visual > img {
   width: 100%;
   height: auto;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
+  aspect-ratio: 1280 / 550;
+  object-fit: contain;
   object-position: 49% center;
   border-radius: 22px;
 }
@@ -552,6 +552,26 @@
   border-radius: 20px;
   overflow: hidden;
 }
+.brand-home .ai-course-feature {
+  margin-bottom: 1.5rem;
+}
+.brand-home .ai-course-feature .course-cover {
+  display: grid;
+  align-items: center;
+  background: var(--navy);
+}
+.brand-home .ai-course-feature .course-cover > img {
+  height: auto;
+  aspect-ratio: 1280 / 550;
+  object-fit: contain;
+}
+.brand-home .ai-course-feature .button-mint {
+  margin-top: 1.5rem;
+}
+.brand-home .ai-course-feature .course-access {
+  display: block;
+  margin: 0.8rem 0 0;
+}
 .brand-home .course-cover {
   position: relative;
   min-width: 0;
@@ -814,7 +834,7 @@
     gap: 53px;
   }
   .brand-home .hero-visual > img {
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 1280 / 550;
   }
   .brand-home .hero-copy h1 {
     font-size: 62px;
@@ -841,7 +861,7 @@
     font-size: 14px;
   }
   .brand-home .hero-visual > img {
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 1280 / 550;
   }
   .brand-home .hero-actions {
     gap: 18px;
@@ -966,7 +986,7 @@
     gap: 30px;
   }
   .brand-home .hero-visual > img {
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 1280 / 550;
     border-radius: 16px;
     object-position: center 44%;
   }
@@ -1081,6 +1101,9 @@
   }
   .brand-home .course-cover {
     height: 290px;
+  }
+  .brand-home .ai-course-feature .course-cover {
+    height: auto;
   }
   .brand-home .course-cover > img {
     object-position: 50% 54%;
@@ -1244,7 +1267,7 @@
     gap: 7px;
   }
   .brand-home .hero-visual > img {
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 1280 / 550;
   }
   .brand-home .hero-visual figcaption {
     font-size: 12px;

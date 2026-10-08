@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { hasUnapprovedPublicAiCopy } from './audit-public-ai-policy.mjs';
 
 const projectRoot = process.cwd();
 const distRoot = path.join(projectRoot, 'dist');
@@ -22,6 +23,7 @@ const requiredOutputs = [
   'tools/visit-planner/index.html',
   'academy/index.html',
   'academy/first-organized-property-file/index.html',
+  'academy/courses/ai-content-real-estate/index.html',
   'articles/index.html',
   'articles/topics/files/index.html',
   'articles/topics/clients/index.html',
@@ -316,13 +318,11 @@ for (const file of htmlFiles) {
     '1.6.1',
     '۱.۶.۱',
   ]) {
-    if (
-      forbidden === 'هوش مصنوعی' &&
-      relativeFile === 'editorial-policy/index.html'
-    ) {
-      continue;
-    }
-    if (html.includes(forbidden)) {
+    const found =
+      forbidden === 'هوش مصنوعی'
+        ? hasUnapprovedPublicAiCopy(relativeFile, html)
+        : html.includes(forbidden);
+    if (found) {
       errors.push(`${relativeFile}: عبارت ممنوع عمومی پیدا شد: ${forbidden}`);
     }
   }

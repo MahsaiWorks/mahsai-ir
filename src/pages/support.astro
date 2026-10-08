@@ -17,8 +17,8 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
 ---
 
 <BaseLayout
-  title={`پشتیبانی رسمی متراژ و سایت | ${siteConfig.brandName}`}
-  description="راه‌های رسمی پشتیبانی اپلیکیشن متراژ و وب‌سایت MAHSAI؛ اطلاعات لازم برای گزارش خطا، ایمیل و کانال‌های ارتباطی."
+  title={`پشتیبانی دوره‌ها، متراژ و سایت | ${siteConfig.brandName}`}
+  description="پشتیبانی دورهٔ ابر مشاور و آکادمی مهسای برای ورود، خرید و دسترسی به درس‌ها؛ راه‌های رسمی ارتباط و پشتیبانی اپلیکیشن متراژ و وب‌سایت."
 >
   <header class="inner-hero support-hero">
     <div class="shell inner-hero-grid">
@@ -26,11 +26,14 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
         <p class="kicker">پشتیبانی مهسای</p>
         <h1>چطور می‌توانیم کمک کنیم؟</h1>
         <p class="lead">
-          اگر در متراژ یا سایت مشکلی دیدید، از راه‌های همین صفحه پیام بدهید. پیش
-          از فرستادن تصویر، اطلاعات مالک و مشتری را حذف یا بپوشانید.
+          برای ورود، خرید و دسترسی به دورهٔ ابر مشاور یا استفاده از متراژ و
+          سایت، مسیر مربوط به خودتان را انتخاب کنید.
         </p>
         <div class="hero-actions">
-          <a class="button" href="#support-form">ساخت پیام پشتیبانی</a>
+          <a class="button" href="#academy-support">پشتیبانی دوره</a>
+          <a class="button button-secondary" href="#support-form"
+            >پشتیبانی متراژ و سایت</a
+          >
           {
             bazaarLink && (
               <a
@@ -49,12 +52,37 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
     </div>
   </header>
 
+  <section
+    class="section academy-support"
+    id="academy-support"
+    aria-labelledby="academy-support-title"
+  >
+    <div class="shell brand-contact-row">
+      <div>
+        <p class="kicker">آکادمی مهسای</p>
+        <h2 id="academy-support-title">پشتیبانی دورهٔ ابر مشاور</h2>
+        <p>
+          برای پرسش‌های پیش از خرید، ورود به حساب و دسترسی به درس‌ها، از
+          پشتیبانی دوره در تلگرام کمک بگیرید.
+        </p>
+      </div>
+      <a
+        class="button"
+        href="https://t.me/Mahsaisupport"
+        target="_blank"
+        rel="noopener noreferrer">پشتیبانی دوره در تلگرام ↗</a
+      >
+    </div>
+  </section>
+
   <section class="section support-report" aria-labelledby="report-title">
     <div class="shell">
       <header class="section-head">
         <div>
-          <p class="kicker">برای اینکه مشکل را پیدا کنیم</p>
-          <h2 id="report-title">برای بررسی بهتر، این اطلاعات را بفرستید</h2>
+          <p class="kicker">پشتیبانی متراژ</p>
+          <h2 id="report-title">
+            برای بررسی مشکل متراژ، این اطلاعات را بفرستید
+          </h2>
         </div>
         <p>
           یک پیام کامل بهتر از چند پیام پراکنده است و کمک می‌کند مشکل را دوباره
@@ -84,10 +112,8 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
   >
     <div class="shell support-form-layout">
       <div class="support-form-intro">
-        <p class="kicker">آماده کردن پیام پشتیبانی</p>
-        <h2 id="support-form-title">
-          چند مورد را انتخاب کنید تا متن ایمیل آماده شود
-        </h2>
+        <p class="kicker">متراژ و سایت</p>
+        <h2 id="support-form-title">برای متراژ و سایت، متن ایمیل آماده کنید</h2>
         <p>
           این فرم چیزی را روی سایت ذخیره یا ارسال نمی‌کند. پس از تکمیل، برنامهٔ
           ایمیل شما با متن آماده باز می‌شود و دکمهٔ ارسال را خودتان می‌زنید.
@@ -250,7 +276,7 @@ const bazaarLink = getCafeBazaarLink(app.data.storeLinks);
     <div class="shell faq-layout">
       <div>
         <p class="kicker">پیش از ارسال</p>
-        <h2 id="support-faq-title">پاسخ چند پرسش رایج</h2>
+        <h2 id="support-faq-title">پرسش‌های رایج دربارهٔ متراژ</h2>
       </div>
       <div class="faq-list">
         <details>

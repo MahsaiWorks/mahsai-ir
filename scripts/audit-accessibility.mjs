@@ -16,6 +16,7 @@ const accessibilityRoutes = [
   '/guides/',
   '/guides/property-files/',
   '/academy/',
+  '/academy/courses/ai-content-real-estate/',
   '/academy/first-organized-property-file/',
   '/articles/',
   '/articles/topics/files/',

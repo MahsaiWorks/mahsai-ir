@@ -1,0 +1,1020 @@
+---
+import { siteConfig } from '../../../config/site';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const salesEnabled = import.meta.env.PUBLIC_ACADEMY_SALES_ENABLED === 'true';
+const checkoutUrl = salesEnabled
+  ? 'https://android-pay.mahsai.ir/account/academy#buy-ai-content-real-estate'
+  : '#course-purchase';
+const purchaseLabel = salesEnabled ? 'ورود و خرید دوره' : 'اطلاعات ثبت‌نام';
+const supportUrl = 'https://t.me/Mahsaisupport';
+
+const results = [
+  {
+    number: '۰۱',
+    title: 'ساخت عکس و ویدیو با هوش مصنوعی',
+    text: 'ایده‌ات را به تصویر و ویدیوی قابل استفاده تبدیل کنی.',
+  },
+  {
+    number: '۰۲',
+    title: 'شخصیت مجازی با چهرهٔ ثابت',
+    text: 'شخصیتی بسازی که چهره‌اش در خروجی‌های مختلف ثابت‌تر بماند.',
+  },
+  {
+    number: '۰۳',
+    title: 'قبل‌وبعد و فرمت‌های محتوا',
+    text: 'فرمت قبل‌وبعد و چند قالب کاربردی محتوا را از صفر بسازی.',
+  },
+  {
+    number: '۰۴',
+    title: 'استوری و رشته‌استوری',
+    text: 'برای استوری‌ها یک مسیر پیوسته و قابل دنبال‌کردن طراحی کنی.',
+  },
+  {
+    number: '۰۵',
+    title: 'محتوای سریالی',
+    text: 'یک ایده را به قسمت‌های مرتبط و قابل ادامه تبدیل کنی.',
+  },
+  {
+    number: '۰۶',
+    title: 'خروجی طبیعی‌تر و خطاهای رایج',
+    text: 'خروجی را دقیق‌تر بررسی کنی و خطاهای رایج را زودتر تشخیص بدهی.',
+  },
+  {
+    number: '۰۷',
+    title: 'موزیک باکلام و بی‌کلام',
+    text: 'برای محتوایت موسیقی باکلام یا بی‌کلام مناسب بسازی.',
+  },
+  {
+    number: '۰۸',
+    title: 'دستیار شخصی برای ایده‌پردازی و تولید محتوا',
+    text: 'برای ایده‌پردازی و برنامه‌ریزی کار خودت، یک دستیار شخصی تنظیم کنی.',
+  },
+  {
+    number: '۰۹',
+    title: 'انتخاب ابزار و حل مشکلات رایج',
+    text: 'ابزار مناسب هر کار را انتخاب کنی و از خطاهای معمول عبور کنی.',
+  },
+] as const;
+
+const coursePath = [
+  {
+    step: 'شروع هوشمند',
+    title: 'اول مسیر کارت رو روشن می‌کنی',
+    text: 'با ابزارها آشنا می‌شی و می‌بینی چطور می‌تونی هوش مصنوعی رو از یه گفت‌وگوی معمولی به دستیار کارت نزدیک کنی.',
+  },
+  {
+    step: 'ساختن',
+    title: 'ایده‌ات رو به تصویر و ویدیو می‌رسونی',
+    text: 'با نمونه‌های عملی جلو می‌ری تا فاصلهٔ بین «یه ایده دارم» و «یه خروجی قابل‌انتشار دارم» کمتر بشه.',
+  },
+  {
+    step: 'ثبات',
+    title: 'به محتوات هویت می‌دی',
+    text: 'روی یکدست‌بودن چهره، فضا و حس خروجی کار می‌کنی تا قسمت‌های مختلف کنار هم هماهنگ‌تر دیده بشن.',
+  },
+  {
+    step: 'تداوم',
+    title: 'محتوای سریالی می‌چینی',
+    text: 'الگوی یک فرمت موفق رو بررسی می‌کنی و می‌بینی چطور می‌شه از یک موضوع، مسیر چندقسمتی ساخت.',
+  },
+  {
+    step: 'انتشار',
+    title: 'خروجی رو برای پیجت جمع می‌کنی',
+    text: 'سراغ فرمت‌های مختلف، روایت استوری، صدا و خطاهای رایج می‌ری تا تمرینت به محتوای آمادهٔ انتشار نزدیک‌تر بشه.',
+  },
+] as const;
+
+const goodFit = [
+  'برای کارت محتوا می‌سازی، ولی روند ثابتی نداری.',
+  'می‌خوای برای شغل، محصول، خدمات یا برند شخصی خودت محتوا بسازی.',
+  'می‌خوای عکس، ویدیو، استوری و محتوای سریالی را عملی یاد بگیری.',
+  'دوست داری نتیجه رو با مثال عملی ببینی، نه اینکه فقط تعریف ابزارها رو بشنوی.',
+] as const;
+
+const notFit = [
+  'دنبال یک دکمه‌ای هستی که بدون تمرین، همه‌چیز رو خودکار و بی‌نقص بسازه.',
+  'فقط یه فهرست بلند از ابزارها می‌خوای و قصد نداری چیزی تولید کنی.',
+  'انتظار داری محتوا به‌جای تو اجرا بشه یا مشاورهٔ نامحدود بگیری.',
+] as const;
+
+const buyingSteps = [
+  {
+    number: '۱',
+    title: 'وارد پنل می‌شی',
+    text: 'با شمارهٔ موبایل، حساب دوره‌ات رو می‌سازی یا وارد همون حساب قبلی می‌شی.',
+  },
+  {
+    number: '۲',
+    title: 'قیمت رو می‌بینی',
+    text: 'کد تخفیف رو همون‌جا وارد می‌کنی و قبل از پرداخت، مبلغ نهایی رو دوباره می‌بینی.',
+  },
+  {
+    number: '۳',
+    title: 'دوره داخل حسابت می‌آید',
+    text: 'بعد از پرداخت موفق، محتوایی که خریدی داخل همون حساب برات فعال می‌شه و آنلاین می‌بینیش.',
+  },
+] as const;
+
+const faqs = [
+  {
+    question: 'با گوشی هم می‌تونم شروع کنم؟',
+    answer:
+      'بله؛ برای شروع به لپ‌تاپ نیاز نداری. با یک گوشی ساده می‌تونی تمرین‌های ساخت محتوا رو شروع کنی.',
+  },
+  {
+    question: 'این دوره برای چه کسانی ساخته شده؟',
+    answer:
+      'برای هر کسی که می‌خواد با هوش مصنوعی برای شغل، خدمات، محصول، آموزش یا برند شخصی خودش عکس، ویدیو و استوری بسازه.',
+  },
+  {
+    question: 'دقیقاً چند ویدیو و چقدر آموزش داخل دوره است؟',
+    answer:
+      'نسخهٔ فعلی ۱۵ ویدیو داره و زمان کلش ۱ ساعت و ۴۰ دقیقه و ۲۴ ثانیه است. آموزش‌ها فشرده‌ان و با توضیح‌های کش‌دار وقتت رو نمی‌گیرن.',
+  },
+  {
+    question: 'بعد از خرید تا چه مدت دسترسی دارم؟',
+    answer:
+      'به محتوایی که خریدی دسترسی دائمی داری و از داخل حساب خودت می‌بینیش. این دسترسی به معنی دریافت همهٔ دوره‌ها یا به‌روزرسانی‌های آینده نیست.',
+  },
+  {
+    question: 'ویدیوها رو می‌تونم دانلود کنم؟',
+    answer:
+      'نه؛ ویدیوها داخل پنل حسابت به‌صورت آنلاین دیده می‌شن و لینک دانلود عمومی ندارن.',
+  },
+  {
+    question: 'پشتیبانی دوره دقیقاً برای چیه؟',
+    answer:
+      'پشتیبانی برای مشکل پرداخت، ورود و دسترسیه و پاسخ‌گویی حداکثر تا ۲ روز کاری انجام می‌شه. این پشتیبانی مشاورهٔ نامحدود تولید محتوا یا اجرای پروژه نیست.',
+  },
+  {
+    question: 'کد تخفیف را کجا وارد کنم؟',
+    answer:
+      'کد تخفیف را داخل پنل خرید وارد می‌کنی. بعد از تأیید کد، مبلغ نهایی نمایش داده می‌شود؛ اگر مبلغ موردانتظارت را ندیدی، پرداخت را ادامه نده و به پشتیبانی پیام بده.',
+  },
+  {
+    question: 'هزینهٔ ابزارهای هوش مصنوعی داخل مبلغ دوره است؟',
+    answer:
+      'نه. مبلغ دوره برای خود آموزش و دسترسی به محتواییه که خریدی. بعضی ابزارهای بیرونی پلن یا اعتبار جدا دارن و قیمتشون هم ممکنه عوض بشه. داخل دوره دربارهٔ مسیر انتخاب و خرید ابزارها هم صحبت می‌کنیم، ولی هزینهٔ خود سرویس‌ها جداست.',
+  },
+] as const;
+
+const courseStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Course',
+  name: 'دوره آموزشی ساخت ویدیو و استوری با هوش مصنوعی (ابر مشاور)',
+  description:
+    'آموزش عملی ساخت عکس، ویدیو، استوری و محتوای سریالی با هوش مصنوعی برای مشاغل و برندهای شخصی.',
+  url: new URL(
+    '/academy/courses/ai-content-real-estate/',
+    Astro.site,
+  ).toString(),
+  provider: {
+    '@type': 'Organization',
+    name: siteConfig.brandName,
+    url: Astro.site?.toString(),
+  },
+  inLanguage: 'fa-IR',
+  isAccessibleForFree: false,
+  timeRequired: 'PT1H40M24S',
+};
+---
+
+<BaseLayout
+  title={'دوره آموزشی ساخت ویدیو و استوری با هوش مصنوعی (ابر مشاور) | ' +
+    siteConfig.brandName}
+  description="با یک گوشی ساده، ساخت عکس، ویدیو، استوری و محتوای سریالی با هوش مصنوعی را برای شغل و برند شخصی خودت یاد بگیر."
+  image="/assets/academy/abr-moshaver/hero-scene.webp"
+  imageAlt="دورهٔ ابر مشاور؛ نمونه‌های ساخت سریال، رشته‌استوری، انیمیشن و قبل‌وبعد"
+  imageWidth={1280}
+  imageHeight={550}
+  keywords={[
+    'دوره هوش مصنوعی',
+    'آموزش تولید محتوا',
+    'محتوای سریالی',
+    'ابر مشاور',
+  ]}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(courseStructuredData)}
+  />
+  <article class="course-page">
+    <header class="course-hero shell">
+      <h1>
+        دوره آموزشی ساخت ویدیو و استوری<br class="desktop-break" /> با هوش مصنوعی
+        (ابر مشاور)
+      </h1>
+      <p class="course-lead">
+        با یه گوشی ساده، برای پیج و کار خودت محتوا بساز و ازش درآمدزایی کن.
+      </p>
+      <img
+        class="course-hero-image"
+        src="/assets/academy/abr-moshaver/hero-scene.webp"
+        width="1280"
+        height="550"
+        alt="شخصیت مجازی دوره با گوشی، در کنار نمونه‌های تصویر و ویدیوی هوش مصنوعی"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <div class="course-purchase-strip" id="course-purchase">
+        <div class="course-strip-offer">
+          <strong>۸٬۰۰۰٬۰۰۰ <small>تومان</small></strong>
+          <a class="course-button" href={checkoutUrl}>{purchaseLabel}</a>
+          <span>کد تخفیف داری؟ داخل پنل واردش کن.</span>
+        </div>
+        <dl class="course-metrics">
+          <div><dt>۱۵ درس</dt><dd>ویدیوی آموزشی</dd></div>
+          <div><dt>۱:۴۰:۲۴</dt><dd>زمان کل آموزش</dd></div>
+          <div><dt>دسترسی دائمی</dt><dd>به محتوای خریداری‌شده</dd></div>
+        </dl>
+      </div>
+      {
+        !salesEnabled && (
+          <p class="course-sale-notice" role="status">
+            ثبت‌نام پس از تکمیل اتصال پرداخت و پخش خصوصی باز می‌شود. برای سؤال
+            دربارهٔ دوره،{' '}
+            <a href={supportUrl} target="_blank" rel="noopener noreferrer">
+              به پشتیبانی پیام بده
+            </a>
+            .
+          </p>
+        )
+      }
+      <p class="course-phone-note">برای شروع به لپ‌تاپ نیاز نداری.</p>
+    </header>
+
+    <section
+      class="course-section shell"
+      aria-labelledby="course-outcomes-title"
+    >
+      <header class="course-section-head">
+        <h2 id="course-outcomes-title">چی یاد می‌گیری؟</h2><p>
+          ساخت محتوا برای شغل، خدمات، محصول یا برند شخصی خودت؛ با مثال‌های عملی.
+        </p>
+      </header>
+      <div class="course-result-grid">
+        {
+          results.map((result) => (
+            <article>
+              <>
+                <h3>{result.title}</h3>
+                <p>{result.text}</p>
+              </>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section
+      class="course-section course-examples shell"
+      aria-labelledby="course-examples-title"
+    >
+      <header class="course-section-head">
+        <h2 id="course-examples-title">
+          نمونه‌هایی از چیزی که در دوره می‌بینی
+        </h2><p>از روایت یک داستان تا ساخت شخصیت، انیمیشن و ویدیوی قبل‌وبعد.</p>
+      </header>
+      <div class="course-example-grid">
+        <figure>
+          <h3 class="course-example-title">آموزش ساخت سریال</h3>
+          <img
+            src="/assets/academy/abr-moshaver/example-fathers-house.webp"
+            width="720"
+            height="1280"
+            loading="lazy"
+            alt="نمونهٔ داستان خانهٔ پدری در دوره"
+          /><figcaption>خانهٔ پدری؛ روایت چندقسمتی</figcaption>
+        </figure>
+        <figure>
+          <h3 class="course-example-title">رشته استوری</h3>
+          <img
+            src="/assets/academy/abr-moshaver/example-character.webp"
+            width="768"
+            height="1376"
+            loading="lazy"
+            alt="آیدا در کافه؛ نمونهٔ رشته استوری دوره"
+          /><figcaption>آیدا در کافه؛ نمونهٔ رشته استوری</figcaption>
+        </figure>
+        <figure>
+          <h3 class="course-example-title">انیمیشن</h3>
+          <img
+            src="/assets/academy/abr-moshaver/example-animation.webp"
+            width="941"
+            height="1672"
+            loading="lazy"
+            alt="نمونهٔ انیمیشن ساخته‌شده با هوش مصنوعی"
+          /><figcaption>ساخت انیمیشن با هوش مصنوعی</figcaption>
+        </figure>
+      </div>
+      <div class="course-before-after">
+        <figure>
+          <img
+            src="/assets/academy/abr-moshaver/balcony-before.webp"
+            width="941"
+            height="1672"
+            loading="lazy"
+            alt="بالکن پیش از تغییر در نمونهٔ آموزشی قبل‌وبعد"
+          /><figcaption>قبل</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="/assets/academy/abr-moshaver/balcony-after.webp"
+            width="941"
+            height="1672"
+            loading="lazy"
+            alt="بالکن پس از تغییر در نمونهٔ آموزشی قبل‌وبعد"
+          /><figcaption>بعد</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section
+      id="course-path"
+      class="course-section course-path"
+      aria-labelledby="course-path-title"
+    >
+      <div class="shell">
+        <header class="course-section-head">
+          <h2 id="course-path-title">مسیر آموزش، از ایده تا محتوا</h2><p>
+            این پنج مرحله، خلاصهٔ مسیر ۱۵ درس دوره است.
+          </p>
+        </header>
+        <ol class="course-path-list">
+          {
+            coursePath.map((item, index) => (
+              <li>
+                <>
+                  <span class="course-path-number">
+                    {(index + 1).toLocaleString('fa-IR')}
+                  </span>
+                  <div>
+                    <>
+                      <p>{item.step}</p>
+                      <h3>{item.title}</h3>
+                      <span>{item.text}</span>
+                    </>
+                  </div>
+                </>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="course-section shell" aria-labelledby="course-fit-title">
+      <header class="course-section-head">
+        <h2 id="course-fit-title">این دوره برای تو مناسبه؟</h2>
+      </header>
+      <div class="course-fit-grid">
+        <article>
+          <h3>به دردت می‌خورد اگر…</h3><ul>
+            {goodFit.map((item) => <li>{item}</li>)}
+          </ul>
+        </article>
+        <article>
+          <h3>قبل از انتخاب، این‌ها را در نظر بگیر</h3><ul>
+            {notFit.map((item) => <li>{item}</li>)}
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="course-section shell" aria-labelledby="course-buying-title">
+      <header class="course-section-head">
+        <h2 id="course-buying-title">خرید و دسترسی به دوره</h2><p>
+          حسابی که با آن خرید می‌کنی، محل دیدن درس‌ها و دریافت فایل‌های همراه
+          است.
+        </p>
+      </header>
+      <ol class="course-buying-steps">
+        {
+          buyingSteps.map((step) => (
+            <li>
+              <>
+                <span>{step.number}</span>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="course-section shell" aria-labelledby="course-faq-title">
+      <header class="course-section-head">
+        <h2 id="course-faq-title">قبل از خرید</h2>
+      </header>
+      <div class="course-faq-list">
+        {
+          faqs.map((faq, index) => (
+            <details open={index === 0}>
+              <>
+                <summary>{faq.question}</summary>
+                <p>{faq.answer}</p>
+              </>
+            </details>
+          ))
+        }
+        <details>
+          <summary>شرایط بازگشت وجه چطور است؟</summary><p>
+            در صورت پرداخت تکراری یا عدم امکان ارائه دسترسی به دوره، مبلغ مربوط
+            بازگردانده می‌شود. درخواست‌های انصراف و بازپرداخت از طریق پشتیبانی و
+            مطابق مقررات قابل‌اعمال بررسی می‌شوند.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <section
+      id="purchase-terms"
+      class="course-section shell course-terms"
+      aria-labelledby="purchase-terms-title"
+    >
+      <header class="course-section-head">
+        <h2 id="purchase-terms-title">شرایط خرید این دوره</h2>
+      </header>
+      <ul>
+        <li>
+          نسخهٔ فعلی شامل ۱۵ درس با مجموع ۱ ساعت و ۴۰ دقیقه و ۲۴ ثانیه آموزش
+          است.
+        </li>
+        <li>
+          قیمت پایه ۸٬۰۰۰٬۰۰۰ تومان است. کد تخفیف را دستی در پنل وارد می‌کنی و
+          مبلغ نهایی پیش از پرداخت نمایش داده می‌شود.
+        </li>
+        <li>
+          دسترسی به محتوای خریداری‌شده دائمی و از حساب شخصی خودت است؛ ویدیوها
+          آنلاین پخش می‌شوند و فایل‌های همراه مجاز از همان پنل دریافت می‌شوند.
+          دسترسی شامل همهٔ دوره‌ها یا به‌روزرسانی‌های آینده نیست.
+        </li>
+        <li>
+          هزینه یا اعتبار ابزارهای بیرونی جداست. نتیجهٔ تمرین‌ها و درآمد به
+          اجرای خودت بستگی دارد؛ درآمد مشخصی تضمین نمی‌شود.
+        </li>
+        <li>
+          پشتیبانی برای پرداخت، ورود و دسترسی از تلگرام انجام می‌شود؛ زمان
+          پاسخ‌گویی حداکثر ۲ روز کاری است.
+        </li>
+        <li>
+          در صورت پرداخت تکراری یا عدم امکان ارائه دسترسی به دوره، مبلغ مربوط
+          بازگردانده می‌شود. درخواست‌های انصراف و بازپرداخت از طریق پشتیبانی و
+          مطابق مقررات قابل‌اعمال بررسی می‌شوند.
+        </li>
+        <li>
+          مبلغ نهایی و نسخهٔ دقیق شرایط پیش از پرداخت نمایش داده می‌شود. شرایط
+          پذیرفته‌شده هنگام خرید برای همان سفارش حفظ می‌شود؛ تغییرات بعدی، شرایط
+          سفارش قبلی را جایگزین نمی‌کند.
+        </li>
+      </ul>
+    </section>
+
+    <footer class="course-final shell">
+      <h2>برای پیج و کار خودت، ساختن را شروع کن</h2>
+      <p>۱۵ درس عملی، از ساخت عکس و ویدیو تا استوری و محتوای سریالی.</p>
+      <a class="course-button" href={checkoutUrl}>{purchaseLabel}</a>
+      <div class="course-final-links">
+        <a href="#purchase-terms">شرایط خرید</a><a
+          href={supportUrl}
+          target="_blank"
+          rel="noopener noreferrer">پشتیبانی تلگرام</a
+        >
+      </div>
+    </footer>
+    {
+      salesEnabled && (
+        <div class="course-mobile-dock">
+          <>
+            <strong>۸٬۰۰۰٬۰۰۰ تومان</strong>
+            <a class="course-button" href={checkoutUrl}>
+              ورود و خرید دوره
+            </a>
+          </>
+        </div>
+      )
+    }
+  </article>
+</BaseLayout>
+
+<style>
+  .course-page {
+    --course-ink: #101642;
+    --course-blue: #064dff;
+    --course-muted: #59668f;
+    --course-pale: #f1f6ff;
+    color: var(--course-ink);
+    background: #fff;
+    padding-bottom: 4rem;
+  }
+  .shell {
+    width: min(100% - 3rem, 72rem);
+    margin-inline: auto;
+  }
+  .course-hero {
+    text-align: center;
+    padding-top: 2rem;
+  }
+  h1,
+  h2,
+  h3,
+  p {
+    margin-top: 0;
+  }
+  .course-hero h1 {
+    font-weight: 850;
+    font-size: clamp(1.65rem, 3.15vw, 2.6rem);
+    line-height: 1.6;
+    margin: 0 auto 0.7rem;
+    max-width: 56rem;
+  }
+  .course-lead {
+    font-size: clamp(1rem, 1.65vw, 1.25rem);
+    font-weight: 600;
+    color: var(--course-muted);
+    line-height: 1.9;
+    margin-bottom: 1.2rem;
+  }
+  .course-hero-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1280/550;
+    object-fit: cover;
+    border-radius: 1rem;
+    background: var(--course-pale);
+  }
+  .course-purchase-strip {
+    display: grid;
+    grid-template-columns: minmax(18rem, 1fr) 2fr;
+    gap: 1.6rem;
+    padding: 1.6rem 1.8rem;
+    margin-top: 1rem;
+    background: var(--course-pale);
+    border-radius: 1rem;
+    align-items: center;
+    scroll-margin-top: 7rem;
+  }
+  .course-strip-offer {
+    display: grid;
+    gap: 0.65rem;
+  }
+  .course-strip-offer strong {
+    font-size: 1.5rem;
+  }
+  .course-strip-offer strong small {
+    font-size: 0.95rem;
+  }
+  .course-strip-offer > span {
+    font-size: 0.8rem;
+    color: var(--course-muted);
+  }
+  .course-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    padding: 0.6rem 1.6rem;
+    border-radius: 0.7rem;
+    background: var(--course-blue);
+    color: white;
+    font-weight: 750;
+    text-decoration: none;
+    line-height: 1.6;
+    transition: background 0.15s;
+  }
+  .course-button:hover {
+    background: #003cd0;
+  }
+  .course-button:focus-visible,
+  summary:focus-visible {
+    outline: 3px solid #94b7ff;
+    outline-offset: 4px;
+  }
+  .course-metrics {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .course-metrics > div {
+    padding: 0.8rem;
+    border-inline-start: 1px solid #d8e3f7;
+  }
+  .course-metrics dt {
+    font-size: 1.2rem;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .course-metrics dd {
+    font-size: 0.8rem;
+    color: var(--course-muted);
+    margin: 0.4rem 0 0;
+    line-height: 1.8;
+  }
+  .course-phone-note {
+    background: var(--course-pale);
+    border-radius: 0.8rem;
+    padding: 1rem;
+    margin: 1rem 0 0;
+    font-weight: 700;
+  }
+  .course-sale-notice {
+    font-size: 0.85rem;
+    line-height: 1.9;
+    color: var(--course-muted);
+    margin: 1rem 0 0;
+  }
+  .course-sale-notice a {
+    color: var(--course-blue);
+    text-underline-offset: 0.2rem;
+  }
+  .course-section {
+    padding-top: 3rem;
+    padding-bottom: 1rem;
+  }
+  .course-section-head {
+    text-align: center;
+    margin-bottom: 1.7rem;
+  }
+  .course-section-head h2 {
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    line-height: 1.8;
+    margin: 0 0 0.4rem;
+  }
+  .course-section-head p {
+    line-height: 1.9;
+    color: var(--course-muted);
+    margin: 0;
+  }
+  .course-result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem 0;
+  }
+  .course-result-grid article {
+    padding: 0.6rem 1.6rem;
+    border-inline-start: 1px solid #dce5f5;
+  }
+  .course-result-grid article:nth-child(3n + 1) {
+    border: 0;
+  }
+  .course-result-grid h3 {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    margin: 0 0 0.4rem;
+  }
+  .course-result-grid p {
+    color: var(--course-muted);
+    line-height: 2;
+    font-size: 0.92rem;
+    margin: 0;
+  }
+  .course-example-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .course-example-title {
+    color: var(--course-blue);
+    background: var(--course-pale);
+    margin: 0;
+    padding: 0.8rem 1rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    line-height: 1.8;
+    text-align: center;
+  }
+  @media (min-width: 601px) and (max-width: 900px) {
+    .course-example-title {
+      min-height: 5.5rem;
+      display: grid;
+      place-content: center;
+    }
+  }
+  .course-examples figure {
+    margin: 0;
+    border: 1px solid #e0e7f4;
+    border-radius: 0.9rem;
+    overflow: hidden;
+    background: white;
+  }
+  .course-examples img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 9/16;
+    object-fit: contain;
+  }
+  .course-examples figcaption {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+    line-height: 1.8;
+    font-weight: 650;
+  }
+  .course-before-after {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .course-before-after img {
+    aspect-ratio: 9/16;
+    object-position: center;
+  }
+  .course-before-after figure {
+    max-width: 24rem;
+    width: 100%;
+    justify-self: center;
+  }
+  .course-before-after figcaption {
+    color: var(--course-blue);
+    text-align: center;
+  }
+  .course-path {
+    margin-top: 2rem;
+    background: var(--course-pale);
+    padding-bottom: 2.5rem;
+  }
+  .course-path-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.2rem;
+    margin: 0;
+  }
+  .course-path-list li {
+    line-height: 1.9;
+  }
+  .course-path-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    background: white;
+    border: 1px solid #dce5f5;
+    border-radius: 50%;
+    font-weight: 800;
+    color: var(--course-blue);
+    margin-bottom: 0.8rem;
+  }
+  .course-path-list li p {
+    color: var(--course-blue);
+    font-size: 0.8rem;
+    margin-bottom: 0.2rem;
+  }
+  .course-path-list li h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .course-path-list li div > span {
+    color: var(--course-muted);
+    font-size: 0.9rem;
+  }
+  .course-fit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .course-fit-grid article {
+    border-top: 1px solid #dce5f5;
+    padding-top: 1.3rem;
+  }
+  .course-fit-grid h3 {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+  .course-fit-grid ul,
+  .course-terms ul {
+    padding-inline-start: 1.2rem;
+    margin: 0;
+  }
+  .course-fit-grid li,
+  .course-terms li {
+    line-height: 2.1;
+    color: var(--course-muted);
+    margin-bottom: 0.65rem;
+  }
+  .course-buying-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    list-style: none;
+    gap: 1.8rem;
+    padding: 0;
+    margin: 0;
+  }
+  .course-buying-steps li > span {
+    color: var(--course-blue);
+    font-weight: 800;
+    font-size: 1.5rem;
+  }
+  .course-buying-steps h3 {
+    font-size: 1.05rem;
+    margin: 0.6rem 0;
+  }
+  .course-buying-steps p {
+    color: var(--course-muted);
+    font-size: 0.92rem;
+    line-height: 2;
+    margin: 0;
+  }
+  .course-faq-list {
+    display: grid;
+    gap: 0.45rem;
+  }
+  .course-faq-list details {
+    border: 1px solid #dce5f5;
+    border-radius: 0.8rem;
+    padding: 0 1.2rem;
+  }
+  .course-faq-list details[open] {
+    background: var(--course-pale);
+  }
+  .course-faq-list summary {
+    cursor: pointer;
+    padding: 1rem 0.2rem;
+    font-weight: 700;
+    line-height: 1.8;
+  }
+  .course-faq-list p {
+    font-size: 0.95rem;
+    color: var(--course-muted);
+    line-height: 2.1;
+    padding: 0.2rem 0.2rem 1rem;
+    margin: 0;
+  }
+  .course-terms {
+    scroll-margin-top: 7rem;
+  }
+  .course-terms li {
+    font-size: 0.9rem;
+  }
+  .course-final {
+    text-align: center;
+    border-top: 1px solid #dce5f5;
+    padding-top: 2.5rem;
+    margin-top: 2rem;
+  }
+  .course-final h2 {
+    font-size: 1.4rem;
+    line-height: 1.9;
+  }
+  .course-final p {
+    line-height: 1.9;
+    color: var(--course-muted);
+  }
+  .course-final > .course-button {
+    min-width: 16rem;
+  }
+  .course-final-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1.2rem;
+    font-size: 0.85rem;
+  }
+  .course-final-links a {
+    color: var(--course-muted);
+    text-underline-offset: 0.25rem;
+  }
+  .course-mobile-dock {
+    display: none;
+  }
+  @media (max-width: 900px) {
+    .course-path-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .course-path-list li:last-child {
+      grid-column: 1/-1;
+    }
+    .course-purchase-strip {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .course-strip-offer {
+      max-width: 24rem;
+      width: 100%;
+      margin: auto;
+    }
+    .course-metrics > div:first-child {
+      border: 0;
+    }
+  }
+  @media (max-width: 600px) {
+    .shell {
+      width: calc(100% - 2rem);
+    }
+    .course-hero {
+      padding-top: 1.6rem;
+    }
+    .desktop-break {
+      display: none;
+    }
+    .course-hero h1 {
+      font-size: 1.55rem;
+      line-height: 1.8;
+    }
+    .course-lead {
+      font-size: 0.95rem;
+    }
+    .course-hero-image {
+      aspect-ratio: 1280/550;
+      object-position: center;
+    }
+    .course-purchase-strip {
+      padding: 1.2rem 1rem;
+    }
+    .course-metrics dt {
+      font-size: 0.94rem;
+      white-space: normal;
+    }
+    .course-metrics dd {
+      font-size: 0.7rem;
+    }
+    .course-metrics > div {
+      padding: 0.5rem;
+    }
+    .course-section {
+      padding-top: 2rem;
+    }
+    .course-result-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .course-result-grid article {
+      border: 0;
+      border-bottom: 1px solid #dce5f5;
+      padding: 0 0 1rem;
+    }
+    .course-example-grid {
+      grid-template-columns: 1fr;
+    }
+    .course-examples img {
+      aspect-ratio: 9/16;
+    }
+    .course-before-after {
+      gap: 0.5rem;
+    }
+    .course-before-after img {
+      aspect-ratio: 9/16;
+    }
+    .course-before-after figcaption {
+      padding: 0.5rem;
+    }
+    .course-fit-grid,
+    .course-buying-steps,
+    .course-path-list {
+      grid-template-columns: 1fr;
+      gap: 1.3rem;
+    }
+    .course-path-list li:last-child {
+      grid-column: auto;
+    }
+    .course-path-list li {
+      display: flex;
+      gap: 0.8rem;
+    }
+    .course-path-number {
+      flex: none;
+    }
+    .course-faq-list details {
+      padding-inline: 0.8rem;
+    }
+    .course-faq-list summary {
+      font-size: 0.9rem;
+    }
+    .course-final > .course-button {
+      width: 100%;
+      min-width: 0;
+    }
+    .course-mobile-dock {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.7rem;
+      padding: 0.8rem 1rem;
+      background: #fff;
+      border-top: 1px solid #dce5f5;
+    }
+    .course-mobile-dock strong {
+      font-size: 0.85rem;
+    }
+    .course-mobile-dock .course-button {
+      font-size: 0.85rem;
+      padding: 0.5rem 0.9rem;
+      min-height: 2.5rem;
+    }
+    .course-page:has(.course-mobile-dock) {
+      padding-bottom: 6rem;
+    }
+  }
+</style>

@@ -5,6 +5,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
+env:
+  PUBLIC_ACADEMY_SALES_ENABLED: 'true'
+
 permissions:
   contents: read
   pages: write

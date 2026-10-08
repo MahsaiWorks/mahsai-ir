@@ -45,5 +45,12 @@ export function getStaticPaths() {
   return legacyRoutes.map((legacy) => ({ params: { legacy } }));
 }
 
-return Astro.redirect('/apps/', 301);
+return Astro.redirect(
+  Astro.params.legacy === 'course'
+    ? '/academy/courses/ai-content-real-estate/'
+    : Astro.params.legacy === 'learn'
+      ? '/academy/'
+      : '/apps/',
+  301,
+);
 ---

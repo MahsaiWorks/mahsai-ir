@@ -11,7 +11,7 @@
     "build": "node scripts/materialize-metrazh-release.mjs && astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "audit:static": "node scripts/audit-static.mjs",
+    "audit:static": "node scripts/audit-static.mjs && node scripts/audit-public-ai-policy.test.mjs",
     "audit:accessibility": "node scripts/audit-accessibility.mjs",
     "audit:external": "node scripts/audit-external-links.mjs",
     "audit:lighthouse": "lhci autorun",
