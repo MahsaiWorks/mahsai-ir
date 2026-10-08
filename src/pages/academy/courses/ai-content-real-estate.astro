@@ -6,7 +6,9 @@ const salesEnabled = import.meta.env.PUBLIC_ACADEMY_SALES_ENABLED === 'true';
 const checkoutUrl = salesEnabled
   ? 'https://android-pay.mahsai.ir/account/academy#buy-ai-content-real-estate'
   : '#course-purchase';
-const purchaseLabel = salesEnabled ? 'ورود و خرید دوره' : 'اطلاعات ثبت‌نام';
+const purchaseLabel = salesEnabled
+  ? 'شروع یادگیری با ۵۰٪ تخفیف'
+  : 'اطلاعات ثبت‌نام';
 const supportUrl = 'https://t.me/Mahsaisupport';
 
 const results = [
@@ -107,7 +109,7 @@ const buyingSteps = [
   {
     number: '۲',
     title: 'قیمت رو می‌بینی',
-    text: 'کد تخفیف رو همون‌جا وارد می‌کنی و قبل از پرداخت، مبلغ نهایی رو دوباره می‌بینی.',
+    text: 'تخفیف همین حالا اعمال شده؛ مبلغ نهایی رو می‌بینی و مستقیم به پرداخت می‌ری.',
   },
   {
     number: '۳',
@@ -135,7 +137,7 @@ const faqs = [
   {
     question: 'بعد از خرید تا چه مدت دسترسی دارم؟',
     answer:
-      'به محتوایی که خریدی دسترسی دائمی داری و از داخل حساب خودت می‌بینیش. این دسترسی به معنی دریافت همهٔ دوره‌ها یا به‌روزرسانی‌های آینده نیست.',
+      'به دوره و آپدیت‌های آیندهٔ آن دسترسی دائمی داری و از داخل حساب خودت می‌بینیش.',
   },
   {
     question: 'ویدیوها رو می‌تونم دانلود کنم؟',
@@ -148,9 +150,9 @@ const faqs = [
       'پشتیبانی برای مشکل پرداخت، ورود و دسترسیه و پاسخ‌گویی حداکثر تا ۲ روز کاری انجام می‌شه. این پشتیبانی مشاورهٔ نامحدود تولید محتوا یا اجرای پروژه نیست.',
   },
   {
-    question: 'کد تخفیف را کجا وارد کنم؟',
+    question: 'برای قیمت ویژه به کد تخفیف نیاز دارم؟',
     answer:
-      'کد تخفیف را داخل پنل خرید وارد می‌کنی. بعد از تأیید کد، مبلغ نهایی نمایش داده می‌شود؛ اگر مبلغ موردانتظارت را ندیدی، پرداخت را ادامه نده و به پشتیبانی پیام بده.',
+      'نه؛ تخفیف به‌صورت خودکار اعمال می‌شود. مبلغ پرداخت این پیشنهاد ۴٬۹۸۰٬۰۰۰ تومان است و پیش از ورود به درگاه آن را می‌بینی.',
   },
   {
     question: 'هزینهٔ ابزارهای هوش مصنوعی داخل مبلغ دوره است؟',
@@ -220,14 +222,20 @@ const courseStructuredData = {
       />
       <div class="course-purchase-strip" id="course-purchase">
         <div class="course-strip-offer">
-          <strong>۸٬۰۰۰٬۰۰۰ <small>تومان</small></strong>
+          <div class="course-offer-price">
+            <del aria-label="قیمت اصلی: ۹ میلیون و ۹۸۰ هزار تومان"
+              >۹٬۹۸۰٬۰۰۰ تومان</del
+            >
+            <span class="course-discount">۵۰٪ تخفیف</span>
+            <strong>فقط ۴٬۹۸۰٬۰۰۰ <small>تومان</small></strong>
+          </div>
           <a class="course-button" href={checkoutUrl}>{purchaseLabel}</a>
-          <span>کد تخفیف داری؟ داخل پنل واردش کن.</span>
+          <span>فقط به مدت محدود؛ تخفیف خودکار و بدون نیاز به کد.</span>
         </div>
         <dl class="course-metrics">
           <div><dt>۱۵ درس</dt><dd>ویدیوی آموزشی</dd></div>
           <div><dt>۱:۴۰:۲۴</dt><dd>زمان کل آموزش</dd></div>
-          <div><dt>دسترسی دائمی</dt><dd>به محتوای خریداری‌شده</dd></div>
+          <div><dt>دسترسی دائمی</dt><dd>به دوره و آپدیت‌های آینده</dd></div>
         </dl>
       </div>
       {
@@ -376,7 +384,7 @@ const courseStructuredData = {
           </ul>
         </article>
         <article>
-          <h3>قبل از انتخاب، این‌ها را در نظر بگیر</h3><ul>
+          <h3>به دردت نمی‌خوره اگه…</h3><ul>
             {notFit.map((item) => <li>{item}</li>)}
           </ul>
         </article>
@@ -444,18 +452,16 @@ const courseStructuredData = {
           است.
         </li>
         <li>
-          قیمت پایه ۸٬۰۰۰٬۰۰۰ تومان است. کد تخفیف را دستی در پنل وارد می‌کنی و
-          مبلغ نهایی پیش از پرداخت نمایش داده می‌شود.
+          قیمت اصلی ۹٬۹۸۰٬۰۰۰ تومان و قیمت ویژهٔ فعلی ۴٬۹۸۰٬۰۰۰ تومان است. تخفیف
+          به‌صورت خودکار اعمال می‌شود. مبلغ نهایی پیش از پرداخت در پنل نمایش
+          داده می‌شود.
         </li>
         <li>
-          دسترسی به محتوای خریداری‌شده دائمی و از حساب شخصی خودت است؛ ویدیوها
-          آنلاین پخش می‌شوند و فایل‌های همراه مجاز از همان پنل دریافت می‌شوند.
-          دسترسی شامل همهٔ دوره‌ها یا به‌روزرسانی‌های آینده نیست.
+          دسترسی به دوره و آپدیت‌های آیندهٔ آن دائمی و از حساب شخصی خودت است؛
+          ویدیوها آنلاین پخش می‌شوند و فایل‌های همراه مجاز از همان پنل دریافت
+          می‌شوند.
         </li>
-        <li>
-          هزینه یا اعتبار ابزارهای بیرونی جداست. نتیجهٔ تمرین‌ها و درآمد به
-          اجرای خودت بستگی دارد؛ درآمد مشخصی تضمین نمی‌شود.
-        </li>
+        <li>هزینه یا اعتبار ابزارهای بیرونی جداست.</li>
         <li>
           پشتیبانی برای پرداخت، ورود و دسترسی از تلگرام انجام می‌شود؛ زمان
           پاسخ‌گویی حداکثر ۲ روز کاری است.
@@ -474,8 +480,8 @@ const courseStructuredData = {
     </section>
 
     <footer class="course-final shell">
-      <h2>برای پیج و کار خودت، ساختن را شروع کن</h2>
-      <p>۱۵ درس عملی، از ساخت عکس و ویدیو تا استوری و محتوای سریالی.</p>
+      <h2>روی آیندهٔ شغلیت سرمایه‌گذاری کن</h2>
+      <p>از یادگرفتن تا ساختن محتوای خودت؛ با ۱۵ درس عملی و دسترسی دائمی.</p>
       <a class="course-button" href={checkoutUrl}>{purchaseLabel}</a>
       <div class="course-final-links">
         <a href="#purchase-terms">شرایط خرید</a><a
@@ -489,9 +495,12 @@ const courseStructuredData = {
       salesEnabled && (
         <div class="course-mobile-dock">
           <>
-            <strong>۸٬۰۰۰٬۰۰۰ تومان</strong>
+            <div class="course-dock-price">
+              <span>۵۰٪ تخفیف، فقط به مدت محدود</span>
+              <strong>۴٬۹۸۰٬۰۰۰ تومان</strong>
+            </div>
             <a class="course-button" href={checkoutUrl}>
-              ورود و خرید دوره
+              شروع یادگیری
             </a>
           </>
         </div>
@@ -561,6 +570,27 @@ const courseStructuredData = {
   .course-strip-offer {
     display: grid;
     gap: 0.65rem;
+  }
+  .course-offer-price {
+    display: grid;
+    justify-items: center;
+    gap: 0.25rem;
+  }
+  .course-offer-price del {
+    color: var(--course-muted);
+    font-size: 1.85rem;
+    font-weight: 850;
+    line-height: 1.7;
+    text-decoration-color: #d32632;
+    text-decoration-thickness: 2.5px;
+  }
+  .course-discount {
+    padding: 0.15rem 0.6rem;
+    border-radius: 0.4rem;
+    background: #dce7ff;
+    color: #003cc8;
+    font-size: 0.8rem;
+    font-weight: 750;
   }
   .course-strip-offer strong {
     font-size: 1.5rem;
@@ -1007,6 +1037,14 @@ const courseStructuredData = {
     }
     .course-mobile-dock strong {
       font-size: 0.85rem;
+    }
+    .course-dock-price {
+      display: grid;
+      gap: 0.15rem;
+    }
+    .course-dock-price > span {
+      color: var(--course-muted);
+      font-size: 0.7rem;
     }
     .course-mobile-dock .course-button {
       font-size: 0.85rem;
