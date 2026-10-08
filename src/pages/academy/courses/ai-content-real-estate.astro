@@ -6,9 +6,7 @@ const salesEnabled = import.meta.env.PUBLIC_ACADEMY_SALES_ENABLED === 'true';
 const checkoutUrl = salesEnabled
   ? 'https://android-pay.mahsai.ir/account/academy#buy-ai-content-real-estate'
   : '#course-purchase';
-const purchaseLabel = salesEnabled
-  ? 'شروع یادگیری با ۵۰٪ تخفیف'
-  : 'اطلاعات ثبت‌نام';
+const purchaseLabel = salesEnabled ? 'شروع یادگیری' : 'اطلاعات ثبت‌نام';
 const supportUrl = 'https://t.me/Mahsaisupport';
 
 const results = [
@@ -122,7 +120,7 @@ const faqs = [
   {
     question: 'با گوشی هم می‌تونم شروع کنم؟',
     answer:
-      'بله؛ برای شروع به لپ‌تاپ نیاز نداری. با یک گوشی ساده می‌تونی تمرین‌های ساخت محتوا رو شروع کنی.',
+      'بله؛ با گوشی می‌تونی ویدیوهای دوره رو ببینی و تمرین‌های ساخت محتوا رو شروع کنی.',
   },
   {
     question: 'این دوره برای چه کسانی ساخته شده؟',
@@ -223,9 +221,10 @@ const courseStructuredData = {
       <div class="course-purchase-strip" id="course-purchase">
         <div class="course-strip-offer">
           <div class="course-offer-price">
-            <del aria-label="قیمت اصلی: ۹ میلیون و ۹۸۰ هزار تومان"
-              >۹٬۹۸۰٬۰۰۰ تومان</del
-            >
+            <del aria-label="قیمت اصلی: ۹ میلیون و ۹۸۰ هزار تومان">
+              <span>۹٬۹۸۰٬۰۰۰</span>
+              <small>تومان</small>
+            </del>
             <span class="course-discount">۵۰٪ تخفیف</span>
             <strong>فقط ۴٬۹۸۰٬۰۰۰ <small>تومان</small></strong>
           </div>
@@ -250,7 +249,7 @@ const courseStructuredData = {
           </p>
         )
       }
-      <p class="course-phone-note">برای شروع به لپ‌تاپ نیاز نداری.</p>
+      <p class="course-start-note">همین حالا شروع کن</p>
     </header>
 
     <section
@@ -496,7 +495,7 @@ const courseStructuredData = {
         <div class="course-mobile-dock">
           <>
             <div class="course-dock-price">
-              <span>۵۰٪ تخفیف، فقط به مدت محدود</span>
+              <span>قیمت ویژه، فقط به مدت محدود</span>
               <strong>۴٬۹۸۰٬۰۰۰ تومان</strong>
             </div>
             <a class="course-button" href={checkoutUrl}>
@@ -577,20 +576,39 @@ const courseStructuredData = {
     gap: 0.25rem;
   }
   .course-offer-price del {
-    color: var(--course-muted);
-    font-size: 1.85rem;
+    color: var(--course-ink);
+    font-size: 2rem;
     font-weight: 850;
     line-height: 1.7;
-    text-decoration-color: #d32632;
-    text-decoration-thickness: 2.5px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .course-offer-price del > span {
+    position: relative;
+    display: inline-block;
+  }
+  .course-offer-price del > span::after {
+    content: '';
+    position: absolute;
+    inset-inline: -0.15rem;
+    top: 51%;
+    height: 1.5px;
+    background: #d32632;
+    transform: rotate(-4deg);
+    pointer-events: none;
+  }
+  .course-offer-price del small {
+    font-size: 1rem;
+    font-weight: 650;
   }
   .course-discount {
-    padding: 0.15rem 0.6rem;
-    border-radius: 0.4rem;
+    padding: 0.25rem 0.85rem;
+    border-radius: 0.5rem;
     background: #dce7ff;
     color: #003cc8;
-    font-size: 0.8rem;
-    font-weight: 750;
+    font-size: 1.4rem;
+    font-weight: 850;
+    line-height: 1.7;
   }
   .course-strip-offer strong {
     font-size: 1.5rem;
@@ -644,7 +662,7 @@ const courseStructuredData = {
     margin: 0.4rem 0 0;
     line-height: 1.8;
   }
-  .course-phone-note {
+  .course-start-note {
     background: var(--course-pale);
     border-radius: 0.8rem;
     padding: 1rem;
