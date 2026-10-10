@@ -17,8 +17,8 @@ const results = [
   },
   {
     number: '۰۲',
-    title: 'شخصیت مجازی با چهرهٔ ثابت',
-    text: 'شخصیتی بسازی که چهره‌اش در خروجی‌های مختلف ثابت‌تر بماند.',
+    title: 'شخصیت مجازی خودت را بساز',
+    text: 'شخصیتی طراحی کنی که چهره‌اش در عکس‌ها و ویدیوهای مختلف ثابت‌تر بماند.',
   },
   {
     number: '۰۳',
@@ -27,13 +27,13 @@ const results = [
   },
   {
     number: '۰۴',
-    title: 'استوری و رشته‌استوری',
-    text: 'برای استوری‌ها یک مسیر پیوسته و قابل دنبال‌کردن طراحی کنی.',
+    title: 'رشته‌استوری پیجت را بساز',
+    text: 'استوری‌های مرتبط طراحی کنی که یک داستان را قدم‌به‌قدم جلو ببرند.',
   },
   {
     number: '۰۵',
-    title: 'محتوای سریالی',
-    text: 'یک ایده را به قسمت‌های مرتبط و قابل ادامه تبدیل کنی.',
+    title: 'داستانت را به یک سریال تبدیل کن',
+    text: 'یک ایده را به روایت چندقسمتی تبدیل کنی؛ مثل نمونهٔ «خانهٔ پدری».',
   },
   {
     number: '۰۶',
@@ -57,9 +57,9 @@ const results = [
   },
 ] as const;
 
-const featuredResults = [results[0], results[1], results[3]];
+const featuredResults = [results[1], results[4], results[3]];
 const additionalResults = results.filter(
-  (_, index) => ![0, 1, 3].includes(index),
+  (_, index) => ![1, 4, 3].includes(index),
 );
 
 const faqs = [
@@ -178,7 +178,11 @@ const courseStructuredData = {
       aria-labelledby="course-outcomes-title"
     >
       <header class="course-section-head">
-        <h2 id="course-outcomes-title">چی یاد می‌گیری؟</h2>
+        <h2 id="course-outcomes-title">چه چیزهایی می‌سازی؟</h2>
+        <p>
+          عکس و ویدیو، شخصیت مجازی، سریال، انیمیشن و موزیک؛ چند نمونه از
+          مهارت‌هایی که در ۱۵ درس عملی تمرین می‌کنی.
+        </p>
       </header>
       <div class="course-result-grid">
         {
@@ -191,6 +195,21 @@ const courseStructuredData = {
             </article>
           ))
         }
+      </div>
+      <div class="course-more-topics">
+        <details>
+          <summary>۶ مهارت دیگر؛ از قبل‌وبعد تا موزیک و دستیار شخصی</summary>
+          <div class="course-result-grid">
+            {
+              additionalResults.map((result) => (
+                <article>
+                  <h3>{result.title}</h3>
+                  <p>{result.text}</p>
+                </article>
+              ))
+            }
+          </div>
+        </details>
       </div>
     </section>
 
@@ -255,22 +274,6 @@ const courseStructuredData = {
           /><figcaption>بعد</figcaption>
         </figure>
       </div>
-    </section>
-
-    <section class="course-section shell course-more-topics">
-      <details>
-        <summary>موضوعات بیشتر دوره</summary>
-        <div class="course-result-grid">
-          {
-            additionalResults.map((result) => (
-              <article>
-                <h3>{result.title}</h3>
-                <p>{result.text}</p>
-              </article>
-            ))
-          }
-        </div>
-      </details>
     </section>
 
     <section
@@ -361,7 +364,7 @@ const courseStructuredData = {
       <h2>برای پیج و کارت محتوا بساز</h2>
       <p class="course-final-note">
         در صورت پرداخت تکراری یا عدم امکان ارائهٔ دسترسی، مبلغ مربوط بازگردانده
-        می‌شود؛ انصراف طبق
+        می‌شود؛ انصراف طبق{' '}
         <a href="#purchase-terms">شرایط خرید و بازگشت وجه</a> بررسی می‌شود.
       </p>
       <a class="course-button" href={checkoutUrl}>{purchaseLabel}</a>
@@ -424,6 +427,7 @@ const courseStructuredData = {
   }
   .course-hero h1 > span {
     display: block;
+    color: var(--course-blue);
     font-size: clamp(1.1rem, 2.2vw, 1.7rem);
     line-height: 1.8;
     margin-top: 0.35rem;
@@ -795,6 +799,9 @@ const courseStructuredData = {
   }
   .course-more-topics .course-result-grid {
     padding-block: 0.5rem 1.2rem;
+  }
+  .course-more-topics {
+    margin-top: 1.2rem;
   }
   .course-fit {
     text-align: center;
