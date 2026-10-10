@@ -6,7 +6,7 @@ const salesEnabled = import.meta.env.PUBLIC_ACADEMY_SALES_ENABLED === 'true';
 const checkoutUrl = salesEnabled
   ? 'https://android-pay.mahsai.ir/account/academy#buy-ai-content-real-estate'
   : '#course-purchase';
-const purchaseLabel = salesEnabled ? 'شروع یادگیری' : 'اطلاعات ثبت‌نام';
+const purchaseLabel = salesEnabled ? 'خرید دوره' : 'اطلاعات ثبت‌نام';
 const supportUrl = 'https://t.me/Mahsaisupport';
 
 const results = [
@@ -57,90 +57,21 @@ const results = [
   },
 ] as const;
 
-const coursePath = [
-  {
-    step: 'شروع هوشمند',
-    title: 'اول مسیر کارت رو روشن می‌کنی',
-    text: 'با ابزارها آشنا می‌شی و می‌بینی چطور می‌تونی هوش مصنوعی رو از یه گفت‌وگوی معمولی به دستیار کارت نزدیک کنی.',
-  },
-  {
-    step: 'ساختن',
-    title: 'ایده‌ات رو به تصویر و ویدیو می‌رسونی',
-    text: 'با نمونه‌های عملی جلو می‌ری تا فاصلهٔ بین «یه ایده دارم» و «یه خروجی قابل‌انتشار دارم» کمتر بشه.',
-  },
-  {
-    step: 'ثبات',
-    title: 'به محتوات هویت می‌دی',
-    text: 'روی یکدست‌بودن چهره، فضا و حس خروجی کار می‌کنی تا قسمت‌های مختلف کنار هم هماهنگ‌تر دیده بشن.',
-  },
-  {
-    step: 'تداوم',
-    title: 'محتوای سریالی می‌چینی',
-    text: 'الگوی یک فرمت موفق رو بررسی می‌کنی و می‌بینی چطور می‌شه از یک موضوع، مسیر چندقسمتی ساخت.',
-  },
-  {
-    step: 'انتشار',
-    title: 'خروجی رو برای پیجت جمع می‌کنی',
-    text: 'سراغ فرمت‌های مختلف، روایت استوری، صدا و خطاهای رایج می‌ری تا تمرینت به محتوای آمادهٔ انتشار نزدیک‌تر بشه.',
-  },
-] as const;
-
-const goodFit = [
-  'برای کارت محتوا می‌سازی، ولی روند ثابتی نداری.',
-  'می‌خوای برای شغل، محصول، خدمات یا برند شخصی خودت محتوا بسازی.',
-  'می‌خوای عکس، ویدیو، استوری و محتوای سریالی را عملی یاد بگیری.',
-  'دوست داری نتیجه رو با مثال عملی ببینی، نه اینکه فقط تعریف ابزارها رو بشنوی.',
-] as const;
-
-const notFit = [
-  'دنبال یک دکمه‌ای هستی که بدون تمرین، همه‌چیز رو خودکار و بی‌نقص بسازه.',
-  'فقط یه فهرست بلند از ابزارها می‌خوای و قصد نداری چیزی تولید کنی.',
-  'انتظار داری محتوا به‌جای تو اجرا بشه یا مشاورهٔ نامحدود بگیری.',
-] as const;
-
-const buyingSteps = [
-  {
-    number: '۱',
-    title: 'وارد پنل می‌شی',
-    text: 'با شمارهٔ موبایل، حساب دوره‌ات رو می‌سازی یا وارد همون حساب قبلی می‌شی.',
-  },
-  {
-    number: '۲',
-    title: 'قیمت رو می‌بینی',
-    text: 'تخفیف همین حالا اعمال شده؛ مبلغ نهایی رو می‌بینی و مستقیم به پرداخت می‌ری.',
-  },
-  {
-    number: '۳',
-    title: 'دوره داخل حسابت می‌آید',
-    text: 'بعد از پرداخت موفق، محتوایی که خریدی داخل همون حساب برات فعال می‌شه و آنلاین می‌بینیش.',
-  },
-] as const;
+const featuredResults = [results[0], results[1], results[3]];
+const additionalResults = results.filter(
+  (_, index) => ![0, 1, 3].includes(index),
+);
 
 const faqs = [
   {
     question: 'با گوشی هم می‌تونم شروع کنم؟',
     answer:
-      'بله؛ با گوشی می‌تونی ویدیوهای دوره رو ببینی و تمرین‌های ساخت محتوا رو شروع کنی.',
+      'بله؛ ویدیوهای دوره رو با گوشی می‌بینی. اجرای تمرین‌ها به ابزار انتخابی و امکانات اون بستگی داره.',
   },
   {
-    question: 'این دوره برای چه کسانی ساخته شده؟',
+    question: 'چطور دوره و فایل‌ها رو دریافت می‌کنم؟',
     answer:
-      'برای هر کسی که می‌خواد با هوش مصنوعی برای شغل، خدمات، محصول، آموزش یا برند شخصی خودش عکس، ویدیو و استوری بسازه.',
-  },
-  {
-    question: 'دقیقاً چند ویدیو و چقدر آموزش داخل دوره است؟',
-    answer:
-      'نسخهٔ فعلی ۱۵ ویدیو داره و زمان کلش ۱ ساعت و ۴۰ دقیقه و ۲۴ ثانیه است. آموزش‌ها فشرده‌ان و با توضیح‌های کش‌دار وقتت رو نمی‌گیرن.',
-  },
-  {
-    question: 'بعد از خرید تا چه مدت دسترسی دارم؟',
-    answer:
-      'به دوره و آپدیت‌های آیندهٔ آن دسترسی دائمی داری و از داخل حساب خودت می‌بینیش.',
-  },
-  {
-    question: 'ویدیوها رو می‌تونم دانلود کنم؟',
-    answer:
-      'نه؛ ویدیوها داخل پنل حسابت به‌صورت آنلاین دیده می‌شن و لینک دانلود عمومی ندارن.',
+      'بعد از پرداخت موفق، ویدیوها داخل پنل حسابت آنلاین پخش می‌شن و فایل‌های همراه مجاز رو از همون پنل دریافت می‌کنی. ویدیوها لینک دانلود عمومی ندارن.',
   },
   {
     question: 'پشتیبانی دوره دقیقاً برای چیه؟',
@@ -148,14 +79,9 @@ const faqs = [
       'پشتیبانی برای مشکل پرداخت، ورود و دسترسیه و پاسخ‌گویی حداکثر تا ۲ روز کاری انجام می‌شه. این پشتیبانی مشاورهٔ نامحدود تولید محتوا یا اجرای پروژه نیست.',
   },
   {
-    question: 'برای قیمت ویژه به کد تخفیف نیاز دارم؟',
-    answer:
-      'نه؛ تخفیف به‌صورت خودکار اعمال می‌شود. مبلغ پرداخت این پیشنهاد ۴٬۹۸۰٬۰۰۰ تومان است و پیش از ورود به درگاه آن را می‌بینی.',
-  },
-  {
     question: 'هزینهٔ ابزارهای هوش مصنوعی داخل مبلغ دوره است؟',
     answer:
-      'نه. مبلغ دوره برای خود آموزش و دسترسی به محتواییه که خریدی. بعضی ابزارهای بیرونی پلن یا اعتبار جدا دارن و قیمتشون هم ممکنه عوض بشه. داخل دوره دربارهٔ مسیر انتخاب و خرید ابزارها هم صحبت می‌کنیم، ولی هزینهٔ خود سرویس‌ها جداست.',
+      'نه؛ مبلغ دوره برای آموزش و دسترسی به محتواست. بعضی ابزارهای بیرونی پلن یا اعتبار جدا دارن و قیمتشون ممکنه تغییر کنه.',
   },
 ] as const;
 
@@ -183,7 +109,7 @@ const courseStructuredData = {
 <BaseLayout
   title={'دوره آموزشی ساخت ویدیو و استوری با هوش مصنوعی (ابر مشاور) | ' +
     siteConfig.brandName}
-  description="با یک گوشی ساده، ساخت عکس، ویدیو، استوری و محتوای سریالی با هوش مصنوعی را برای شغل و برند شخصی خودت یاد بگیر."
+  description="دورهٔ ضبط‌شدهٔ ابر مشاور؛ ۱۵ درس عملی برای ساخت عکس، ویدیو و استوری با هوش مصنوعی برای پیج، کسب‌وکار و برند شخصی."
   image="/assets/academy/abr-moshaver/hero-scene.webp"
   imageAlt="دورهٔ ابر مشاور؛ نمونه‌های ساخت سریال، رشته‌استوری، انیمیشن و قبل‌وبعد"
   imageWidth={1280}
@@ -202,12 +128,9 @@ const courseStructuredData = {
   />
   <article class="course-page">
     <header class="course-hero shell">
-      <h1>
-        دوره آموزشی ساخت ویدیو و استوری<br class="desktop-break" /> با هوش مصنوعی
-        (ابر مشاور)
-      </h1>
+      <h1>ابر مشاور<span>ساخت ویدیو و استوری با هوش مصنوعی</span></h1>
       <p class="course-lead">
-        با یه گوشی ساده، برای پیج و کار خودت محتوا بساز و ازش درآمدزایی کن.
+        ۱۵ درس ضبط‌شده و عملی برای ساخت محتوای پیج یا کسب‌وکار خودت.
       </p>
       <img
         class="course-hero-image"
@@ -226,14 +149,14 @@ const courseStructuredData = {
               <small>تومان</small>
             </del>
             <span class="course-discount">۵۰٪ تخفیف</span>
-            <strong>فقط ۴٬۹۸۰٬۰۰۰ <small>تومان</small></strong>
+            <strong>۴٬۹۸۰٬۰۰۰ <small>تومان</small></strong>
           </div>
           <a class="course-button" href={checkoutUrl}>{purchaseLabel}</a>
-          <span>فقط به مدت محدود</span>
+          <span>هزینهٔ ابزارهای هوش مصنوعی جداست.</span>
         </div>
         <dl class="course-metrics">
-          <div><dt>۱۵ درس</dt><dd>ویدیوی آموزشی</dd></div>
-          <div><dt>۱:۴۰:۲۴</dt><dd>زمان کل آموزش</dd></div>
+          <div><dt>۱۵ درس</dt><dd>ضبط‌شده</dd></div>
+          <div><dt><bdi dir="ltr">۱:۴۰:۲۴</bdi></dt><dd>زمان آموزش</dd></div>
           <div><dt>دسترسی دائمی</dt><dd>به دوره و آپدیت‌های آینده</dd></div>
         </dl>
       </div>
@@ -249,7 +172,6 @@ const courseStructuredData = {
           </p>
         )
       }
-      <p class="course-start-note">همین حالا شروع کن</p>
     </header>
 
     <section
@@ -257,13 +179,11 @@ const courseStructuredData = {
       aria-labelledby="course-outcomes-title"
     >
       <header class="course-section-head">
-        <h2 id="course-outcomes-title">چی یاد می‌گیری؟</h2><p>
-          ساخت محتوا برای شغل، خدمات، محصول یا برند شخصی خودت؛ با مثال‌های عملی.
-        </p>
+        <h2 id="course-outcomes-title">چی یاد می‌گیری؟</h2>
       </header>
       <div class="course-result-grid">
         {
-          results.map((result) => (
+          featuredResults.map((result) => (
             <article>
               <>
                 <h3>{result.title}</h3>
@@ -338,78 +258,37 @@ const courseStructuredData = {
       </div>
     </section>
 
-    <section
-      id="course-path"
-      class="course-section course-path"
-      aria-labelledby="course-path-title"
-    >
-      <div class="shell">
-        <header class="course-section-head">
-          <h2 id="course-path-title">مسیر آموزش، از ایده تا محتوا</h2><p>
-            این پنج مرحله، خلاصهٔ مسیر ۱۵ درس دوره است.
-          </p>
-        </header>
-        <ol class="course-path-list">
+    <section class="course-section shell course-more-topics">
+      <details>
+        <summary>موضوعات بیشتر دوره</summary>
+        <div class="course-result-grid">
           {
-            coursePath.map((item, index) => (
-              <li>
-                <>
-                  <span class="course-path-number">
-                    {(index + 1).toLocaleString('fa-IR')}
-                  </span>
-                  <div>
-                    <>
-                      <p>{item.step}</p>
-                      <h3>{item.title}</h3>
-                      <span>{item.text}</span>
-                    </>
-                  </div>
-                </>
-              </li>
+            additionalResults.map((result) => (
+              <article>
+                <h3>{result.title}</h3>
+                <p>{result.text}</p>
+              </article>
             ))
           }
-        </ol>
-      </div>
+        </div>
+      </details>
     </section>
 
-    <section class="course-section shell" aria-labelledby="course-fit-title">
-      <header class="course-section-head">
-        <h2 id="course-fit-title">این دوره برای تو مناسبه؟</h2>
-      </header>
-      <div class="course-fit-grid">
-        <article>
-          <h3>به دردت می‌خورد اگر…</h3><ul>
-            {goodFit.map((item) => <li>{item}</li>)}
-          </ul>
-        </article>
-        <article>
-          <h3>به دردت نمی‌خوره اگه…</h3><ul>
-            {notFit.map((item) => <li>{item}</li>)}
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <section class="course-section shell" aria-labelledby="course-buying-title">
-      <header class="course-section-head">
-        <h2 id="course-buying-title">خرید و دسترسی به دوره</h2><p>
-          حسابی که با آن خرید می‌کنی، محل دیدن درس‌ها و دریافت فایل‌های همراه
-          است.
-        </p>
-      </header>
-      <ol class="course-buying-steps">
-        {
-          buyingSteps.map((step) => (
-            <li>
-              <>
-                <span>{step.number}</span>
-                <h3>{step.title}</h3>
-                <p>{step.text}</p>
-              </>
-            </li>
-          ))
-        }
-      </ol>
+    <section
+      class="course-section shell course-fit"
+      aria-labelledby="course-fit-title"
+    >
+      <h2 id="course-fit-title">این دوره برای تو مناسبه؟</h2>
+      <p>
+        برای ساخت محتوای پیج، محصول، خدمات یا برند شخصی خودت با مثال‌های عملی.
+      </p>
+      <p>
+        برای نتیجه‌گرفتن باید تمرین کنی؛ آموزش، جای اجرای پروژه یا مشاورهٔ
+        نامحدود نیست.
+      </p>
+      <p class="course-buying-flow">
+        ورود با شمارهٔ موبایل ← پرداخت ← دسترسی آنلاین در همان حساب
+      </p>
     </section>
 
     <section class="course-section shell" aria-labelledby="course-faq-title">
@@ -418,8 +297,8 @@ const courseStructuredData = {
       </header>
       <div class="course-faq-list">
         {
-          faqs.map((faq, index) => (
-            <details open={index === 0}>
+          faqs.map((faq) => (
+            <details>
               <>
                 <summary>{faq.question}</summary>
                 <p>{faq.answer}</p>
@@ -442,45 +321,50 @@ const courseStructuredData = {
       class="course-section shell course-terms"
       aria-labelledby="purchase-terms-title"
     >
-      <header class="course-section-head">
-        <h2 id="purchase-terms-title">شرایط خرید این دوره</h2>
-      </header>
-      <ul>
-        <li>
-          نسخهٔ فعلی شامل ۱۵ درس با مجموع ۱ ساعت و ۴۰ دقیقه و ۲۴ ثانیه آموزش
-          است.
-        </li>
-        <li>
-          قیمت اصلی ۹٬۹۸۰٬۰۰۰ تومان و قیمت ویژهٔ فعلی ۴٬۹۸۰٬۰۰۰ تومان است. تخفیف
-          به‌صورت خودکار اعمال می‌شود. مبلغ نهایی پیش از پرداخت در پنل نمایش
-          داده می‌شود.
-        </li>
-        <li>
-          دسترسی به دوره و آپدیت‌های آیندهٔ آن دائمی و از حساب شخصی خودت است؛
-          ویدیوها آنلاین پخش می‌شوند و فایل‌های همراه مجاز از همان پنل دریافت
-          می‌شوند.
-        </li>
-        <li>هزینه یا اعتبار ابزارهای بیرونی جداست.</li>
-        <li>
-          پشتیبانی برای پرداخت، ورود و دسترسی از تلگرام انجام می‌شود؛ زمان
-          پاسخ‌گویی حداکثر ۲ روز کاری است.
-        </li>
-        <li>
-          در صورت پرداخت تکراری یا عدم امکان ارائه دسترسی به دوره، مبلغ مربوط
-          بازگردانده می‌شود. درخواست‌های انصراف و بازپرداخت از طریق پشتیبانی و
-          مطابق مقررات قابل‌اعمال بررسی می‌شوند.
-        </li>
-        <li>
-          مبلغ نهایی و نسخهٔ دقیق شرایط پیش از پرداخت نمایش داده می‌شود. شرایط
-          پذیرفته‌شده هنگام خرید برای همان سفارش حفظ می‌شود؛ تغییرات بعدی، شرایط
-          سفارش قبلی را جایگزین نمی‌کند.
-        </li>
-      </ul>
+      <details>
+        <summary id="purchase-terms-title">شرایط کامل خرید و بازگشت وجه</summary
+        >
+        <ul>
+          <li>
+            نسخهٔ فعلی شامل ۱۵ درس با مجموع ۱ ساعت و ۴۰ دقیقه و ۲۴ ثانیه آموزش
+            است.
+          </li>
+          <li>
+            قیمت اصلی ۹٬۹۸۰٬۰۰۰ تومان و قیمت ویژهٔ فعلی ۴٬۹۸۰٬۰۰۰ تومان است.
+            تخفیف به‌صورت خودکار اعمال می‌شود. مبلغ نهایی پیش از پرداخت در پنل
+            نمایش داده می‌شود.
+          </li>
+          <li>
+            دسترسی به دوره و آپدیت‌های آیندهٔ آن دائمی و از حساب شخصی خودت است؛
+            ویدیوها آنلاین پخش می‌شوند و فایل‌های همراه مجاز از همان پنل دریافت
+            می‌شوند.
+          </li>
+          <li>هزینه یا اعتبار ابزارهای بیرونی جداست.</li>
+          <li>
+            پشتیبانی برای پرداخت، ورود و دسترسی از تلگرام انجام می‌شود؛ زمان
+            پاسخ‌گویی حداکثر ۲ روز کاری است.
+          </li>
+          <li>
+            در صورت پرداخت تکراری یا عدم امکان ارائه دسترسی به دوره، مبلغ مربوط
+            بازگردانده می‌شود. درخواست‌های انصراف و بازپرداخت از طریق پشتیبانی و
+            مطابق مقررات قابل‌اعمال بررسی می‌شوند.
+          </li>
+          <li>
+            مبلغ نهایی و نسخهٔ دقیق شرایط پیش از پرداخت نمایش داده می‌شود. شرایط
+            پذیرفته‌شده هنگام خرید برای همان سفارش حفظ می‌شود؛ تغییرات بعدی،
+            شرایط سفارش قبلی را جایگزین نمی‌کند.
+          </li>
+        </ul>
+      </details>
     </section>
 
     <footer class="course-final shell">
-      <h2>روی آیندهٔ شغلیت سرمایه‌گذاری کن</h2>
-      <p>از یادگرفتن تا ساختن محتوای خودت؛ با ۱۵ درس عملی و دسترسی دائمی.</p>
+      <h2>برای پیج و کارت محتوا بساز</h2>
+      <p class="course-final-note">
+        هزینهٔ ابزارهای بیرونی جداست. در صورت پرداخت تکراری یا عدم امکان ارائهٔ
+        دسترسی، مبلغ مربوط بازگردانده می‌شود؛ انصراف طبق
+        <a href="#purchase-terms">شرایط خرید و بازگشت وجه</a> بررسی می‌شود.
+      </p>
       <a class="course-button" href={checkoutUrl}>{purchaseLabel}</a>
       <div class="course-final-links">
         <a href="#purchase-terms">شرایط خرید</a><a
@@ -495,11 +379,11 @@ const courseStructuredData = {
         <div class="course-mobile-dock">
           <>
             <div class="course-dock-price">
-              <span>قیمت ویژه، فقط به مدت محدود</span>
+              <span>قیمت دوره با تخفیف</span>
               <strong>۴٬۹۸۰٬۰۰۰ تومان</strong>
             </div>
             <a class="course-button" href={checkoutUrl}>
-              شروع یادگیری
+              خرید دوره
             </a>
           </>
         </div>
@@ -539,6 +423,12 @@ const courseStructuredData = {
     margin: 0 auto 0.7rem;
     max-width: 56rem;
   }
+  .course-hero h1 > span {
+    display: block;
+    font-size: clamp(1.1rem, 2.2vw, 1.7rem);
+    line-height: 1.8;
+    margin-top: 0.35rem;
+  }
   .course-lead {
     font-size: clamp(1rem, 1.65vw, 1.25rem);
     font-weight: 600;
@@ -572,13 +462,16 @@ const courseStructuredData = {
   }
   .course-offer-price {
     display: grid;
+    grid-template-columns: max-content max-content;
+    justify-content: center;
     justify-items: center;
-    gap: 0.25rem;
+    align-items: center;
+    gap: 0.3rem 0.7rem;
   }
   .course-offer-price del {
-    color: var(--course-ink);
-    font-size: 2rem;
-    font-weight: 850;
+    color: var(--course-muted);
+    font-size: 1rem;
+    font-weight: 650;
     line-height: 1.7;
     text-decoration: none;
     white-space: nowrap;
@@ -598,20 +491,21 @@ const courseStructuredData = {
     pointer-events: none;
   }
   .course-offer-price del small {
-    font-size: 1rem;
+    font-size: 0.75rem;
     font-weight: 650;
   }
   .course-discount {
-    padding: 0.25rem 0.85rem;
+    padding: 0.2rem 0.6rem;
     border-radius: 0.5rem;
     background: #dce7ff;
     color: #003cc8;
-    font-size: 1.4rem;
-    font-weight: 850;
+    font-size: 0.9rem;
+    font-weight: 700;
     line-height: 1.7;
   }
   .course-strip-offer strong {
-    font-size: 1.5rem;
+    grid-column: 1 / -1;
+    font-size: 1.85rem;
   }
   .course-strip-offer strong small {
     font-size: 0.95rem;
@@ -619,6 +513,7 @@ const courseStructuredData = {
   .course-strip-offer > span {
     font-size: 0.8rem;
     color: var(--course-muted);
+    text-align: center;
   }
   .course-button {
     display: inline-flex;
@@ -722,7 +617,7 @@ const courseStructuredData = {
   }
   .course-example-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
   }
   .course-example-title {
@@ -874,15 +769,21 @@ const courseStructuredData = {
     display: grid;
     gap: 0.45rem;
   }
-  .course-faq-list details {
+  .course-faq-list details,
+  .course-more-topics details,
+  .course-terms details {
     border: 1px solid #dce5f5;
     border-radius: 0.8rem;
     padding: 0 1.2rem;
   }
-  .course-faq-list details[open] {
+  .course-faq-list details[open],
+  .course-more-topics details[open],
+  .course-terms details[open] {
     background: var(--course-pale);
   }
-  .course-faq-list summary {
+  .course-faq-list summary,
+  .course-more-topics summary,
+  .course-terms summary {
     cursor: pointer;
     padding: 1rem 0.2rem;
     font-weight: 700;
@@ -897,6 +798,31 @@ const courseStructuredData = {
   }
   .course-terms {
     scroll-margin-top: 7rem;
+  }
+  .course-more-topics .course-result-grid {
+    padding-block: 0.5rem 1.2rem;
+  }
+  .course-fit {
+    text-align: center;
+  }
+  .course-fit h2 {
+    font-size: 1.4rem;
+    line-height: 1.8;
+    margin-bottom: 0.5rem;
+  }
+  .course-fit p {
+    color: var(--course-muted);
+    line-height: 1.9;
+    margin-bottom: 0.5rem;
+  }
+  .course-buying-flow {
+    background: var(--course-pale);
+    border-radius: 0.8rem;
+    padding: 0.8rem;
+    margin-top: 1rem;
+  }
+  .course-terms ul {
+    padding-block: 0.5rem 1rem;
   }
   .course-terms li {
     font-size: 0.9rem;
@@ -915,11 +841,21 @@ const courseStructuredData = {
     line-height: 1.9;
     color: var(--course-muted);
   }
+  .course-final-note {
+    max-width: 42rem;
+    margin-inline: auto;
+    font-size: 0.9rem;
+  }
+  .course-final-note a {
+    color: var(--course-blue);
+    text-underline-offset: 0.2rem;
+  }
   .course-final > .course-button {
     min-width: 16rem;
   }
   .course-final-links {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 1.5rem;
     margin-top: 1.2rem;
@@ -963,8 +899,11 @@ const courseStructuredData = {
       display: none;
     }
     .course-hero h1 {
-      font-size: 1.55rem;
-      line-height: 1.8;
+      font-size: 1.9rem;
+      line-height: 1.5;
+    }
+    .course-hero h1 > span {
+      font-size: 1.1rem;
     }
     .course-lead {
       font-size: 0.95rem;
@@ -999,7 +938,21 @@ const courseStructuredData = {
       padding: 0 0 1rem;
     }
     .course-example-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.6rem;
+    }
+    .course-example-grid figure:last-child {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: min(100%, 14rem);
+    }
+    .course-example-title {
+      font-size: 0.85rem;
+      padding: 0.6rem 0.4rem;
+    }
+    .course-example-grid figcaption {
+      font-size: 0.8rem;
+      padding: 0.5rem;
     }
     .course-examples img {
       aspect-ratio: 9/16;
@@ -1029,10 +982,14 @@ const courseStructuredData = {
     .course-path-number {
       flex: none;
     }
-    .course-faq-list details {
+    .course-faq-list details,
+    .course-more-topics details,
+    .course-terms details {
       padding-inline: 0.8rem;
     }
-    .course-faq-list summary {
+    .course-faq-list summary,
+    .course-more-topics summary,
+    .course-terms summary {
       font-size: 0.9rem;
     }
     .course-final > .course-button {
@@ -1045,19 +1002,23 @@ const courseStructuredData = {
       left: 0;
       right: 0;
       z-index: 40;
-      display: flex;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
       align-items: center;
       justify-content: space-between;
       gap: 0.7rem;
-      padding: 0.8rem 1rem;
+      padding: 0.7rem 1rem calc(0.7rem + env(safe-area-inset-bottom, 0px));
+      box-sizing: border-box;
       background: #fff;
       border-top: 1px solid #dce5f5;
     }
     .course-mobile-dock strong {
-      font-size: 0.85rem;
+      font-size: 0.95rem;
+      overflow-wrap: anywhere;
     }
     .course-dock-price {
       display: grid;
+      min-width: 0;
       gap: 0.15rem;
     }
     .course-dock-price > span {
@@ -1067,10 +1028,10 @@ const courseStructuredData = {
     .course-mobile-dock .course-button {
       font-size: 0.85rem;
       padding: 0.5rem 0.9rem;
-      min-height: 2.5rem;
+      min-height: 48px;
     }
     .course-page:has(.course-mobile-dock) {
-      padding-bottom: 6rem;
+      padding-bottom: calc(7rem + env(safe-area-inset-bottom, 0px));
     }
   }
 </style>
