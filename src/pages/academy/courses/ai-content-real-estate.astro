@@ -174,43 +174,28 @@ const courseStructuredData = {
     </header>
 
     <section
-      class="course-section shell"
+      class="course-section shell course-outcomes"
       aria-labelledby="course-outcomes-title"
     >
-      <header class="course-section-head">
-        <h2 id="course-outcomes-title">چه چیزهایی می‌سازی؟</h2>
-        <p>
+      <details>
+        <summary
+          ><h2 id="course-outcomes-title">چه چیزهایی می‌سازی؟</h2></summary
+        >
+        <p class="course-outcomes-intro">
           عکس و ویدیو، شخصیت مجازی، سریال، انیمیشن و موزیک؛ چند نمونه از
           مهارت‌هایی که در ۱۵ درس عملی تمرین می‌کنی.
         </p>
-      </header>
-      <div class="course-result-grid">
-        {
-          featuredResults.map((result) => (
-            <article>
-              <>
+        <div class="course-result-grid">
+          {
+            [...featuredResults, ...additionalResults].map((result) => (
+              <article>
                 <h3>{result.title}</h3>
                 <p>{result.text}</p>
-              </>
-            </article>
-          ))
-        }
-      </div>
-      <div class="course-more-topics">
-        <details>
-          <summary>۶ مهارت دیگر؛ از قبل‌وبعد تا موزیک و دستیار شخصی</summary>
-          <div class="course-result-grid">
-            {
-              additionalResults.map((result) => (
-                <article>
-                  <h3>{result.title}</h3>
-                  <p>{result.text}</p>
-                </article>
-              ))
-            }
-          </div>
-        </details>
-      </div>
+              </article>
+            ))
+          }
+        </div>
+      </details>
     </section>
 
     <section
@@ -768,19 +753,19 @@ const courseStructuredData = {
     gap: 0.45rem;
   }
   .course-faq-list details,
-  .course-more-topics details,
+  .course-outcomes details,
   .course-terms details {
     border: 1px solid #dce5f5;
     border-radius: 0.8rem;
     padding: 0 1.2rem;
   }
   .course-faq-list details[open],
-  .course-more-topics details[open],
+  .course-outcomes details[open],
   .course-terms details[open] {
     background: var(--course-pale);
   }
   .course-faq-list summary,
-  .course-more-topics summary,
+  .course-outcomes summary,
   .course-terms summary {
     cursor: pointer;
     padding: 1rem 0.2rem;
@@ -797,11 +782,19 @@ const courseStructuredData = {
   .course-terms {
     scroll-margin-top: 7rem;
   }
-  .course-more-topics .course-result-grid {
+  .course-outcomes .course-result-grid {
     padding-block: 0.5rem 1.2rem;
   }
-  .course-more-topics {
-    margin-top: 1.2rem;
+  .course-outcomes summary h2 {
+    display: inline;
+    font-size: inherit;
+    line-height: inherit;
+    margin: 0;
+  }
+  .course-outcomes-intro {
+    color: var(--course-muted);
+    line-height: 1.9;
+    margin: 0 0 1rem;
   }
   .course-fit {
     text-align: center;
@@ -984,12 +977,12 @@ const courseStructuredData = {
       flex: none;
     }
     .course-faq-list details,
-    .course-more-topics details,
+    .course-outcomes details,
     .course-terms details {
       padding-inline: 0.8rem;
     }
     .course-faq-list summary,
-    .course-more-topics summary,
+    .course-outcomes summary,
     .course-terms summary {
       font-size: 0.9rem;
     }
