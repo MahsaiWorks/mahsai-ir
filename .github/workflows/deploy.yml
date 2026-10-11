@@ -7,6 +7,7 @@ on:
 
 env:
   PUBLIC_ACADEMY_SALES_ENABLED: 'true'
+  PUBLIC_ACADEMY_FUNNEL_ENABLED: 'true'
 
 permissions:
   contents: read
