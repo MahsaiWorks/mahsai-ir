@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/materialize-metrazh-release.mjs && astro build",
+    "build": "node scripts/materialize-metrazh-release.mjs && astro build && node scripts/inline-course-styles.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "audit:static": "node scripts/audit-static.mjs && node scripts/audit-public-ai-policy.test.mjs",
