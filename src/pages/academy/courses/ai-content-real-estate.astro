@@ -185,7 +185,7 @@ const courseStructuredData = {
       aria-labelledby="course-introduction-title"
     >
       <figure class="course-preview">
-        <figcaption>
+        <figcaption data-course-reveal>
           <h2 id="course-introduction-title">قبل از خرید، مقدمه رو ببین</h2>
         </figcaption>
         <div class="course-preview-player">
@@ -253,11 +253,11 @@ const courseStructuredData = {
       class="course-section course-examples shell"
       aria-labelledby="course-examples-title"
     >
-      <header class="course-section-head">
+      <header class="course-section-head" data-course-reveal>
         <h2 id="course-examples-title">خودت چی می‌سازی؟</h2>
       </header>
       <div class="course-example-grid">
-        <figure>
+        <figure data-course-reveal>
           <h3 class="course-example-title">آموزش ساخت سریال</h3>
           <img
             src="/assets/academy/abr-moshaver/example-fathers-house.webp"
@@ -267,7 +267,7 @@ const courseStructuredData = {
             alt="نمونهٔ داستان خانهٔ پدری در دوره"
           />
         </figure>
-        <figure>
+        <figure data-course-reveal>
           <h3 class="course-example-title">رشته استوری</h3>
           <img
             src="/assets/academy/abr-moshaver/example-character.webp"
@@ -277,7 +277,7 @@ const courseStructuredData = {
             alt="آیدا در کافه؛ نمونهٔ رشته استوری دوره"
           />
         </figure>
-        <figure>
+        <figure data-course-reveal>
           <h3 class="course-example-title">انیمیشن</h3>
           <img
             src="/assets/academy/abr-moshaver/example-animation.webp"
@@ -289,7 +289,7 @@ const courseStructuredData = {
         </figure>
       </div>
       <div class="course-before-after">
-        <figure>
+        <figure data-course-reveal>
           <img
             src="/assets/academy/abr-moshaver/balcony-before.webp"
             width="941"
@@ -298,7 +298,7 @@ const courseStructuredData = {
             alt="بالکن پیش از تغییر در نمونهٔ آموزشی قبل‌وبعد"
           /><figcaption>قبل</figcaption>
         </figure>
-        <figure>
+        <figure data-course-reveal>
           <img
             src="/assets/academy/abr-moshaver/balcony-after.webp"
             width="941"
@@ -314,7 +314,7 @@ const courseStructuredData = {
       class="course-section shell course-fit"
       aria-labelledby="course-fit-title"
     >
-      <h2 id="course-fit-title">این دوره برای تو مناسبه؟</h2>
+      <h2 id="course-fit-title" data-course-reveal>این دوره برای تو مناسبه؟</h2>
       <p>
         برای ساخت محتوای پیج، محصول، خدمات یا برند شخصی خودت با مثال‌های عملی.
       </p>
@@ -424,6 +424,7 @@ const courseStructuredData = {
   </article>
   <script>
     import '../../../scripts/academy-funnel';
+    import '../../../scripts/academy-motion';
     const sample = document.querySelector<HTMLVideoElement>('#course-preview');
     const play = document.querySelector<HTMLButtonElement>(
       '#course-preview-play',
