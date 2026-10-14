@@ -137,47 +137,17 @@ const courseStructuredData = {
     <header class="course-hero shell">
       <h1>ابر مشاور<span>ساخت ویدیو و استوری با هوش مصنوعی</span></h1>
       <p class="course-lead">
-        شخصیت مجازی بساز، داستانت را به سریال تبدیل کن و برای پیج یا کسب‌وکارت
-        محتوای اختصاصی خلق کن؛ در ۱۵ درس عملی.
+        این شخصیت‌ها و ویدیوها چطور ساخته می‌شن؟ این‌بار خودت بسازشون.
       </p>
-      <figure class="course-preview">
-        <figcaption>
-          <strong>مقدمهٔ دوره را ببین</strong>
-          <span>قبل از شروع، با دوره آشنا شو</span>
-        </figcaption>
-        <div class="course-preview-player">
-          <video
-            id="course-preview"
-            controls
-            tabindex="0"
-            playsinline
-            preload="none"
-            poster="/assets/academy/abr-moshaver/course-introduction-v1.webp"
-            aria-label="ویدیوی مقدمهٔ دورهٔ ابر مشاور"
-          >
-            <source
-              src="/assets/academy/abr-moshaver/course-introduction-v1.mp4"
-              type="video/mp4"
-            />
-            <track
-              kind="captions"
-              src="/assets/academy/abr-moshaver/course-introduction-v1.fa.vtt"
-              srclang="fa"
-              label="فارسی"
-            />
-            برای دیدن نمونه، از مرورگری استفاده کن که پخش ویدیو را پشتیبانی می‌کند.
-          </video>
-          <button
-            class="course-preview-play"
-            id="course-preview-play"
-            type="button"
-            hidden
-          >
-            <span aria-hidden="true">▶</span> پخش مقدمهٔ دوره
-          </button>
-        </div>
-        <p>با مسیر دوره و چیزهایی که یاد می‌گیری آشنا شو.</p>
-      </figure>
+      <img
+        class="course-hero-image"
+        src="/assets/academy/abr-moshaver/hero-scene.webp"
+        alt="ابر مشاور؛ نمونه‌های ساخت شخصیت مجازی، سریال و قبل‌وبعد با هوش مصنوعی"
+        width="1280"
+        height="550"
+        fetchpriority="high"
+        decoding="async"
+      />
       <div class="course-purchase-strip" id="course-purchase">
         <div class="course-strip-offer">
           <div class="course-offer-price">
@@ -211,6 +181,48 @@ const courseStructuredData = {
     </header>
 
     <section
+      class="course-section shell course-introduction"
+      aria-labelledby="course-introduction-title"
+    >
+      <figure class="course-preview">
+        <figcaption>
+          <h2 id="course-introduction-title">قبل از خرید، مقدمه رو ببین</h2>
+        </figcaption>
+        <div class="course-preview-player">
+          <video
+            id="course-preview"
+            controls
+            tabindex="0"
+            playsinline
+            preload="none"
+            poster="/assets/academy/abr-moshaver/course-introduction-v1.webp"
+            aria-label="ویدیوی مقدمهٔ دورهٔ ابر مشاور"
+          >
+            <source
+              src="/assets/academy/abr-moshaver/course-introduction-v1.mp4"
+              type="video/mp4"
+            />
+            <track
+              kind="captions"
+              src="/assets/academy/abr-moshaver/course-introduction-v1.fa.vtt"
+              srclang="fa"
+              label="فارسی"
+            />
+            برای دیدن نمونه، از مرورگری استفاده کن که پخش ویدیو را پشتیبانی می‌کند.
+          </video>
+          <button
+            class="course-preview-play"
+            id="course-preview-play"
+            type="button"
+            hidden
+          >
+            <span aria-hidden="true">▶</span> پخش مقدمهٔ دوره
+          </button>
+        </div>
+      </figure>
+    </section>
+
+    <section
       class="course-section shell course-outcomes"
       aria-labelledby="course-outcomes-title"
     >
@@ -242,9 +254,7 @@ const courseStructuredData = {
       aria-labelledby="course-examples-title"
     >
       <header class="course-section-head">
-        <h2 id="course-examples-title">
-          نمونه‌هایی از چیزی که در دوره می‌بینی
-        </h2><p>از روایت یک داستان تا ساخت شخصیت، انیمیشن و ویدیوی قبل‌وبعد.</p>
+        <h2 id="course-examples-title">خودت چی می‌سازی؟</h2>
       </header>
       <div class="course-example-grid">
         <figure>
@@ -255,7 +265,7 @@ const courseStructuredData = {
             height="1280"
             loading="lazy"
             alt="نمونهٔ داستان خانهٔ پدری در دوره"
-          /><figcaption>خانهٔ پدری؛ روایت چندقسمتی</figcaption>
+          />
         </figure>
         <figure>
           <h3 class="course-example-title">رشته استوری</h3>
@@ -265,7 +275,7 @@ const courseStructuredData = {
             height="1376"
             loading="lazy"
             alt="آیدا در کافه؛ نمونهٔ رشته استوری دوره"
-          /><figcaption>آیدا در کافه؛ نمونهٔ رشته استوری</figcaption>
+          />
         </figure>
         <figure>
           <h3 class="course-example-title">انیمیشن</h3>
@@ -275,7 +285,7 @@ const courseStructuredData = {
             height="1672"
             loading="lazy"
             alt="نمونهٔ انیمیشن ساخته‌شده با هوش مصنوعی"
-          /><figcaption>ساخت انیمیشن با هوش مصنوعی</figcaption>
+          />
         </figure>
       </div>
       <div class="course-before-after">
@@ -307,10 +317,6 @@ const courseStructuredData = {
       <h2 id="course-fit-title">این دوره برای تو مناسبه؟</h2>
       <p>
         برای ساخت محتوای پیج، محصول، خدمات یا برند شخصی خودت با مثال‌های عملی.
-      </p>
-      <p>
-        آموزش‌ها را قدم‌به‌قدم روی ایدهٔ خودت اجرا کن؛ مهارتت با تمرین و ساختن
-        رشد می‌کند.
       </p>
       <p class="course-buying-flow">
         ورود با شمارهٔ موبایل ← پرداخت ← دسترسی آنلاین در همان حساب
@@ -493,14 +499,20 @@ const courseStructuredData = {
     width: 100%;
     height: auto;
     aspect-ratio: 1280/550;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 1rem;
     background: var(--course-pale);
   }
   .course-preview {
-    max-width: 54rem;
-    margin: 1.4rem auto 0;
-    padding: 0.9rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 19rem);
+    align-items: center;
+    gap: 0.8rem 2rem;
+    width: 100%;
+    max-width: 52rem;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 1.5rem;
     border: 1px solid #dce7ff;
     border-radius: 1rem;
     background: var(--course-pale);
@@ -508,22 +520,18 @@ const courseStructuredData = {
     transform: none;
   }
   .course-preview figcaption {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 0.4rem 1rem;
-    margin-bottom: 0.7rem;
+    grid-column: 1;
+    grid-row: 1;
+    text-align: center;
   }
-  .course-preview figcaption strong {
+  .course-preview figcaption h2 {
     color: var(--course-ink);
-    font-size: 1rem;
-  }
-  .course-preview figcaption span {
-    color: #003cc8;
-    font-size: 0.8rem;
+    margin: 0;
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
   }
   .course-preview-player {
+    grid-column: 2;
+    grid-row: 1;
     position: relative;
     width: min(100%, 19rem);
     margin-inline: auto;
@@ -567,17 +575,6 @@ const courseStructuredData = {
     border-radius: 0.6rem;
     background: #101642;
     object-fit: contain;
-  }
-  .course-preview > p {
-    max-width: 19rem;
-    margin: 0.8rem auto 0;
-    padding-inline: 0.25rem;
-    font-size: 0.95rem;
-    font-weight: 500;
-    line-height: 1.9;
-    color: var(--course-ink);
-    text-align: center;
-    text-wrap: balance;
   }
   .course-purchase-strip {
     display: grid;
@@ -1051,6 +1048,16 @@ const courseStructuredData = {
     .course-hero-image {
       aspect-ratio: 1280/550;
       object-position: center;
+    }
+    .course-preview {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1rem;
+      padding: 0.9rem;
+    }
+    .course-preview figcaption,
+    .course-preview-player {
+      grid-column: auto;
+      grid-row: auto;
     }
     .course-purchase-strip {
       padding: 1.2rem 1rem;
