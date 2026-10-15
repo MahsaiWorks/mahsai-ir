@@ -8,6 +8,8 @@ on:
 env:
   PUBLIC_ACADEMY_SALES_ENABLED: 'true'
   PUBLIC_ACADEMY_FUNNEL_ENABLED: 'true'
+  # Enable only after the backend, verified email sender and owner panel are live.
+  PUBLIC_ACADEMY_PAYPAL_ENABLED: ${{ vars.PUBLIC_ACADEMY_PAYPAL_ENABLED || 'false' }}
 
 permissions:
   contents: read

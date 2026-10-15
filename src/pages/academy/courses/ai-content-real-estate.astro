@@ -12,6 +12,10 @@ const checkoutUrl = salesEnabled
   : '#course-purchase';
 const purchaseLabel = salesEnabled ? 'خرید دوره' : 'اطلاعات ثبت‌نام';
 const supportUrl = 'https://t.me/Mahsaisupport';
+const internationalEnabled =
+  salesEnabled && import.meta.env.PUBLIC_ACADEMY_PAYPAL_ENABLED === 'true';
+const internationalUrl =
+  'https://android-pay.mahsai.ir/academy/buy-international';
 
 const results = [
   {
@@ -165,6 +169,16 @@ const courseStructuredData = {
           <div><dt><bdi dir="ltr">۱:۴۰:۲۴</bdi></dt><dd>زمان آموزش</dd></div>
           <div><dt>دسترسی دائمی</dt><dd>به دوره و آپدیت‌های آینده</dd></div>
         </dl>
+        {
+          internationalEnabled && (
+            <p class="course-international-option">
+              خارج از ایران هستی؟{' '}
+              <a href={internationalUrl} data-academy-international>
+                پرداخت با PayPal · <bdi dir="ltr">40 USD</bdi>
+              </a>
+            </p>
+          )
+        }
       </div>
       {
         !salesEnabled && (
@@ -398,6 +412,16 @@ const courseStructuredData = {
         <a href="#purchase-terms">شرایط خرید و بازگشت وجه</a> بررسی می‌شود.
       </p>
       <a class="course-button" href={checkoutUrl}>{purchaseLabel}</a>
+      {
+        internationalEnabled && (
+          <p class="course-international-option">
+            <a href={internationalUrl} data-academy-international>
+              پرداخت بین‌المللی با PayPal · <bdi dir="ltr">40 USD</bdi>
+            </a>
+            <span>دسترسی پس از تأیید پرداخت فعال می‌شود.</span>
+          </p>
+        )
+      }
       <div class="course-final-links">
         <a href="#purchase-terms">شرایط خرید</a><a
           href={supportUrl}
@@ -451,6 +475,22 @@ const courseStructuredData = {
 </BaseLayout>
 
 <style>
+  .course-international-option {
+    margin: 16px 0 0;
+    color: var(--muted, #5d6b88);
+    font-size: 0.875rem;
+    line-height: 1.9;
+    text-align: center;
+  }
+  .course-international-option a {
+    color: #064dff;
+    font-weight: 700;
+    text-underline-offset: 4px;
+  }
+  .course-international-option span {
+    display: block;
+    margin-top: 4px;
+  }
   .course-page {
     --course-ink: #101642;
     --course-blue: #064dff;
