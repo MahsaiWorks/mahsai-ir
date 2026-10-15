@@ -19,6 +19,8 @@ const accessibilityRoutes = [
   '/academy/courses/ai-content-real-estate/',
   '/academy/first-organized-property-file/',
   '/articles/',
+  '/articles/topics/ai-content/',
+  '/articles/blogger-photos-chatgpt/',
   '/articles/topics/files/',
   '/articles/complete-property-file/',
   '/articles/name-property-files/',

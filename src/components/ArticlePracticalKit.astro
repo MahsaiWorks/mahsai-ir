@@ -16,28 +16,38 @@ interface Props {
   articleId: string;
   scenario: Scenario;
   copyBlock: CopyBlock;
+  scenarioEyebrow?: string;
+  copySuccess?: string;
+  conversational?: boolean;
 }
 
-const { articleId, scenario, copyBlock } = Astro.props;
+const {
+  articleId,
+  scenario,
+  copyBlock,
+  scenarioEyebrow = 'یک موقعیت واقعی از کار روزانه',
+  copySuccess = 'کپی شد؛ حالا متناسب با پرونده ویرایشش کن.',
+  conversational = false,
+} = Astro.props;
 const copyTargetId = `copy-${articleId}`;
 const copyText = copyBlock.lines.join('\n');
 ---
 
 <section class="article-practical-kit" aria-labelledby={`kit-${articleId}`}>
   <article class="article-scenario">
-    <p class="eyebrow">یک موقعیت واقعی از کار روزانه</p>
+    <p class="eyebrow">{scenarioEyebrow}</p>
     <h2 id={`kit-${articleId}`}>{scenario.title}</h2>
     <dl>
       <div>
-        <dt>چه پیش آمده؟</dt>
+        <dt>{conversational ? 'چی می‌خوای بسازی؟' : 'چه پیش آمده؟'}</dt>
         <dd>{scenario.situation}</dd>
       </div>
       <div>
-        <dt>چه کار کنیم؟</dt>
+        <dt>{conversational ? 'چی کار کنی؟' : 'چه کار کنیم؟'}</dt>
         <dd>{scenario.action}</dd>
       </div>
       <div>
-        <dt>نتیجهٔ قابل انتظار</dt>
+        <dt>{conversational ? 'به چی می‌رسی؟' : 'نتیجهٔ قابل انتظار'}</dt>
         <dd>{scenario.result}</dd>
       </div>
     </dl>
@@ -61,6 +71,7 @@ const copyText = copyBlock.lines.join('\n');
         class="button button-small"
         data-copy-article-kit
         data-copy-target={copyTargetId}
+        data-copy-success={copySuccess}
         data-event="article_resource_copied"
         data-event-location={`article_${articleId}`}
       >
@@ -102,7 +113,7 @@ const copyText = copyBlock.lines.join('\n');
         );
         if (status) {
           status.textContent = copied
-            ? 'کپی شد؛ حالا متناسب با پرونده ویرایشش کن.'
+            ? (button.dataset.copySuccess ?? '')
             : 'متن را انتخاب کن و دستی کپی کن.';
         }
       });

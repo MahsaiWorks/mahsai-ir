@@ -1,4 +1,19 @@
 /* Editorial pages and tools share the same scale as the MAHSAI home page. */
+.mahsai-site .article-page[data-article-topic='ai-content'] {
+  --course-blue: #064dff;
+  --course-pale: #f1f6ff;
+  --teal: var(--course-blue);
+  --teal-dark: var(--course-blue);
+  --mint-soft: var(--course-pale);
+  --orange: var(--course-blue);
+  --orange-soft: var(--course-pale);
+}
+
+.mahsai-site .article-page[data-article-topic='ai-content'] .article-takeaways {
+  background: var(--course-pale);
+  border-color: #d9e2ff;
+}
+
 .mahsai-site
   :is(
     .tool-index-hero,

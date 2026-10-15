@@ -178,7 +178,7 @@ const collectionStructuredData = {
     </div>
   </section>
 
-  <nav class="academy-map" aria-label="مسیرهای آموزش املاک">
+  <nav class="academy-map" aria-label="موضوع‌های آموزش رایگان">
     <div class="shell academy-map-grid">
       {
         articleClusters.map((cluster) => (
@@ -224,7 +224,21 @@ const collectionStructuredData = {
         const entries = articles.filter(
           (article) => article.data.cluster === cluster.id,
         );
-        const image = trackImages[cluster.id];
+        const image =
+          cluster.id === 'ai-content'
+            ? {
+                src: entries[0]?.data.cover ?? cluster.cover,
+                alt: entries[0]?.data.coverAlt ?? cluster.coverAlt,
+                width:
+                  entries[0]?.data.coverWidth ?? cluster.coverWidth ?? 1280,
+                height:
+                  entries[0]?.data.coverHeight ?? cluster.coverHeight ?? 550,
+              }
+            : {
+                ...trackImages[cluster.id],
+                width: 1536,
+                height: 1024,
+              };
 
         return (
           <section
@@ -246,8 +260,8 @@ const collectionStructuredData = {
                   <ResponsiveImage
                     src={image.src}
                     alt={image.alt}
-                    width="1536"
-                    height="1024"
+                    width={image.width}
+                    height={image.height}
                     loading="lazy"
                     decoding="async"
                   />

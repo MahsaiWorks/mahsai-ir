@@ -50,52 +50,81 @@ const apps = defineCollection({
   }),
 });
 
+const articleFields = z.object({
+  title: z.string(),
+  seoTitle: z.string().optional(),
+  description: z.string(),
+  category: z.string(),
+  publishedAt: z.coerce.date(),
+  updatedAt: z.coerce.date().optional(),
+  readingTime: z.string(),
+  cover: z.string(),
+  coverWidth: z.number().int().positive(),
+  coverHeight: z.number().int().positive(),
+  coverAlt: z.string(),
+  coverPosition: z.enum(['center', 'left', 'right']).default('center'),
+  accent: z.enum(['navy', 'teal', 'sand']),
+  seriesOrder: z.number().int().positive(),
+  related: z.array(z.string()).default([]),
+  takeaways: z.array(z.string()).min(2).max(4),
+  scenario: z.object({
+    title: z.string(),
+    situation: z.string(),
+    action: z.string(),
+    result: z.string(),
+  }),
+  copyBlock: z.object({
+    title: z.string(),
+    intro: z.string(),
+    lines: z.array(z.string()).min(2).max(12),
+  }),
+  keywords: z.array(z.string()),
+  draft: z.boolean().default(false),
+  featured: z.boolean().default(false),
+});
+
+const metrazhArticleOffer = z.object({
+  title: z.string(),
+  description: z.string(),
+  visual: z.enum([
+    'property-catalog',
+    'smart-matching',
+    'smart-listing',
+    'visit-routing',
+    'customer-follow-up',
+  ]),
+});
+
+const courseArticleOffer = z.object({
+  slug: z.literal('ai-content-real-estate'),
+  title: z.string().min(1),
+  description: z.string().min(1),
+  label: z.string().min(1),
+});
+
+const articleDownload = z.object({
+  title: z.string().min(1),
+  description: z.string().min(1),
+  href: z.string().regex(/^\/downloads\/academy\/[a-z0-9-]+\.(?:txt|pdf|zip)$/),
+  label: z.string().min(1),
+});
+
 const articles = defineCollection({
   loader: glob({ base: './src/content/articles', pattern: '**/*.{md,mdx}' }),
-  schema: z.object({
-    title: z.string(),
-    seoTitle: z.string().optional(),
-    description: z.string(),
-    category: z.string(),
-    publishedAt: z.coerce.date(),
-    updatedAt: z.coerce.date().optional(),
-    readingTime: z.string(),
-    cover: z.string(),
-    coverWidth: z.number().int().positive(),
-    coverHeight: z.number().int().positive(),
-    coverAlt: z.string(),
-    coverPosition: z.enum(['center', 'left', 'right']).default('center'),
-    accent: z.enum(['navy', 'teal', 'sand']),
-    cluster: z.enum(['files', 'clients', 'marketing', 'legal']),
-    seriesOrder: z.number().int().positive(),
-    related: z.array(z.string()).default([]),
-    takeaways: z.array(z.string()).min(2).max(4),
-    scenario: z.object({
-      title: z.string(),
-      situation: z.string(),
-      action: z.string(),
-      result: z.string(),
+  schema: z.discriminatedUnion('cluster', [
+    articleFields.extend({
+      cluster: z.enum(['files', 'clients', 'marketing', 'legal']),
+      metrazh: metrazhArticleOffer,
+      course: z.never().optional(),
+      download: z.never().optional(),
     }),
-    copyBlock: z.object({
-      title: z.string(),
-      intro: z.string(),
-      lines: z.array(z.string()).min(2).max(12),
+    articleFields.extend({
+      cluster: z.literal('ai-content'),
+      metrazh: z.never().optional(),
+      course: courseArticleOffer,
+      download: articleDownload.optional(),
     }),
-    metrazh: z.object({
-      title: z.string(),
-      description: z.string(),
-      visual: z.enum([
-        'property-catalog',
-        'smart-matching',
-        'smart-listing',
-        'visit-routing',
-        'customer-follow-up',
-      ]),
-    }),
-    keywords: z.array(z.string()),
-    draft: z.boolean().default(false),
-    featured: z.boolean().default(false),
-  }),
+  ]),
 });
 
 export const collections = {

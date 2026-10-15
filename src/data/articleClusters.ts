@@ -1,16 +1,38 @@
 export interface ArticleCluster {
-  id: 'files' | 'clients' | 'marketing' | 'legal';
+  id: 'files' | 'clients' | 'marketing' | 'legal' | 'ai-content';
   title: string;
   description: string;
   searchTitle: string;
   answer: string;
   cover: string;
   coverAlt: string;
+  coverWidth?: number;
+  coverHeight?: number;
   keywords: string[];
   guideSlug?: string;
 }
 
 export const articleClusters: ArticleCluster[] = [
+  {
+    id: 'ai-content',
+    title: 'تولید محتوا با هوش مصنوعی',
+    description:
+      'با مثال و متن آماده، ساخت عکس و محتوا برای پیجت را قدم‌به‌قدم یاد بگیر.',
+    searchTitle: 'آموزش تولید محتوا با هوش مصنوعی؛ از کجا شروع کنیم؟',
+    answer:
+      'برای شروع لازم نیست همهٔ ابزارها را بلد باشی. یک عکس یا محتوای مشخص انتخاب کن، خواسته‌ات را ساده توضیح بده و هر بار یک بخش از نتیجه را بهتر کن. اینجا آموزش‌های رایگان و فایل‌های آماده را کنار هم پیدا می‌کنی.',
+    cover: '/assets/academy/abr-moshaver/hero-scene.webp',
+    coverAlt:
+      'نمونه‌های ساخت عکس، ویدیو و استوری با هوش مصنوعی در آکادمی مهسای',
+    coverWidth: 1280,
+    coverHeight: 550,
+    keywords: [
+      'آموزش هوش مصنوعی',
+      'تولید محتوا با هوش مصنوعی',
+      'ساخت عکس با چت جی پی تی',
+      'آموزش ChatGPT برای تولید محتوا',
+    ],
+  },
   {
     id: 'files',
     title: 'فایل و داده',

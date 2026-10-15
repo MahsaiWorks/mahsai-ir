@@ -24,7 +24,7 @@ export const GET: APIRoute = async ({ site }) => {
     })
     .join('');
 
-  const body = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>مجلهٔ املاک MAHSAI</title><link>${new URL('/articles/', base)}</link><description>راهنماهای ساده و کاربردی برای مشاوران املاک ایران</description><language>fa-IR</language>${items}</channel></rss>`;
+  const body = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>مجلهٔ مهسای</title><link>${new URL('/articles/', base)}</link><description>آموزش‌های سادهٔ هوش مصنوعی و راهنماهای کاربردی کار املاک</description><language>fa-IR</language>${items}</channel></rss>`;
 
   return new Response(body, {
     headers: { 'Content-Type': 'application/rss+xml; charset=utf-8' },

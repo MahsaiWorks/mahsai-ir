@@ -28,6 +28,12 @@ const articles = (await getCollection('articles'))
     (article) => !article.data.draft && article.data.cluster === cluster.id,
   )
   .sort((a, b) => a.data.seriesOrder - b.data.seriesOrder);
+const leadArticle = cluster.id === 'ai-content' ? articles[0] : undefined;
+const cover = leadArticle?.data.cover ?? cluster.cover;
+const coverAlt = leadArticle?.data.coverAlt ?? cluster.coverAlt;
+const coverWidth = leadArticle?.data.coverWidth ?? cluster.coverWidth ?? 1536;
+const coverHeight =
+  leadArticle?.data.coverHeight ?? cluster.coverHeight ?? 1024;
 const guide = cluster.guideSlug
   ? guideTopics.find((entry) => entry.slug === cluster.guideSlug)
   : undefined;
@@ -39,7 +45,7 @@ const pageStructuredData = {
   name: cluster.searchTitle,
   description: cluster.description,
   url: canonical.toString(),
-  image: new URL(cluster.cover, Astro.site).toString(),
+  image: new URL(cover, Astro.site).toString(),
   inLanguage: 'fa-IR',
   publisher: {
     '@type': 'Organization',
@@ -70,7 +76,7 @@ const breadcrumbStructuredData = {
     {
       '@type': 'ListItem',
       position: 2,
-      name: 'مجلهٔ املاک',
+      name: 'مجلهٔ مهسای',
       item: new URL('/articles/', Astro.site).toString(),
     },
     {
@@ -85,13 +91,15 @@ const breadcrumbStructuredData = {
 
 <BaseLayout
   title={`${cluster.searchTitle} | ${siteConfig.brandName}`}
-  description={`${cluster.description} مقاله‌ها و راهنماهای ساده و کاربردی برای مشاوران املاک ایران.`}
-  image={cluster.cover}
-  imageAlt={cluster.coverAlt}
-  imageWidth={1536}
-  imageHeight={1024}
-  preloadImage={cluster.cover}
-  preloadImageWidth={1536}
+  description={cluster.id === 'ai-content'
+    ? `${cluster.description} با آموزش‌های رایگان مهسای شروع کن.`
+    : `${cluster.description} مقاله‌ها و راهنماهای ساده و کاربردی برای مشاوران املاک ایران.`}
+  image={cover}
+  imageAlt={coverAlt}
+  imageWidth={coverWidth}
+  imageHeight={coverHeight}
+  preloadImage={cover}
+  preloadImageWidth={coverWidth}
   keywords={cluster.keywords}
 >
   <script
@@ -110,7 +118,7 @@ const breadcrumbStructuredData = {
       <div>
         <nav class="breadcrumbs" aria-label="مسیر صفحه">
           <a href="/">خانه</a><span aria-hidden="true">/</span>
-          <a href="/articles/">مجلهٔ املاک</a><span aria-hidden="true">/</span>
+          <a href="/articles/">مجلهٔ مهسای</a><span aria-hidden="true">/</span>
           <span>{cluster.title}</span>
         </nav>
         <p class="kicker">مقاله‌های این موضوع</p>
@@ -119,10 +127,10 @@ const breadcrumbStructuredData = {
       </div>
       <figure>
         <ResponsiveImage
-          src={cluster.cover}
-          alt={cluster.coverAlt}
-          width="1536"
-          height="1024"
+          src={cover}
+          alt={coverAlt}
+          width={coverWidth}
+          height={coverHeight}
           sizes="(max-width: 56.25rem) 100vw, 44vw"
           fetchpriority="high"
         />

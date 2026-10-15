@@ -25,6 +25,20 @@ check(
   actualMetrazh,
   false,
 );
+assert.deepEqual(
+  [...actualMetrazh.matchAll(/href=["']\/articles\/([^/"']+)\/["']/g)].map(
+    (match) => match[1],
+  ),
+  [
+    'complete-property-file',
+    'property-ad-photography',
+    'qualify-real-estate-client',
+  ],
+  'Metrazh keeps its three existing product guides when an AI article is added',
+);
+checks.push(
+  'Metrazh keeps its three existing product guides when an AI article is added',
+);
 check(
   'Injected AI product feature in actual Metrazh main is rejected',
   actualMetrazh.replace('</main>', `${feature}</main>`),
@@ -100,6 +114,32 @@ check(
   `<p>${approvedBrandDescription}</p>`,
   true,
   'guides/index.html',
+);
+
+for (const educationRoute of [
+  'articles/index.html',
+  'articles/topics/ai-content/index.html',
+  'articles/blogger-photos-chatgpt/index.html',
+]) {
+  check(
+    `Reviewed AI education copy is accepted on ${educationRoute}`,
+    '<p>آموزش ساخت عکس با هوش مصنوعی، همراه با فایل رایگان.</p>',
+    false,
+    educationRoute,
+  );
+}
+
+check(
+  'An unreviewed article cannot inherit the AI education exemption',
+  '<p>آموزش ساخت عکس با هوش مصنوعی.</p>',
+  true,
+  'articles/unreviewed-ai-article/index.html',
+);
+check(
+  'An unreviewed topic cannot inherit the AI education exemption',
+  '<p>آموزش ساخت عکس با هوش مصنوعی.</p>',
+  true,
+  'articles/topics/unreviewed-ai-topic/index.html',
 );
 
 console.log(

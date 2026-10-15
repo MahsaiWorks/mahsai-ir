@@ -17,7 +17,7 @@ const bazaarLink = app.data.storeLinks.find((link) =>
   link.url.includes('cafebazaar.ir'),
 );
 const productGuides = (await getCollection('articles'))
-  .filter((article) => !article.data.draft)
+  .filter((article) => !article.data.draft && Boolean(article.data.metrazh))
   .sort(
     (a, b) =>
       Number(b.data.featured) - Number(a.data.featured) ||

@@ -11,6 +11,7 @@ import {
 import { getGuideForArticle } from '../../data/guideTopics';
 import AnswerFirst from '../../components/AnswerFirst.astro';
 import ArticlePracticalKit from '../../components/ArticlePracticalKit.astro';
+import ArticleCourseOffer from '../../components/ArticleCourseOffer.astro';
 import PropertyFileNameBuilder from '../../components/PropertyFileNameBuilder.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { metrazhScreenshots } from '../../data/metrazhScreenshots';
@@ -28,6 +29,9 @@ export async function getStaticPaths() {
 
 const { article, allArticles } = Astro.props;
 const { Content, headings } = await render(article);
+const metrazhOffer = article.data.metrazh;
+const courseOffer = article.data.course;
+const isAiArticle = article.data.cluster === 'ai-content';
 const metrazhApp = (await getCollection('apps')).find(
   (app) => app.id === 'metrazh' && app.data.status === 'available',
 );
@@ -44,10 +48,11 @@ const featureScreenshots = {
   'visit-routing': 'visits',
   'customer-follow-up': 'workspace',
 } as const;
-const metrazhVisual = metrazhScreenshots.find(
-  (screenshot) =>
-    screenshot.id === featureScreenshots[article.data.metrazh.visual],
-);
+const metrazhVisual = metrazhOffer
+  ? metrazhScreenshots.find(
+      (screenshot) => screenshot.id === featureScreenshots[metrazhOffer.visual],
+    )
+  : undefined;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const cluster = articleClusters.find(
   (entry) => entry.id === article.data.cluster,
@@ -119,7 +124,7 @@ const breadcrumbStructuredData = {
     {
       '@type': 'ListItem',
       position: 2,
-      name: 'مجلهٔ املاک',
+      name: 'مجلهٔ مهسای',
       item: new URL('/articles/', Astro.site).toString(),
     },
     {
@@ -167,12 +172,16 @@ const breadcrumbStructuredData = {
     set:html={JSON.stringify(breadcrumbStructuredData)}
   />
 
-  <article class="article-page" data-accent={article.data.accent}>
+  <article
+    class="article-page"
+    data-accent={article.data.accent}
+    data-article-topic={article.data.cluster}
+  >
     <header class="article-stage">
       <div class="shell">
         <nav class="breadcrumbs" aria-label="مسیر صفحه">
           <a href="/">خانه</a><span aria-hidden="true">/</span>
-          <a href="/articles/">مجلهٔ املاک</a><span aria-hidden="true">/</span>
+          <a href="/articles/">مجلهٔ مهسای</a><span aria-hidden="true">/</span>
           {
             cluster ? (
               <a href={`/articles/topics/${cluster.id}/`}>{cluster.title}</a>
@@ -186,8 +195,14 @@ const breadcrumbStructuredData = {
           <div class="article-stage-copy">
             <p class="article-stage-label">
               <span>{article.data.category}</span>
-              <i aria-hidden="true"></i>
-              {cluster?.title}
+              {
+                cluster && cluster.title !== article.data.category && (
+                  <>
+                    <i aria-hidden="true" />
+                    {cluster.title}
+                  </>
+                )
+              }
             </p>
             <h1>{article.data.title}</h1>
             <p class="article-deck">{article.data.description}</p>
@@ -207,7 +222,13 @@ const breadcrumbStructuredData = {
             </div>
 
             <div class="article-takeaways">
-              <p>توی این راهنما چی یاد می‌گیرید؟</p>
+              <p>
+                {
+                  isAiArticle
+                    ? 'توی این آموزش چی یاد می‌گیری؟'
+                    : 'توی این راهنما چی یاد می‌گیرید؟'
+                }
+              </p>
               <ul>
                 {article.data.takeaways.map((takeaway) => <li>{takeaway}</li>)}
               </ul>
@@ -234,7 +255,13 @@ const breadcrumbStructuredData = {
       data-view-event="article_reading_started"
     >
       <aside class="article-toc" aria-label="فهرست مقاله">
-        <p>سریع بروید سراغ بخشی که لازم دارید</p>
+        <p>
+          {
+            isAiArticle
+              ? 'مستقیم برو سراغ بخشی که می‌خوای'
+              : 'سریع بروید سراغ بخشی که لازم دارید'
+          }
+        </p>
         <ol>
           {
             headings
@@ -246,16 +273,39 @@ const breadcrumbStructuredData = {
               ))
           }
         </ol>
+        {
+          metrazhOffer ? (
+            <a
+              class="toc-product-link"
+              href="#metrazh-for-this-article"
+              data-event="article_metrazh_anchor_click"
+              data-event-location="article_toc"
+            >
+              این کار را با متراژ انجام بدهید <span aria-hidden="true">←</span>
+            </a>
+          ) : (
+            <>
+              {article.data.download && (
+                <a class="toc-product-link" href="#article-download">
+                  فایل رایگان این آموزش <span aria-hidden="true">↓</span>
+                </a>
+              )}
+              <a class="toc-academy-link" href="#course-for-this-article">
+                ادامهٔ یادگیری در ابر مشاور <span aria-hidden="true">←</span>
+              </a>
+            </>
+          )
+        }
         <a
-          class="toc-product-link"
-          href="#metrazh-for-this-article"
-          data-event="article_metrazh_anchor_click"
-          data-event-location="article_toc"
+          class="toc-academy-link"
+          href={isAiArticle ? '/articles/topics/ai-content/' : '/guides/'}
         >
-          این کار را با متراژ انجام بدهید <span aria-hidden="true">←</span>
-        </a>
-        <a class="toc-academy-link" href="/guides/">
-          راهنماهای بیشتر برای کار املاک <span aria-hidden="true">←</span>
+          {
+            isAiArticle
+              ? 'آموزش‌های رایگان هوش مصنوعی'
+              : 'راهنماهای بیشتر برای کار املاک'
+          }
+          <span aria-hidden="true">←</span>
         </a>
         {
           topicGuide && (
@@ -272,94 +322,123 @@ const breadcrumbStructuredData = {
       </aside>
 
       <div class="article-body prose">
-        <AnswerFirst
-          answer={article.data.description}
-          actions={article.data.takeaways}
-        />
+        {
+          !isAiArticle && (
+            <AnswerFirst
+              answer={article.data.description}
+              actions={article.data.takeaways}
+            />
+          )
+        }
         {hasPropertyFileNameBuilder && <PropertyFileNameBuilder />}
         <Content />
         <ArticlePracticalKit
           articleId={article.id}
           scenario={article.data.scenario}
           copyBlock={article.data.copyBlock}
-        />
-        <aside
-          class="article-inline-cta"
-          id="metrazh-for-this-article"
-          aria-labelledby="metrazh-article-title"
-          data-view-event="article_metrazh_offer_viewed"
-        >
-          <div class="article-inline-cta-copy">
-            <div class="article-metrazh-brand">
-              {
-                metrazhApp && (
-                  <ResponsiveImage
-                    src={metrazhApp.data.icon}
-                    alt=""
-                    width="52"
-                    height="52"
-                    responsive={false}
-                    aria-hidden="true"
-                  />
-                )
+          conversational={isAiArticle}
+          {...isAiArticle
+            ? {
+                scenarioEyebrow: 'یک مثال برای شروع',
+                copySuccess: 'کپی شد؛ حالا جزئیاتش را برای عکس خودت عوض کن.',
               }
-              <span>حالا با متراژ انجامش بدهید</span>
-            </div>
-            <h2 id="metrazh-article-title">{article.data.metrazh.title}</h2>
-            <p>{article.data.metrazh.description}</p>
-            <div class="article-inline-cta-actions">
-              <a
-                class="button button-light"
-                href={articleInstallUrl}
-                target={bazaarLink ? '_blank' : undefined}
-                rel={bazaarLink ? 'noopener' : undefined}
-                data-event={bazaarLink
-                  ? 'metrazh_bazaar_click'
-                  : 'article_to_metrazh'}
-                data-event-location={`article_${article.id}_conversion`}
-                aria-label={bazaarLink
-                  ? 'نصب رایگان متراژ از کافه‌بازار'
-                  : 'دیدن صفحهٔ معرفی متراژ'}
-              >
-                {bazaarLink ? 'نصب رایگان متراژ' : 'دیدن متراژ'}
-                <span aria-hidden="true">↗</span>
-              </a>
-              <a
-                class="text-link text-link-light"
-                href="/apps/metrazh/"
-                data-event="article_to_metrazh"
-                data-event-location={`article_${article.id}_details`}
-              >
-                اول خود برنامه را ببینید
-              </a>
-            </div>
-            {
-              bazaarLink && (
-                <small>
-                  دکمهٔ نصب، مستقیم صفحهٔ رسمی متراژ در کافه‌بازار را باز
-                  می‌کند.
-                </small>
-              )
-            }
-          </div>
-          {
-            metrazhVisual && (
-              <figure class="article-inline-cta-visual">
-                <ResponsiveImage
-                  src={metrazhVisual.src}
-                  alt={metrazhVisual.alt}
-                  width={metrazhVisual.width}
-                  height={metrazhVisual.height}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </figure>
-            )
-          }
-        </aside>
+            : {}}
+        />
+        {
+          courseOffer && (
+            <ArticleCourseOffer
+              course={courseOffer}
+              {...(article.data.download
+                ? { download: article.data.download }
+                : {})}
+            />
+          )
+        }
+        {
+          metrazhOffer && (
+            <aside
+              class="article-inline-cta"
+              id="metrazh-for-this-article"
+              aria-labelledby="metrazh-article-title"
+              data-view-event="article_metrazh_offer_viewed"
+            >
+              <div class="article-inline-cta-copy">
+                <div class="article-metrazh-brand">
+                  {metrazhApp && (
+                    <ResponsiveImage
+                      src={metrazhApp.data.icon}
+                      alt=""
+                      width="52"
+                      height="52"
+                      responsive={false}
+                      aria-hidden="true"
+                    />
+                  )}
+                  <span>حالا با متراژ انجامش بدهید</span>
+                </div>
+                <h2 id="metrazh-article-title">{metrazhOffer.title}</h2>
+                <p>{metrazhOffer.description}</p>
+                <div class="article-inline-cta-actions">
+                  <a
+                    class="button button-light"
+                    href={articleInstallUrl}
+                    target={bazaarLink ? '_blank' : undefined}
+                    rel={bazaarLink ? 'noopener' : undefined}
+                    data-event={
+                      bazaarLink ? 'metrazh_bazaar_click' : 'article_to_metrazh'
+                    }
+                    data-event-location={`article_${article.id}_conversion`}
+                    aria-label={
+                      bazaarLink
+                        ? 'نصب رایگان متراژ از کافه‌بازار'
+                        : 'دیدن صفحهٔ معرفی متراژ'
+                    }
+                  >
+                    {bazaarLink ? 'نصب رایگان متراژ' : 'دیدن متراژ'}
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                  <a
+                    class="text-link text-link-light"
+                    href="/apps/metrazh/"
+                    data-event="article_to_metrazh"
+                    data-event-location={`article_${article.id}_details`}
+                  >
+                    اول خود برنامه را ببینید
+                  </a>
+                </div>
+                {bazaarLink && (
+                  <small>
+                    دکمهٔ نصب، مستقیم صفحهٔ رسمی متراژ در کافه‌بازار را باز
+                    می‌کند.
+                  </small>
+                )}
+              </div>
+              {metrazhVisual && (
+                <figure class="article-inline-cta-visual">
+                  <ResponsiveImage
+                    src={metrazhVisual.src}
+                    alt={metrazhVisual.alt}
+                    width={metrazhVisual.width}
+                    height={metrazhVisual.height}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+              )}
+            </aside>
+          )
+        }
         <section class="editorial-note" aria-labelledby="editorial-note-title">
-          <p class="eyebrow">شفافیت تحریریه</p>
-          <h2 id="editorial-note-title">این مطلب چطور تهیه و به‌روز می‌شود؟</h2>
+          <p class="eyebrow">
+            {isAiArticle ? 'دربارهٔ این آموزش' : 'شفافیت تحریریه'}
+          </p>
+          <h2 id="editorial-note-title">
+            {
+              isAiArticle
+                ? 'این آموزش را چطور آماده کردیم؟'
+                : 'این مطلب چطور تهیه و به‌روز می‌شود؟'
+            }
+          </h2>
           <dl>
             <div>
               <dt>مسئول محتوا</dt>
@@ -371,15 +450,22 @@ const breadcrumbStructuredData = {
                 {
                   article.data.cluster === 'legal'
                     ? 'مرور منابع و درگاه‌های رسمی پیوندشده در متن، همراه با هشدار مراجعه به فرد دارای صلاحیت برای هر پرونده.'
-                    : 'آموزش ساده و مرحله‌به‌مرحله، همراه با بررسی توضیح‌های محصول و امکانات نسخهٔ فعلی متراژ.'
+                    : isAiArticle
+                      ? 'آموزش قدم‌به‌قدم، همراه با مثال و لینک منابع رسمی. روش‌ها و محدودیت‌های ابزار با تاریخ همین مقاله توضیح داده شده‌اند.'
+                      : 'آموزش ساده و مرحله‌به‌مرحله، همراه با بررسی توضیح‌های محصول و امکانات نسخهٔ فعلی متراژ.'
                 }
               </dd>
             </div>
             <div>
-              <dt>وضعیت بازبینی میدانی</dt>
+              <dt>
+                {isAiArticle ? 'دربارهٔ نتیجه‌ها' : 'وضعیت بازبینی میدانی'}
+              </dt>
               <dd>
-                این نسخه هنوز تأیید مستقل یک مشاور بیرون از MAHSAI را ندارد؛
-                تجربه یا نقل‌قول ساختگی به متن اضافه نشده است.
+                {
+                  isAiArticle
+                    ? 'نمونه و شرایط ساختش در متن مشخص است. نتیجهٔ بعدی ممکن است فرق کند؛ اگر بخشی از عکس خوب نشد، همان بخش را در مرحلهٔ بعد اصلاح کن.'
+                    : 'این نسخه هنوز تأیید مستقل یک مشاور بیرون از MAHSAI را ندارد؛ تجربه یا نقل‌قول ساختگی به متن اضافه نشده است.'
+                }
               </dd>
             </div>
             <div>
