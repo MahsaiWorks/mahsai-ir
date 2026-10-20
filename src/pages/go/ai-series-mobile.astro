@@ -1,6 +1,7 @@
 ---
 import SeriesCourseLayout from '../../layouts/SeriesCourseLayout.astro';
 import SeriesStoryViewer from '../../components/SeriesStoryViewer.astro';
+import { seriesImage, seriesImageSet } from '../../lib/seriesCourseImages';
 import {
   movieAssets,
   movieCheckoutUrl,
@@ -101,11 +102,12 @@ const courseTiles = [
           >
             <span class="avatar-ring"
               ><img
-                src={`${movieAssets}/brand/profile-logo.jpg`}
+                src={seriesImage(`${movieAssets}/brand/profile-logo.jpg`)}
                 alt="MAHSAI MOVIES"
                 width="1254"
                 height="1254"
                 loading="eager"
+                fetchpriority="high"
                 decoding="async"
               /></span
             >
@@ -151,7 +153,7 @@ const courseTiles = [
             >
               <span class="highlight-ring">
                 <img
-                  src={group.cover}
+                  src={seriesImage(group.cover)}
                   alt=""
                   aria-hidden="true"
                   width="1254"
@@ -229,7 +231,9 @@ const courseTiles = [
                 aria-controls="series-story-viewer"
               >
                 <img
-                  src={tile.image}
+                  src={seriesImage(tile.image)}
+                  srcset={seriesImageSet(tile.image)}
+                  sizes="(max-width: 860px) calc((100vw - 6px) / 3), 285px"
                   alt=""
                   aria-hidden="true"
                   width="714"
@@ -264,11 +268,13 @@ const courseTiles = [
                 aria-controls="series-story-viewer"
               >
                 <img
-                  src={episode.image}
+                  data-deferred-src={seriesImage(episode.image)}
+                  data-deferred-srcset={seriesImageSet(episode.image)}
+                  sizes="(max-width: 860px) calc((100vw - 6px) / 3), 285px"
                   alt={`کاور ${episode.label} سریال خانه پدری`}
                   width="720"
                   height="1280"
-                  loading={index < 3 ? 'eager' : 'lazy'}
+                  loading="lazy"
                   decoding="async"
                 />
                 <span class="post-kind" aria-hidden="true">
@@ -325,6 +331,17 @@ const courseTiles = [
       });
       panels.forEach((panel) => {
         panel.hidden = panel.id !== tab.getAttribute('aria-controls');
+        if (!panel.hidden) {
+          panel
+            .querySelectorAll<HTMLImageElement>('img[data-deferred-src]')
+            .forEach((image, index) => {
+              image.loading = index < 3 ? 'eager' : 'lazy';
+              image.srcset = image.dataset['deferredSrcset'] || '';
+              image.src = image.dataset['deferredSrc'] || '';
+              delete image.dataset['deferredSrcset'];
+              delete image.dataset['deferredSrc'];
+            });
+        }
       });
     };
     tabs.forEach((tab, index) => {

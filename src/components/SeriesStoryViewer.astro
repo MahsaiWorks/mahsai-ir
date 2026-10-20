@@ -111,6 +111,8 @@ const serializedGroups = JSON.stringify(groups)
 </dialog>
 
 <script>
+  import { seriesImage } from '../lib/seriesCourseImages';
+
   interface StorySlide {
     kind?: 'card' | 'image';
     image?: string;
@@ -182,7 +184,7 @@ const serializedGroups = JSON.stringify(groups)
 
       if (stage)
         stage.dataset['kind'] = slide.kind === 'image' ? 'image' : 'card';
-      if (groupCover) groupCover.src = group.cover;
+      if (groupCover) groupCover.src = seriesImage(group.cover);
       if (groupLabel) groupLabel.textContent = group.label;
       if (counter) {
         counter.textContent = `${persianNumber.format(activeIndex + 1)} از ${persianNumber.format(group.slides.length)}`;
@@ -197,14 +199,15 @@ const serializedGroups = JSON.stringify(groups)
         body.hidden = !slide.text;
       }
       if (art) {
-        art.src = slide.image || group.cover;
+        if (slide.kind === 'image') art.removeAttribute('src');
+        else art.src = seriesImage(slide.image || group.cover, 'story');
         art.dataset['source'] = slide.image ? 'scene' : 'cover';
         art.hidden = slide.kind === 'image';
       }
       if (fullImage) {
         fullImage.hidden = slide.kind !== 'image';
         if (slide.kind === 'image') {
-          fullImage.src = slide.image || group.cover;
+          fullImage.src = seriesImage(slide.image || group.cover, 'story');
           fullImage.alt = slide.title;
         } else {
           fullImage.removeAttribute('src');
@@ -239,6 +242,12 @@ const serializedGroups = JSON.stringify(groups)
           return segment;
         });
         progress.replaceChildren(...segments);
+      }
+      const nextSlide = group.slides[activeIndex + 1];
+      if (nextSlide) {
+        const nextImage = new Image();
+        nextImage.decoding = 'async';
+        nextImage.src = seriesImage(nextSlide.image || group.cover, 'story');
       }
     };
 
