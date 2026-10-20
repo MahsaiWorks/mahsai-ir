@@ -1,3 +1,5 @@
+import { seriesDesignedStories } from './seriesDesignedStories';
+
 export const movieAssets = '/assets/ai-series-mobile';
 export const movieCheckoutUrl =
   'https://android-pay.mahsai.ir/account/academy/series-mobile';
@@ -85,7 +87,7 @@ export const movieEpisodes = episodeFrameTeaching.map((teaching, index) => ({
 }));
 
 export interface MovieStorySlide {
-  kind?: 'card' | 'image';
+  kind?: 'card' | 'image' | 'designed';
   image?: string;
   eyebrow?: string;
   title: string;
@@ -98,7 +100,7 @@ export interface MovieStoryGroup {
   id: string;
   label: string;
   cover: string;
-  slides: MovieStorySlide[];
+  slides: readonly MovieStorySlide[];
 }
 
 export const movieStoryGroups: MovieStoryGroup[] = [
@@ -106,183 +108,43 @@ export const movieStoryGroups: MovieStoryGroup[] = [
     id: 'course',
     label: 'آموزش',
     cover: `${movieAssets}/highlights/course.jpg`,
-    slides: [
-      {
-        image: `${movieAssets}/scene-closeup.jpg`,
-        eyebrow: 'آموزش موجود · شخصیت‌سازی',
-        title: 'شخصیت مجازی بساز.',
-        text: 'ساخت شخصیت از صفر و افزایش ثبات چهره؛ همراه با مثال عملیِ شخصیت در ویدیوی بازدید ملک.',
-      },
-      {
-        image: `${movieAssets}/scene-car.jpg`,
-        eyebrow: 'آموزش موجود · تصویر و ویدیو',
-        title: 'از تصویر، ویدیو بساز.',
-        text: 'تولید ویدیو با هوش مصنوعی را با مثال‌های عملی مثل قبل‌و‌بعد ویلا و بازسازی تمرین کن.',
-      },
-      {
-        image: `${movieAssets}/scene-driver.jpg`,
-        eyebrow: 'آموزش موجود · کیفیت ویدیو',
-        title: 'ویدیوی طبیعی‌تر بساز.',
-        text: 'اصول طبیعی‌ترشدن ویدیو و دلایل خطاهای رایج هوش مصنوعی را بشناس؛ همراه با مثال عملی.',
-      },
-      {
-        image: `${movieAssets}/highlights/samples.jpg`,
-        eyebrow: 'آموزش موجود · روایت چندقسمتی',
-        title: 'محتوای سریالی طراحی کن.',
-        text: 'الگوهای موفق محتوا را تحلیل کن و با طراحی محتوای سریالی و رشته‌استوری بلاگری آشنا شو.',
-      },
-      {
-        image: `${movieAssets}/highlights/series.jpg`,
-        eyebrow: 'آموزش موجود · موسیقی',
-        title: 'موسیقی باکلام و بی‌کلام بساز.',
-        text: 'ساخت موسیقی با هوش مصنوعی را برای همراه‌کردن با ویدیوها و محتوایت تمرین کن.',
-      },
-      {
-        image: `${movieAssets}/highlights/course.jpg`,
-        eyebrow: 'آموزش موجود · ابزارها',
-        title: 'ابزار مناسب را انتخاب کن.',
-        text: 'تنظیم ChatGPT برای تولید محتوا، نکته‌های کار با Flow و Gemini و حل مشکلات رایج ابزارها.',
-      },
-      {
-        image: `${movieAssets}/highlights/enrol.jpg`,
-        eyebrow: 'ثبت‌نام آموزش',
-        title: moviePriceLabel,
-        text: '۱۵ ویدیوی ضبط‌شده، با مجموع ۱ ساعت و ۴۰ دقیقه و ۲۴ ثانیه آموزش. دسترسی آنلاین در حساب شخصی؛ هزینهٔ ابزارها جداست.',
-        buttonLabel: 'خرید دوره',
-        href: movieCheckoutUrl,
-      },
-    ],
+    slides: seriesDesignedStories.course,
   },
   {
     id: 'samples',
     label: 'نمونه‌ها',
     cover: `${movieAssets}/highlights/samples.jpg`,
-    slides: [
-      {
-        kind: 'image',
-        image: `${movieAssets}/scene-rain.jpg`,
-        title: 'خانه پدری',
-        text: 'قابی از سریال؛ نمونه‌کار سازندهٔ دوره',
-      },
-      {
-        kind: 'image',
-        image: `${movieAssets}/scene-office.jpg`,
-        title: 'شخصیت‌ها در یک جهان داستانی',
-        text: 'نمونه‌کار سازندهٔ دوره',
-      },
-      {
-        kind: 'image',
-        image: `${movieAssets}/scene-car.jpg`,
-        title: 'روایت، موقعیت و رابطه',
-        text: 'نمونه‌کار سازندهٔ دوره',
-      },
-    ],
+    slides: seriesDesignedStories.samples,
   },
   {
     id: 'faq',
     label: 'سوالات',
     cover: `${movieAssets}/highlights/faq.jpg`,
-    slides: [
-      {
-        image: `${movieAssets}/highlights/phone.jpg`,
-        eyebrow: 'سوال ۱',
-        title: 'با گوشی می‌توانم شروع کنم؟',
-        text: 'بله. برای شروع تمرین‌ها، گوشی، اینترنت و حساب ابزارهای مورد استفاده را لازم داری. تمرین بخش مهم یادگیری است.',
-      },
-      {
-        image: `${movieAssets}/highlights/faq.jpg`,
-        eyebrow: 'سوال ۲',
-        title: 'هزینهٔ ابزارها داخل شهریه است؟',
-        text: 'شهریه برای آموزش است. هزینهٔ اشتراک یا اعتبار ابزارهای هوش مصنوعی جداگانه پرداخت می‌شود.',
-      },
-      {
-        image: `${movieAssets}/teacher.jpg`,
-        eyebrow: 'سوال ۳',
-        title: 'بعد از خرید، درس‌ها کجاست؟',
-        text: 'ویدیوهای خریداری‌شده را آنلاین در حساب شخصی خودت می‌بینی؛ با دسترسی دائمی به محتوای خریداری‌شده.',
-      },
-      {
-        image: `${movieAssets}/highlights/enrol.jpg`,
-        eyebrow: 'سوال ۴',
-        title: 'قبل از پرداخت چه می‌بینم؟',
-        text: 'نام دوره، مبلغ نهایی و شرایط خرید را در پنل ثبت‌نام می‌بینی و سپس به پرداخت می‌رسی.',
-        buttonLabel: 'ورود به ثبت‌نام',
-        href: movieCheckoutUrl,
-      },
-    ],
+    slides: seriesDesignedStories.faq,
   },
   {
     id: 'phone',
     label: 'با گوشی',
     cover: `${movieAssets}/highlights/phone.jpg`,
-    slides: [
-      {
-        image: `${movieAssets}/highlights/phone.jpg`,
-        eyebrow: 'شروع ساده',
-        title: 'گوشی، اینترنت، یک ایده.',
-        text: 'برای شروع، لازم نیست دوربین یا تجهیزات فیلم‌برداری بخری. روی ایده، کار با ابزارها و تمرین تمرکز کن.',
-      },
-      {
-        image: `${movieAssets}/teacher.jpg`,
-        eyebrow: 'آموزش همراه با تمرین',
-        title: 'ببین؛ همان موقع امتحان کن.',
-        text: 'درس‌ها را به‌ترتیب جلو برو و آموخته‌ها را برای شخصیت و داستان خودت به کار بگیر.',
-      },
-    ],
+    slides: seriesDesignedStories.phone,
   },
   {
     id: 'behind',
     label: 'مسیر ساخت',
     cover: `${movieAssets}/highlights/behind.jpg`,
-    slides: [
-      {
-        image: `${movieAssets}/scene-closeup.jpg`,
-        eyebrow: '۰۱ · شخصیت',
-        title: 'از شخصیت شروع کن.',
-        text: 'چهره، ظاهر و حس شخصیت، نقطهٔ شروع یک دنیای داستانی هستند.',
-      },
-      {
-        image: `${movieAssets}/scene-office.jpg`,
-        eyebrow: '۰۲ · موقعیت',
-        title: 'برای شخصیتت یک جهان بساز.',
-        text: 'فضا، نور و رابطهٔ شخصیت‌ها را کنار هم بچین تا هر تصویر بخشی از یک داستان باشد.',
-      },
-      {
-        image: `${movieAssets}/scene-rain.jpg`,
-        eyebrow: '۰۳ · روایت',
-        title: 'به قسمت بعد فکر کن.',
-        text: 'یک موقعیت داستانی بساز که ادامه‌اش برای مخاطب جذاب باشد؛ برای سرگرمی یا روایت برندت.',
-      },
-    ],
+    slides: seriesDesignedStories.behind,
   },
   {
     id: 'episodes',
     label: 'خانه پدری',
     cover: `${movieAssets}/highlights/series.jpg`,
-    slides: movieEpisodes.map((episode) => ({
-      kind: 'image',
-      image: episode.image,
-      eyebrow: 'نکتهٔ ساخت این قاب',
-      title: `${episode.label} · ${episode.teachingTitle}`,
-      text: episode.teachingText,
-      buttonLabel: 'تماشای سریال در پیج',
-      href: movieInstagramUrl,
-    })),
+    slides: seriesDesignedStories.episodes,
   },
   {
     id: 'enrol',
     label: 'ثبت‌نام',
     cover: `${movieAssets}/highlights/enrol.jpg`,
-    slides: [
-      {
-        image: `${movieAssets}/highlights/enrol.jpg`,
-        eyebrow: 'آموزش ساخت سریال با هوش مصنوعی',
-        title: moviePriceLabel,
-        text: 'وارد حساب خودت شو، شرایط خرید را ببین و ثبت‌نام را کامل کن.',
-        buttonLabel: 'خرید دوره',
-        href: movieCheckoutUrl,
-      },
-    ],
+    slides: seriesDesignedStories.enrol,
   },
 ];
 

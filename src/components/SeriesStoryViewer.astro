@@ -1,6 +1,6 @@
 ---
 interface StorySlide {
-  kind?: 'card' | 'image';
+  kind?: 'card' | 'image' | 'designed';
   image?: string;
   eyebrow?: string;
   title: string;
@@ -114,7 +114,7 @@ const serializedGroups = JSON.stringify(groups)
   import { seriesImage } from '../lib/seriesCourseImages';
 
   interface StorySlide {
-    kind?: 'card' | 'image';
+    kind?: 'card' | 'image' | 'designed';
     image?: string;
     eyebrow?: string;
     title: string;
@@ -182,8 +182,8 @@ const serializedGroups = JSON.stringify(groups)
       const slide = group?.slides[activeIndex];
       if (!group || !slide) return;
 
-      if (stage)
-        stage.dataset['kind'] = slide.kind === 'image' ? 'image' : 'card';
+      const fullArtwork = slide.kind === 'image' || slide.kind === 'designed';
+      if (stage) stage.dataset['kind'] = slide.kind || 'card';
       if (groupCover) groupCover.src = seriesImage(group.cover);
       if (groupLabel) groupLabel.textContent = group.label;
       if (counter) {
@@ -199,16 +199,20 @@ const serializedGroups = JSON.stringify(groups)
         body.hidden = !slide.text;
       }
       if (art) {
-        if (slide.kind === 'image') art.removeAttribute('src');
+        if (fullArtwork) art.removeAttribute('src');
         else art.src = seriesImage(slide.image || group.cover, 'story');
         art.dataset['source'] = slide.image ? 'scene' : 'cover';
-        art.hidden = slide.kind === 'image';
+        art.hidden = fullArtwork;
       }
       if (fullImage) {
-        fullImage.hidden = slide.kind !== 'image';
-        if (slide.kind === 'image') {
+        fullImage.hidden = !fullArtwork;
+        if (fullArtwork) {
           fullImage.src = seriesImage(slide.image || group.cover, 'story');
-          fullImage.alt = slide.title;
+          fullImage.alt = slide.kind === 'designed' ? '' : slide.title;
+          fullImage.setAttribute(
+            'aria-hidden',
+            String(slide.kind === 'designed'),
+          );
         } else {
           fullImage.removeAttribute('src');
           fullImage.alt = '';
@@ -594,6 +598,44 @@ const serializedGroups = JSON.stringify(groups)
     margin-top: 9px;
     min-height: 44px;
     font-size: 13px;
+    pointer-events: auto;
+  }
+  .story-stage[data-kind='designed'] .story-shade {
+    display: none;
+  }
+  .story-stage[data-kind='designed'] {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+  .story-stage[data-kind='designed'] .story-full-image {
+    position: relative;
+    inset: auto;
+    min-height: 0;
+    grid-row: 1;
+  }
+  .story-stage[data-kind='designed'] .story-copy {
+    height: auto;
+    position: relative;
+    inset: auto;
+    grid-row: 2;
+    padding: 0 18px;
+    pointer-events: none;
+    overflow: visible;
+  }
+  .story-stage[data-kind='designed']
+    :is(.story-eyebrow, .story-title, .story-text) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px !important;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .story-stage[data-kind='designed'] .story-cta {
+    margin: 8px 0 12px;
     pointer-events: auto;
   }
   .story-controls {
