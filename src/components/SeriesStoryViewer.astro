@@ -1,0 +1,663 @@
+---
+interface StorySlide {
+  kind?: 'card' | 'image';
+  image?: string;
+  eyebrow?: string;
+  title: string;
+  text?: string;
+  buttonLabel?: string;
+  href?: string;
+}
+
+interface StoryGroup {
+  id: string;
+  label: string;
+  cover: string;
+  slides: readonly StorySlide[];
+}
+
+interface Props {
+  groups: readonly StoryGroup[];
+}
+
+const { groups } = Astro.props;
+const serializedGroups = JSON.stringify(groups)
+  .replace(/</g, '\\u003c')
+  .replace(/\u2028/g, '\\u2028')
+  .replace(/\u2029/g, '\\u2029');
+---
+
+<script
+  id="series-story-data"
+  type="application/json"
+  is:inline
+  set:html={serializedGroups}
+/>
+
+<dialog
+  id="series-story-viewer"
+  class="story-viewer"
+  aria-labelledby="series-story-title"
+  aria-describedby="series-story-text"
+>
+  <div class="story-frame" dir="rtl">
+    <header class="story-header">
+      <div class="story-progress" aria-hidden="true"></div>
+      <div class="story-header-row">
+        <img
+          class="story-group-cover"
+          alt=""
+          aria-hidden="true"
+          width="38"
+          height="38"
+        />
+        <div class="story-identity">
+          <p class="story-group-label"></p>
+          <p
+            class="story-counter"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+          </p>
+        </div>
+        <button
+          class="story-close"
+          type="button"
+          aria-label="بستن استوری"
+          autofocus
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="story-stage" data-kind="card">
+      <img
+        class="story-art"
+        alt=""
+        aria-hidden="true"
+        width="720"
+        height="1280"
+      />
+      <img
+        class="story-full-image"
+        alt="تصویر استوری"
+        width="720"
+        height="1280"
+        hidden
+      />
+      <div class="story-shade" aria-hidden="true"></div>
+      <div class="story-copy">
+        <p class="story-eyebrow" hidden></p>
+        <h2 id="series-story-title" class="story-title"></h2>
+        <p id="series-story-text" class="story-text" hidden></p>
+        <a class="story-cta" hidden></a>
+      </div>
+    </div>
+
+    <footer class="story-controls">
+      <button class="story-previous" type="button" aria-label="استوری قبلی">
+        <span aria-hidden="true">→</span><span>قبلی</span>
+      </button>
+      <span class="story-swipe-hint" aria-hidden="true">برای ورق‌زدن بکش</span>
+      <button class="story-next" type="button" aria-label="استوری بعدی">
+        <span class="story-next-label">بعدی</span><span aria-hidden="true"
+          >←</span
+        >
+      </button>
+    </footer>
+  </div>
+</dialog>
+
+<script>
+  interface StorySlide {
+    kind?: 'card' | 'image';
+    image?: string;
+    eyebrow?: string;
+    title: string;
+    text?: string;
+    buttonLabel?: string;
+    href?: string;
+  }
+  interface StoryGroup {
+    id: string;
+    label: string;
+    cover: string;
+    slides: readonly StorySlide[];
+  }
+
+  const storyDialog = document.querySelector<HTMLDialogElement>(
+    '#series-story-viewer',
+  );
+  const storyData =
+    document.querySelector<HTMLScriptElement>('#series-story-data');
+
+  if (storyDialog && storyData && !storyDialog.dataset['ready']) {
+    const viewer = storyDialog;
+    viewer.dataset['ready'] = 'true';
+    const groups = JSON.parse(
+      storyData.textContent || '[]',
+    ) as readonly StoryGroup[];
+    const progress = viewer.querySelector<HTMLElement>('.story-progress');
+    const groupCover =
+      viewer.querySelector<HTMLImageElement>('.story-group-cover');
+    const groupLabel = viewer.querySelector<HTMLElement>('.story-group-label');
+    const counter = viewer.querySelector<HTMLElement>('.story-counter');
+    const stage = viewer.querySelector<HTMLElement>('.story-stage');
+    const art = viewer.querySelector<HTMLImageElement>('.story-art');
+    const fullImage =
+      viewer.querySelector<HTMLImageElement>('.story-full-image');
+    const eyebrow = viewer.querySelector<HTMLElement>('.story-eyebrow');
+    const title = viewer.querySelector<HTMLElement>('.story-title');
+    const body = viewer.querySelector<HTMLElement>('.story-text');
+    const cta = viewer.querySelector<HTMLAnchorElement>('.story-cta');
+    const closeButton = viewer.querySelector<HTMLButtonElement>('.story-close');
+    const previousButton =
+      viewer.querySelector<HTMLButtonElement>('.story-previous');
+    const nextButton = viewer.querySelector<HTMLButtonElement>('.story-next');
+    const nextLabel = viewer.querySelector<HTMLElement>('.story-next-label');
+    const persianNumber = new Intl.NumberFormat('fa-IR');
+    let activeGroup: StoryGroup | undefined;
+    let activeIndex = 0;
+    let openingTrigger: HTMLElement | null = null;
+    let touchStart: { x: number; y: number; pointerId: number } | undefined;
+
+    const safeHref = (value: string | undefined): string | undefined => {
+      if (!value) return undefined;
+      try {
+        const parsed = new URL(value, window.location.href);
+        return ['http:', 'https:', 'mailto:', 'tel:'].includes(parsed.protocol)
+          ? value
+          : undefined;
+      } catch {
+        return undefined;
+      }
+    };
+
+    const update = (): void => {
+      const group = activeGroup;
+      const slide = group?.slides[activeIndex];
+      if (!group || !slide) return;
+
+      if (stage)
+        stage.dataset['kind'] = slide.kind === 'image' ? 'image' : 'card';
+      if (groupCover) groupCover.src = group.cover;
+      if (groupLabel) groupLabel.textContent = group.label;
+      if (counter) {
+        counter.textContent = `${persianNumber.format(activeIndex + 1)} از ${persianNumber.format(group.slides.length)}`;
+      }
+      if (title) title.textContent = slide.title;
+      if (eyebrow) {
+        eyebrow.textContent = slide.eyebrow || '';
+        eyebrow.hidden = !slide.eyebrow;
+      }
+      if (body) {
+        body.textContent = slide.text || '';
+        body.hidden = !slide.text;
+      }
+      if (art) {
+        art.src = slide.image || group.cover;
+        art.dataset['source'] = slide.image ? 'scene' : 'cover';
+        art.hidden = slide.kind === 'image';
+      }
+      if (fullImage) {
+        fullImage.hidden = slide.kind !== 'image';
+        if (slide.kind === 'image') {
+          fullImage.src = slide.image || group.cover;
+          fullImage.alt = slide.title;
+        } else {
+          fullImage.removeAttribute('src');
+          fullImage.alt = '';
+        }
+      }
+      if (cta) {
+        const href = safeHref(slide.href);
+        cta.hidden = !href || !slide.buttonLabel;
+        cta.textContent = slide.buttonLabel || '';
+        if (href) cta.href = href;
+        else cta.removeAttribute('href');
+      }
+      if (previousButton) previousButton.disabled = activeIndex === 0;
+      const isLast = activeIndex === group.slides.length - 1;
+      if (nextLabel) nextLabel.textContent = isLast ? 'پایان' : 'بعدی';
+      if (nextButton) {
+        nextButton.setAttribute(
+          'aria-label',
+          isLast ? 'پایان و بستن استوری' : 'استوری بعدی',
+        );
+      }
+      if (progress) {
+        const segments = group.slides.map((_, index) => {
+          const segment = document.createElement('span');
+          segment.className =
+            index < activeIndex
+              ? 'is-complete'
+              : index === activeIndex
+                ? 'is-current'
+                : '';
+          return segment;
+        });
+        progress.replaceChildren(...segments);
+      }
+    };
+
+    const next = (): void => {
+      if (!activeGroup) return;
+      if (activeIndex >= activeGroup.slides.length - 1) viewer.close();
+      else {
+        activeIndex += 1;
+        update();
+      }
+    };
+    const previous = (): void => {
+      if (activeIndex <= 0) return;
+      activeIndex -= 1;
+      update();
+    };
+
+    document.addEventListener('click', (event: MouseEvent) => {
+      if (!(event.target instanceof Element)) return;
+      const trigger = event.target.closest<HTMLElement>('[data-story-group]');
+      if (!trigger) return;
+      const group = groups.find(
+        (item) => item.id === trigger.dataset['storyGroup'],
+      );
+      if (!group || group.slides.length === 0) return;
+      event.preventDefault();
+      openingTrigger = trigger;
+      activeGroup = group;
+      const requestedIndex = Number.parseInt(
+        trigger.dataset['storyIndex'] || '0',
+        10,
+      );
+      activeIndex = Math.max(
+        0,
+        Math.min(
+          Number.isNaN(requestedIndex) ? 0 : requestedIndex,
+          group.slides.length - 1,
+        ),
+      );
+      update();
+      if (!viewer.open) viewer.showModal();
+      closeButton?.focus({ preventScroll: true });
+    });
+
+    closeButton?.addEventListener('click', () => viewer.close());
+    nextButton?.addEventListener('click', next);
+    previousButton?.addEventListener('click', previous);
+    cta?.addEventListener('click', () => viewer.close());
+    viewer.addEventListener('click', (event) => {
+      if (event.target === viewer) viewer.close();
+    });
+    viewer.addEventListener('keydown', (event: KeyboardEvent) => {
+      if (event.altKey || event.ctrlKey || event.metaKey) return;
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        next();
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        previous();
+      }
+    });
+    viewer.addEventListener('close', () => {
+      touchStart = undefined;
+      if (openingTrigger?.isConnected)
+        openingTrigger.focus({ preventScroll: true });
+    });
+    stage?.addEventListener('pointerdown', (event: PointerEvent) => {
+      if (event.pointerType !== 'touch' || !event.isPrimary) return;
+      touchStart = {
+        x: event.clientX,
+        y: event.clientY,
+        pointerId: event.pointerId,
+      };
+    });
+    stage?.addEventListener('pointerup', (event: PointerEvent) => {
+      const start = touchStart;
+      touchStart = undefined;
+      if (!start || start.pointerId !== event.pointerId) return;
+      const distanceX = event.clientX - start.x;
+      const distanceY = event.clientY - start.y;
+      if (
+        Math.abs(distanceX) < 50 ||
+        Math.abs(distanceX) <= Math.abs(distanceY) * 1.3
+      )
+        return;
+      if (distanceX < 0) next();
+      else previous();
+    });
+    stage?.addEventListener('pointercancel', () => {
+      touchStart = undefined;
+    });
+  }
+</script>
+
+<style>
+  :global(html:has(.story-viewer[open])) {
+    overflow: hidden;
+  }
+  .story-viewer {
+    padding: 0;
+    margin: auto;
+    border: 0;
+    max-width: 100vw;
+    max-height: 100dvh;
+    overflow: visible;
+    background: transparent;
+    color: #fff4e9;
+    font-family: inherit;
+  }
+  .story-viewer::backdrop {
+    background: rgb(10 3 7 / 88%);
+  }
+  .story-frame {
+    width: min(100vw, 430px);
+    height: min(calc(100dvh - 24px), 790px);
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    overflow: hidden;
+    border: 1px solid #975848;
+    border-radius: 14px;
+    background:
+      radial-gradient(ellipse at 30% 20%, #771f27, transparent 70%),
+      linear-gradient(150deg, #420913, #1e060c 80%);
+    box-shadow: 0 24px 80px #0007;
+  }
+  .story-frame,
+  .story-frame * {
+    box-sizing: border-box;
+  }
+  .story-frame p,
+  .story-frame h2 {
+    margin: 0;
+  }
+  .story-frame button,
+  .story-frame a {
+    -webkit-tap-highlight-color: transparent;
+    font: inherit;
+  }
+  .story-frame button {
+    border: 0;
+    cursor: pointer;
+  }
+  .story-frame button:focus-visible,
+  .story-frame a:focus-visible {
+    outline: 3px solid #ffd7b1;
+    outline-offset: 3px;
+  }
+  .story-frame [hidden] {
+    display: none !important;
+  }
+  .story-header {
+    position: relative;
+    z-index: 3;
+    padding: 12px 16px 10px;
+    background: linear-gradient(#21060de8, #21060d60);
+  }
+  .story-progress {
+    display: flex;
+    gap: 4px;
+    direction: rtl;
+  }
+  .story-progress :global(span) {
+    display: block;
+    flex: 1;
+    height: 3px;
+    border-radius: 6px;
+    background: #ffffff42;
+  }
+  .story-progress :global(span.is-complete) {
+    background: #d9b59b;
+  }
+  .story-progress :global(span.is-current) {
+    background: #fff4e9;
+  }
+  .story-header-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .story-group-cover {
+    flex: none;
+    width: 38px;
+    height: 38px;
+    border: 1px solid #eac1a8;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .story-identity {
+    min-width: 0;
+    flex: 1;
+  }
+  .story-group-label {
+    color: #fff4e9;
+    font-size: 13px;
+    font-weight: 650;
+    line-height: 1.7;
+  }
+  .story-counter {
+    color: #e1b9a5;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+  .story-close {
+    display: grid;
+    place-items: center;
+    flex: none;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    border-radius: 50%;
+    background: #ffffff0d;
+    color: #fff4e9;
+  }
+  .story-close span {
+    font:
+      300 32px/1 Arial,
+      sans-serif;
+  }
+  .story-stage {
+    position: relative;
+    min-height: 0;
+    overflow: hidden;
+    isolation: isolate;
+    touch-action: pan-y;
+  }
+  .story-art,
+  .story-full-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .story-art {
+    object-fit: cover;
+    opacity: 0.85;
+  }
+  .story-art[data-source='cover'] {
+    inset: 1% 12% auto;
+    width: 76%;
+    height: 51%;
+    object-fit: contain;
+    opacity: 0.95;
+  }
+  .story-full-image {
+    object-fit: contain;
+    background: #10070b;
+  }
+  .story-shade {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background: linear-gradient(
+      0deg,
+      #260710 1%,
+      #310913ee 25%,
+      #3d101b70 58%,
+      transparent 85%
+    );
+    pointer-events: none;
+  }
+  .story-copy {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: end;
+    height: 100%;
+    padding: 26px 28px 25px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    text-align: right;
+  }
+  .story-eyebrow {
+    color: #f0c5a3;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.9;
+    margin-bottom: 9px !important;
+  }
+  .story-title {
+    color: #fff5ed;
+    font-size: clamp(26px, 6vw, 34px);
+    line-height: 1.65;
+    font-weight: 800;
+    letter-spacing: -0.7px;
+    text-wrap: balance;
+  }
+  .story-text {
+    color: #f6dfd3;
+    font-size: 16px;
+    line-height: 2;
+    margin-top: 13px !important;
+    white-space: pre-line;
+  }
+  .story-cta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 48px;
+    margin-top: 22px;
+    padding: 10px 18px;
+    border: 1px solid #f4c8a9;
+    border-radius: 7px;
+    background: linear-gradient(105deg, #f8d8b9, #d6a27f);
+    color: #43111a;
+    text-decoration: none;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 750;
+    line-height: 1.8;
+  }
+  .story-stage[data-kind='image'] .story-shade {
+    background: linear-gradient(transparent 65%, #10070bde);
+  }
+  .story-stage[data-kind='image'] .story-copy {
+    height: auto;
+    position: absolute;
+    inset: auto 0 0;
+    padding: 15px 18px 12px;
+    background: linear-gradient(transparent, #10070bdb);
+    pointer-events: none;
+  }
+  .story-stage[data-kind='image'] .story-title {
+    font-size: 17px;
+    font-weight: 650;
+    letter-spacing: 0;
+    line-height: 1.8;
+    text-shadow: 0 1px 5px #000;
+  }
+  .story-stage[data-kind='image'] .story-text {
+    font-size: 13px;
+    line-height: 1.9;
+    margin-top: 4px !important;
+  }
+  .story-stage[data-kind='image'] .story-eyebrow {
+    font-size: 11px;
+    margin-bottom: 2px !important;
+  }
+  .story-stage[data-kind='image'] .story-cta {
+    margin-top: 9px;
+    min-height: 44px;
+    font-size: 13px;
+    pointer-events: auto;
+  }
+  .story-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 15px 13px;
+    background: #20070e;
+    border-top: 1px solid #e5b99a25;
+  }
+  .story-controls button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    min-height: 44px;
+    min-width: 78px;
+    padding: 8px 12px;
+    border-radius: 7px;
+    background: #ffffff0c;
+    color: #fff1e6;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .story-controls button > span[aria-hidden] {
+    font-size: 21px;
+    line-height: 1;
+  }
+  .story-controls button:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+  .story-swipe-hint {
+    color: #c8a695;
+    font-size: 10px;
+    line-height: 1.8;
+  }
+  @media (max-width: 560px) {
+    .story-frame {
+      width: 100vw;
+      height: 100dvh;
+      max-height: 100dvh;
+      border: 0;
+      border-radius: 0;
+    }
+    .story-header {
+      padding-top: max(12px, env(safe-area-inset-top));
+    }
+    .story-controls {
+      padding-bottom: max(12px, env(safe-area-inset-bottom));
+    }
+  }
+  @media (max-height: 600px) and (min-width: 561px) {
+    .story-frame {
+      width: 370px;
+    }
+    .story-title {
+      font-size: 25px;
+    }
+    .story-text {
+      font-size: 14px;
+    }
+    .story-copy {
+      padding: 18px 22px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .story-viewer,
+    .story-viewer * {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>

@@ -120,6 +120,7 @@ for (const educationRoute of [
   'articles/index.html',
   'articles/topics/ai-content/index.html',
   'articles/blogger-photos-chatgpt/index.html',
+  'go/ai-series-mobile/index.html',
 ]) {
   check(
     `Reviewed AI education copy is accepted on ${educationRoute}`,
@@ -128,6 +129,13 @@ for (const educationRoute of [
     educationRoute,
   );
 }
+
+check(
+  'Other direct-link pages do not inherit the new course exemption',
+  '<p>آموزش ساخت سریال با هوش مصنوعی.</p>',
+  true,
+  'go/unreviewed-course/index.html',
+);
 
 check(
   'An unreviewed article cannot inherit the AI education exemption',

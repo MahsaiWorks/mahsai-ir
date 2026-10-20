@@ -10,6 +10,7 @@ const approvedEducationPages = new Set([
   'editorial-policy/index.html',
   'academy/index.html',
   'academy/courses/ai-content-real-estate/index.html',
+  'go/ai-series-mobile/index.html',
   'articles/index.html',
   'articles/topics/ai-content/index.html',
   'articles/blogger-photos-chatgpt/index.html',

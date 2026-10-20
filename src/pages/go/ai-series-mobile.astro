@@ -1,0 +1,956 @@
+---
+import SeriesCourseLayout from '../../layouts/SeriesCourseLayout.astro';
+import SeriesStoryViewer from '../../components/SeriesStoryViewer.astro';
+import {
+  movieAssets,
+  movieCheckoutUrl,
+  movieInstagramUrl,
+  moviePriceLabel,
+  movieEpisodes,
+  movieStoryGroups,
+} from '../../data/seriesMovieProfile';
+
+const courseTiles = [
+  {
+    image: `${movieAssets}/scene-closeup.jpg`,
+    title: 'ساخت شخصیت مجازی',
+    group: 'course',
+    index: 0,
+  },
+  {
+    image: `${movieAssets}/scene-car.jpg`,
+    title: 'تصویر به ویدیو',
+    group: 'course',
+    index: 1,
+  },
+  {
+    image: `${movieAssets}/scene-driver.jpg`,
+    title: 'ویدیوی طبیعی‌تر',
+    group: 'course',
+    index: 2,
+  },
+  {
+    image: `${movieAssets}/highlights/samples.jpg`,
+    title: 'محتوای سریالی',
+    group: 'course',
+    index: 3,
+  },
+  {
+    image: `${movieAssets}/highlights/series.jpg`,
+    title: 'ساخت موسیقی',
+    group: 'course',
+    index: 4,
+  },
+  {
+    image: `${movieAssets}/highlights/course.jpg`,
+    title: 'کار با ابزارها',
+    group: 'course',
+    index: 5,
+  },
+];
+---
+
+<SeriesCourseLayout
+  title="mahsaimovie | آموزش کارگردانی و ساخت سریال با هوش مصنوعی"
+  description="آموزش ساخت شخصیت مجازی، تصویر و ویدیو، محتوای سریالی و موسیقی با هوش مصنوعی؛ شروع با گوشی و ثبت‌نام دوره با قیمت ۱ میلیون تومان."
+  noindex
+  image={`${movieAssets}/brand/profile-logo.jpg`}
+  imageAlt="لوگوی MAHSAI MOVIES"
+  imageWidth={1254}
+  imageHeight={1254}
+>
+  <article class="movie-profile" id="series-top" data-movie-profile>
+    <div class="profile-shell">
+      <nav class="profile-topbar" aria-label="پروفایل و خرید">
+        <a
+          class="profile-handle"
+          href={movieInstagramUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          dir="ltr"
+          aria-label="پیج اینستاگرام mahsaimovie"
+          >mahsaimovie <span aria-hidden="true">⌄</span></a
+        >
+        <a
+          class="topbar-buy"
+          href={movieCheckoutUrl}
+          aria-label="خرید دوره با قیمت ۱ میلیون تومان"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            aria-hidden="true"
+            ><path d="M6 7h12l1 14H5L6 7Z"></path><path
+              d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg
+          >
+          خرید دوره
+        </a>
+      </nav>
+
+      <header class="profile-header">
+        <div class="identity-row">
+          <button
+            class="avatar-button"
+            type="button"
+            data-story-group="course"
+            aria-label="معرفی آموزش ساخت سریال"
+            aria-haspopup="dialog"
+            aria-controls="series-story-viewer"
+          >
+            <span class="avatar-ring"
+              ><img
+                src={`${movieAssets}/brand/profile-logo.jpg`}
+                alt="MAHSAI MOVIES"
+                width="1254"
+                height="1254"
+                loading="eager"
+                decoding="async"
+              /></span
+            >
+          </button>
+          <div class="profile-facts" aria-label="مهارت‌های تدریس‌شده در آموزش">
+            <div><strong>شخصیت</strong><span>مجازی</span></div>
+            <div><strong>تصویر</strong><span>به ویدیو</span></div>
+            <div><strong>محتوا</strong><span>سریالی</span></div>
+          </div>
+        </div>
+        <div class="profile-bio">
+          <p class="display-name" lang="en" dir="ltr">MAHSAI MOVIES</p>
+          <h1>آموزش کارگردانی و ساخت سریال حرفه‌ای</h1>
+          <p>با گوشی شروع کن؛ شخصیت، ویدیو، روایت سریالی و موسیقی بساز.</p>
+          <p class="bio-muted">برای پیجت، کسب‌وکارت و پروژه‌های تولید محتوا.</p>
+        </div>
+        <div class="profile-actions">
+          <a class="purchase-button" href={movieCheckoutUrl}
+            >خرید دوره <span class="action-separator" aria-hidden="true">·</span
+            >
+            {moviePriceLabel}</a
+          >
+          <button
+            class="outline-button"
+            type="button"
+            data-story-group="course"
+            aria-haspopup="dialog"
+            aria-controls="series-story-viewer">دربارهٔ آموزش</button
+          >
+        </div>
+      </header>
+
+      <section class="highlights" aria-label="هایلایت‌ها">
+        {
+          movieStoryGroups.map((group) => (
+            <button
+              type="button"
+              class="highlight"
+              data-story-group={group.id}
+              aria-label={`باز کردن هایلایت ${group.label}`}
+              aria-haspopup="dialog"
+              aria-controls="series-story-viewer"
+            >
+              <span class="highlight-ring">
+                <img
+                  src={group.cover}
+                  alt=""
+                  aria-hidden="true"
+                  width="1254"
+                  height="1254"
+                  loading="eager"
+                  decoding="async"
+                />
+              </span>
+              <span class="highlight-label">{group.label}</span>
+            </button>
+          ))
+        }
+      </section>
+
+      <div class="profile-tabs" role="tablist" aria-label="محتوای پیج">
+        <button
+          type="button"
+          role="tab"
+          id="tab-course"
+          aria-controls="panel-course"
+          aria-selected="true"
+          data-profile-tab="course"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            aria-hidden="true"
+            ><path d="m2 8 10-5 10 5-10 5-10-5Z"></path><path
+              d="M6 10v7c4 3 8 3 12 0v-7M22 8v8"></path></svg
+          >
+          آموزش‌های دوره
+        </button>
+        <button
+          type="button"
+          role="tab"
+          id="tab-episodes"
+          aria-controls="panel-episodes"
+          aria-selected="false"
+          tabindex="-1"
+          data-profile-tab="episodes"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            aria-hidden="true"
+            ><rect x="3" y="3" width="18" height="18" rx="1"></rect><path
+              d="M3 9h18M3 15h18M9 3v18M15 3v18"></path></svg
+          >
+          نمونه‌کار مدرس
+        </button>
+      </div>
+
+      <section
+        id="panel-course"
+        class="profile-panel"
+        role="tabpanel"
+        aria-labelledby="tab-course"
+      >
+        <div
+          class="post-grid course-grid"
+          aria-label="شش موضوع تدریس‌شده در آموزش فعلی"
+        >
+          {
+            courseTiles.map((tile) => (
+              <button
+                class="course-post"
+                type="button"
+                data-story-group={tile.group}
+                data-story-index={tile.index}
+                aria-haspopup="dialog"
+                aria-controls="series-story-viewer"
+              >
+                <img
+                  src={tile.image}
+                  alt=""
+                  aria-hidden="true"
+                  width="714"
+                  height="1280"
+                  loading="eager"
+                  decoding="async"
+                />
+                <span>{tile.title}</span>
+              </button>
+            ))
+          }
+        </div>
+      </section>
+
+      <section
+        id="panel-episodes"
+        class="profile-panel"
+        role="tabpanel"
+        aria-labelledby="tab-episodes"
+        hidden
+      >
+        <div class="post-grid" aria-label="کاور قسمت‌های ۱ تا ۱۶ خانه پدری">
+          {
+            movieEpisodes.map((episode, index) => (
+              <button
+                class="episode-post"
+                type="button"
+                data-story-group="episodes"
+                data-story-index={index}
+                aria-label={`خانه پدری، ${episode.label}؛ باز کردن کاور`}
+                aria-haspopup="dialog"
+                aria-controls="series-story-viewer"
+              >
+                <img
+                  src={episode.image}
+                  alt={`کاور ${episode.label} سریال خانه پدری`}
+                  width="720"
+                  height="1280"
+                  loading={index < 3 ? 'eager' : 'lazy'}
+                  decoding="async"
+                />
+                <span class="post-kind" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <>
+                      <rect x="6" y="6" width="15" height="15" rx="2" />
+                      <path d="M3 16V5a2 2 0 0 1 2-2h11" />
+                    </>
+                  </svg>
+                </span>
+              </button>
+            ))
+          }
+        </div>
+      </section>
+
+      <footer class="profile-footer">
+        <span lang="en" dir="ltr">MAHSAI MOVIES</span><a
+          href="https://t.me/Mahsaisupport"
+          target="_blank"
+          rel="noopener noreferrer">پشتیبانی ثبت‌نام ↗</a
+        >
+      </footer>
+    </div>
+    <aside class="purchase-dock" aria-label="خرید سریع آموزش">
+      <div class="dock-price"><strong>۱ میلیون</strong><span>تومان</span></div>
+      <a class="purchase-button" href={movieCheckoutUrl}
+        >خرید آموزش <span aria-hidden="true">←</span></a
+      >
+    </aside>
+    <SeriesStoryViewer groups={movieStoryGroups} />
+  </article>
+</SeriesCourseLayout>
+
+<script>
+  const profile = document.querySelector<HTMLElement>('[data-movie-profile]');
+  if (profile) {
+    const tabs = [
+      ...profile.querySelectorAll<HTMLButtonElement>('[data-profile-tab]'),
+    ];
+    const panels = [
+      ...profile.querySelectorAll<HTMLElement>('[role="tabpanel"]'),
+    ];
+    const selectTab = (tab: HTMLButtonElement) => {
+      tabs.forEach((item) => {
+        const selected = item === tab;
+        item.setAttribute('aria-selected', String(selected));
+        item.tabIndex = selected ? 0 : -1;
+      });
+      panels.forEach((panel) => {
+        panel.hidden = panel.id !== tab.getAttribute('aria-controls');
+      });
+    };
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => selectTab(tab));
+      tab.addEventListener('keydown', (event) => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key))
+          return;
+        event.preventDefault();
+        const nextIndex =
+          event.key === 'Home'
+            ? 0
+            : event.key === 'End'
+              ? tabs.length - 1
+              : (index + (event.key === 'ArrowLeft' ? 1 : -1) + tabs.length) %
+                tabs.length;
+        const nextTab = tabs[nextIndex];
+        if (nextTab) {
+          selectTab(nextTab);
+          nextTab.focus();
+        }
+      });
+    });
+  }
+</script>
+
+<style>
+  .movie-profile {
+    --wine: #9e1730;
+    --wine-dark: #7c1026;
+    --rose: #d6ab90;
+    --ink: #242126;
+    --muted: #6c656a;
+    --line: #e8e4e5;
+    background: #fff;
+    color: var(--ink);
+    font:
+      400 15px/1.85 'Vazirmatn Variable',
+      Tahoma,
+      sans-serif;
+    min-height: 100vh;
+    padding-bottom: 92px;
+  }
+  .movie-profile *,
+  .movie-profile *::before,
+  .movie-profile *::after {
+    box-sizing: border-box;
+  }
+  .movie-profile :is(h1, p, figure) {
+    margin: 0;
+  }
+  .movie-profile button,
+  .movie-profile a {
+    -webkit-tap-highlight-color: transparent;
+  }
+  .movie-profile button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+  .movie-profile a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .movie-profile button:focus-visible,
+  .movie-profile a:focus-visible {
+    outline: 3px solid var(--wine);
+    outline-offset: 4px;
+  }
+  .profile-shell {
+    width: min(860px, 100%);
+    margin-inline: auto;
+  }
+  .profile-topbar {
+    height: 66px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    border-bottom: 1px solid var(--line);
+    padding-inline: 30px;
+  }
+  .profile-handle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font:
+      700 22px/1.2 Arial,
+      sans-serif;
+    letter-spacing: -0.4px;
+  }
+  .profile-handle span {
+    font-size: 19px;
+    font-weight: 400;
+    color: var(--muted);
+  }
+  .topbar-buy {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .topbar-buy svg {
+    width: 23px;
+    height: 23px;
+    flex: none;
+  }
+  .profile-header {
+    padding: 28px 30px 0;
+  }
+  .identity-row {
+    display: flex;
+    align-items: center;
+    gap: 38px;
+  }
+  .avatar-button {
+    flex: none;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+  }
+  .avatar-ring {
+    display: block;
+    width: 124px;
+    height: 124px;
+    padding: 4px;
+    border-radius: 50%;
+    background: linear-gradient(
+      145deg,
+      #e2b79a,
+      #b1283a 38%,
+      #791426 78%,
+      #e0b498
+    );
+  }
+  .avatar-ring img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 4px solid #fff;
+    border-radius: 50%;
+  }
+  .profile-facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+    flex: 1;
+    text-align: center;
+  }
+  .profile-facts > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+  }
+  .profile-facts strong {
+    font-size: 21px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .profile-facts span {
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .profile-bio {
+    margin-top: 18px;
+  }
+  .display-name {
+    font:
+      700 13px/1.4 Arial,
+      sans-serif;
+    letter-spacing: 1.3px;
+    text-align: right;
+    color: var(--wine);
+    margin-bottom: 7px !important;
+  }
+  h1 {
+    font-size: 21px;
+    line-height: 1.7;
+    font-weight: 750;
+    letter-spacing: -0.35px;
+  }
+  .profile-bio > p:not(.display-name) {
+    font-size: 15px;
+    line-height: 1.95;
+    margin-top: 3px;
+  }
+  .profile-bio .bio-muted {
+    color: var(--muted);
+    font-size: 14px !important;
+  }
+  .profile-actions {
+    display: grid;
+    grid-template-columns: 1.55fr 1fr;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .purchase-button,
+  .outline-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 10px 18px;
+    border-radius: 7px;
+    font:
+      600 14px/1.6 'Vazirmatn Variable',
+      Tahoma,
+      sans-serif;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .purchase-button {
+    background: var(--wine);
+    border: 1px solid var(--wine);
+    color: #fff !important;
+    transition: background 0.15s;
+  }
+  .purchase-button:hover {
+    background: var(--wine-dark);
+    border-color: var(--wine-dark);
+  }
+  .outline-button {
+    background: #f5f3f4;
+    border: 1px solid #eee9eb;
+    color: var(--ink);
+  }
+  .outline-button:hover {
+    background: #ece7e9;
+  }
+  .action-separator {
+    opacity: 0.65;
+    font-weight: 400;
+  }
+  .highlights {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    padding: 27px 30px 24px;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+  }
+  .highlights::-webkit-scrollbar {
+    display: none;
+  }
+  .highlight {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    min-width: 76px;
+    padding: 0;
+    border: 0;
+    background: none;
+    scroll-snap-align: start;
+    flex: none;
+  }
+  .highlight-ring {
+    display: block;
+    width: 76px;
+    height: 76px;
+    border: 1px solid #d7ccce;
+    padding: 4px;
+    border-radius: 50%;
+    background: #fff;
+  }
+  .highlight-ring img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .highlight-label {
+    font-size: 12px;
+    line-height: 1.6;
+    white-space: nowrap;
+  }
+  .highlight:hover .highlight-ring {
+    border-color: var(--wine);
+  }
+  .profile-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--line);
+    margin-inline: 0;
+  }
+  .profile-tabs > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    background: none;
+    border: 0;
+    border-top: 2px solid transparent;
+    margin-top: -1px;
+    min-height: 54px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 550;
+  }
+  .profile-tabs > button[aria-selected='true'] {
+    border-top-color: var(--wine);
+    color: var(--wine);
+  }
+  .profile-tabs svg {
+    width: 21px;
+    height: 21px;
+  }
+  .profile-panel[hidden] {
+    display: none !important;
+  }
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 3px;
+  }
+  .episode-post,
+  .course-post {
+    display: block;
+    position: relative;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: #261019;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+  }
+  .episode-post > img,
+  .course-post > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: filter 0.15s;
+  }
+  .episode-post:hover > img,
+  .course-post:hover > img {
+    filter: brightness(0.88);
+  }
+  .post-kind {
+    position: absolute;
+    top: 9px;
+    left: 9px;
+    width: 21px;
+    height: 21px;
+    color: white;
+    filter: drop-shadow(0 1px 3px #0009);
+  }
+  .post-kind svg {
+    width: 100%;
+    height: 100%;
+  }
+  .course-post::after {
+    content: '';
+    position: absolute;
+    inset: 40% 0 0;
+    background: linear-gradient(transparent, #21040de6);
+  }
+  .course-post > span {
+    position: absolute;
+    z-index: 1;
+    inset: auto 10px 15px;
+    color: #fff;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.7;
+    text-wrap: balance;
+    text-shadow: 0 2px 10px #0008;
+  }
+  .profile-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 25px 30px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .profile-footer > span {
+    font:
+      700 11px/1 Arial,
+      sans-serif;
+    letter-spacing: 1px;
+  }
+  .purchase-dock {
+    position: fixed;
+    z-index: 20;
+    inset: auto 0 0;
+    max-width: 860px;
+    margin-inline: auto;
+    padding: 12px 30px max(12px, env(safe-area-inset-bottom));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    background: #fffffff5;
+    border-top: 1px solid #e2d9dc;
+    box-shadow: 0 -5px 22px #2d102008;
+    backdrop-filter: blur(10px);
+  }
+  .dock-price {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    white-space: nowrap;
+  }
+  .dock-price strong {
+    font-size: 23px;
+    font-weight: 750;
+    letter-spacing: -0.4px;
+  }
+  .dock-price span {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .purchase-dock .purchase-button {
+    min-width: 260px;
+    font-size: 16px;
+    gap: 28px;
+    min-height: 48px;
+  }
+  @media (max-width: 600px) {
+    .movie-profile {
+      padding-bottom: 86px;
+    }
+    .profile-topbar {
+      height: 58px;
+      padding-inline: 18px;
+      gap: 18px;
+    }
+    .profile-handle {
+      font-size: 20px;
+    }
+    .topbar-buy {
+      font-size: 12px;
+    }
+    .topbar-buy svg {
+      width: 21px;
+      height: 21px;
+    }
+    .profile-header {
+      padding: 20px 18px 0;
+    }
+    .identity-row {
+      gap: 20px;
+    }
+    .avatar-ring {
+      width: 91px;
+      height: 91px;
+      padding: 3px;
+    }
+    .avatar-ring img {
+      border-width: 3px;
+    }
+    .profile-facts {
+      gap: 12px;
+    }
+    .profile-facts strong {
+      font-size: 16px;
+    }
+    .profile-facts span {
+      font-size: 10px;
+      letter-spacing: -0.15px;
+    }
+    .profile-bio {
+      margin-top: 17px;
+    }
+    .display-name {
+      font-size: 11px;
+      letter-spacing: 1px;
+      margin-bottom: 5px !important;
+    }
+    h1 {
+      font-size: 18px;
+      line-height: 1.8;
+      letter-spacing: -0.3px;
+    }
+    .profile-bio > p:not(.display-name) {
+      font-size: 14px;
+      line-height: 1.95;
+    }
+    .profile-bio .bio-muted {
+      font-size: 13px !important;
+    }
+    .profile-actions {
+      gap: 8px;
+      margin-top: 15px;
+      grid-template-columns: 1.55fr 1fr;
+    }
+    .purchase-button,
+    .outline-button {
+      min-height: 44px;
+      font-size: 12px;
+      padding: 10px 10px;
+      gap: 6px;
+    }
+    .highlights {
+      gap: 16px;
+      padding: 22px 18px 21px;
+    }
+    .highlight {
+      min-width: 65px;
+      gap: 7px;
+    }
+    .highlight-ring {
+      width: 65px;
+      height: 65px;
+      padding: 3px;
+    }
+    .highlight-label {
+      font-size: 11px;
+    }
+    .profile-tabs > button {
+      min-height: 49px;
+      font-size: 12px;
+      gap: 8px;
+    }
+    .profile-tabs svg {
+      width: 20px;
+      height: 20px;
+    }
+    .post-grid {
+      gap: 2px;
+    }
+    .post-kind {
+      width: 18px;
+      height: 18px;
+      top: 7px;
+      left: 7px;
+    }
+    .course-post > span {
+      font-size: 14px;
+      inset: auto 7px 11px;
+    }
+    .profile-footer {
+      padding: 22px 18px;
+      font-size: 11px;
+      gap: 16px;
+    }
+    .profile-footer > span {
+      font-size: 10px;
+      letter-spacing: 0.6px;
+    }
+    .purchase-dock {
+      gap: 20px;
+      padding: 11px 18px max(11px, env(safe-area-inset-bottom));
+    }
+    .dock-price {
+      gap: 4px;
+    }
+    .dock-price strong {
+      font-size: 22px;
+    }
+    .dock-price span {
+      font-size: 11px;
+    }
+    .purchase-dock .purchase-button {
+      min-width: 0;
+      flex: 1;
+      font-size: 15px;
+      gap: 21px;
+      max-width: 225px;
+      min-height: 47px;
+    }
+  }
+  @media (max-width: 360px) {
+    .profile-header {
+      padding-inline: 15px;
+    }
+    .profile-topbar {
+      padding-inline: 15px;
+    }
+    .identity-row {
+      gap: 15px;
+    }
+    .avatar-ring {
+      width: 80px;
+      height: 80px;
+    }
+    .profile-facts {
+      gap: 8px;
+    }
+    .profile-facts strong {
+      font-size: 14px;
+    }
+    .profile-facts span {
+      font-size: 9px;
+    }
+    h1 {
+      font-size: 17px;
+    }
+    .profile-actions {
+      grid-template-columns: 1.65fr 1fr;
+    }
+    .profile-actions .purchase-button {
+      font-size: 11px;
+    }
+    .outline-button {
+      font-size: 11px;
+    }
+    .purchase-dock {
+      padding-inline: 15px;
+      gap: 15px;
+    }
+    .dock-price strong {
+      font-size: 20px;
+    }
+    .purchase-dock .purchase-button {
+      font-size: 14px;
+      gap: 18px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .movie-profile *,
+    .movie-profile *::before,
+    .movie-profile *::after {
+      transition: none !important;
+      scroll-behavior: auto !important;
+      animation: none !important;
+    }
+  }
+</style>

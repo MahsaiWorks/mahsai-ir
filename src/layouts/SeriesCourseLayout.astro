@@ -1,0 +1,115 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+  image: string;
+  imageAlt: string;
+  imageWidth: number;
+  imageHeight: number;
+}
+const { title, description, image, imageAlt, imageWidth, imageHeight } =
+  Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const socialImage = new URL(image, Astro.site);
+---
+
+<!doctype html>
+<html lang="fa-IR" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="canonical" href={canonical} />
+    <link
+      rel="icon"
+      type="image/jpeg"
+      href="/assets/ai-series-mobile/brand/profile-logo.jpg"
+    />
+    <link
+      rel="preload"
+      href="/fonts/vazirmatn-arabic-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/vazirmatn-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fa_IR" />
+    <meta property="og:site_name" content="MAHSAI MOVIES" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:image:width" content={String(imageWidth)} />
+    <meta property="og:image:height" content={String(imageHeight)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">رفتن به محتوای اصلی</a>
+    <main id="main-content"><slot /></main>
+  </body>
+</html>
+
+<style is:global>
+  @font-face {
+    font-family: 'Vazirmatn Variable';
+    src: url('/fonts/vazirmatn-arabic-wght-normal.woff2') format('woff2');
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    unicode-range:
+      U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200F, U+FB50-FDFF,
+      U+FE70-FEFF;
+  }
+  @font-face {
+    font-family: 'Vazirmatn Variable';
+    src: url('/fonts/vazirmatn-latin-wght-normal.woff2') format('woff2');
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    unicode-range: U+0000-00FF;
+  }
+  html {
+    color-scheme: light;
+    scroll-behavior: smooth;
+    font-family: 'Vazirmatn Variable', Tahoma, sans-serif;
+    background: #fff;
+  }
+  body {
+    margin: 0;
+    min-width: 0;
+  }
+  .skip-link {
+    position: fixed;
+    top: 8px;
+    right: 12px;
+    padding: 8px 14px;
+    background: #fff;
+    color: #242424;
+    border: 2px solid #242424;
+    z-index: 100;
+    transform: translateY(-160%);
+  }
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+</style>
