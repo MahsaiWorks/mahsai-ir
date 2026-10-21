@@ -158,14 +158,17 @@ const courseTiles = [
             <dd>دائمی در پنل شخصی</dd>
           </div>
           <div>
-            <dt>شهریهٔ آموزش</dt>
-            <dd>{moviePriceLabel}</dd>
+            <dt>پرداخت ثبت‌نام</dt>
+            <dd>یک‌باره · {moviePriceLabel}</dd>
           </div>
           <div>
             <dt>شروع ابزارها</dt>
             <dd>با نسخه‌های رایگان</dd>
           </div>
         </dl>
+        <p class="payment-note">
+          این مبلغ برای ثبت‌نام دوره یک‌باره پرداخت می‌شود؛ هزینهٔ ماهانه ندارد.
+        </p>
         <div class="tool-guide" aria-label="ابزارهای آشنا در مسیر ساخت">
           <p>ابزارهای آشنا در مسیر ساخت</p>
           <ul class="tool-list">
@@ -187,16 +190,15 @@ const courseTiles = [
                 dir="ltr">Google Flow</span
               >
             </li>
-            <li class="tool-chip tool-chip--capcut">
-              <span class="tool-mark" aria-hidden="true">✕</span><span
-                lang="en"
-                dir="ltr">CapCut</span
+            <li class="tool-chip tool-chip--captiono">
+              <span class="tool-mark" aria-hidden="true">ک</span><span lang="fa"
+                >کپشنو</span
               >
             </li>
-            <li class="tool-chip tool-chip--premiere">
-              <span class="tool-mark" aria-hidden="true">Pr</span><span
+            <li class="tool-chip tool-chip--vn">
+              <span class="tool-mark" aria-hidden="true">V</span><span
                 lang="en"
-                dir="ltr">Premiere Pro</span
+                dir="ltr">VN</span
               >
             </li>
           </ul>
@@ -765,11 +767,11 @@ const courseTiles = [
   .tool-chip--flow {
     --tool-color: #2575ce;
   }
-  .tool-chip--capcut {
-    --tool-color: #181818;
+  .tool-chip--captiono {
+    --tool-color: #c1533e;
   }
-  .tool-chip--premiere {
-    --tool-color: #702a9e;
+  .tool-chip--vn {
+    --tool-color: #12a06a;
   }
   .tool-chip--gemini .tool-mark {
     background: linear-gradient(135deg, #4285f4, #a142f4 52%, #ea4335);
@@ -783,9 +785,7 @@ const courseTiles = [
       #ea4335
     );
   }
-  .tool-chip--premiere .tool-mark {
-    color: #e8c7ff;
-  }
+  .payment-note,
   .tool-note,
   .access-note {
     color: #62595e;
@@ -794,6 +794,9 @@ const courseTiles = [
   }
   .tool-note {
     margin-top: 12px !important;
+  }
+  .payment-note {
+    margin-top: 10px !important;
   }
   .decision-purchase {
     width: 100%;
