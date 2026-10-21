@@ -1,7 +1,7 @@
 // Approved Persian copy from ai-stories-20261021-r1/CARD_PLAN.json.
 // Copy remains available to assistive technology alongside the designed raster.
-export interface DesignedMovieStorySlide {
-  kind: 'designed';
+export interface SeriesMovieStorySlide {
+  kind: 'card' | 'designed';
   image: string;
   eyebrow: string;
   title: string;
@@ -15,7 +15,7 @@ export type DesignedStoryGroupId =
 
 export const seriesDesignedStories: Record<
   DesignedStoryGroupId,
-  readonly DesignedMovieStorySlide[]
+  readonly SeriesMovieStorySlide[]
 > = {
   course: [
     {
@@ -58,15 +58,15 @@ export const seriesDesignedStories: Record<
       image: '/assets/ai-series-mobile/stories-r1/course-06.webp',
       eyebrow: 'آموزش · ۶',
       title: 'بدان با کدام ابزار شروع کنی',
-      text: 'کار با ChatGPT، Flow و Gemini؛ از انتخاب ابزار تا خطاهای رایج.',
+      text: 'با ابزارهای آشنا مثل ChatGPT، Gemini و Google Flow مسیر ساخت را بشناس؛ از انتخاب ابزار تا خطاهای رایج.',
     },
     {
       kind: 'designed',
       image: '/assets/ai-series-mobile/stories-r1/course-07.webp',
       eyebrow: 'آموزش · ۷',
       title: 'این مهارت را برای محتوای خودت یاد بگیر',
-      text: '۱۵ ویدیوی آموزشی · دسترسی دائمی\n۱ میلیون تومان\nهزینهٔ ابزارها جداست.',
-      buttonLabel: 'خرید دوره',
+      text: '۱۵ ویدیوی آموزشی · دسترسی دائمی\n۱ میلیون تومان\nبرای شروع، نسخه‌های رایگان ابزارها کافی‌اند.',
+      buttonLabel: 'ثبت‌نام دوره',
       href: 'https://android-pay.mahsai.ir/account/academy/series-mobile',
     },
   ],
@@ -102,11 +102,11 @@ export const seriesDesignedStories: Record<
       text: 'بله. برای شروع، گوشی و اینترنت لازم داری؛ یادگیری با تمرین جلو می‌رود.',
     },
     {
-      kind: 'designed',
-      image: '/assets/ai-series-mobile/stories-r1/faq-02.webp',
+      kind: 'card',
+      image: '/assets/ai-series-mobile/highlights/faq.jpg',
       eyebrow: 'سوالات · ۲',
       title: 'هزینهٔ ابزارها چطور؟',
-      text: '۱ میلیون تومان، شهریهٔ آموزش است؛ اشتراک یا اعتبار ابزارها جداست.',
+      text: 'برای شروع لازم نیست هزینهٔ ابزار بدهی؛ نسخه‌های رایگان کافی‌اند. قابلیت‌های حرفه‌ای یا اعتبار بیشتر ممکن است جداگانه هزینه داشته باشند.',
     },
     {
       kind: 'designed',
@@ -131,7 +131,7 @@ export const seriesDesignedStories: Record<
       image: '/assets/ai-series-mobile/stories-r1/phone-01.webp',
       eyebrow: 'با گوشی · ۱',
       title: 'شروع با گوشی، بدون تجهیزات فیلم‌برداری',
-      text: 'گوشی، اینترنت و حساب ابزارها؛ هزینهٔ ابزارها جداست.',
+      text: 'گوشی و اینترنت کافی است؛ برای شروع، از نسخه‌های رایگان ابزارها استفاده کن.',
     },
     {
       kind: 'designed',
@@ -316,7 +316,7 @@ export const seriesDesignedStories: Record<
       image: '/assets/ai-series-mobile/stories-r1/enrol-01.webp',
       eyebrow: 'ثبت‌نام · ۱',
       title: 'آموزش ساخت سریال با هوش مصنوعی',
-      text: 'با گوشی شروع کن\n۱ میلیون تومان\n۱۵ ویدیوی آموزشی · دسترسی دائمی\nهزینهٔ ابزارها جداست.',
+      text: 'با گوشی شروع کن\n۱ میلیون تومان\n۱۵ ویدیوی آموزشی · دسترسی دائمی\nبرای شروع، نسخه‌های رایگان ابزارها کافی‌اند.',
       buttonLabel: 'خرید دوره',
       href: 'https://android-pay.mahsai.ir/account/academy/series-mobile',
     },

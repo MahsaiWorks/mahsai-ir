@@ -75,7 +75,7 @@ const courseTiles = [
         <a
           class="topbar-buy"
           href={movieCheckoutUrl}
-          aria-label="خرید دوره با قیمت ۱ میلیون تومان"
+          aria-label="ثبت‌نام دوره با قیمت ۱ میلیون تومان"
         >
           <svg
             viewBox="0 0 24 24"
@@ -86,7 +86,7 @@ const courseTiles = [
             ><path d="M6 7h12l1 14H5L6 7Z"></path><path
               d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg
           >
-          خرید دوره
+          ثبت‌نام
         </a>
       </nav>
 
@@ -126,7 +126,8 @@ const courseTiles = [
         </div>
         <div class="profile-actions">
           <a class="purchase-button" href={movieCheckoutUrl}
-            >خرید دوره <span class="action-separator" aria-hidden="true">·</span
+            >ثبت‌نام دوره <span class="action-separator" aria-hidden="true"
+              >·</span
             >
             {moviePriceLabel}</a
           >
@@ -135,10 +136,84 @@ const courseTiles = [
             type="button"
             data-story-group="course"
             aria-haspopup="dialog"
-            aria-controls="series-story-viewer">دربارهٔ آموزش</button
+            aria-controls="series-story-viewer">سرفصل‌های دوره</button
           >
         </div>
       </header>
+
+      <section class="decision-card" aria-labelledby="decision-title">
+        <p class="decision-eyebrow">قبل از ثبت‌نام، این‌ها را بدان</p>
+        <h2 id="decision-title">با گوشی، از ایده تا ساخت یک سریال کوتاه</h2>
+        <p class="decision-summary">
+          شخصیت، تصویر، ویدیو، روایت سریالی و موسیقی را قدم‌به‌قدم برای محتوای
+          خودت کنار هم می‌سازی.
+        </p>
+        <dl class="decision-facts">
+          <div>
+            <dt>آنچه می‌گیری</dt>
+            <dd>۱۵ ویدیوی آموزشی</dd>
+          </div>
+          <div>
+            <dt>دسترسی</dt>
+            <dd>دائمی در پنل شخصی</dd>
+          </div>
+          <div>
+            <dt>شهریهٔ آموزش</dt>
+            <dd>{moviePriceLabel}</dd>
+          </div>
+          <div>
+            <dt>شروع ابزارها</dt>
+            <dd>با نسخه‌های رایگان</dd>
+          </div>
+        </dl>
+        <div class="tool-guide" aria-label="ابزارهای آشنا در مسیر ساخت">
+          <p>ابزارهای آشنا در مسیر ساخت</p>
+          <ul class="tool-list">
+            <li class="tool-chip tool-chip--chatgpt">
+              <span class="tool-mark" aria-hidden="true">✳</span><span
+                lang="en"
+                dir="ltr">ChatGPT</span
+              >
+            </li>
+            <li class="tool-chip tool-chip--gemini">
+              <span class="tool-mark" aria-hidden="true">✦</span><span
+                lang="en"
+                dir="ltr">Gemini</span
+              >
+            </li>
+            <li class="tool-chip tool-chip--flow">
+              <span class="tool-mark" aria-hidden="true">F</span><span
+                lang="en"
+                dir="ltr">Google Flow</span
+              >
+            </li>
+            <li class="tool-chip tool-chip--capcut">
+              <span class="tool-mark" aria-hidden="true">✕</span><span
+                lang="en"
+                dir="ltr">CapCut</span
+              >
+            </li>
+            <li class="tool-chip tool-chip--premiere">
+              <span class="tool-mark" aria-hidden="true">Pr</span><span
+                lang="en"
+                dir="ltr">Premiere Pro</span
+              >
+            </li>
+          </ul>
+        </div>
+        <p class="tool-note">
+          برای شروع لازم نیست هزینهٔ ابزار بدهی؛ بعضی قابلیت‌های حرفه‌ای یا
+          اعتبارهای بیشتر ممکن است هزینهٔ جدا داشته باشند.
+        </p>
+        <a class="decision-purchase purchase-button" href={movieCheckoutUrl}
+          >ثبت‌نام دوره <span class="action-separator" aria-hidden="true"
+            >·</span
+          >{moviePriceLabel}</a
+        >
+        <p class="access-note">
+          پس از تأیید پرداخت، درس‌ها در پنل شخصی‌ات باز می‌شوند.
+        </p>
+      </section>
 
       <section class="highlights" aria-label="هایلایت‌ها">
         {
@@ -307,7 +382,7 @@ const courseTiles = [
     <aside class="purchase-dock" aria-label="خرید سریع آموزش">
       <div class="dock-price"><strong>۱ میلیون</strong><span>تومان</span></div>
       <a class="purchase-button" href={movieCheckoutUrl}
-        >خرید آموزش <span aria-hidden="true">←</span></a
+        >ثبت‌نام دوره <span aria-hidden="true">←</span></a
       >
     </aside>
     <SeriesStoryViewer groups={movieStoryGroups} />
@@ -580,6 +655,155 @@ const courseTiles = [
     opacity: 0.65;
     font-weight: 400;
   }
+  .decision-card {
+    margin: 24px 30px 0;
+    padding: 22px;
+    border: 1px solid #eadde0;
+    border-radius: 14px;
+    background:
+      radial-gradient(circle at 9% 0%, #f2ddcf 0, transparent 35%),
+      linear-gradient(135deg, #fffafb, #f8f3f4);
+    box-shadow: 0 8px 28px #5f15200a;
+  }
+  .decision-eyebrow {
+    color: var(--wine);
+    font-size: 12px;
+    font-weight: 750;
+    line-height: 1.8;
+  }
+  .decision-card h2 {
+    margin-top: 3px;
+    color: var(--ink);
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.8;
+    letter-spacing: -0.35px;
+  }
+  .decision-summary {
+    margin-top: 5px !important;
+    color: #4f484c;
+    font-size: 13px;
+    line-height: 2;
+  }
+  .decision-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin: 17px 0 0;
+  }
+  .decision-facts > div {
+    min-width: 0;
+    padding: 10px 11px;
+    border: 1px solid #eee4e6;
+    border-radius: 9px;
+    background: #fff;
+  }
+  .decision-facts dt {
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.7;
+  }
+  .decision-facts dd {
+    margin: 2px 0 0;
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 750;
+    line-height: 1.8;
+  }
+  .tool-guide {
+    margin-top: 17px;
+  }
+  .tool-guide > p {
+    color: #50474b;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.8;
+  }
+  .tool-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    padding: 0;
+    margin: 8px 0 0;
+    list-style: none;
+  }
+  .tool-chip {
+    --tool-color: #242126;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 28px;
+    padding: 4px 8px 4px 7px;
+    border: 1px solid color-mix(in srgb, var(--tool-color) 20%, #fff);
+    border-radius: 999px;
+    background: #fff;
+    color: #403b3e;
+    font:
+      650 10px/1 Arial,
+      sans-serif;
+    white-space: nowrap;
+  }
+  .tool-mark {
+    display: inline-grid;
+    place-items: center;
+    width: 17px;
+    height: 17px;
+    border-radius: 5px;
+    background: var(--tool-color);
+    color: #fff;
+    font:
+      700 11px/1 Arial,
+      sans-serif;
+  }
+  .tool-chip--chatgpt {
+    --tool-color: #1d1d1d;
+  }
+  .tool-chip--gemini {
+    --tool-color: #6d5ce7;
+  }
+  .tool-chip--flow {
+    --tool-color: #2575ce;
+  }
+  .tool-chip--capcut {
+    --tool-color: #181818;
+  }
+  .tool-chip--premiere {
+    --tool-color: #702a9e;
+  }
+  .tool-chip--gemini .tool-mark {
+    background: linear-gradient(135deg, #4285f4, #a142f4 52%, #ea4335);
+  }
+  .tool-chip--flow .tool-mark {
+    background: linear-gradient(
+      135deg,
+      #4285f4 20%,
+      #34a853 43%,
+      #fbbc05 63%,
+      #ea4335
+    );
+  }
+  .tool-chip--premiere .tool-mark {
+    color: #e8c7ff;
+  }
+  .tool-note,
+  .access-note {
+    color: #62595e;
+    font-size: 11px;
+    line-height: 1.95;
+  }
+  .tool-note {
+    margin-top: 12px !important;
+  }
+  .decision-purchase {
+    width: 100%;
+    margin-top: 14px;
+    min-height: 48px;
+  }
+  .access-note {
+    margin-top: 10px !important;
+    text-align: center;
+  }
   .highlights {
     display: flex;
     gap: 24px;
@@ -844,6 +1068,53 @@ const courseTiles = [
       font-size: 12px;
       padding: 10px 10px;
       gap: 6px;
+    }
+    .decision-card {
+      margin: 19px 18px 0;
+      padding: 17px;
+      border-radius: 12px;
+    }
+    .decision-card h2 {
+      font-size: 17px;
+      line-height: 1.85;
+    }
+    .decision-summary {
+      font-size: 12px;
+      line-height: 1.95;
+    }
+    .decision-facts {
+      gap: 7px;
+      margin-top: 13px;
+    }
+    .decision-facts > div {
+      padding: 8px 9px;
+    }
+    .decision-facts dd {
+      font-size: 11px;
+    }
+    .tool-guide {
+      margin-top: 13px;
+    }
+    .tool-list {
+      gap: 5px;
+    }
+    .tool-chip {
+      min-height: 26px;
+      padding: 4px 7px 4px 6px;
+      font-size: 9px;
+    }
+    .tool-mark {
+      width: 16px;
+      height: 16px;
+      font-size: 10px;
+    }
+    .tool-note,
+    .access-note {
+      font-size: 10px;
+    }
+    .decision-purchase {
+      min-height: 46px;
+      margin-top: 12px;
     }
     .highlights {
       gap: 16px;
