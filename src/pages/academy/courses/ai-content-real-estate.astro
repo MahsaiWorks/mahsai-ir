@@ -163,6 +163,12 @@ const courseStructuredData = {
             <strong>۴٬۹۸۰٬۰۰۰ <small>تومان</small></strong>
           </div>
           <a class="course-button" href={checkoutUrl}>{purchaseLabel}</a>
+          <p class="course-support-cta">
+            در ثبت‌نام یا پرداخت مشکل داری؟{' '}
+            <a href={supportUrl} target="_blank" rel="noopener noreferrer">
+              تلگرام پشتیبانی: <bdi dir="ltr">@Mahsaisupport</bdi>
+            </a>
+          </p>
         </div>
         <dl class="course-metrics">
           <div><dt>۱۵ درس</dt><dd>ضبط‌شده</dd></div>
@@ -426,7 +432,8 @@ const courseStructuredData = {
         <a href="#purchase-terms">شرایط خرید</a><a
           href={supportUrl}
           target="_blank"
-          rel="noopener noreferrer">پشتیبانی تلگرام</a
+          rel="noopener noreferrer"
+          >تلگرام پشتیبانی: <bdi dir="ltr">@Mahsaisupport</bdi></a
         >
       </div>
     </footer>
@@ -698,6 +705,19 @@ const courseStructuredData = {
   }
   .course-button:hover {
     background: #003cd0;
+  }
+  .course-support-cta {
+    margin: 0;
+    color: var(--course-muted);
+    font-size: 0.85rem;
+    line-height: 1.8;
+    text-align: center;
+  }
+  .course-support-cta a {
+    color: var(--course-blue);
+    font-weight: 750;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.2rem;
   }
   .course-button:focus-visible,
   summary:focus-visible {
