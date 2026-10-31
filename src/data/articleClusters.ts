@@ -21,11 +21,10 @@ export const articleClusters: ArticleCluster[] = [
     searchTitle: 'آموزش تولید محتوا با هوش مصنوعی؛ از کجا شروع کنیم؟',
     answer:
       'برای شروع لازم نیست همهٔ ابزارها را بلد باشی. یک عکس یا محتوای مشخص انتخاب کن، خواسته‌ات را ساده توضیح بده و هر بار یک بخش از نتیجه را بهتر کن. اینجا آموزش‌های رایگان و فایل‌های آماده را کنار هم پیدا می‌کنی.',
-    cover: '/assets/academy/abr-moshaver/hero-scene.webp',
-    coverAlt:
-      'نمونه‌های ساخت عکس، ویدیو و استوری با هوش مصنوعی در آکادمی مهسای',
-    coverWidth: 1280,
-    coverHeight: 550,
+    cover: '/assets/academy/abr-moshaver/course-hero-banner-20261031.webp',
+    coverAlt: 'دورهٔ آموزشی کارگردانی و فیلمسازی با هوش مصنوعی در آکادمی مهسای',
+    coverWidth: 1912,
+    coverHeight: 823,
     keywords: [
       'آموزش هوش مصنوعی',
       'تولید محتوا با هوش مصنوعی',

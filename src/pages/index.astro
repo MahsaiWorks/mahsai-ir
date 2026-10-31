@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
-import academyHero from '../assets/academy/hero-scene.webp';
+import academyHero from '../assets/academy/abr-moshaver-course-banner.webp';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/brand-home.css';
 import ResponsiveImage from '../components/ResponsiveImage.astro';
@@ -32,11 +32,11 @@ const lessons = [
 
 <BaseLayout
   title="مهسای | آموزش هوش مصنوعی و دوره‌های تولید محتوا"
-  description="آکادمی مهسای و دورهٔ ابر مشاور برای یادگیری ساخت عکس، ویدیو و استوری با هوش مصنوعی؛ در کنار آموزش‌های رایگان، ابزارهای فارسی و اپلیکیشن متراژ."
-  image="/assets/academy/abr-moshaver/hero-scene.webp"
-  imageAlt="آکادمی مهسای؛ نمونه‌های دورهٔ ابر مشاور برای ساخت محتوا با هوش مصنوعی"
-  imageWidth={1280}
-  imageHeight={550}
+  description="آکادمی مهسای و دورهٔ آموزشی کارگردانی و فیلمسازی با هوش مصنوعی؛ در کنار آموزش‌های رایگان، ابزارهای فارسی و اپلیکیشن متراژ."
+  image="/assets/academy/abr-moshaver/course-hero-banner-20261031.webp"
+  imageAlt="آکادمی مهسای؛ دورهٔ آموزشی کارگردانی و فیلمسازی با هوش مصنوعی"
+  imageWidth={1912}
+  imageHeight={823}
 >
   <div class="brand-home">
     <section class="brand-hero wrap" aria-labelledby="hero-title">
@@ -60,14 +60,14 @@ const lessons = [
       <figure class="hero-visual">
         <Image
           src={academyHero}
-          width={1280}
-          height={550}
-          widths={[320, 480, 640, 672, 768, 960, 1280]}
+          width={1912}
+          height={823}
+          widths={[320, 480, 640, 672, 768, 960, 1280, 1600, 1912]}
           sizes="(max-width: 480px) calc(100vw - 36px), (max-width: 800px) calc(100vw - 44px), (max-width: 1100px) calc((100vw - 88px) * 0.51), 610px"
           format="webp"
           quality={85}
           loading="eager"
-          alt="دورهٔ ابر مشاور؛ چند نمونه از ساخت سریال، رشته‌استوری، انیمیشن و قبل‌وبعد"
+          alt="دورهٔ آموزشی کارگردانی و فیلمسازی با هوش مصنوعی"
           fetchpriority="high"
         />
       </figure>
@@ -265,7 +265,7 @@ const lessons = [
               sizes="(max-width: 480px) calc(100vw - 36px), (max-width: 800px) calc(100vw - 44px), (max-width: 1100px) calc((100vw - 64px) / 2), 620px"
               format="webp"
               quality={85}
-              alt="چند نمونه از آموزش‌های دورهٔ ابر مشاور"
+              alt="چند نمونه از آموزش‌های دورهٔ کارگردانی و فیلمسازی با هوش مصنوعی"
               loading="lazy"
             />
           </div>
@@ -275,7 +275,7 @@ const lessons = [
                 >۱۵ درس · ۱ ساعت و ۴۰ دقیقه</span
               >
             </div>
-            <h3>ابر مشاور</h3>
+            <h3>کارگردانی و فیلمسازی با هوش مصنوعی</h3>
             <p>
               ساخت عکس، ویدیو، رشته‌استوری، شخصیت مجازی و محتوای سریالی برای پیج
               و کار خودت.
