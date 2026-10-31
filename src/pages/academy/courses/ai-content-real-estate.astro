@@ -84,7 +84,7 @@ const faqs = [
   {
     question: 'پشتیبانی دوره دقیقاً برای چیه؟',
     answer:
-      'اگر در هر بخش از دوره سؤال داشتی یا جایی برایت روشن نبود، پشتیبان کنار توست تا شفاف‌سازی و راهنمایی‌ات کند؛ برای پرداخت، ورود و دسترسی هم کمک می‌گیری. زمان پاسخ‌گویی: زیر ۲۴ ساعت.',
+      'اگر در هر بخش از دوره سؤال داشتی یا جایی برایت روشن نبود، پشتیبان کنار توست تا شفاف‌سازی و راهنمایی‌ات کند؛ برای پرداخت، ورود و دسترسی هم کمک می‌گیری.',
   },
   {
     question: 'هزینهٔ ابزارهای هوش مصنوعی داخل مبلغ دوره است؟',
@@ -169,6 +169,12 @@ const courseStructuredData = {
             <span>وقت داری تا با تخفیف ثبت‌نام کنی</span>
           </p>
           <a class="course-button" href={checkoutUrl}>{purchaseLabel}</a>
+          <p class="course-support-cta">
+            پاسخ‌گویی پشتیبانی: زیر ۲۴ ساعت ·{' '}
+            <a href={supportUrl} target="_blank" rel="noopener noreferrer">
+              تلگرام <bdi dir="ltr">@Mahsaisupport</bdi>
+            </a>
+          </p>
         </div>
         <dl class="course-metrics">
           <div><dt>۱۵ درس</dt></div>
@@ -732,6 +738,19 @@ const courseStructuredData = {
   }
   .course-button:hover {
     background: #003cd0;
+  }
+  .course-support-cta {
+    margin: 0;
+    color: var(--course-muted);
+    font-size: 0.85rem;
+    line-height: 1.8;
+    text-align: center;
+  }
+  .course-support-cta a {
+    color: var(--course-blue);
+    font-weight: 750;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.2rem;
   }
   .course-button:focus-visible,
   summary:focus-visible {
