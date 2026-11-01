@@ -8,10 +8,10 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/materialize-metrazh-release.mjs && astro build && node scripts/inline-course-styles.mjs",
+    "build": "node scripts/materialize-metrazh-release.mjs && astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "audit:static": "node scripts/audit-static.mjs && node scripts/audit-public-ai-policy.test.mjs",
+    "audit:static": "node scripts/audit-static.mjs && node scripts/audit-course-performance.mjs && node scripts/audit-public-ai-policy.test.mjs",
     "audit:accessibility": "node scripts/audit-accessibility.mjs",
     "audit:external": "node scripts/audit-external-links.mjs",
     "audit:lighthouse": "lhci autorun",
