@@ -23,19 +23,25 @@ const poster = path.join(
 
 const htmlBytes = await readFile(courseDocument);
 const html = htmlBytes.toString('utf8');
-const stylesheetHrefs = [
-  ...html.matchAll(/<link rel="stylesheet" href="([^"]+)"/gu),
+const deferredStylesheetHrefs = [
+  ...html.matchAll(
+    /<link rel="preload" as="style" href="([^"]+)" data-course-deferred-style>/gu,
+  ),
 ].map((match) => match[1]);
+const inlineStyleCount = (html.match(/<style>/gu) ?? []).length;
 
 assert(
-  htmlBytes.byteLength <= 40_000,
+  htmlBytes.byteLength <= 65_000,
   `Course document exceeds the first-render budget: ${htmlBytes.byteLength} bytes`,
 );
 assert(
-  !/<style\b/iu.test(html),
-  'Course styles must remain cacheable stylesheets instead of blocking HTML parsing.',
+  inlineStyleCount === 1,
+  'Only the compact course-critical stylesheet may be inlined.',
 );
-assert(stylesheetHrefs.length > 0, 'Course stylesheet is missing.');
+assert(
+  deferredStylesheetHrefs.length > 0,
+  'Course shared stylesheet must be preloaded without blocking first paint.',
+);
 assert(
   html.includes(
     'rel="preload" as="image" href="/assets/academy/abr-moshaver/course-hero-banner-20261031.webp" fetchpriority="high"',
@@ -62,7 +68,8 @@ assert(
 console.log(
   JSON.stringify({
     courseDocumentBytes: htmlBytes.byteLength,
-    stylesheetCount: stylesheetHrefs.length,
+    deferredStylesheetCount: deferredStylesheetHrefs.length,
+    inlineStyleCount,
     posterBytes: posterSize,
   }),
 );
