@@ -1,15 +1,20 @@
 ---
 import { siteConfig } from '../../../config/site';
+import { aiFilmCourse } from '../../../data/aiFilmCourse';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 const salesEnabled = import.meta.env.PUBLIC_ACADEMY_SALES_ENABLED === 'true';
 const funnelEnabled =
   salesEnabled && import.meta.env.PUBLIC_ACADEMY_FUNNEL_ENABLED === 'true';
-const courseTitle = 'دورهٔ آموزشی کارگردانی و فیلمسازی با هوش مصنوعی';
-const checkoutUrl = salesEnabled
-  ? 'https://android-pay.mahsai.ir/academy/buy'
-  : '#course-purchase';
-const purchaseLabel = 'ثبت‌نام';
+const courseTitle = aiFilmCourse.title;
+// This existing server entry preserves signed referral/funnel attribution and redirects to checkout.
+const checkoutUrl = 'https://android-pay.mahsai.ir/academy/buy';
+const purchaseLabel = 'ثبت‌نام دوره';
+const faNumber = new Intl.NumberFormat('fa-IR');
+const lessonTime = (seconds: number) =>
+  `${faNumber.format(Math.floor(seconds / 60))}:${String(seconds % 60)
+    .padStart(2, '0')
+    .replace(/\d/g, (digit) => '۰۱۲۳۴۵۶۷۸۹'.charAt(Number(digit)))}`;
 const academyLoginUrl = 'https://android-pay.mahsai.ir/account/academy';
 const supportUrl = 'https://t.me/Mahsaisupport';
 const internationalEnabled =
@@ -72,14 +77,18 @@ const additionalResults = results.filter(
 
 const faqs = [
   {
+    question: 'برای ویدئوهای سیدنس آمده‌ام؛ این دوره چه چیزی آموزش می‌دهد؟',
+    answer: aiFilmCourse.scope,
+  },
+  {
     question: 'با گوشی هم می‌تونم شروع کنم؟',
     answer:
-      'بله، ویدیوها رو با همین گوشی می‌تونی ببینی و آموزش‌ها رو اجرا کنی.',
+      'در چند درس نمونهٔ کار روی صفحهٔ گوشی را می‌بینی. پیش از ثبت‌نام، دسترسی ابزارهای مدنظرت را روی گوشی و حساب خودت بررسی کن.',
   },
   {
     question: 'چطور دوره و فایل‌ها رو دریافت می‌کنم؟',
     answer:
-      'بعد از خرید، هم از پنل سایت به آموزش‌ها دسترسی داری، هم از کانال‌های تلگرام دوره.',
+      'پس از تأیید پرداخت، با همان شمارهٔ خرید وارد دوره‌های من شو. درخواست عضویت در کانال‌های تلگرام از حساب خریدار قابل پیگیری است و تماشای سایت به تأیید عضویت تلگرام وابسته نیست.',
   },
   {
     question: 'پشتیبانی دوره دقیقاً برای چیه؟',
@@ -89,7 +98,7 @@ const faqs = [
   {
     question: 'هزینهٔ ابزارهای هوش مصنوعی داخل مبلغ دوره است؟',
     answer:
-      'نه؛ ابزارهایی که در دوره معرفی می‌شن در حالت رایگان قابل استفاده‌اند. برای استفادهٔ حرفه‌ای‌تر ممکنه اشتراک لازم باشه؛ راه تهیه با قیمت مناسب را هم در همان بخش معرفی می‌کنیم.',
+      'هزینهٔ اشتراک یا اعتبار ابزارها جداست و با ابزار، پلن و زمان تغییر می‌کند. برای بعضی ابزارها ممکن است گزینهٔ رایگان در دسترس باشد. پیش از شروع، شرایط همان ابزار را در حساب خودت بررسی کن.',
   },
 ] as const;
 
@@ -152,26 +161,29 @@ const courseStructuredData = {
       />
       <p class="course-existing-login">
         قبلاً دوره را خریده‌ای؟
-        <a href={academyLoginUrl}>ورود به دوره و ویدیوها</a>
+        <a href={academyLoginUrl}>قبلاً خریده‌ام؛ ورود به دوره</a>
       </p>
       <h1>{courseTitle}</h1>
+      <p class="course-upgrade-intro">
+        از ایده تا ویدئو پیش برو. با مثال‌های عملی، داستان و شخصیت طراحی کن،
+        سکانس‌ها را بساز و خروجی را بازبینی و تدوین کن. نمونه‌های اصلی دوره
+        ملکی‌اند؛ همین مراحل را برای پیج، محصول یا خدمات خودت تمرین کن.
+      </p>
+      <p class="course-upgrade-scope">{aiFilmCourse.scope}</p>
       <div class="course-purchase-strip" id="course-purchase">
         <div class="course-strip-offer">
           <span class="course-strip-offer-label">ثبت‌نام در دورهٔ آموزشی</span>
           <div class="course-offer-price">
-            <del aria-label="قیمت اصلی: ۹ میلیون و ۹۸۰ هزار تومان">
-              <span>۹٬۹۸۰٬۰۰۰</span>
-              <small>تومان</small>
-            </del>
-            <span class="course-discount">۵۰٪ تخفیف</span>
-            <strong>۴٬۹۸۰٬۰۰۰ <small>تومان</small></strong>
+            <strong
+              >{faNumber.format(aiFilmCourse.currentPriceToman)}
+              <small>تومان</small></strong
+            >
           </div>
-          <p class="course-daily-countdown">
-            <span>فقط</span>
-            <time data-course-daily-countdown>--:--:--</time>
-            <span>وقت داری تا با تخفیف ثبت‌نام کنی</span>
-          </p>
           <a class="course-button" href={checkoutUrl}>{purchaseLabel}</a>
+          <p class="course-price-note">
+            مبلغ نهایی و شرایط همان سفارش پیش از پرداخت در صفحهٔ ثبت‌نام نمایش
+            داده می‌شوند.
+          </p>
           <p class="course-support-cta">
             پاسخ‌گویی پشتیبانی: زیر ۲۴ ساعت ·{' '}
             <a href={supportUrl} target="_blank" rel="noopener noreferrer">
@@ -180,8 +192,16 @@ const courseStructuredData = {
           </p>
         </div>
         <dl class="course-metrics">
-          <div><dt>۱۵ درس</dt></div>
-          <div><dt><bdi dir="ltr">۱:۴۰:۲۴</bdi></dt><dd>زمان آموزش</dd></div>
+          <div>
+            <dt>{faNumber.format(aiFilmCourse.lessons.length)} درس</dt><dd>
+              ۱۵ ویدیوی آموزشی
+            </dd>
+          </div>
+          <div>
+            <dt><bdi dir="ltr">{aiFilmCourse.durationClock}</bdi></dt><dd>
+              زمان آموزش
+            </dd>
+          </div>
           <div><dt>دسترسی دائمی</dt><dd>به دوره و آپدیت‌های آینده</dd></div>
         </dl>
         {
@@ -271,84 +291,118 @@ const courseStructuredData = {
       aria-labelledby="course-examples-title"
     >
       <header class="course-section-head" data-course-reveal>
-        <h2 id="course-examples-title">
-          اینا چند نمونهٔ کوچیک از چیزهایین که یاد می‌گیری بسازی
-        </h2>
+        <h2 id="course-examples-title">تصویر نمونه‌ها و ارتباطشان با درس‌ها</h2>
       </header>
+      <p>
+        این رسانه‌ها عکس‌اند. هر نمونه با درس مرتبط یا به‌عنوان الهام معرفی شده
+        است؛ نمونه‌های عملی ساخت ویدئو در درس‌های فعلی با Flow هستند.
+      </p>
       <div class="course-example-grid course-square-example-grid">
-        <figure data-course-reveal>
-          <h3 class="course-example-title">ساخت انسان مجازی</h3>
-          <img
-            src="/assets/academy/abr-moshaver/example-virtual-human-20261031.webp"
-            width="1254"
-            height="1254"
-            loading="lazy"
-            alt="نمونهٔ ساخت چند انسان مجازی با هوش مصنوعی"
-          />
-        </figure>
-        <figure data-course-reveal>
-          <h3 class="course-example-title">تبلیغ لباس</h3>
-          <img
-            src="/assets/academy/abr-moshaver/example-clothing-ad-20261031.webp"
-            width="1448"
-            height="1086"
-            loading="lazy"
-            alt="نمونهٔ تبلیغ لباس با هوش مصنوعی"
-          />
-        </figure>
-        <figure data-course-reveal>
-          <h3 class="course-example-title">ویدیوی قبل‌وبعد</h3>
-          <img
-            src="/assets/academy/abr-moshaver/example-before-after-20261031.webp"
-            width="1340"
-            height="1174"
-            loading="lazy"
-            alt="نمونهٔ ساخت ویدیوی قبل‌وبعد با هوش مصنوعی"
-          />
-        </figure>
+        {
+          aiFilmCourse.examples.slice(0, 3).map((item) => (
+            <figure data-course-reveal>
+              <>
+                <h3 class="course-example-title">{item.title}</h3>
+                <img
+                  src={item.src}
+                  width={item.width}
+                  height={item.height}
+                  loading="lazy"
+                  alt={item.title + '؛ تصویر نمونه'}
+                />
+                <figcaption>
+                  <>
+                    <p>{item.relationship}</p>
+                    <a href={'#course-lesson-' + item.lessonNumber}>
+                      دیدن درس مرتبط در فهرست
+                    </a>
+                  </>
+                </figcaption>
+              </>
+            </figure>
+          ))
+        }
       </div>
       <div class="course-vertical-example-grid">
-        <figure data-course-reveal>
-          <h3 class="course-example-title">تبلیغ محصول</h3>
-          <img
-            src="/assets/academy/abr-moshaver/example-product-ad-20261031.webp"
-            width="941"
-            height="1672"
-            loading="lazy"
-            alt="نمونهٔ تبلیغ محصول با هوش مصنوعی"
-          />
-        </figure>
-        <figure data-course-reveal>
-          <h3 class="course-example-title">انیمیشن</h3>
-          <img
-            src="/assets/academy/abr-moshaver/example-animation-20261031.webp"
-            width="941"
-            height="1672"
-            loading="lazy"
-            alt="نمونهٔ انیمیشن ساخته‌شده با هوش مصنوعی"
-          />
-        </figure>
-        <figure data-course-reveal>
-          <h3 class="course-example-title">استوری داستانی</h3>
-          <img
-            src="/assets/academy/abr-moshaver/example-story-20261031.webp"
-            width="937"
-            height="1678"
-            loading="lazy"
-            alt="نمونهٔ استوری داستانی ساخته‌شده با هوش مصنوعی"
-          />
-        </figure>
-        <figure data-course-reveal>
-          <h3 class="course-example-title">ساخت سریال</h3>
-          <img
-            src="/assets/academy/abr-moshaver/example-series-20261031.webp"
-            width="941"
-            height="1672"
-            loading="lazy"
-            alt="نمونهٔ ساخت سریال با هوش مصنوعی"
-          />
-        </figure>
+        {
+          aiFilmCourse.examples.slice(3).map((item) => (
+            <figure data-course-reveal>
+              <>
+                <h3 class="course-example-title">{item.title}</h3>
+                <img
+                  src={item.src}
+                  width={item.width}
+                  height={item.height}
+                  loading="lazy"
+                  alt={item.title + '؛ تصویر نمونه'}
+                />
+                <figcaption>
+                  <>
+                    <p>{item.relationship}</p>
+                    <a href={'#course-lesson-' + item.lessonNumber}>
+                      دیدن درس مرتبط در فهرست
+                    </a>
+                  </>
+                </figcaption>
+              </>
+            </figure>
+          ))
+        }
       </div>
+    </section>
+
+    <section
+      class="course-section shell"
+      aria-labelledby="course-syllabus-title"
+    >
+      <h2 id="course-syllabus-title">فهرست درس‌های فعلی دوره</h2>
+      <p>
+        درس ۷ بانک ۳۰ فرمت و ایده است. نوع آموزش هر درس را کنار عنوان می‌بینی؛
+        این فهرست شامل آموزش آیندهٔ سیدنس نیست.
+      </p>
+      <ol class="course-syllabus-list">
+        {
+          aiFilmCourse.lessons.map((lesson) => (
+            <li id={'course-lesson-' + lesson.number}>
+              <>
+                <span aria-hidden="true">{faNumber.format(lesson.number)}</span>
+                <div>
+                  <>
+                    <strong>{lesson.title}</strong>
+                    <small>{lesson.format}</small>
+                  </>
+                </div>
+                <time dir="ltr">{lessonTime(lesson.durationSeconds)}</time>
+              </>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+    <section
+      class="course-section shell"
+      aria-labelledby="course-resources-title"
+    >
+      <h2 id="course-resources-title">فایل‌های همراه درس‌ها</h2>
+      <p>
+        فایل دستیار محتوا، راهنمای ۳۰ فرمت و راهنمای رشته‌استوری در منابع همراه
+        دوره قرار دارند. پس از ورود، فایل‌های مرتبط را کنار درس مربوط یا از
+        کانال «فایل + پرامپت» دوره پیگیری کن.
+      </p>
+      <ul>
+        {
+          aiFilmCourse.companionFiles.map((file) => (
+            <li>
+              <>
+                <a href={'#course-lesson-' + file.lessonNumber}>
+                  درس {faNumber.format(file.lessonNumber)} · {file.title}
+                </a>
+                <p>{file.use}</p>
+              </>
+            </li>
+          ))
+        }
+      </ul>
     </section>
 
     <section class="course-section shell" aria-labelledby="course-faq-title">
@@ -389,11 +443,13 @@ const courseStructuredData = {
         <div class="course-mobile-dock">
           <>
             <div class="course-dock-price">
-              <span>قیمت دوره با تخفیف</span>
-              <strong>۴٬۹۸۰٬۰۰۰ تومان</strong>
+              <span>قیمت دوره</span>
+              <strong>
+                {faNumber.format(aiFilmCourse.currentPriceToman)} تومان
+              </strong>
             </div>
             <a class="course-button" href={checkoutUrl}>
-              ثبت‌نام
+              ثبت‌نام دوره
             </a>
           </>
         </div>
@@ -432,43 +488,70 @@ const courseStructuredData = {
         play.hidden = false;
       });
     }
-
-    const dailyCountdown = document.querySelector<HTMLTimeElement>(
-      '[data-course-daily-countdown]',
-    );
-    if (dailyCountdown) {
-      const tehranClock = new Intl.DateTimeFormat('en-US', {
-        timeZone: 'Asia/Tehran',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hourCycle: 'h23',
-      });
-      const persianTwoDigits = new Intl.NumberFormat('fa-IR', {
-        minimumIntegerDigits: 2,
-        useGrouping: false,
-      });
-      const renderDailyCountdown = () => {
-        const clock = tehranClock.formatToParts(new Date());
-        const read = (part: string): number =>
-          Number(clock.find((item) => item.type === part)?.value ?? 0);
-        const elapsed =
-          read('hour') * 3_600 + read('minute') * 60 + read('second');
-        const remaining = Math.max(0, 86_399 - elapsed);
-        const hours = Math.floor(remaining / 3_600);
-        const minutes = Math.floor((remaining % 3_600) / 60);
-        const seconds = remaining % 60;
-        dailyCountdown.textContent = [hours, minutes, seconds]
-          .map((value) => persianTwoDigits.format(value))
-          .join(':');
-      };
-      renderDailyCountdown();
-      window.setInterval(renderDailyCountdown, 1_000);
-    }
   </script>
 </BaseLayout>
 
 <style>
+  .course-upgrade-intro,
+  .course-upgrade-scope {
+    max-width: 72ch;
+    margin-inline: auto;
+    line-height: 1.95;
+  }
+  .course-upgrade-scope {
+    padding: 1rem;
+    border: 1px solid #dce5f5;
+    border-radius: 1rem;
+    background: #f5f8ff;
+  }
+  .course-price-note {
+    font-size: 0.8rem;
+    color: var(--course-muted);
+    line-height: 1.8;
+  }
+  .course-examples figcaption {
+    padding: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.9;
+  }
+  .course-syllabus-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.7rem;
+  }
+  .course-syllabus-list li {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    gap: 0.7rem;
+    align-items: start;
+    padding: 1rem;
+    border: 1px solid #dce5f5;
+    border-radius: 1rem;
+    scroll-margin-top: 6rem;
+    line-height: 1.9;
+  }
+  .course-syllabus-list small {
+    display: block;
+    color: var(--course-muted);
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+  }
+  @media (max-width: 600px) {
+    .course-examples .course-square-example-grid,
+    .course-examples .course-vertical-example-grid {
+      grid-template-columns: 1fr;
+    }
+    .course-examples .course-example-title {
+      font-size: 1rem;
+      padding: 0.7rem;
+    }
+    .course-examples figure img {
+      max-height: 24rem;
+      object-fit: contain;
+    }
+  }
+
   @font-face {
     font-family: 'Vazirmatn Variable';
     font-style: normal;
@@ -755,76 +838,11 @@ const courseStructuredData = {
     font-weight: 800;
   }
   .course-offer-price {
-    display: grid;
-    grid-template-columns: max-content max-content;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-    gap: 0.3rem 0.7rem;
-  }
-  .course-offer-price del {
-    color: var(--course-muted);
-    font-size: 1rem;
-    font-weight: 650;
-    line-height: 1.7;
-    text-decoration: none;
-    white-space: nowrap;
-  }
-  .course-offer-price del > span {
-    position: relative;
-    display: inline-block;
-  }
-  .course-offer-price del > span::after {
-    content: '';
-    position: absolute;
-    inset-inline: -0.15rem;
-    top: 51%;
-    height: 1.5px;
-    background: #d32632;
-    transform: rotate(-4deg);
-    pointer-events: none;
-  }
-  .course-offer-price del small {
-    font-size: 0.75rem;
-    font-weight: 650;
-  }
-  .course-daily-countdown {
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 0.45rem;
-    margin: 0;
-    color: var(--course-muted);
-    font-size: 0.8rem;
-    font-weight: 700;
-  }
-  .course-daily-countdown time {
-    direction: ltr;
-    display: inline-block;
-    min-width: 5.5rem;
-    padding: 0.28rem 0.55rem;
-    border-radius: 0.45rem;
-    border: 1px solid #fecdc7;
-    background: #fff1ef;
-    box-shadow: 0 2px 10px rgba(190, 49, 39, 0.12);
-    color: #b42318;
-    font-size: 1.15rem;
-    font-weight: 900;
-    line-height: 1.25;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.06em;
-  }
-  .course-discount {
-    padding: 0.2rem 0.6rem;
-    border-radius: 0.5rem;
-    background: #dce7ff;
-    color: #003cc8;
-    font-size: 0.9rem;
-    font-weight: 700;
-    line-height: 1.7;
+    align-items: center;
   }
   .course-strip-offer strong {
-    grid-column: 1 / -1;
     font-size: 1.85rem;
   }
   .course-strip-offer strong small {
